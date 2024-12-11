@@ -94,7 +94,7 @@ My current goal is to get educated enough to master all tools needed.</p>
 </div>
 
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=mohamedhabibwork&langs_count=8)
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=mohamedhabibwork&layout=pie)](https://github.com/mohamedhabibwork/github-readme-stats)
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=mohamedhabibwork&layout=pie)
 
 ---
 ## Get in Touch!
