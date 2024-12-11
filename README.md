@@ -92,6 +92,7 @@ My current goal is to get educated enough to master all tools needed.</p>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg" height="40" width="52" alt="raspberrypi logo" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-original-wordmark.svg" height="40" width="52" alt="kubernetes logo" />
 </div>
+
 ---
 
 ### IDEs
@@ -126,7 +127,9 @@ My current goal is to get educated enough to master all tools needed.</p>
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=mohamedhabibwork&layout=pie)
 
 ---
+
 ## Get in Touch!
+
 <div align="center">
   <a href="mailto:mohamedhabibwork@gmail.com" title="Email Me"><img src="https://img.shields.io/badge/Email-mohamedhabibwork%40gmail.com-blue?logo=gmail&logoColor=white" alt="Email Me"></a>
   <a href="https://linkedin.com/in/mohamedhabibwork/" title="My LinkedIn Profile"><img src="https://img.shields.io/badge/LinkedIn-mohamedhabibwork-blue?logo=linkedin&logoColor=white" alt="LinkedIn"></a>
