@@ -92,7 +92,36 @@ My current goal is to get educated enough to master all tools needed.</p>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg" height="40" width="52" alt="raspberrypi logo" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-original-wordmark.svg" height="40" width="52" alt="kubernetes logo" />
 </div>
+---
 
+### IDEs
+
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" height="40" width="52" alt="vscode logo" />
+  <img src="https://cdn.cdnlogo.com/logos/p/61/phpstorm.svg" height="40" width="52" alt="phpstorm logo" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/intellij/intellij-original.svg" height="40" width="52" alt="intellij logo" />
+</div>
+
+---
+
+### Testing Units
+
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg" height="40" width="52" alt="jest logo" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/selenium/selenium-original.svg" height="40" width="52" alt="selenium logo" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cypress/cypress-original.svg" height="40" width="52" alt="cypress logo" />
+</div>
+
+---
+
+### AI & ML Tools
+
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original-wordmark.svg" height="40" width="52" alt="tensorflow logo" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original-wordmark.svg" height="40" width="52" alt="pytorch logo" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original-wordmark.svg" height="40" width="52" alt="numpy logo" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original-wordmark.svg" height="40" width="52" alt="pandas logo" />
+</div>
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=mohamedhabibwork&langs_count=8)
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=mohamedhabibwork&layout=pie)
 
