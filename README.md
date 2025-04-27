@@ -126,18 +126,3 @@ Software Engineer with expertise in Laravel and backend development. Based in Eg
   </a>
 </div>
 
-<style>
-  @media (prefers-color-scheme: dark) {
-    img[alt$="logo"] {
-      background-color: rgba(255, 255, 255, 0.2) !important;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-  }
-  
-  @media (prefers-color-scheme: light) {
-    img[alt$="logo"] {
-      background-color: rgba(0, 0, 0, 0.03) !important;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-    }
-  }
-</style>
