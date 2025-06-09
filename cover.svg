@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="140" viewBox="0 0 280 140">
+  <defs>
+    <!-- Enhanced gradient definitions -->
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#27548A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="letterGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#27548A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#27548A;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Enhanced shadow filter -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="rgba(0,0,0,0.25)"/>
+    </filter>
+    
+    <!-- Enhanced glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Code pattern background -->
+    <pattern id="codePattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <rect width="20" height="20" fill="rgba(59, 130, 246, 0.03)"/>
+      <circle cx="10" cy="10" r="1" fill="rgba(59, 130, 246, 0.1)"/>
+    </pattern>
+  </defs>
+  
+  <style>
+    .bracket {
+      fill: url(#primaryGradient);
+      font-size: 72px;
+      font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+      font-weight: 800;
+      filter: url(#shadow);
+    }
+
+    .letters {
+      fill: url(#letterGradient);
+      font-size: 72px;
+      font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+      font-weight: 800;
+      filter: url(#shadow);
+    }
+    
+    .accent-dot {
+      fill: url(#accentGradient);
+      filter: url(#glow);
+    }
+    
+    .title-text {
+      fill: #27548A;
+      font-size: 12px;
+      font-family: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    
+    .subtitle-text {
+      fill: #3b82f6;
+      font-size: 10px;
+      font-family: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+  </style>
+
+  <!-- Background pattern -->
+  <rect width="280" height="140" fill="url(#codePattern)"/>
+  
+  
+  <!-- Primary Logo with enhanced positioning -->
+  <text x="25" y="85" class="bracket">&lt;</text>
+  <text x="85" y="85" class="letters">M</text>
+  <text x="155" y="85" class="letters">H</text>
+  <text x="215" y="85" class="bracket">&gt;</text>
+  
+  <!-- Enhanced accent elements -->
+  <circle cx="75" cy="60" r="4" class="accent-dot"/>
+  <circle cx="205" cy="60" r="4" class="accent-dot"/>
+  <circle cx="140" cy="45" r="2.5" class="accent-dot"/>
+  
+  <!-- Code-style decorative elements -->
+  <rect x="60" y="100" width="3" height="3" fill="url(#accentGradient)" opacity="0.7" rx="1"/>
+  <rect x="70" y="102" width="8" height="1" fill="url(#primaryGradient)" opacity="0.5" rx="0.5"/>
+  <rect x="200" y="100" width="3" height="3" fill="url(#accentGradient)" opacity="0.7" rx="1"/>
+  <rect x="190" y="102" width="8" height="1" fill="url(#primaryGradient)" opacity="0.5" rx="0.5"/>
+  
+  <!-- Enhanced underline with gradient -->
+  <rect x="25" y="95" width="230" height="3" fill="url(#primaryGradient)" opacity="0.7" rx="1.5"/>
+  
+  <!-- Professional titles -->
+  <text x="140" y="115" text-anchor="middle" class="title-text">SENIOR FULL STACK DEVELOPER</text>
+  <text x="140" y="130" text-anchor="middle" class="subtitle-text">& TEAM LEADER • 7+ YEARS EXPERIENCE</text>
+  
+  <!-- Corner accent elements -->
+  <path d="M10,10 L20,10 L20,20" stroke="url(#primaryGradient)" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M270,10 L260,10 L260,20" stroke="url(#primaryGradient)" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M10,130 L20,130 L20,120" stroke="url(#primaryGradient)" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M270,130 L260,130 L260,120" stroke="url(#primaryGradient)" stroke-width="2" fill="none" opacity="0.4"/>
+</svg>
