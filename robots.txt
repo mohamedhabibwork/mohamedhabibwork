@@ -1,0 +1,41 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://mohamedhabib.work/sitemap.xml
+
+# Crawl-delay for courtesy (in seconds)
+Crawl-delay: 1
+
+# Disallow crawling of any temporary or cache files
+Disallow: /*.tmp$
+Disallow: /*.cache$
+Disallow: /temp/
+Disallow: /cache/
+
+# Allow crawling of important resources
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.pdf$
+Allow: /*.webp$
+
+# Popular crawlers - specific rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: / 

@@ -1,43 +1,88 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
     <!-- SEO Meta Tags -->
     <title>Mohammad Habib - Senior Full Stack Developer & Team Leader | PHP Laravel Node.js Expert</title>
-    <meta name="description" content="Mohammad Habib - Senior Full Stack Developer with 7+ years experience in PHP Laravel, Node.js, React, Vue.js. Expert in payment gateways, real-time systems, and team leadership across transportation, healthcare, and fintech industries." />
-    <meta name="keywords" content="Full Stack Developer, PHP Laravel Developer, Node.js Developer, React Developer, Vue.js Developer, Team Leader, Payment Gateway Integration, Real-time Systems, Transportation Apps, Healthcare Software, Fintech Solutions, Egypt Developer, Senior Developer, GoLang Developer, ASP.NET Developer, PostgreSQL, MySQL, AWS, DigitalOcean" />
+    <meta name="description"
+        content="Mohammad Habib - Senior Full Stack Developer with 7+ years experience in PHP Laravel, Node.js, React, Vue.js. Expert in payment gateways, real-time systems, and team leadership across transportation, healthcare, and fintech industries." />
+    <meta name="keywords"
+        content="Full Stack Developer, PHP Laravel Developer, Node.js Developer, React Developer, Vue.js Developer, Team Leader, Payment Gateway Integration, Real-time Systems, Transportation Apps, Healthcare Software, Fintech Solutions, Egypt Developer, Senior Developer, GoLang Developer, ASP.NET Developer, PostgreSQL, MySQL, AWS, DigitalOcean" />
     <meta name="author" content="Mohammad Habib" />
     <meta name="robots" content="index, follow" />
     <meta name="language" content="English" />
     <meta name="revisit-after" content="7 days" />
-    
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Mohammad Habib - Senior Full Stack Developer & Team Leader" />
-    <meta property="og:description" content="7+ years experience in full-stack development, specializing in enterprise solutions, real-time systems, and payment integrations." />
+    <meta property="og:description"
+        content="7+ years experience in full-stack development, specializing in enterprise solutions, real-time systems, and payment integrations." />
     <meta property="og:image" content="https://mohamedhabib.work/cover.svg" />
     <meta property="og:url" content="https://mohamedhabib.work" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Mohammad Habib Portfolio" />
-    
+
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Mohammad Habib - Senior Full Stack Developer & Team Leader" />
-    <meta name="twitter:description" content="7+ years experience in full-stack development, specializing in enterprise solutions, real-time systems, and payment integrations." />
+    <meta name="twitter:description"
+        content="7+ years experience in full-stack development, specializing in enterprise solutions, real-time systems, and payment integrations." />
     <meta name="twitter:image" content="https://mohamedhabib.work/cover.svg" />
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="logo.svg" />
     <link rel="apple-touch-icon" href="logo.svg" />
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://mohamedhabib.work" />
-    
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="Mohammad Habib - RSS Feed"
+        href="https://mohamedhabib.work/rss.xml" />
+
+    <!-- Sitemap -->
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://mohamedhabib.work/sitemap.xml" />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="https://mohamedhabib.work/manifest.json" />
+
+    <!-- DNS Prefetch for Performance -->
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+
+    <!-- Preconnect for Critical Resources -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+    <!-- Additional SEO Meta Tags -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-TileColor" content="#2563eb" />
+    <meta name="msapplication-config" content="browserconfig.xml" />
+    <meta name="application-name" content="Mohammad Habib Portfolio" />
+    <meta name="apple-mobile-web-app-title" content="Mohammad Habib" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+
+    <!-- Geographic Meta Tags -->
+    <meta name="geo.region" content="EG" />
+    <meta name="geo.placename" content="Egypt" />
+    <meta name="ICBM" content="30.0444, 31.2357" />
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -558,17 +603,17 @@
             background-color: rgba(59, 130, 246, 0.1);
         }
     </style>
-    
+
     <script>
         // Mobile menu functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
-            
+
             if (mobileMenuBtn && mobileMenu) {
-                mobileMenuBtn.addEventListener('click', function() {
+                mobileMenuBtn.addEventListener('click', function () {
                     mobileMenu.classList.toggle('hidden');
-                    
+
                     // Toggle hamburger icon
                     const icon = mobileMenuBtn.querySelector('i');
                     if (mobileMenu.classList.contains('hidden')) {
@@ -605,11 +650,11 @@
 
             // Smooth scrolling
             navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
+                link.addEventListener('click', function (e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     const targetSection = document.querySelector(targetId);
-                    
+
                     if (targetSection) {
                         targetSection.scrollIntoView({
                             behavior: 'smooth',
@@ -633,16 +678,21 @@
         });
     </script>
 </head>
+
 <body class="bg-gray-50 text-gray-800">
     <!-- Enhanced Navigation -->
-    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-lg shadow-xl z-50 border-b border-gray-200/20 transition-all duration-300" id="navbar">
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-lg shadow-xl z-50 border-b border-gray-200/20 transition-all duration-300"
+        id="navbar">
         <div class="container mx-auto px-6 py-3">
             <div class="flex justify-between items-center">
                 <!-- Logo and Brand -->
                 <div class="flex items-center space-x-4">
                     <div class="relative group">
-                        <img src="logo.svg" alt="Mohammad Habib Logo" class="h-12 w-auto transition-transform duration-300 group-hover:scale-110" />
-                        <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                        <img src="logo.svg" alt="Mohammad Habib Logo"
+                            class="h-12 w-auto transition-transform duration-300 group-hover:scale-110" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10">
+                        </div>
                     </div>
                     <div class="flex flex-col">
                         <div class="text-xl font-bold text-gradient">Mohammad Habib</div>
@@ -652,59 +702,79 @@
 
                 <!-- Desktop Navigation Links -->
                 <div class="hidden lg:flex items-center space-x-1">
-                    <a href="#home" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
+                    <a href="#home"
+                        class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
                         <i class="fas fa-home mr-2 text-sm"></i>Home
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
                     </a>
-                    <a href="#about" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
+                    <a href="#about"
+                        class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
                         <i class="fas fa-user mr-2 text-sm"></i>About
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
                     </a>
-                    <a href="#skills" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
+                    <a href="#skills"
+                        class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
                         <i class="fas fa-cogs mr-2 text-sm"></i>Skills
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
                     </a>
-                    <a href="#experience" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
+                    <a href="#experience"
+                        class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
                         <i class="fas fa-briefcase mr-2 text-sm"></i>Experience
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
                     </a>
-                    <a href="#projects" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
+                    <a href="#projects"
+                        class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
                         <i class="fas fa-rocket mr-2 text-sm"></i>Projects
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
                     </a>
-                    <a href="#resume" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
+                    <a href="#resume"
+                        class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
                         <i class="fas fa-file-alt mr-2 text-sm"></i>Resume
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
                     </a>
-                    <a href="#contact" class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
+                    <a href="#contact"
+                        class="nav-link px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-primary hover:bg-primary/10 transition-all duration-300 relative group">
                         <i class="fas fa-envelope mr-2 text-sm"></i>Contact
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
+                        <span
+                            class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full group-hover:left-0 transition-all duration-300"></span>
                     </a>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="flex items-center space-x-3">
                     <!-- Hire Me Button -->
-                    <a href="mailto:mohamedhabibwork@gmail.com" class="hidden md:flex items-center space-x-2 bg-gradient-to-r from-primary to-secondary text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105 group">
+                    <a href="mailto:mohamedhabibwork@gmail.com"
+                        class="hidden md:flex items-center space-x-2 bg-gradient-to-r from-primary to-secondary text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105 group">
                         <i class="fas fa-paper-plane group-hover:animate-bounce text-sm"></i>
                         <span>Hire Me</span>
                     </a>
 
                     <!-- Social Links -->
                     <div class="hidden md:flex items-center space-x-2">
-                        <a href="https://linkedin.com/in/mohamedhabibwork" class="w-9 h-9 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 hover:scale-110">
+                        <a href="https://linkedin.com/in/mohamedhabibwork"
+                            class="w-9 h-9 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 hover:scale-110">
                             <i class="fab fa-linkedin text-sm"></i>
                         </a>
-                        <a href="https://github.com/mohamedhabibwork" class="w-9 h-9 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center hover:bg-gray-800 hover:text-white transition-all duration-300 hover:scale-110">
+                        <a href="https://github.com/mohamedhabibwork"
+                            class="w-9 h-9 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center hover:bg-gray-800 hover:text-white transition-all duration-300 hover:scale-110">
                             <i class="fab fa-github text-sm"></i>
                         </a>
-                        <a href="https://wa.me/201151978927" class="w-9 h-9 bg-green-100 text-green-600 rounded-full flex items-center justify-center hover:bg-green-500 hover:text-white transition-all duration-300 hover:scale-110">
+                        <a href="https://wa.me/201151978927"
+                            class="w-9 h-9 bg-green-100 text-green-600 rounded-full flex items-center justify-center hover:bg-green-500 hover:text-white transition-all duration-300 hover:scale-110">
                             <i class="fab fa-whatsapp text-sm"></i>
                         </a>
                     </div>
 
                     <!-- Mobile Menu Button -->
-                    <button class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors duration-300" id="mobile-menu-btn">
+                    <button
+                        class="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors duration-300"
+                        id="mobile-menu-btn">
                         <i class="fas fa-bars text-lg"></i>
                     </button>
                 </div>
@@ -713,42 +783,53 @@
             <!-- Mobile Menu -->
             <div class="lg:hidden hidden mt-4 pb-4 border-t border-gray-200/20" id="mobile-menu">
                 <div class="flex flex-col space-y-2 mt-4">
-                    <a href="#home" class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
+                    <a href="#home"
+                        class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
                         <i class="fas fa-home mr-3 text-primary"></i>Home
                     </a>
-                    <a href="#about" class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
+                    <a href="#about"
+                        class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
                         <i class="fas fa-user mr-3 text-primary"></i>About
                     </a>
-                    <a href="#skills" class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
+                    <a href="#skills"
+                        class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
                         <i class="fas fa-cogs mr-3 text-primary"></i>Skills
                     </a>
-                    <a href="#experience" class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
+                    <a href="#experience"
+                        class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
                         <i class="fas fa-briefcase mr-3 text-primary"></i>Experience
                     </a>
-                    <a href="#projects" class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
+                    <a href="#projects"
+                        class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
                         <i class="fas fa-rocket mr-3 text-primary"></i>Projects
                     </a>
-                    <a href="#resume" class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
+                    <a href="#resume"
+                        class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
                         <i class="fas fa-file-alt mr-3 text-primary"></i>Resume
                     </a>
-                    <a href="#contact" class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
+                    <a href="#contact"
+                        class="flex items-center px-4 py-3 text-gray-700 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300">
                         <i class="fas fa-envelope mr-3 text-primary"></i>Contact
                     </a>
-                    
+
                     <!-- Mobile Action Buttons -->
                     <div class="pt-4 space-y-3">
-                        <a href="mailto:mohamedhabibwork@gmail.com" class="flex items-center justify-center space-x-2 bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-full font-semibold">
+                        <a href="mailto:mohamedhabibwork@gmail.com"
+                            class="flex items-center justify-center space-x-2 bg-gradient-to-r from-primary to-secondary text-white px-6 py-3 rounded-full font-semibold">
                             <i class="fas fa-paper-plane"></i>
                             <span>Hire Me</span>
                         </a>
                         <div class="flex justify-center space-x-4">
-                            <a href="https://linkedin.com/in/mohamedhabibwork" class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
+                            <a href="https://linkedin.com/in/mohamedhabibwork"
+                                class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
                                 <i class="fab fa-linkedin"></i>
                             </a>
-                            <a href="https://github.com/mohamedhabibwork" class="w-10 h-10 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center">
+                            <a href="https://github.com/mohamedhabibwork"
+                                class="w-10 h-10 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center">
                                 <i class="fab fa-github"></i>
                             </a>
-                            <a href="https://wa.me/201151978927" class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                            <a href="https://wa.me/201151978927"
+                                class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
                                 <i class="fab fa-whatsapp"></i>
                             </a>
                         </div>
@@ -764,45 +845,56 @@
         <div class="absolute inset-0 gradient-bg"></div>
         <div class="absolute inset-0 pattern-dots opacity-20"></div>
         <div class="absolute inset-0 pattern-grid opacity-10"></div>
-        
+
         <!-- Animated Background Elements -->
         <div class="absolute inset-0 overflow-hidden">
             <!-- Main Tech Icons with improved animations -->
-            <div class="absolute top-20 left-8 w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-500 rounded-full animate-float flex items-center justify-center shadow-lg hover:shadow-yellow-500/25 transition-all duration-300">
+            <div
+                class="absolute top-20 left-8 w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-500 rounded-full animate-float flex items-center justify-center shadow-lg hover:shadow-yellow-500/25 transition-all duration-300">
                 <i class="fab fa-php text-2xl text-white drop-shadow-sm"></i>
             </div>
-            <div class="absolute top-32 right-16 w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full animate-pulse-slow flex items-center justify-center shadow-lg hover:shadow-red-500/25 transition-all duration-300">
+            <div
+                class="absolute top-32 right-16 w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full animate-pulse-slow flex items-center justify-center shadow-lg hover:shadow-red-500/25 transition-all duration-300">
                 <i class="fab fa-laravel text-xl text-white drop-shadow-sm"></i>
             </div>
-            <div class="absolute bottom-24 left-1/4 w-18 h-18 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-full animate-float flex items-center justify-center shadow-lg hover:shadow-cyan-500/25 transition-all duration-300" style="animation-delay: 1s;">
+            <div class="absolute bottom-24 left-1/4 w-18 h-18 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-full animate-float flex items-center justify-center shadow-lg hover:shadow-cyan-500/25 transition-all duration-300"
+                style="animation-delay: 1s;">
                 <i class="fab fa-react text-lg text-white drop-shadow-sm"></i>
             </div>
-            <div class="absolute bottom-36 right-1/4 w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-full animate-pulse-slow flex items-center justify-center shadow-lg hover:shadow-green-500/25 transition-all duration-300" style="animation-delay: 2s;">
+            <div class="absolute bottom-36 right-1/4 w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-full animate-pulse-slow flex items-center justify-center shadow-lg hover:shadow-green-500/25 transition-all duration-300"
+                style="animation-delay: 2s;">
                 <i class="fab fa-node-js text-sm text-white drop-shadow-sm"></i>
             </div>
-            <div class="absolute top-1/2 left-12 w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full animate-float flex items-center justify-center shadow-lg hover:shadow-green-500/25 transition-all duration-300" style="animation-delay: 3s;">
+            <div class="absolute top-1/2 left-12 w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full animate-float flex items-center justify-center shadow-lg hover:shadow-green-500/25 transition-all duration-300"
+                style="animation-delay: 3s;">
                 <i class="fab fa-vuejs text-sm text-white drop-shadow-sm"></i>
             </div>
-            <div class="absolute top-1/3 right-12 w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full animate-pulse-slow flex items-center justify-center shadow-lg hover:shadow-blue-500/25 transition-all duration-300" style="animation-delay: 4s;">
+            <div class="absolute top-1/3 right-12 w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full animate-pulse-slow flex items-center justify-center shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
+                style="animation-delay: 4s;">
                 <i class="fas fa-database text-lg text-white drop-shadow-sm"></i>
             </div>
-            
+
             <!-- Additional floating elements -->
-            <div class="absolute top-3/4 left-1/3 w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-500 rounded-full animate-float flex items-center justify-center shadow-lg opacity-80" style="animation-delay: 5s;">
+            <div class="absolute top-3/4 left-1/3 w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-500 rounded-full animate-float flex items-center justify-center shadow-lg opacity-80"
+                style="animation-delay: 5s;">
                 <i class="fab fa-python text-sm text-white drop-shadow-sm"></i>
             </div>
-            <div class="absolute top-1/4 left-1/2 w-8 h-8 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-full animate-pulse-slow flex items-center justify-center shadow-lg opacity-70" style="animation-delay: 6s;">
-                                                <span class="text-xs text-white font-bold drop-shadow-sm">Go</span>
+            <div class="absolute top-1/4 left-1/2 w-8 h-8 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-full animate-pulse-slow flex items-center justify-center shadow-lg opacity-70"
+                style="animation-delay: 6s;">
+                <span class="text-xs text-white font-bold drop-shadow-sm">Go</span>
             </div>
         </div>
 
         <!-- Geometric Shapes -->
         <div class="absolute inset-0 opacity-5">
-            <div class="absolute top-10 right-1/3 w-32 h-32 border border-white/20 rounded-full animate-spin-slow"></div>
-            <div class="absolute bottom-10 left-1/3 w-24 h-24 border border-white/20 rounded-lg transform rotate-45 animate-float" style="animation-delay: 2s;"></div>
-            <div class="absolute top-1/2 right-10 w-16 h-16 border border-white/20 rounded-full animate-pulse-slow" style="animation-delay: 4s;"></div>
+            <div class="absolute top-10 right-1/3 w-32 h-32 border border-white/20 rounded-full animate-spin-slow">
+            </div>
+            <div class="absolute bottom-10 left-1/3 w-24 h-24 border border-white/20 rounded-lg transform rotate-45 animate-float"
+                style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 right-10 w-16 h-16 border border-white/20 rounded-full animate-pulse-slow"
+                style="animation-delay: 4s;"></div>
         </div>
-        
+
         <div class="container mx-auto px-6 relative z-10">
             <div class="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto grid-responsive-md">
                 <!-- Left Content -->
@@ -810,87 +902,111 @@
                     <!-- Enhanced Status Badge -->
                     <div class="flex lg:justify-start justify-center mb-8">
                         <div class="flex flex-wrap items-center gap-3">
-                            <span class="bg-gradient-to-r from-emerald-400 via-green-500 to-emerald-600 px-5 py-2.5 rounded-full text-sm font-bold flex items-center space-x-2 shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105">
+                            <span
+                                class="bg-gradient-to-r from-emerald-400 via-green-500 to-emerald-600 px-5 py-2.5 rounded-full text-sm font-bold flex items-center space-x-2 shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-105">
                                 <div class="w-2.5 h-2.5 bg-white rounded-full animate-pulse"></div>
                                 <span>Available for Hire</span>
                             </span>
-                            <span class="bg-white/15 backdrop-blur-md px-5 py-2.5 rounded-full text-sm font-semibold border border-white/30 hover:bg-white/25 transition-all duration-300">
+                            <span
+                                class="bg-white/15 backdrop-blur-md px-5 py-2.5 rounded-full text-sm font-semibold border border-white/30 hover:bg-white/25 transition-all duration-300">
                                 <i class="fas fa-globe mr-2 text-blue-300"></i>Remote & On-site
                             </span>
-                            <span class="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md px-5 py-2.5 rounded-full text-sm font-semibold border border-blue-300/30 hover:border-blue-300/50 transition-all duration-300">
+                            <span
+                                class="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-md px-5 py-2.5 rounded-full text-sm font-semibold border border-blue-300/30 hover:border-blue-300/50 transition-all duration-300">
                                 <i class="fas fa-clock mr-2 text-yellow-300"></i>GMT+2 Timezone
                             </span>
                         </div>
                     </div>
-                    
+
                     <!-- Enhanced Main Heading -->
                     <div class="space-y-6 animate-slide-in-left">
                         <h1 class="text-6xl lg:text-8xl font-bold leading-tight tracking-tight">
                             <span class="block text-white drop-shadow-lg animate-fade-in">Mohammad</span>
-                            <span class="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 via-pink-400 to-purple-500 animate-gradient-x drop-shadow-lg">
+                            <span
+                                class="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 via-pink-400 to-purple-500 animate-gradient-x drop-shadow-lg">
                                 Habib
                             </span>
                         </h1>
                         <div class="flex lg:justify-start justify-center">
-                            <div class="h-1.5 w-32 bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 rounded-full animate-pulse-slow shadow-lg"></div>
+                            <div
+                                class="h-1.5 w-32 bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 rounded-full animate-pulse-slow shadow-lg">
+                            </div>
                         </div>
                         <!-- Decorative element -->
                         <div class="flex lg:justify-start justify-center">
                             <div class="flex items-center space-x-2 text-blue-200">
                                 <div class="w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
-                                <div class="w-2 h-2 bg-orange-400 rounded-full animate-ping" style="animation-delay: 0.2s;"></div>
-                                <div class="w-2 h-2 bg-pink-400 rounded-full animate-ping" style="animation-delay: 0.4s;"></div>
+                                <div class="w-2 h-2 bg-orange-400 rounded-full animate-ping"
+                                    style="animation-delay: 0.2s;"></div>
+                                <div class="w-2 h-2 bg-pink-400 rounded-full animate-ping"
+                                    style="animation-delay: 0.4s;"></div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Enhanced Role & Description -->
                     <div class="space-y-6 animate-slide-in-right">
                         <h2 class="text-3xl lg:text-4xl font-semibold text-blue-100 leading-tight">
-                            Senior Full Stack Developer & 
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">Team Leader</span>
+                            Senior Full Stack Developer &
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300">Team
+                                Leader</span>
                         </h2>
                         <p class="text-xl lg:text-2xl text-blue-100/90 leading-relaxed max-w-3xl font-light">
-                            Transforming ideas into scalable digital solutions with 
-                            <span class="text-yellow-300 font-bold bg-yellow-300/10 px-2 py-1 rounded-md">7+ years</span> of expertise in 
-                            <span class="text-emerald-300 font-bold bg-emerald-300/10 px-2 py-1 rounded-md">enterprise development</span> and 
-                            <span class="text-pink-300 font-bold bg-pink-300/10 px-2 py-1 rounded-md">team leadership</span>.
+                            Transforming ideas into scalable digital solutions with
+                            <span class="text-yellow-300 font-bold bg-yellow-300/10 px-2 py-1 rounded-md">7+
+                                years</span> of expertise in
+                            <span class="text-emerald-300 font-bold bg-emerald-300/10 px-2 py-1 rounded-md">enterprise
+                                development</span> and
+                            <span class="text-pink-300 font-bold bg-pink-300/10 px-2 py-1 rounded-md">team
+                                leadership</span>.
                         </p>
                     </div>
 
                     <!-- Enhanced Key Highlights -->
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 animate-fade-up delay-300 grid-responsive">
-                        <div class="group bg-white/15 backdrop-blur-md rounded-2xl px-6 py-6 border border-white/30 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-yellow-500/10">
+                        <div
+                            class="group bg-white/15 backdrop-blur-md rounded-2xl px-6 py-6 border border-white/30 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-yellow-500/10">
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/25 transition-all duration-300">
+                                <div
+                                    class="w-14 h-14 bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/25 transition-all duration-300">
                                     <span class="text-lg text-white font-bold">Go</span>
                                 </div>
                                 <div>
-                                    <div class="font-bold text-3xl text-white group-hover:text-yellow-200 transition-colors">7+</div>
+                                    <div
+                                        class="font-bold text-3xl text-white group-hover:text-yellow-200 transition-colors">
+                                        7+</div>
                                     <div class="text-sm text-blue-200 font-medium">Years Experience</div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="group bg-white/15 backdrop-blur-md rounded-2xl px-6 py-6 border border-white/30 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-green-500/10">
+
+                        <div
+                            class="group bg-white/15 backdrop-blur-md rounded-2xl px-6 py-6 border border-white/30 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-green-500/10">
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 bg-gradient-to-br from-emerald-400 via-green-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-green-500/25 transition-all duration-300">
+                                <div
+                                    class="w-14 h-14 bg-gradient-to-br from-emerald-400 via-green-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-green-500/25 transition-all duration-300">
                                     <i class="fas fa-rocket text-white text-lg"></i>
                                 </div>
                                 <div>
-                                    <div class="font-bold text-3xl text-white group-hover:text-green-200 transition-colors">50+</div>
+                                    <div
+                                        class="font-bold text-3xl text-white group-hover:text-green-200 transition-colors">
+                                        50+</div>
                                     <div class="text-sm text-blue-200 font-medium">Projects Delivered</div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="group bg-white/15 backdrop-blur-md rounded-2xl px-6 py-6 border border-white/30 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/10">
+
+                        <div
+                            class="group bg-white/15 backdrop-blur-md rounded-2xl px-6 py-6 border border-white/30 hover:bg-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/10">
                             <div class="flex items-center space-x-4">
-                                <div class="w-14 h-14 bg-gradient-to-br from-purple-400 via-violet-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-purple-500/25 transition-all duration-300">
+                                <div
+                                    class="w-14 h-14 bg-gradient-to-br from-purple-400 via-violet-500 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-purple-500/25 transition-all duration-300">
                                     <i class="fas fa-globe text-white text-lg"></i>
                                 </div>
                                 <div>
-                                    <div class="font-bold text-3xl text-white group-hover:text-purple-200 transition-colors">6+</div>
+                                    <div
+                                        class="font-bold text-3xl text-white group-hover:text-purple-200 transition-colors">
+                                        6+</div>
                                     <div class="text-sm text-blue-200 font-medium">Industries Served</div>
                                 </div>
                             </div>
@@ -898,36 +1014,46 @@
                     </div>
 
                     <!-- CTA Buttons -->
-                    <div class="flex flex-wrap gap-4 pt-4 lg:justify-start justify-center animate-fade-up delay-500 flex-responsive">
-                        <a href="#contact" class="group bg-gradient-to-r from-orange-500 to-pink-500 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-orange-500/25 transform hover:scale-105 transition-all duration-300 flex items-center space-x-3">
+                    <div
+                        class="flex flex-wrap gap-4 pt-4 lg:justify-start justify-center animate-fade-up delay-500 flex-responsive">
+                        <a href="#contact"
+                            class="group bg-gradient-to-r from-orange-500 to-pink-500 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-orange-500/25 transform hover:scale-105 transition-all duration-300 flex items-center space-x-3">
                             <i class="fas fa-paper-plane group-hover:animate-bounce"></i>
                             <span>Let's Work Together</span>
                         </a>
-                        <a href="#projects" class="group bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold border border-white/30 hover:bg-white/20 transition-all duration-300 flex items-center space-x-3">
+                        <a href="#projects"
+                            class="group bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold border border-white/30 hover:bg-white/20 transition-all duration-300 flex items-center space-x-3">
                             <i class="fas fa-eye group-hover:animate-pulse"></i>
                             <span>View Portfolio</span>
                         </a>
-                        <a href="#resume" class="group bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3">
+                        <a href="#resume"
+                            class="group bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center space-x-3">
                             <i class="fas fa-download group-hover:animate-bounce"></i>
                             <span>Download CV</span>
                         </a>
                     </div>
 
                     <!-- Social Links -->
-                    <div class="flex space-x-6 pt-4 lg:justify-start justify-center animate-fade-up delay-700 flex-responsive">
-                        <a href="https://linkedin.com/in/mohamedhabibwork" class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-blue-600 hover:border-blue-500 transition-all duration-300 hover:scale-110">
+                    <div
+                        class="flex space-x-6 pt-4 lg:justify-start justify-center animate-fade-up delay-700 flex-responsive">
+                        <a href="https://linkedin.com/in/mohamedhabibwork"
+                            class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-blue-600 hover:border-blue-500 transition-all duration-300 hover:scale-110">
                             <i class="fab fa-linkedin text-xl"></i>
                         </a>
-                        <a href="https://github.com/mohamedhabibwork" class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-gray-800 hover:border-gray-700 transition-all duration-300 hover:scale-110">
+                        <a href="https://github.com/mohamedhabibwork"
+                            class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-gray-800 hover:border-gray-700 transition-all duration-300 hover:scale-110">
                             <i class="fab fa-github text-xl"></i>
                         </a>
-                        <a href="https://mohamedhabib.work" class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-green-600 hover:border-green-500 transition-all duration-300 hover:scale-110">
+                        <a href="https://mohamedhabib.work"
+                            class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-green-600 hover:border-green-500 transition-all duration-300 hover:scale-110">
                             <i class="fas fa-globe text-xl"></i>
                         </a>
-                        <a href="mailto:mohamedhabibwork@gmail.com" class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-red-600 hover:border-red-500 transition-all duration-300 hover:scale-110">
+                        <a href="mailto:mohamedhabibwork@gmail.com"
+                            class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-red-600 hover:border-red-500 transition-all duration-300 hover:scale-110">
                             <i class="fas fa-envelope text-xl"></i>
                         </a>
-                        <a href="https://wa.me/201151978927" class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-green-500 hover:border-green-400 transition-all duration-300 hover:scale-110">
+                        <a href="https://wa.me/201151978927"
+                            class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 hover:bg-green-500 hover:border-green-400 transition-all duration-300 hover:scale-110">
                             <i class="fab fa-whatsapp text-xl"></i>
                         </a>
                     </div>
@@ -939,37 +1065,44 @@
                         <!-- Profile Container -->
                         <div class="relative w-80 h-80 lg:w-96 lg:h-96">
                             <!-- Animated Background Ring -->
-                            <div class="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 animate-rotate-slow opacity-75"></div>
-                            
+                            <div
+                                class="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 animate-rotate-slow opacity-75">
+                            </div>
+
                             <!-- Profile Image -->
                             <div class="absolute inset-4 rounded-full overflow-hidden border-4 border-white shadow-2xl">
-                                <img src="profile.png" alt="Mohammad Habib - Senior Full Stack Developer" 
-                                     class="w-full h-full object-cover animate-float">
+                                <img src="profile.png" alt="Mohammad Habib - Senior Full Stack Developer"
+                                    class="w-full h-full object-cover animate-float">
                             </div>
-                            
+
                         </div>
-                        
+
                         <!-- Floating Tech Badges -->
-                        <div class="absolute -top-4 -right-4 bg-gradient-to-r from-red-500 to-red-600 rounded-full p-3 shadow-xl animate-float border-2 border-white">
+                        <div
+                            class="absolute -top-4 -right-4 bg-gradient-to-r from-red-500 to-red-600 rounded-full p-3 shadow-xl animate-float border-2 border-white">
                             <i class="fab fa-laravel text-white text-xl"></i>
                         </div>
-                        <div class="absolute -bottom-4 -left-4 bg-gradient-to-r from-cyan-400 to-cyan-600 rounded-full p-3 shadow-xl animate-float border-2 border-white" style="animation-delay: 1s;">
+                        <div class="absolute -bottom-4 -left-4 bg-gradient-to-r from-cyan-400 to-cyan-600 rounded-full p-3 shadow-xl animate-float border-2 border-white"
+                            style="animation-delay: 1s;">
                             <i class="fab fa-react text-white text-xl"></i>
                         </div>
-                        <div class="absolute top-1/3 -right-6 bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 shadow-xl animate-float border-2 border-white" style="animation-delay: 2s;">
+                        <div class="absolute top-1/3 -right-6 bg-gradient-to-r from-green-500 to-green-600 rounded-full p-3 shadow-xl animate-float border-2 border-white"
+                            style="animation-delay: 2s;">
                             <i class="fab fa-node-js text-white text-lg"></i>
                         </div>
-                        <div class="absolute top-2/3 -left-6 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 shadow-xl animate-float border-2 border-white" style="animation-delay: 3s;">
+                        <div class="absolute top-2/3 -left-6 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full p-3 shadow-xl animate-float border-2 border-white"
+                            style="animation-delay: 3s;">
                             <i class="fab fa-php text-white text-lg"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- Enhanced Scroll Indicator -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <a href="#about" class="flex flex-col items-center space-y-2 text-white hover:text-blue-200 transition-colors">
+            <a href="#about"
+                class="flex flex-col items-center space-y-2 text-white hover:text-blue-200 transition-colors">
                 <div class="w-6 h-10 border-2 border-white rounded-full flex justify-center">
                     <div class="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
                 </div>
@@ -986,9 +1119,12 @@
                 <div class="text-center mb-16 animate-fade-up">
                     <h2 class="heading-secondary mb-4 text-gradient">About Me</h2>
                     <p class="text-responsive text-gray-600 max-w-3xl mx-auto">
-                        A passionate Senior Full Stack Developer with a proven track record of transforming complex business requirements into scalable digital solutions.
+                        A passionate Senior Full Stack Developer with a proven track record of transforming complex
+                        business requirements into scalable digital solutions.
                     </p>
-                    <div class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow"></div>
+                    <div
+                        class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow">
+                    </div>
                 </div>
 
                 <div class="grid lg:grid-cols-2 gap-16 items-center grid-responsive-md">
@@ -996,7 +1132,7 @@
                     <div class="space-y-8 animate-fade-left">
                         <div class="space-y-8">
                             <h3 class="heading-tertiary text-gradient">Professional Journey</h3>
-                            
+
                             <!-- Career Timeline -->
                             <div class="space-y-6">
                                 <!-- 2017 Foundation -->
@@ -1005,7 +1141,10 @@
                                     <div class="bg-blue-50 p-4 rounded-lg">
                                         <h4 class="font-bold text-blue-800 mb-1">2017 - Foundation Phase</h4>
                                         <p class="text-sm text-blue-600 mb-2">February - December 2017</p>
-                                        <p class="text-gray-700">Started with <strong>C++ programming fundamentals</strong> (4 months), then transitioned to <strong>web development</strong> with HTML5, CSS3, and website design (8 months).</p>
+                                        <p class="text-gray-700">Started with <strong>C++ programming
+                                                fundamentals</strong> (4 months), then transitioned to <strong>web
+                                                development</strong> with HTML5, CSS3, and website design (8 months).
+                                        </p>
                                     </div>
                                 </div>
 
@@ -1013,9 +1152,15 @@
                                 <div class="relative pl-8 border-l-2 border-green-200">
                                     <div class="absolute -left-2 top-0 w-4 h-4 bg-green-500 rounded-full"></div>
                                     <div class="bg-green-50 p-4 rounded-lg">
-                                        <h4 class="font-bold text-green-800 mb-1">2018-2020 - Professional Development</h4>
-                                        <p class="text-sm text-green-600 mb-2">GDG (Global Development Gateway) • 2+ Years</p>
-                                        <p class="text-gray-700">Full Stack Developer specializing in <strong>distance learning platforms</strong> and <strong>mobile API integrations</strong>. Mastered PHP Laravel, Vue.js, React, Node.js, Python. Specialized in <strong>payment gateway integrations</strong> (Fawry, Paymob, PayPal).</p>
+                                        <h4 class="font-bold text-green-800 mb-1">2018-2020 - Professional Development
+                                        </h4>
+                                        <p class="text-sm text-green-600 mb-2">GDG (Global Development Gateway) • 2+
+                                            Years</p>
+                                        <p class="text-gray-700">Full Stack Developer specializing in <strong>distance
+                                                learning platforms</strong> and <strong>mobile API
+                                                integrations</strong>. Mastered PHP Laravel, Vue.js, React, Node.js,
+                                            Python. Specialized in <strong>payment gateway integrations</strong> (Fawry,
+                                            Paymob, PayPal).</p>
                                     </div>
                                 </div>
 
@@ -1025,7 +1170,10 @@
                                     <div class="bg-purple-50 p-4 rounded-lg">
                                         <h4 class="font-bold text-purple-800 mb-1">2020-2021 - E-commerce Expertise</h4>
                                         <p class="text-sm text-purple-600 mb-2">Rawabet Company • 10 Months</p>
-                                        <p class="text-gray-700">Focused on <strong>online stores</strong>, <strong>ERP systems</strong>, <strong>CRM solutions</strong>, and <strong>mobile API development</strong>. Built comprehensive e-commerce platforms with integrated business management systems.</p>
+                                        <p class="text-gray-700">Focused on <strong>online stores</strong>, <strong>ERP
+                                                systems</strong>, <strong>CRM solutions</strong>, and <strong>mobile API
+                                                development</strong>. Built comprehensive e-commerce platforms with
+                                            integrated business management systems.</p>
                                     </div>
                                 </div>
 
@@ -1033,9 +1181,15 @@
                                 <div class="relative pl-8 border-l-2 border-orange-200">
                                     <div class="absolute -left-2 top-0 w-4 h-4 bg-orange-500 rounded-full"></div>
                                     <div class="bg-orange-50 p-4 rounded-lg">
-                                        <h4 class="font-bold text-orange-800 mb-1">2021-2023 - Senior Development Phase</h4>
-                                        <p class="text-sm text-orange-600 mb-2">Gulf Communication Company • 2.5+ Years</p>
-                                        <p class="text-gray-700">Led development of <strong>transportation apps</strong>, <strong>mapping solutions</strong>, <strong>medical tracking systems</strong>, and <strong>security management platforms</strong>. Advanced to senior-level architecture and team coordination.</p>
+                                        <h4 class="font-bold text-orange-800 mb-1">2021-2023 - Senior Development Phase
+                                        </h4>
+                                        <p class="text-sm text-orange-600 mb-2">Gulf Communication Company • 2.5+ Years
+                                        </p>
+                                        <p class="text-gray-700">Led development of <strong>transportation
+                                                apps</strong>, <strong>mapping solutions</strong>, <strong>medical
+                                                tracking systems</strong>, and <strong>security management
+                                                platforms</strong>. Advanced to senior-level architecture and team
+                                            coordination.</p>
                                     </div>
                                 </div>
 
@@ -1043,9 +1197,13 @@
                                 <div class="relative pl-8 border-l-2 border-red-200">
                                     <div class="absolute -left-2 top-0 w-4 h-4 bg-red-500 rounded-full"></div>
                                     <div class="bg-red-50 p-4 rounded-lg">
-                                        <h4 class="font-bold text-red-800 mb-1">2023-2024 - Team Leadership Evolution</h4>
+                                        <h4 class="font-bold text-red-800 mb-1">2023-2024 - Team Leadership Evolution
+                                        </h4>
                                         <p class="text-sm text-red-600 mb-2">Enjoy Driving • 12 Months</p>
-                                        <p class="text-gray-700">Senior Full Stack Developer & Team Leader managing <strong>driver applications</strong>, <strong>agent management systems</strong>, and <strong>store platforms</strong>. Led teams of 5-10 developers.</p>
+                                        <p class="text-gray-700">Senior Full Stack Developer & Team Leader managing
+                                            <strong>driver applications</strong>, <strong>agent management
+                                                systems</strong>, and <strong>store platforms</strong>. Led teams of
+                                            5-10 developers.</p>
                                     </div>
                                 </div>
 
@@ -1054,19 +1212,30 @@
                                     <div class="absolute -left-2 top-0 w-4 h-4 bg-indigo-500 rounded-full"></div>
                                     <div class="bg-indigo-50 p-4 rounded-lg">
                                         <h4 class="font-bold text-indigo-800 mb-1">2024 - Saudi Market Experience</h4>
-                                        <p class="text-sm text-indigo-600 mb-2">Code700 (Riyadh, Saudi Arabia) • 3 Months</p>
-                                        <p class="text-gray-700">International team leadership developing <strong>Ensany, Qaff, Mozn, Cashback applications</strong> using Node.js, React, Python, ERPNext for the Saudi Arabian market.</p>
+                                        <p class="text-sm text-indigo-600 mb-2">Code700 (Riyadh, Saudi Arabia) • 3
+                                            Months</p>
+                                        <p class="text-gray-700">International team leadership developing
+                                            <strong>Ensany, Qaff, Mozn, Cashback applications</strong> using Node.js,
+                                            React, Python, ERPNext for the Saudi Arabian market.</p>
                                     </div>
                                 </div>
 
                                 <!-- 2024-Present Current -->
                                 <div class="relative pl-8">
-                                    <div class="absolute -left-2 top-0 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse"></div>
-                                    <div class="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border-2 border-yellow-200">
+                                    <div
+                                        class="absolute -left-2 top-0 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse">
+                                    </div>
+                                    <div
+                                        class="bg-gradient-to-r from-yellow-50 to-orange-50 p-4 rounded-lg border-2 border-yellow-200">
                                         <h4 class="font-bold text-yellow-800 mb-1">2024-Present - Current Position</h4>
-                                        <p class="text-sm text-yellow-600 mb-2">Mugsult • Senior Full Stack Developer & Team Leader</p>
-                                        <p class="text-gray-700">Leading development of <strong>Team1 Emergency Transportation Platform</strong> - critical healthcare transportation coordination with real-time emergency dispatch and medical team communication.</p>
-                                        <span class="inline-block bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold mt-2">
+                                        <p class="text-sm text-yellow-600 mb-2">Mugsult • Senior Full Stack Developer &
+                                            Team Leader</p>
+                                        <p class="text-gray-700">Leading development of <strong>Team1 Emergency
+                                                Transportation Platform</strong> - critical healthcare transportation
+                                            coordination with real-time emergency dispatch and medical team
+                                            communication.</p>
+                                        <span
+                                            class="inline-block bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold mt-2">
                                             🚀 ACTIVE PROJECT
                                         </span>
                                     </div>
@@ -1074,7 +1243,8 @@
                             </div>
 
                             <!-- Key Achievements -->
-                            <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border border-blue-200">
+                            <div
+                                class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border border-blue-200">
                                 <h4 class="font-bold text-gray-800 mb-4 flex items-center">
                                     <i class="fas fa-trophy text-yellow-500 mr-2"></i>
                                     Key Career Achievements
@@ -1082,11 +1252,13 @@
                                 <div class="grid md:grid-cols-2 gap-4">
                                     <div class="flex items-center space-x-3">
                                         <i class="fas fa-check-circle text-green-500"></i>
-                                        <span class="text-gray-700">Led international teams across Egypt & Saudi Arabia</span>
+                                        <span class="text-gray-700">Led international teams across Egypt & Saudi
+                                            Arabia</span>
                                     </div>
                                     <div class="flex items-center space-x-3">
                                         <i class="fas fa-check-circle text-green-500"></i>
-                                        <span class="text-gray-700">Managed projects worth $100K+ in development costs</span>
+                                        <span class="text-gray-700">Managed projects worth $100K+ in development
+                                            costs</span>
                                     </div>
                                     <div class="flex items-center space-x-3">
                                         <i class="fas fa-check-circle text-green-500"></i>
@@ -1094,7 +1266,8 @@
                                     </div>
                                     <div class="flex items-center space-x-3">
                                         <i class="fas fa-check-circle text-green-500"></i>
-                                        <span class="text-gray-700">Specialized in real-time tracking & payment systems</span>
+                                        <span class="text-gray-700">Specialized in real-time tracking & payment
+                                            systems</span>
                                     </div>
                                 </div>
                             </div>
@@ -1102,11 +1275,13 @@
 
                         <!-- Key Stats -->
                         <div class="grid grid-cols-2 gap-6">
-                            <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl border-l-4 border-primary">
+                            <div
+                                class="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl border-l-4 border-primary">
                                 <div class="text-3xl font-bold text-primary">95%</div>
                                 <div class="text-sm text-gray-600">Project Success Rate</div>
                             </div>
-                            <div class="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-500">
+                            <div
+                                class="bg-gradient-to-r from-green-50 to-green-100 p-6 rounded-xl border-l-4 border-green-500">
                                 <div class="text-3xl font-bold text-green-600">15+</div>
                                 <div class="text-sm text-gray-600">Technologies Mastered</div>
                             </div>
@@ -1117,38 +1292,48 @@
                             <h4 class="text-xl font-semibold text-gray-800">Core Values & Approach</h4>
                             <div class="grid gap-3">
                                 <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
                                         <i class="fas fa-lightbulb text-white"></i>
                                     </div>
-                                    <span class="text-gray-700"><strong>Innovation:</strong> Always exploring cutting-edge solutions</span>
+                                    <span class="text-gray-700"><strong>Innovation:</strong> Always exploring
+                                        cutting-edge solutions</span>
                                 </div>
                                 <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center">
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center">
                                         <i class="fas fa-users text-white"></i>
                                     </div>
-                                    <span class="text-gray-700"><strong>Collaboration:</strong> Effective team leadership and mentorship</span>
+                                    <span class="text-gray-700"><strong>Collaboration:</strong> Effective team
+                                        leadership and mentorship</span>
                                 </div>
                                 <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
                                         <i class="fas fa-chart-line text-white"></i>
                                     </div>
-                                    <span class="text-gray-700"><strong>Excellence:</strong> Delivering high-quality, scalable solutions</span>
+                                    <span class="text-gray-700"><strong>Excellence:</strong> Delivering high-quality,
+                                        scalable solutions</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Social Links -->
                         <div class="flex space-x-4 pt-4">
-                            <a href="https://linkedin.com/in/mohamedhabibwork" class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors hover:scale-110 transform">
+                            <a href="https://linkedin.com/in/mohamedhabibwork"
+                                class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors hover:scale-110 transform">
                                 <i class="fab fa-linkedin text-xl"></i>
                             </a>
-                            <a href="https://github.com/mohamedhabibwork" class="w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center hover:bg-gray-900 transition-colors hover:scale-110 transform">
+                            <a href="https://github.com/mohamedhabibwork"
+                                class="w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center hover:bg-gray-900 transition-colors hover:scale-110 transform">
                                 <i class="fab fa-github text-xl"></i>
                             </a>
-                            <a href="https://mohamedhabib.work" class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center hover:bg-green-700 transition-colors hover:scale-110 transform">
+                            <a href="https://mohamedhabib.work"
+                                class="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center hover:bg-green-700 transition-colors hover:scale-110 transform">
                                 <i class="fas fa-globe text-xl"></i>
                             </a>
-                            <a href="mailto:mohamedhabibwork@gmail.com" class="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors hover:scale-110 transform">
+                            <a href="mailto:mohamedhabibwork@gmail.com"
+                                class="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition-colors hover:scale-110 transform">
                                 <i class="fas fa-envelope text-xl"></i>
                             </a>
                         </div>
@@ -1157,16 +1342,20 @@
                     <!-- Right Content - Enhanced Info Cards -->
                     <div class="space-y-6 animate-fade-right">
                         <!-- Current Role -->
-                        <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-primary card-hover animate-scale-bounce delay-100">
+                        <div
+                            class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-primary card-hover animate-scale-bounce delay-100">
                             <div class="flex items-start space-x-4">
-                                <div class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
+                                <div
+                                    class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
                                     <i class="fas fa-briefcase text-white text-2xl"></i>
                                 </div>
                                 <div class="flex-1">
                                     <h4 class="text-xl font-bold text-gray-800 mb-2">Current Position</h4>
-                                    <p class="text-gray-600 mb-2"><strong>Senior Full Stack Developer & Team Leader</strong></p>
+                                    <p class="text-gray-600 mb-2"><strong>Senior Full Stack Developer & Team
+                                            Leader</strong></p>
                                     <p class="text-gray-500">Mugsult • Team1 Emergency Transportation Platform</p>
-                                    <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium mt-3">
+                                    <span
+                                        class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium mt-3">
                                         Active Since 2024
                                     </span>
                                 </div>
@@ -1174,26 +1363,32 @@
                         </div>
 
                         <!-- Experience Overview -->
-                        <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-green-500 card-hover animate-scale-bounce delay-200">
+                        <div
+                            class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-green-500 card-hover animate-scale-bounce delay-200">
                             <div class="flex items-start space-x-4">
-                                <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+                                <div
+                                    class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center">
                                     <i class="fas fa-calendar text-white text-2xl"></i>
                                 </div>
                                 <div class="flex-1">
                                     <h4 class="text-xl font-bold text-gray-800 mb-2">Experience Timeline</h4>
                                     <div class="space-y-2">
-                                        <p class="text-gray-600"><strong>7+ Years</strong> across multiple industries</p>
+                                        <p class="text-gray-600"><strong>7+ Years</strong> across multiple industries
+                                        </p>
                                         <p class="text-gray-600"><strong>3+ Years</strong> in team leadership roles</p>
-                                        <p class="text-gray-600"><strong>50+ Projects</strong> successfully delivered</p>
+                                        <p class="text-gray-600"><strong>50+ Projects</strong> successfully delivered
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Specializations -->
-                        <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-purple-500 card-hover animate-scale-bounce delay-300">
+                        <div
+                            class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-purple-500 card-hover animate-scale-bounce delay-300">
                             <div class="flex items-start space-x-4">
-                                <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                                <div
+                                    class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
                                     <i class="fas fa-cogs text-white text-2xl"></i>
                                 </div>
                                 <div class="flex-1">
@@ -1221,20 +1416,28 @@
                         </div>
 
                         <!-- Industries -->
-                        <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-orange-500 card-hover animate-scale-bounce delay-400">
+                        <div
+                            class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-orange-500 card-hover animate-scale-bounce delay-400">
                             <div class="flex items-start space-x-4">
-                                <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center">
+                                <div
+                                    class="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center">
                                     <i class="fas fa-industry text-white text-2xl"></i>
                                 </div>
                                 <div class="flex-1">
                                     <h4 class="text-xl font-bold text-gray-800 mb-3">Industry Experience</h4>
                                     <div class="flex flex-wrap gap-2">
-                                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Transportation</span>
-                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Healthcare</span>
-                                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">FinTech</span>
-                                        <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-medium">E-commerce</span>
-                                        <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Security</span>
-                                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">Education</span>
+                                        <span
+                                            class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Transportation</span>
+                                        <span
+                                            class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Healthcare</span>
+                                        <span
+                                            class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">FinTech</span>
+                                        <span
+                                            class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-medium">E-commerce</span>
+                                        <span
+                                            class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">Security</span>
+                                        <span
+                                            class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">Education</span>
                                     </div>
                                 </div>
                             </div>
@@ -1251,24 +1454,29 @@
             <div class="text-center mb-16 animate-fade-up">
                 <h2 class="heading-secondary mb-4 text-gradient">Technical Expertise</h2>
                 <p class="text-responsive text-gray-600 max-w-3xl mx-auto">
-                    Mastering cutting-edge technologies to deliver scalable enterprise solutions across diverse industries
+                    Mastering cutting-edge technologies to deliver scalable enterprise solutions across diverse
+                    industries
                 </p>
-                <div class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow"></div>
+                <div
+                    class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow">
+                </div>
             </div>
 
             <div class="max-w-7xl mx-auto">
                 <!-- Core Technology Stacks -->
                 <div class="grid lg:grid-cols-3 gap-8 mb-16 grid-responsive">
                     <!-- Backend Excellence -->
-                    <div class="bg-white p-8 rounded-3xl shadow-xl card-hover border-t-4 border-primary animate-fade-up delay-100">
+                    <div
+                        class="bg-white p-8 rounded-3xl shadow-xl card-hover border-t-4 border-primary animate-fade-up delay-100">
                         <div class="text-center mb-8">
-                            <div class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div
+                                class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-4">
                                 <i class="fas fa-server text-white text-3xl"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-gradient">Backend Excellence</h3>
                             <p class="text-gray-600 mt-2">Enterprise-grade server solutions</p>
                         </div>
-                        
+
                         <div class="space-y-4">
                             <div class="bg-gray-50 p-4 rounded-xl">
                                 <div class="flex items-center justify-between mb-2">
@@ -1276,12 +1484,15 @@
                                         <i class="fab fa-laravel icon-laravel text-2xl mr-3"></i>
                                         <span class="font-bold">PHP & Laravel</span>
                                     </div>
-                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">EXPERT</span>
+                                    <span
+                                        class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">EXPERT</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full" style="width: 95%"></div>
+                                    <div class="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full"
+                                        style="width: 95%"></div>
                                 </div>
-                                <p class="text-xs text-gray-500 mt-1">6+ Years • Enterprise Solutions • Real-time Systems</p>
+                                <p class="text-xs text-gray-500 mt-1">6+ Years • Enterprise Solutions • Real-time
+                                    Systems</p>
                             </div>
 
                             <div class="bg-gray-50 p-4 rounded-xl">
@@ -1290,10 +1501,12 @@
                                         <i class="fab fa-node-js icon-nodejs text-2xl mr-3"></i>
                                         <span class="font-bold">Node.js & Express</span>
                                     </div>
-                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
+                                    <span
+                                        class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style="width: 85%"></div>
+                                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full"
+                                        style="width: 85%"></div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">4+ Years • WebSocket • Chat Systems • APIs</p>
                             </div>
@@ -1304,12 +1517,15 @@
                                         <span class="text-2xl mr-3 font-bold icon-golang">Go</span>
                                         <span class="font-bold">GoLang</span>
                                     </div>
-                                    <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
+                                    <span
+                                        class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full" style="width: 80%"></div>
+                                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full"
+                                        style="width: 80%"></div>
                                 </div>
-                                <p class="text-xs text-gray-500 mt-1">3+ Years • Socket Programming • High Performance</p>
+                                <p class="text-xs text-gray-500 mt-1">3+ Years • Socket Programming • High Performance
+                                </p>
                             </div>
 
                             <div class="bg-gray-50 p-4 rounded-xl">
@@ -1318,10 +1534,12 @@
                                         <i class="fab fa-python icon-python text-2xl mr-3"></i>
                                         <span class="font-bold">Python</span>
                                     </div>
-                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold">INTERMEDIATE</span>
+                                    <span
+                                        class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold">INTERMEDIATE</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 h-2 rounded-full" style="width: 70%"></div>
+                                    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 h-2 rounded-full"
+                                        style="width: 70%"></div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">2+ Years • Data Processing • Automation</p>
                             </div>
@@ -1329,15 +1547,17 @@
                     </div>
 
                     <!-- Frontend Mastery -->
-                    <div class="bg-white p-8 rounded-3xl shadow-xl card-hover border-t-4 border-secondary animate-fade-up delay-200">
+                    <div
+                        class="bg-white p-8 rounded-3xl shadow-xl card-hover border-t-4 border-secondary animate-fade-up delay-200">
                         <div class="text-center mb-8">
-                            <div class="w-20 h-20 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div
+                                class="w-20 h-20 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center mx-auto mb-4">
                                 <i class="fas fa-palette text-white text-3xl"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-gradient">Frontend Mastery</h3>
                             <p class="text-gray-600 mt-2">Modern responsive interfaces</p>
                         </div>
-                        
+
                         <div class="space-y-4">
                             <div class="bg-gray-50 p-4 rounded-xl">
                                 <div class="flex items-center justify-between mb-2">
@@ -1345,10 +1565,12 @@
                                         <i class="fab fa-react icon-react text-2xl mr-3"></i>
                                         <span class="font-bold">React.js</span>
                                     </div>
-                                    <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
+                                    <span
+                                        class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-cyan-500 to-cyan-600 h-2 rounded-full" style="width: 85%"></div>
+                                    <div class="bg-gradient-to-r from-cyan-500 to-cyan-600 h-2 rounded-full"
+                                        style="width: 85%"></div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">4+ Years • Hooks • Redux • Modern Patterns</p>
                             </div>
@@ -1359,10 +1581,12 @@
                                         <i class="fab fa-vuejs icon-vue text-2xl mr-3"></i>
                                         <span class="font-bold">Vue.js</span>
                                     </div>
-                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
+                                    <span
+                                        class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full" style="width: 85%"></div>
+                                    <div class="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full"
+                                        style="width: 85%"></div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">4+ Years • Composition API • Vuex • Nuxt.js</p>
                             </div>
@@ -1373,10 +1597,12 @@
                                         <i class="fab fa-js-square icon-javascript text-2xl mr-3"></i>
                                         <span class="font-bold">JavaScript ES6+</span>
                                     </div>
-                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold">EXPERT</span>
+                                    <span
+                                        class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold">EXPERT</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 h-2 rounded-full" style="width: 95%"></div>
+                                    <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 h-2 rounded-full"
+                                        style="width: 95%"></div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">6+ Years • TypeScript • Async/Await • Modules</p>
                             </div>
@@ -1387,10 +1613,12 @@
                                         <i class="fab fa-html5 icon-html text-2xl mr-3"></i>
                                         <span class="font-bold">HTML5 & CSS3</span>
                                     </div>
-                                    <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-xs font-bold">EXPERT</span>
+                                    <span
+                                        class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-xs font-bold">EXPERT</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full" style="width: 95%"></div>
+                                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full"
+                                        style="width: 95%"></div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">7+ Years • Flexbox • Grid • Animations</p>
                             </div>
@@ -1398,15 +1626,17 @@
                     </div>
 
                     <!-- Infrastructure & DevOps -->
-                    <div class="bg-white p-8 rounded-3xl shadow-xl card-hover border-t-4 border-accent animate-fade-up delay-300">
+                    <div
+                        class="bg-white p-8 rounded-3xl shadow-xl card-hover border-t-4 border-accent animate-fade-up delay-300">
                         <div class="text-center mb-8">
-                            <div class="w-20 h-20 bg-gradient-to-r from-accent to-warning rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div
+                                class="w-20 h-20 bg-gradient-to-r from-accent to-warning rounded-full flex items-center justify-center mx-auto mb-4">
                                 <i class="fas fa-cloud text-white text-3xl"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-gradient">Infrastructure & DevOps</h3>
                             <p class="text-gray-600 mt-2">Scalable cloud solutions</p>
                         </div>
-                        
+
                         <div class="space-y-4">
                             <div class="bg-gray-50 p-4 rounded-xl">
                                 <div class="flex items-center justify-between mb-2">
@@ -1414,12 +1644,15 @@
                                         <i class="fas fa-database icon-mysql text-2xl mr-3"></i>
                                         <span class="font-bold">MySQL</span>
                                     </div>
-                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold">EXPERT</span>
+                                    <span
+                                        class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold">EXPERT</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style="width: 95%"></div>
+                                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full"
+                                        style="width: 95%"></div>
                                 </div>
-                                <p class="text-xs text-gray-500 mt-1">6+ Years • Optimization • Indexing • Replication</p>
+                                <p class="text-xs text-gray-500 mt-1">6+ Years • Optimization • Indexing • Replication
+                                </p>
                             </div>
 
                             <div class="bg-gray-50 p-4 rounded-xl">
@@ -1428,10 +1661,12 @@
                                         <i class="fas fa-elephant icon-postgresql text-2xl mr-3"></i>
                                         <span class="font-bold">PostgreSQL</span>
                                     </div>
-                                    <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
+                                    <span
+                                        class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2 rounded-full" style="width: 80%"></div>
+                                    <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2 rounded-full"
+                                        style="width: 80%"></div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">4+ Years • Complex Queries • JSON Support</p>
                             </div>
@@ -1442,10 +1677,12 @@
                                         <i class="fab fa-aws icon-aws text-2xl mr-3"></i>
                                         <span class="font-bold">AWS Cloud</span>
                                     </div>
-                                    <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
+                                    <span
+                                        class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-xs font-bold">ADVANCED</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full" style="width: 75%"></div>
+                                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full"
+                                        style="width: 75%"></div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">3+ Years • EC2 • RDS • S3 • Lambda</p>
                             </div>
@@ -1456,10 +1693,12 @@
                                         <i class="fab fa-docker icon-docker text-2xl mr-3"></i>
                                         <span class="font-bold">Docker & DevOps</span>
                                     </div>
-                                    <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-xs font-bold">INTERMEDIATE</span>
+                                    <span
+                                        class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-xs font-bold">INTERMEDIATE</span>
                                 </div>
                                 <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-gradient-to-r from-cyan-500 to-cyan-600 h-2 rounded-full" style="width: 70%"></div>
+                                    <div class="bg-gradient-to-r from-cyan-500 to-cyan-600 h-2 rounded-full"
+                                        style="width: 70%"></div>
                                 </div>
                                 <p class="text-xs text-gray-500 mt-1">2+ Years • Containerization • CI/CD</p>
                             </div>
@@ -1470,9 +1709,11 @@
                 <!-- Specialized Expertise -->
                 <div class="grid lg:grid-cols-2 gap-8 mb-12 grid-responsive-md">
                     <!-- Enterprise Solutions -->
-                    <div class="bg-white p-8 rounded-3xl shadow-xl card-hover border-l-4 border-primary animate-fade-left delay-400">
+                    <div
+                        class="bg-white p-8 rounded-3xl shadow-xl card-hover border-l-4 border-primary animate-fade-left delay-400">
                         <div class="flex items-start space-x-4">
-                            <div class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
+                            <div
+                                class="w-16 h-16 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center">
                                 <i class="fas fa-building text-white text-2xl"></i>
                             </div>
                             <div class="flex-1">
@@ -1512,9 +1753,11 @@
                     </div>
 
                     <!-- Leadership & Architecture -->
-                    <div class="bg-white p-8 rounded-3xl shadow-xl card-hover border-l-4 border-secondary animate-fade-right delay-500">
+                    <div
+                        class="bg-white p-8 rounded-3xl shadow-xl card-hover border-l-4 border-secondary animate-fade-right delay-500">
                         <div class="flex items-start space-x-4">
-                            <div class="w-16 h-16 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center">
+                            <div
+                                class="w-16 h-16 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center">
                                 <i class="fas fa-users text-white text-2xl"></i>
                             </div>
                             <div class="flex-1">
@@ -1558,28 +1801,36 @@
                 <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100 animate-fade-up delay-600">
                     <h3 class="heading-tertiary text-center text-gradient mb-8">Technology Ecosystem</h3>
                     <div class="flex flex-wrap justify-center gap-3">
-                        <span class="bg-gradient-to-r from-red-500 to-red-600  text-white px-4 py-2 rounded-full text-sm font-medium flex items-center">
+                        <span
+                            class="bg-gradient-to-r from-red-500 to-red-600  text-white px-4 py-2 rounded-full text-sm font-medium flex items-center">
                             <i class="fab fa-laravel mr-2"></i>Laravel Framework
                         </span>
-                        <span class="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
+                        <span
+                            class="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
                             <i class="fab fa-node-js mr-2"></i>Node.js Runtime
                         </span>
-                        <span class="bg-cyan-100 text-cyan-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
+                        <span
+                            class="bg-cyan-100 text-cyan-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
                             <i class="fab fa-react mr-2"></i>React Ecosystem
                         </span>
-                        <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
+                        <span
+                            class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
                             <i class="fab fa-vuejs mr-2"></i>Vue.js Framework
                         </span>
-                        <span class="bg-gray-100 text-gray-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
+                        <span
+                            class="bg-gray-100 text-gray-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
                             <i class="fas fa-database mr-2"></i>Database Design
                         </span>
-                        <span class="bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
+                        <span
+                            class="bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
                             <i class="fab fa-aws mr-2"></i>Cloud Infrastructure
                         </span>
-                        <span class="bg-red-100 text-red-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
+                        <span
+                            class="bg-red-100 text-red-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
                             <i class="fas fa-broadcast-tower mr-2"></i>Real-time Systems
                         </span>
-                        <span class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
+                        <span
+                            class="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium flex items-center">
                             <i class="fas fa-mobile-alt mr-2"></i>Mobile APIs
                         </span>
                     </div>
@@ -1593,25 +1844,32 @@
         <div class="container mx-auto px-6">
             <div class="text-center mb-16 animate-fade-up">
                 <h2 class="heading-secondary mb-4 text-gradient">Featured Projects</h2>
-                <p class="text-responsive text-gray-600 max-w-3xl mx-auto">Enterprise Solutions Across Multiple Industries</p>
-                <div class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow"></div>
+                <p class="text-responsive text-gray-600 max-w-3xl mx-auto">Enterprise Solutions Across Multiple
+                    Industries</p>
+                <div
+                    class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow">
+                </div>
             </div>
             <div class="max-w-7xl mx-auto">
                 <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-responsive gap-8">
-                    
+
                     <!-- TOO APP - Transportation -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-primary animate-fade-up delay-100">
+                    <div
+                        class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-primary animate-fade-up delay-100">
                         <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
                             <div class="flex items-center justify-between mb-4">
                                 <i class="fas fa-car text-4xl"></i>
-                                <span class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Transportation</span>
+                                <span
+                                    class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Transportation</span>
                             </div>
                             <h3 class="text-2xl font-bold mb-2">TOO APP</h3>
                             <p class="text-blue-100">Complete Uber-like Ride-Hailing Platform</p>
                         </div>
                         <div class="p-6">
-                            <p class="text-gray-600 mb-4 leading-relaxed">Full-stack ride-hailing application with real-time GPS tracking, payment gateway integration, driver management, and enterprise-level ERP/CRM systems.</p>
-                            
+                            <p class="text-gray-600 mb-4 leading-relaxed">Full-stack ride-hailing application with
+                                real-time GPS tracking, payment gateway integration, driver management, and
+                                enterprise-level ERP/CRM systems.</p>
+
                             <div class="space-y-3 mb-6">
                                 <div class="flex items-center">
                                     <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -1633,34 +1891,45 @@
 
                             <h4 class="font-semibold mb-3 text-gradient">Technology Stack:</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-laravel mr-1"></i>Laravel
                                 </span>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fas fa-golang icon-golang mr-1"></i>GoLang
                                 </span>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fas fa-database icon-mysql mr-1"></i>MySQL
                                 </span>
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Socket.io</span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Payment APIs</span>
+                                <span
+                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Socket.io</span>
+                                <span
+                                    class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Payment
+                                    APIs</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Team1 - Emergency Transportation -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-red-500 animate-fade-up delay-200">
+                    <div
+                        class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-red-500 animate-fade-up delay-200">
                         <div class="bg-gradient-to-r from-red-500 to-red-600 p-6 text-white">
                             <div class="flex items-center justify-between mb-4">
                                 <i class="fas fa-ambulance text-4xl"></i>
-                                <span class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Current Project</span>
+                                <span
+                                    class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Current
+                                    Project</span>
                             </div>
                             <h3 class="text-2xl font-bold mb-2">Team1</h3>
                             <p class="text-red-100">Emergency Transportation Platform</p>
                         </div>
                         <div class="p-6">
-                            <p class="text-gray-600 mb-4 leading-relaxed">Critical healthcare transportation coordination system with real-time emergency dispatch, medical team communication, and patient tracking capabilities.</p>
-                            
+                            <p class="text-gray-600 mb-4 leading-relaxed">Critical healthcare transportation
+                                coordination system with real-time emergency dispatch, medical team communication, and
+                                patient tracking capabilities.</p>
+
                             <div class="space-y-3 mb-6">
                                 <div class="flex items-center">
                                     <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -1682,34 +1951,44 @@
 
                             <h4 class="font-semibold mb-3 text-gradient">Technology Stack:</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-laravel icon-laravel mr-1"></i>Laravel
                                 </span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-node-js icon-nodejs mr-1"></i>Node.js
                                 </span>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fas fa-database icon-mysql mr-1"></i>MySQL
                                 </span>
-                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">WebSocket</span>
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Real-time Chat</span>
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">WebSocket</span>
+                                <span
+                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Real-time
+                                    Chat</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Mappy - Navigation -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-green-500 animate-fade-up delay-300">
+                    <div
+                        class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-green-500 animate-fade-up delay-300">
                         <div class="bg-gradient-to-r from-green-500 to-green-600 p-6 text-white">
                             <div class="flex items-center justify-between mb-4">
                                 <i class="fas fa-map-marked-alt text-4xl"></i>
-                                <span class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Navigation</span>
+                                <span
+                                    class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Navigation</span>
                             </div>
                             <h3 class="text-2xl font-bold mb-2">Mappy</h3>
                             <p class="text-green-100">Google Maps Alternative Platform</p>
                         </div>
                         <div class="p-6">
-                            <p class="text-gray-600 mb-4 leading-relaxed">Custom mapping solution with complete navigation system, location services, route optimization, and enterprise mapping APIs for businesses.</p>
-                            
+                            <p class="text-gray-600 mb-4 leading-relaxed">Custom mapping solution with complete
+                                navigation system, location services, route optimization, and enterprise mapping APIs
+                                for businesses.</p>
+
                             <div class="space-y-3 mb-6">
                                 <div class="flex items-center">
                                     <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -1731,18 +2010,22 @@
 
                             <h4 class="font-semibold mb-3 text-gradient">Technology Stack:</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-microsoft text-blue-600 mr-1"></i>ASP.NET
                                 </span>
-                                <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-react icon-react mr-1"></i>React
                                 </span>
-                                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fas fa-elephant icon-postgresql mr-1"></i>PostgreSQL
                                 </span>
                             </div>
                             <div class="mt-4">
-                                <a href="https://mapy.world" target="_blank" class="inline-flex items-center text-primary hover:text-secondary transition-colors font-medium">
+                                <a href="https://mapy.world" target="_blank"
+                                    class="inline-flex items-center text-primary hover:text-secondary transition-colors font-medium">
                                     <i class="fas fa-external-link-alt mr-2"></i>Visit mapy.world
                                 </a>
                             </div>
@@ -1750,18 +2033,22 @@
                     </div>
 
                     <!-- Too Medical - Healthcare -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-blue-500 animate-fade-up delay-400">
+                    <div
+                        class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-blue-500 animate-fade-up delay-400">
                         <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
                             <div class="flex items-center justify-between mb-4">
                                 <i class="fas fa-user-md text-4xl"></i>
-                                <span class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Healthcare</span>
+                                <span
+                                    class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Healthcare</span>
                             </div>
                             <h3 class="text-2xl font-bold mb-2">Too Medical</h3>
                             <p class="text-blue-100">Medical Delegate Tracking System</p>
                         </div>
                         <div class="p-6">
-                            <p class="text-gray-600 mb-4 leading-relaxed">Comprehensive medical representative management system with real-time tracking, visit scheduling, client management, and performance analytics.</p>
-                            
+                            <p class="text-gray-600 mb-4 leading-relaxed">Comprehensive medical representative
+                                management system with real-time tracking, visit scheduling, client management, and
+                                performance analytics.</p>
+
                             <div class="space-y-3 mb-6">
                                 <div class="flex items-center">
                                     <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -1783,33 +2070,41 @@
 
                             <h4 class="font-semibold mb-3 text-gradient">Technology Stack:</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-laravel icon-laravel mr-1"></i>Laravel
                                 </span>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fas fa-golang icon-golang mr-1"></i>GoLang
                                 </span>
-                                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fas fa-elephant icon-postgresql mr-1"></i>PostgreSQL
                                 </span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">ERP Integration</span>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">ERP
+                                    Integration</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Paymob Projects - FinTech -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-yellow-500 animate-fade-up delay-500">
+                    <div
+                        class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-yellow-500 animate-fade-up delay-500">
                         <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 p-6 text-white">
                             <div class="flex items-center justify-between mb-4">
                                 <i class="fas fa-credit-card text-4xl"></i>
-                                <span class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">FinTech</span>
+                                <span
+                                    class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">FinTech</span>
                             </div>
                             <h3 class="text-2xl font-bold mb-2">Paymob Suite</h3>
                             <p class="text-yellow-100">Financial Technology Solutions</p>
                         </div>
                         <div class="p-6">
-                            <p class="text-gray-600 mb-4 leading-relaxed">Enterprise financial management systems including ASM and FSM projects with payment processing, transaction management, and financial reporting.</p>
-                            
+                            <p class="text-gray-600 mb-4 leading-relaxed">Enterprise financial management systems
+                                including ASM and FSM projects with payment processing, transaction management, and
+                                financial reporting.</p>
+
                             <div class="space-y-3 mb-6">
                                 <div class="flex items-center">
                                     <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -1831,31 +2126,41 @@
 
                             <h4 class="font-semibold mb-3 text-gradient">Technology Stack:</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-laravel icon-laravel mr-1"></i>Laravel
                                 </span>
-                                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fas fa-elephant icon-postgresql mr-1"></i>PostgreSQL
                                 </span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Payment APIs</span>
-                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Financial Systems</span>
+                                <span
+                                    class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Payment
+                                    APIs</span>
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Financial
+                                    Systems</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Saudi Arabia Portfolio -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-purple-500 animate-fade-up delay-600">
+                    <div
+                        class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-purple-500 animate-fade-up delay-600">
                         <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-6 text-white">
                             <div class="flex items-center justify-between mb-4">
                                 <i class="fas fa-globe-asia text-4xl"></i>
-                                <span class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">International</span>
+                                <span
+                                    class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">International</span>
                             </div>
                             <h3 class="text-2xl font-bold mb-2">Saudi Portfolio</h3>
                             <p class="text-purple-100">Multi-Application Suite for Saudi Market</p>
                         </div>
                         <div class="p-6">
-                            <p class="text-gray-600 mb-4 leading-relaxed">Complete digital solutions suite for Saudi Arabian market including Ensany, Qaff, Mozn, and Cashback applications with international team leadership.</p>
-                            
+                            <p class="text-gray-600 mb-4 leading-relaxed">Complete digital solutions suite for Saudi
+                                Arabian market including Ensany, Qaff, Mozn, and Cashback applications with
+                                international team leadership.</p>
+
                             <div class="space-y-3 mb-6">
                                 <div class="flex items-center">
                                     <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -1877,33 +2182,41 @@
 
                             <h4 class="font-semibold mb-3 text-gradient">Technology Stack:</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-node-js icon-nodejs mr-1"></i>Node.js
                                 </span>
-                                <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-react icon-react mr-1"></i>React
                                 </span>
-                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-python icon-python mr-1"></i>Python
                                 </span>
-                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">ERPNext</span>
+                                <span
+                                    class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">ERPNext</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- TOO Bus - School Transportation -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-orange-500 animate-fade-up delay-700">
+                    <div
+                        class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-orange-500 animate-fade-up delay-700">
                         <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-6 text-white">
                             <div class="flex items-center justify-between mb-4">
                                 <i class="fas fa-school-bus text-4xl"></i>
-                                <span class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Education</span>
+                                <span
+                                    class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Education</span>
                             </div>
                             <h3 class="text-2xl font-bold mb-2">TOO Bus</h3>
                             <p class="text-orange-100">School Transportation Management System</p>
                         </div>
                         <div class="p-6">
-                            <p class="text-gray-600 mb-4 leading-relaxed">Comprehensive school bus tracking system ensuring student safety with real-time GPS monitoring, parent notifications, and route optimization for educational institutions.</p>
-                            
+                            <p class="text-gray-600 mb-4 leading-relaxed">Comprehensive school bus tracking system
+                                ensuring student safety with real-time GPS monitoring, parent notifications, and route
+                                optimization for educational institutions.</p>
+
                             <div class="space-y-3 mb-6">
                                 <div class="flex items-center">
                                     <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -1925,33 +2238,42 @@
 
                             <h4 class="font-semibold mb-3 text-gradient">Technology Stack:</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-laravel icon-laravel mr-1"></i>Laravel
                                 </span>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fas fa-golang icon-golang mr-1"></i>GoLang
                                 </span>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fas fa-database icon-mysql mr-1"></i>MySQL
                                 </span>
-                                <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">GPS Tracking</span>
+                                <span
+                                    class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">GPS
+                                    Tracking</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Too Security - Security Management -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-gray-700 animate-fade-up delay-800">
+                    <div
+                        class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-gray-700 animate-fade-up delay-800">
                         <div class="bg-gradient-to-r from-gray-700 to-gray-800 p-6 text-white">
                             <div class="flex items-center justify-between mb-4">
                                 <i class="fas fa-shield-alt text-4xl"></i>
-                                <span class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Security</span>
+                                <span
+                                    class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Security</span>
                             </div>
                             <h3 class="text-2xl font-bold mb-2">Too Security</h3>
                             <p class="text-gray-100">Complete Security Workforce Management</p>
                         </div>
                         <div class="p-6">
-                            <p class="text-gray-600 mb-4 leading-relaxed">Enterprise security company management system with workforce tracking, shift scheduling, HR management, and comprehensive security operations oversight.</p>
-                            
+                            <p class="text-gray-600 mb-4 leading-relaxed">Enterprise security company management system
+                                with workforce tracking, shift scheduling, HR management, and comprehensive security
+                                operations oversight.</p>
+
                             <div class="space-y-3 mb-6">
                                 <div class="flex items-center">
                                     <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -1973,31 +2295,40 @@
 
                             <h4 class="font-semibold mb-3 text-gradient">Technology Stack:</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-laravel icon-laravel mr-1"></i>Laravel
                                 </span>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fas fa-golang icon-golang mr-1"></i>GoLang
                                 </span>
-                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">ERP System</span>
-                                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">HR Management</span>
+                                <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">ERP
+                                    System</span>
+                                <span
+                                    class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">HR
+                                    Management</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- E-commerce Platform - Rawabet -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-pink-500 animate-fade-up delay-100">
+                    <div
+                        class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-pink-500 animate-fade-up delay-100">
                         <div class="bg-gradient-to-r from-pink-500 to-pink-600 p-6 text-white">
                             <div class="flex items-center justify-between mb-4">
                                 <i class="fas fa-shopping-cart text-4xl"></i>
-                                <span class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">E-commerce</span>
+                                <span
+                                    class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">E-commerce</span>
                             </div>
                             <h3 class="text-2xl font-bold mb-2">E-commerce Solutions</h3>
                             <p class="text-pink-100">Online Store & ERP Platforms</p>
                         </div>
                         <div class="p-6">
-                            <p class="text-gray-600 mb-4 leading-relaxed">Comprehensive e-commerce platforms with integrated ERP systems, CRM solutions, mobile APIs, and complete online store management for Rawabet Company.</p>
-                            
+                            <p class="text-gray-600 mb-4 leading-relaxed">Comprehensive e-commerce platforms with
+                                integrated ERP systems, CRM solutions, mobile APIs, and complete online store management
+                                for Rawabet Company.</p>
+
                             <div class="space-y-3 mb-6">
                                 <div class="flex items-center">
                                     <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -2019,33 +2350,42 @@
 
                             <h4 class="font-semibold mb-3 text-gradient">Technology Stack:</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-laravel icon-laravel mr-1"></i>Laravel
                                 </span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-vuejs icon-vue mr-1"></i>Vue.js
                                 </span>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fas fa-database icon-mysql mr-1"></i>MySQL
                                 </span>
-                                <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-medium">E-commerce APIs</span>
+                                <span
+                                    class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-medium">E-commerce
+                                    APIs</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Distance Learning Platform - GDG -->
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-indigo-500 animate-fade-up delay-200">
+                    <div
+                        class="bg-white rounded-2xl overflow-hidden shadow-2xl card-hover border-t-4 border-indigo-500 animate-fade-up delay-200">
                         <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 p-6 text-white">
                             <div class="flex items-center justify-between mb-4">
                                 <i class="fas fa-graduation-cap text-4xl"></i>
-                                <span class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Education</span>
+                                <span
+                                    class="bg-white bg-opacity-20 text-gray-900 px-3 py-1 rounded-full text-sm font-medium">Education</span>
                             </div>
                             <h3 class="text-2xl font-bold mb-2">Learning Platforms</h3>
                             <p class="text-indigo-100">Distance Learning & Educational Systems</p>
                         </div>
                         <div class="p-6">
-                            <p class="text-gray-600 mb-4 leading-relaxed">Advanced distance learning platforms with mobile API integrations, NEN certification systems, and comprehensive educational management solutions for GDG.</p>
-                            
+                            <p class="text-gray-600 mb-4 leading-relaxed">Advanced distance learning platforms with
+                                mobile API integrations, NEN certification systems, and comprehensive educational
+                                management solutions for GDG.</p>
+
                             <div class="space-y-3 mb-6">
                                 <div class="flex items-center">
                                     <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -2067,16 +2407,21 @@
 
                             <h4 class="font-semibold mb-3 text-gradient">Technology Stack:</h4>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-laravel icon-laravel mr-1"></i>Laravel
                                 </span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-vuejs icon-vue mr-1"></i>Vue.js
                                 </span>
-                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                                <span
+                                    class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                                     <i class="fab fa-python icon-python mr-1"></i>Python
                                 </span>
-                                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">Educational APIs</span>
+                                <span
+                                    class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">Educational
+                                    APIs</span>
                             </div>
                         </div>
                     </div>
@@ -2090,14 +2435,19 @@
         <div class="container mx-auto px-6">
             <div class="text-center mb-16 animate-fade-up">
                 <h2 class="heading-secondary mb-4 text-gradient">Professional Journey</h2>
-                <p class="text-responsive text-gray-600 max-w-3xl mx-auto">7+ Years of Progressive Growth and Leadership</p>
-                <div class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow"></div>
+                <p class="text-responsive text-gray-600 max-w-3xl mx-auto">7+ Years of Progressive Growth and Leadership
+                </p>
+                <div
+                    class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow">
+                </div>
             </div>
-            
+
             <div class="max-w-5xl mx-auto">
                 <div class="relative">
-                    <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-secondary transform md:-translate-x-1/2"></div>
-                    
+                    <div
+                        class="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-secondary transform md:-translate-x-1/2">
+                    </div>
+
                     <div class="space-y-12">
                         <!-- Current Role -->
                         <div class="flex flex-col md:flex-row items-start md:items-center animate-fade-left delay-100">
@@ -2105,19 +2455,26 @@
                                 <div class="bg-white p-8 rounded-xl shadow-lg card-hover border-l-4 border-primary">
                                     <div class="flex items-center mb-4">
                                         <div class="bg-primary w-4 h-4 rounded-full mr-3"></div>
-                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Current</span>
+                                        <span
+                                            class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Current</span>
                                     </div>
-                                    <h3 class="font-bold text-xl mb-2 text-gradient">Senior Full Stack Developer & Team Leader</h3>
+                                    <h3 class="font-bold text-xl mb-2 text-gradient">Senior Full Stack Developer & Team
+                                        Leader</h3>
                                     <p class="text-primary font-semibold mb-2">Mugsult • 2024 - Present</p>
-                                    <p class="text-gray-600 mb-4">Leading development of Team1 emergency transportation platform with real-time dispatch and healthcare coordination.</p>
+                                    <p class="text-gray-600 mb-4">Leading development of Team1 emergency transportation
+                                        platform with real-time dispatch and healthcare coordination.</p>
                                     <div class="flex flex-wrap gap-2">
                                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Laravel</span>
-                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Node.js</span>
-                                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">Team Leadership</span>
+                                        <span
+                                            class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Node.js</span>
+                                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">Team
+                                            Leadership</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="hidden md:block w-8 h-8 bg-primary rounded-full border-4 border-white shadow-lg absolute left-1/2 transform -translate-x-1/2"></div>
+                            <div
+                                class="hidden md:block w-8 h-8 bg-primary rounded-full border-4 border-white shadow-lg absolute left-1/2 transform -translate-x-1/2">
+                            </div>
                             <div class="md:w-1/2 md:pl-8">
                                 <div class="text-right">
                                     <div class="text-2xl font-bold text-primary">2024</div>
@@ -2132,21 +2489,29 @@
                                 <div class="text-2xl font-bold text-primary">2024</div>
                                 <div class="text-gray-500">3 Months</div>
                             </div>
-                            <div class="hidden md:block w-8 h-8 bg-secondary rounded-full border-4 border-white shadow-lg absolute left-1/2 transform -translate-x-1/2"></div>
+                            <div
+                                class="hidden md:block w-8 h-8 bg-secondary rounded-full border-4 border-white shadow-lg absolute left-1/2 transform -translate-x-1/2">
+                            </div>
                             <div class="md:w-1/2 md:pl-8">
                                 <div class="bg-white p-8 rounded-xl shadow-lg card-hover border-l-4 border-secondary">
                                     <div class="flex items-center mb-4">
                                         <div class="bg-secondary w-4 h-4 rounded-full mr-3"></div>
-                                        <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">International</span>
+                                        <span
+                                            class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">International</span>
                                     </div>
                                     <h3 class="font-bold text-xl mb-2">Senior Developer & Team Leader</h3>
                                     <p class="text-secondary font-semibold mb-2">Code700, Riyadh, Saudi Arabia</p>
-                                    <p class="text-gray-600 mb-4">Multi-application development for Saudi market: Ensany, Qaff, Mozn, Cashback applications with international team coordination.</p>
+                                    <p class="text-gray-600 mb-4">Multi-application development for Saudi market:
+                                        Ensany, Qaff, Mozn, Cashback applications with international team coordination.
+                                    </p>
                                     <div class="flex flex-wrap gap-2">
-                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Node.js</span>
+                                        <span
+                                            class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Node.js</span>
                                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">React</span>
-                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">Python</span>
-                                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">ERPNext</span>
+                                        <span
+                                            class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">Python</span>
+                                        <span
+                                            class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">ERPNext</span>
                                     </div>
                                 </div>
                             </div>
@@ -2158,19 +2523,25 @@
                                 <div class="bg-white p-8 rounded-xl shadow-lg card-hover border-l-4 border-accent">
                                     <div class="flex items-center mb-4">
                                         <div class="bg-accent w-4 h-4 rounded-full mr-3"></div>
-                                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Leadership</span>
+                                        <span
+                                            class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Leadership</span>
                                     </div>
                                     <h3 class="font-bold text-xl mb-2">Senior Full Stack Developer & Team Leader</h3>
                                     <p class="text-accent font-semibold mb-2">Enjoy Driving • 2023 - 2024</p>
-                                    <p class="text-gray-600 mb-4">Led development team for driver applications, agent management systems, and store operations with focus on user experience.</p>
+                                    <p class="text-gray-600 mb-4">Led development team for driver applications, agent
+                                        management systems, and store operations with focus on user experience.</p>
                                     <div class="flex flex-wrap gap-2">
                                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Laravel</span>
-                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Vue.js</span>
-                                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">Team Management</span>
+                                        <span
+                                            class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Vue.js</span>
+                                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">Team
+                                            Management</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="hidden md:block w-8 h-8 bg-accent rounded-full border-4 border-white shadow-lg absolute left-1/2 transform -translate-x-1/2"></div>
+                            <div
+                                class="hidden md:block w-8 h-8 bg-accent rounded-full border-4 border-white shadow-lg absolute left-1/2 transform -translate-x-1/2">
+                            </div>
                             <div class="md:w-1/2 md:pl-8">
                                 <div class="text-right">
                                     <div class="text-2xl font-bold text-accent">2023</div>
@@ -2185,21 +2556,29 @@
                                 <div class="text-2xl font-bold text-cyan">2021</div>
                                 <div class="text-gray-500">2.5+ Years</div>
                             </div>
-                            <div class="hidden md:block w-8 h-8 bg-cyan rounded-full border-4 border-white shadow-lg absolute left-1/2 transform -translate-x-1/2"></div>
+                            <div
+                                class="hidden md:block w-8 h-8 bg-cyan rounded-full border-4 border-white shadow-lg absolute left-1/2 transform -translate-x-1/2">
+                            </div>
                             <div class="md:w-1/2 md:pl-8">
                                 <div class="bg-white p-8 rounded-xl shadow-lg card-hover border-l-4 border-cyan">
                                     <div class="flex items-center mb-4">
                                         <div class="bg-cyan w-4 h-4 rounded-full mr-3"></div>
-                                        <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">Growth Phase</span>
+                                        <span
+                                            class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">Growth
+                                            Phase</span>
                                     </div>
                                     <h3 class="font-bold text-xl mb-2">Full Stack Developer</h3>
                                     <p class="text-cyan font-semibold mb-2">Gulf Communication Company</p>
-                                    <p class="text-gray-600 mb-4">Developed transportation apps (TOO APP, TOO Bus), mapping solutions (Mappy), medical tracking (Too Medical), and security management systems.</p>
+                                    <p class="text-gray-600 mb-4">Developed transportation apps (TOO APP, TOO Bus),
+                                        mapping solutions (Mappy), medical tracking (Too Medical), and security
+                                        management systems.</p>
                                     <div class="flex flex-wrap gap-2">
                                         <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm">Laravel</span>
-                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">GoLang</span>
+                                        <span
+                                            class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">GoLang</span>
                                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">ASP.NET</span>
-                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">PostgreSQL</span>
+                                        <span
+                                            class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">PostgreSQL</span>
                                     </div>
                                 </div>
                             </div>
@@ -2211,19 +2590,26 @@
                                 <div class="bg-white p-8 rounded-xl shadow-lg card-hover border-l-4 border-purple">
                                     <div class="flex items-center mb-4">
                                         <div class="bg-purple w-4 h-4 rounded-full mr-3"></div>
-                                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Foundation</span>
+                                        <span
+                                            class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Foundation</span>
                                     </div>
                                     <h3 class="font-bold text-xl mb-2">Full Stack Developer</h3>
                                     <p class="text-purple font-semibold mb-2">GDG & Early Companies • 2018 - 2021</p>
-                                    <p class="text-gray-600 mb-4">Started with distance learning platforms, e-commerce solutions, and payment gateway integrations. Transitioned from C++ to web development.</p>
+                                    <p class="text-gray-600 mb-4">Started with distance learning platforms, e-commerce
+                                        solutions, and payment gateway integrations. Transitioned from C++ to web
+                                        development.</p>
                                     <div class="flex flex-wrap gap-2">
                                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">PHP</span>
-                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Vue.js</span>
-                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">Payment Gateways</span>
+                                        <span
+                                            class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Vue.js</span>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">Payment
+                                            Gateways</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="hidden md:block w-8 h-8 bg-purple rounded-full border-4 border-white shadow-lg absolute left-1/2 transform -translate-x-1/2"></div>
+                            <div
+                                class="hidden md:block w-8 h-8 bg-purple rounded-full border-4 border-white shadow-lg absolute left-1/2 transform -translate-x-1/2">
+                            </div>
                             <div class="md:w-1/2 md:pl-8">
                                 <div class="text-right">
                                     <div class="text-2xl font-bold text-purple">2018</div>
@@ -2244,15 +2630,20 @@
                 <!-- Section Header -->
                 <div class="text-center mb-16 animate-fade-up">
                     <h2 class="heading-secondary mb-4 text-gradient">Professional Resume</h2>
-                    <p class="text-responsive text-gray-600 max-w-3xl mx-auto">Complete overview of my professional experience, skills, and achievements</p>
-                    <div class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow"></div>
+                    <p class="text-responsive text-gray-600 max-w-3xl mx-auto">Complete overview of my professional
+                        experience, skills, and achievements</p>
+                    <div
+                        class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow">
+                    </div>
                 </div>
-                
+
                 <div class="grid md:grid-cols-3 gap-8 mb-16 grid-responsive">
                     <!-- Skills Summary -->
-                    <div class="bg-white p-8 rounded-2xl shadow-xl card-hover border-t-4 border-primary animate-fade-up delay-100">
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-xl card-hover border-t-4 border-primary animate-fade-up delay-100">
                         <div class="text-center mb-6">
-                            <div class="w-16 h-16 gradient-card-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-glow">
+                            <div
+                                class="w-16 h-16 gradient-card-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-glow">
                                 <span class="text-white text-2xl font-bold">Go</span>
                             </div>
                             <h3 class="text-2xl font-bold text-gradient">Technical Skills</h3>
@@ -2288,11 +2679,13 @@
                             </li>
                         </ul>
                     </div>
-                    
+
                     <!-- Industry Experience -->
-                    <div class="bg-white p-8 rounded-2xl shadow-xl card-hover border-t-4 border-success animate-fade-up delay-200">
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-xl card-hover border-t-4 border-success animate-fade-up delay-200">
                         <div class="text-center mb-6">
-                            <div class="w-16 h-16 gradient-card-cool rounded-full flex items-center justify-center mx-auto mb-4 shadow-cool">
+                            <div
+                                class="w-16 h-16 gradient-card-cool rounded-full flex items-center justify-center mx-auto mb-4 shadow-cool">
                                 <i class="fas fa-industry text-white text-2xl"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-gradient">Industry Expertise</h3>
@@ -2324,11 +2717,13 @@
                             </li>
                         </ul>
                     </div>
-                    
+
                     <!-- Leadership -->
-                    <div class="bg-white p-8 rounded-2xl shadow-xl card-hover border-t-4 border-purple animate-fade-up delay-300">
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-xl card-hover border-t-4 border-purple animate-fade-up delay-300">
                         <div class="text-center mb-6">
-                            <div class="w-16 h-16 gradient-card-secondary rounded-full flex items-center justify-center mx-auto mb-4 shadow-glow">
+                            <div
+                                class="w-16 h-16 gradient-card-secondary rounded-full flex items-center justify-center mx-auto mb-4 shadow-glow">
                                 <i class="fas fa-users text-white text-2xl"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-gradient">Leadership</h3>
@@ -2361,21 +2756,23 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <!-- Enhanced Download Options -->
                 <div class="text-center animate-fade-up delay-400">
                     <h3 class="heading-tertiary text-gradient mb-8">Download Resume</h3>
                     <div class="flex flex-col lg:flex-row gap-6 justify-center flex-responsive">
-                        <a href="./Mohammad_Habib_Senior_Full_Stack_Developer_Resume.pdf" class="group gradient-card-primary text-white px-8 py-4 rounded-2xl font-bold transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl flex items-center justify-center space-x-3">
+                        <a href="./Mohammad_Habib_Senior_Full_Stack_Developer_Resume.pdf"
+                            class="group gradient-card-primary text-white px-8 py-4 rounded-2xl font-bold transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl flex items-center justify-center space-x-3">
                             <i class="fas fa-file-pdf group-hover:animate-bounce text-xl"></i>
                             <span>Download PDF Resume</span>
                         </a>
-                        <a href="mailto:mohamedhabibwork@gmail.com" class="group bg-white border-2 border-primary text-primary px-8 py-4 rounded-2xl font-bold hover:bg-primary hover:text-white transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl flex items-center justify-center space-x-3">
+                        <a href="mailto:mohamedhabibwork@gmail.com"
+                            class="group bg-white border-2 border-primary text-primary px-8 py-4 rounded-2xl font-bold hover:bg-primary hover:text-white transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl flex items-center justify-center space-x-3">
                             <i class="fas fa-envelope group-hover:animate-pulse text-xl"></i>
                             <span>Request Custom Resume</span>
                         </a>
                     </div>
-                    
+
                     <!-- Additional Resume Stats -->
                     <div class="grid grid-cols-3 gap-6 mt-12 max-w-2xl mx-auto">
                         <div class="text-center">
@@ -2403,61 +2800,75 @@
         <div class="absolute inset-0 opacity-5">
             <div class="absolute top-10 left-10 w-20 h-20 bg-primary rounded-full animate-float"></div>
             <div class="absolute top-20 right-20 w-16 h-16 bg-secondary rounded-full animate-float-reverse"></div>
-            <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-accent rounded-full animate-float" style="animation-delay: 1s;"></div>
-            <div class="absolute bottom-10 right-1/3 w-8 h-8 bg-primary rounded-full animate-float-reverse" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-accent rounded-full animate-float"
+                style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-10 right-1/3 w-8 h-8 bg-primary rounded-full animate-float-reverse"
+                style="animation-delay: 2s;"></div>
         </div>
-        
+
         <div class="container mx-auto px-6 relative z-10">
             <div class="text-center mb-16 animate-fade-up">
                 <h2 class="heading-secondary mb-4 text-gradient">Let's Build Something Amazing</h2>
-                <p class="text-responsive text-gray-600 max-w-3xl mx-auto">Ready to discuss your next project or collaboration opportunity?</p>
-                <div class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow"></div>
+                <p class="text-responsive text-gray-600 max-w-3xl mx-auto">Ready to discuss your next project or
+                    collaboration opportunity?</p>
+                <div
+                    class="h-1 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mt-6 animate-pulse-glow">
+                </div>
             </div>
-            
+
             <div class="max-w-6xl mx-auto">
                 <!-- Contact Information Cards -->
                 <div class="grid md:grid-cols-3 gap-8 mb-16 grid-responsive animate-fade-up delay-100">
-                    <div class="bg-white p-8 rounded-2xl shadow-xl card-hover text-center border-t-4 border-primary animate-scale-bounce delay-200">
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-xl card-hover text-center border-t-4 border-primary animate-scale-bounce delay-200">
                         <i class="fas fa-envelope text-5xl text-primary mb-6"></i>
                         <h3 class="text-xl font-bold mb-3 text-gradient">Email Me</h3>
                         <p class="text-gray-600 mb-4">For project inquiries and collaborations</p>
-                        <a href="mailto:mohamedhabibwork@gmail.com" class="inline-flex items-center text-primary hover:text-secondary transition-colors font-semibold">
+                        <a href="mailto:mohamedhabibwork@gmail.com"
+                            class="inline-flex items-center text-primary hover:text-secondary transition-colors font-semibold">
                             <i class="fas fa-paper-plane mr-2"></i>mohamedhabibwork@gmail.com
                         </a>
                     </div>
-                    
-                    <div class="bg-white p-8 rounded-2xl shadow-xl card-hover text-center border-t-4 border-success animate-scale-bounce delay-300">
+
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-xl card-hover text-center border-t-4 border-success animate-scale-bounce delay-300">
                         <i class="fab fa-whatsapp text-5xl text-green-600 mb-6"></i>
                         <h3 class="text-xl font-bold mb-3 text-gradient">WhatsApp</h3>
                         <p class="text-gray-600 mb-4">Quick chat and immediate responses</p>
-                        <a href="https://wa.me/201151978927" class="inline-flex items-center text-green-600 hover:text-green-700 transition-colors font-semibold">
+                        <a href="https://wa.me/201151978927"
+                            class="inline-flex items-center text-green-600 hover:text-green-700 transition-colors font-semibold">
                             <i class="fas fa-phone mr-2"></i>+201151978927
                         </a>
                     </div>
-                    
-                    <div class="bg-white p-8 rounded-2xl shadow-xl card-hover text-center border-t-4 border-purple animate-scale-bounce delay-400">
+
+                    <div
+                        class="bg-white p-8 rounded-2xl shadow-xl card-hover text-center border-t-4 border-purple animate-scale-bounce delay-400">
                         <i class="fas fa-calendar-alt text-5xl text-purple mb-6"></i>
                         <h3 class="text-xl font-bold mb-3 text-gradient">Schedule Meeting</h3>
                         <p class="text-gray-600 mb-4">Let's discuss your project in detail</p>
-                        <a href="mailto:mohamedhabibwork@gmail.com?subject=Schedule Meeting" class="inline-flex items-center text-purple hover:text-purple-700 transition-colors font-semibold">
+                        <a href="mailto:mohamedhabibwork@gmail.com?subject=Schedule Meeting"
+                            class="inline-flex items-center text-purple hover:text-purple-700 transition-colors font-semibold">
                             <i class="fas fa-video mr-2"></i>Book a Call
                         </a>
                     </div>
                 </div>
-                
+
                 <!-- Detailed Contact Information -->
                 <div class="bg-white p-12 rounded-3xl shadow-2xl border border-gray-100 animate-fade-up delay-500">
                     <div class="grid md:grid-cols-2 gap-12 items-center grid-responsive-md">
                         <div>
                             <h3 class="heading-tertiary mb-6 text-gradient">Ready to Start Your Project?</h3>
                             <p class="text-lg mb-8 leading-relaxed text-gray-600">
-                                I'm always excited to discuss new opportunities, whether it's building enterprise applications, 
-                                leading development teams, or architecting scalable solutions. Let's turn your ideas into reality.
+                                I'm always excited to discuss new opportunities, whether it's building enterprise
+                                applications,
+                                leading development teams, or architecting scalable solutions. Let's turn your ideas
+                                into reality.
                             </p>
-                            
+
                             <div class="space-y-6">
                                 <div class="flex items-center group">
-                                    <div class="bg-white p-3 rounded-full shadow-lg mr-4 group-hover:scale-110 transition-transform">
+                                    <div
+                                        class="bg-white p-3 rounded-full shadow-lg mr-4 group-hover:scale-110 transition-transform">
                                         <i class="fas fa-briefcase text-primary text-xl"></i>
                                     </div>
                                     <div>
@@ -2465,9 +2876,10 @@
                                         <p class="text-gray-600">Full-time positions, contract work, consulting</p>
                                     </div>
                                 </div>
-                                
+
                                 <div class="flex items-center group">
-                                    <div class="bg-white p-3 rounded-full shadow-lg mr-4 group-hover:scale-110 transition-transform">
+                                    <div
+                                        class="bg-white p-3 rounded-full shadow-lg mr-4 group-hover:scale-110 transition-transform">
                                         <i class="fas fa-clock text-secondary text-xl"></i>
                                     </div>
                                     <div>
@@ -2475,9 +2887,10 @@
                                         <p class="text-gray-600">Usually within 24 hours</p>
                                     </div>
                                 </div>
-                                
+
                                 <div class="flex items-center group">
-                                    <div class="bg-white p-3 rounded-full shadow-lg mr-4 group-hover:scale-110 transition-transform">
+                                    <div
+                                        class="bg-white p-3 rounded-full shadow-lg mr-4 group-hover:scale-110 transition-transform">
                                         <i class="fas fa-globe text-accent text-xl"></i>
                                     </div>
                                     <div>
@@ -2487,35 +2900,43 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="text-center">
                             <div class="relative inline-block mb-8">
-                                <img src="profile.png" alt="Mohammad Habib" class="h-32 w-32 rounded-full border-4 border-white shadow-2xl animate-float mx-auto" />
-                                <div class="absolute -top-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-2 border-white animate-pulse"></div>
+                                <img src="profile.png" alt="Mohammad Habib"
+                                    class="h-32 w-32 rounded-full border-4 border-white shadow-2xl animate-float mx-auto" />
+                                <div
+                                    class="absolute -top-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-2 border-white animate-pulse">
+                                </div>
                             </div>
-                            
+
                             <h4 class="text-2xl font-bold mb-4 text-gradient">Mohammad Habib</h4>
                             <p class="text-gray-600 mb-8">Senior Full Stack Developer & Team Leader</p>
-                            
+
                             <!-- Social Links -->
                             <div class="flex justify-center space-x-4 mb-8">
-                                <a href="https://linkedin.com/in/mohamedhabibwork" class="bg-blue-600 text-white p-3 rounded-full hover:scale-110 transition-transform shadow-lg">
+                                <a href="https://linkedin.com/in/mohamedhabibwork"
+                                    class="bg-blue-600 text-white p-3 rounded-full hover:scale-110 transition-transform shadow-lg">
                                     <i class="fab fa-linkedin text-xl"></i>
                                 </a>
-                                <a href="https://github.com/mohamedhabibwork" class="bg-gray-800 text-white p-3 rounded-full hover:scale-110 transition-transform shadow-lg">
+                                <a href="https://github.com/mohamedhabibwork"
+                                    class="bg-gray-800 text-white p-3 rounded-full hover:scale-110 transition-transform shadow-lg">
                                     <i class="fab fa-github text-xl"></i>
                                 </a>
-                                <a href="https://mohamedhabib.work" class="bg-primary text-white p-3 rounded-full hover:scale-110 transition-transform shadow-lg">
+                                <a href="https://mohamedhabib.work"
+                                    class="bg-primary text-white p-3 rounded-full hover:scale-110 transition-transform shadow-lg">
                                     <i class="fas fa-globe text-xl"></i>
                                 </a>
                             </div>
-                            
+
                             <!-- CTA Buttons -->
                             <div class="space-y-4">
-                                <a href="mailto:mohamedhabibwork@gmail.com" class="block bg-primary text-white px-8 py-4 rounded-full font-bold hover:bg-secondary transition-all duration-300 hover:scale-105 shadow-lg">
+                                <a href="mailto:mohamedhabibwork@gmail.com"
+                                    class="block bg-primary text-white px-8 py-4 rounded-full font-bold hover:bg-secondary transition-all duration-300 hover:scale-105 shadow-lg">
                                     <i class="fas fa-envelope mr-2"></i>Send Email
                                 </a>
-                                <a href="https://wa.me/201151978927" class="block bg-green-600 text-white px-8 py-4 rounded-full font-bold hover:bg-green-700 transition-all duration-300 hover:scale-105 shadow-lg">
+                                <a href="https://wa.me/201151978927"
+                                    class="block bg-green-600 text-white px-8 py-4 rounded-full font-bold hover:bg-green-700 transition-all duration-300 hover:scale-105 shadow-lg">
                                     <i class="fab fa-whatsapp mr-2"></i>WhatsApp Chat
                                 </a>
                             </div>
@@ -2533,16 +2954,19 @@
                 <h3 class="text-2xl font-bold mb-4">Mohammad Habib</h3>
                 <p class="text-gray-400 mb-6">Senior Full Stack Developer & Team Leader</p>
                 <div class="flex justify-center space-x-6 mb-8">
-                    <a href="https://linkedin.com/in/mohamedhabibwork" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://linkedin.com/in/mohamedhabibwork"
+                        class="text-gray-400 hover:text-white transition-colors">
                         <i class="fab fa-linkedin text-2xl"></i>
                     </a>
-                    <a href="https://github.com/mohamedhabibwork" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="https://github.com/mohamedhabibwork"
+                        class="text-gray-400 hover:text-white transition-colors">
                         <i class="fab fa-github text-2xl"></i>
                     </a>
                     <a href="https://mohamedhabib.work" class="text-gray-400 hover:text-white transition-colors">
                         <i class="fas fa-globe text-2xl"></i>
                     </a>
-                    <a href="mailto:mohamedhabibwork@gmail.com" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="mailto:mohamedhabibwork@gmail.com"
+                        class="text-gray-400 hover:text-white transition-colors">
                         <i class="fas fa-envelope text-2xl"></i>
                     </a>
                 </div>
@@ -2569,11 +2993,12 @@
         });
 
         // Contact form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelector('form').addEventListener('submit', function (e) {
             e.preventDefault();
             alert('Thank you for your message! I\'ll get back to you soon.');
             this.reset();
         });
     </script>
 </body>
-</html> 
+
+</html>

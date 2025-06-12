@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#27548A;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="letterGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#27548A;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:0.05" />
+    </radialGradient>
+    
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="8" dy="12" stdDeviation="8" flood-color="rgba(0,0,0,0.4)"/>
+    </filter>
+    
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" fill="url(#bgGradient)" rx="64" />
+  
+  <style>
+    .bracket {
+      fill: url(#primaryGradient);
+      font-size: 180px;
+      font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+      font-weight: 800;
+      filter: url(#shadow) url(#glow);
+    }
+
+    .letters {
+      fill: url(#letterGradient);
+      font-size: 180px;
+      font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+      font-weight: 800;
+      filter: url(#shadow) url(#glow);
+    }
+  </style>
+
+  <!-- Centered logo -->
+  <g transform="translate(86, 0)">
+    <text x="20" y="320" class="bracket">&lt;</text>
+    <text x="120" y="320" class="letters">M</text>
+    <text x="220" y="320" class="letters">H</text>
+    <text x="320" y="320" class="bracket">&gt;</text>
+  </g>
+</svg> 

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" 
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    
+    <channel>
+        <title>Mohammad Habib - Senior Full Stack Developer</title>
+        <link>https://mohamedhabib.work</link>
+        <description>Stay updated with Mohammad Habib's latest projects, technical insights, and professional achievements in full-stack development, team leadership, and enterprise solutions.</description>
+        <language>en-US</language>
+        <managingEditor>mohamedhabibwork@gmail.com (Mohammad Habib)</managingEditor>
+        <webMaster>mohamedhabibwork@gmail.com (Mohammad Habib)</webMaster>
+        <lastBuildDate>Sat, 28 Dec 2024 12:00:00 GMT</lastBuildDate>
+        <pubDate>Sat, 28 Dec 2024 12:00:00 GMT</pubDate>
+        <ttl>1440</ttl>
+        <image>
+            <url>https://mohamedhabib.work/logo.svg</url>
+            <title>Mohammad Habib - Senior Full Stack Developer</title>
+            <link>https://mohamedhabib.work</link>
+            <width>144</width>
+            <height>144</height>
+        </image>
+        <atom:link href="https://mohamedhabib.work/rss.xml" rel="self" type="application/rss+xml"/>
+        
+        <item>
+            <title>Portfolio Website Launch - Enhanced SEO & Performance</title>
+            <link>https://mohamedhabib.work/#home</link>
+            <description>Launched comprehensive portfolio website showcasing 7+ years of full-stack development experience with enhanced SEO optimization, modern responsive design, and complete project showcase.</description>
+            <content:encoded><![CDATA[
+                <p>I'm excited to announce the launch of my enhanced portfolio website featuring:</p>
+                <ul>
+                    <li><strong>Complete SEO Suite:</strong> Comprehensive sitemap, robots.txt, RSS feed, and structured data</li>
+                    <li><strong>Modern Design:</strong> Responsive layout with advanced CSS animations and Tailwind CSS</li>
+                    <li><strong>Project Showcase:</strong> Detailed presentation of enterprise solutions and real-time applications</li>
+                    <li><strong>Performance Optimized:</strong> Fast loading times and mobile-first approach</li>
+                    <li><strong>Contact Integration:</strong> Direct communication channels for collaboration opportunities</li>
+                </ul>
+                <p>Visit the website to explore my expertise in PHP Laravel, Node.js, React, Vue.js, and enterprise solution development.</p>
+            ]]></content:encoded>
+            <author>mohamedhabibwork@gmail.com (Mohammad Habib)</author>
+            <category>Portfolio</category>
+            <category>Web Development</category>
+            <category>SEO</category>
+            <pubDate>Sat, 28 Dec 2024 12:00:00 GMT</pubDate>
+            <guid isPermaLink="true">https://mohamedhabib.work/#home</guid>
+        </item>
+        
+        <item>
+            <title>Skills & Technologies - Full Stack Excellence</title>
+            <link>https://mohamedhabib.work/#skills</link>
+            <description>Comprehensive overview of technical expertise spanning PHP Laravel, Node.js, React, Vue.js, GoLang, Python, and modern development practices with 7+ years of professional experience.</description>
+            <content:encoded><![CDATA[
+                <p>My technical expertise covers the full spectrum of modern web development:</p>
+                <h3>Backend Technologies:</h3>
+                <ul>
+                    <li><strong>PHP & Laravel:</strong> Advanced enterprise solutions, API development, and payment integrations</li>
+                    <li><strong>Node.js:</strong> Real-time applications, microservices, and scalable backend systems</li>
+                    <li><strong>GoLang:</strong> High-performance applications and concurrent systems</li>
+                    <li><strong>Python:</strong> Data processing, automation, and AI/ML integration</li>
+                </ul>
+                <h3>Frontend Technologies:</h3>
+                <ul>
+                    <li><strong>React:</strong> Modern SPAs, state management, and component architecture</li>
+                    <li><strong>Vue.js:</strong> Progressive web applications and reactive interfaces</li>
+                    <li><strong>JavaScript/TypeScript:</strong> ES6+, async programming, and type safety</li>
+                </ul>
+                <h3>Databases & Cloud:</h3>
+                <ul>
+                    <li><strong>Databases:</strong> MySQL, PostgreSQL, MongoDB, Redis</li>
+                    <li><strong>Cloud Platforms:</strong> AWS, DigitalOcean, containerization</li>
+                    <li><strong>DevOps:</strong> CI/CD pipelines, monitoring, and deployment automation</li>
+                </ul>
+            ]]></content:encoded>
+            <author>mohamedhabibwork@gmail.com (Mohammad Habib)</author>
+            <category>Skills</category>
+            <category>Technology</category>
+            <category>Full Stack Development</category>
+            <pubDate>Fri, 27 Dec 2024 12:00:00 GMT</pubDate>
+            <guid isPermaLink="true">https://mohamedhabib.work/#skills</guid>
+        </item>
+        
+        <item>
+            <title>Featured Projects - Enterprise Solutions & Innovation</title>
+            <link>https://mohamedhabib.work/#projects</link>
+            <description>Showcase of key projects including transportation management systems, healthcare platforms, fintech solutions, and real-time applications built with modern technologies and best practices.</description>
+            <content:encoded><![CDATA[
+                <p>Explore my portfolio of enterprise-grade projects that demonstrate expertise in:</p>
+                <ul>
+                    <li><strong>Transportation Systems:</strong> Comprehensive ride-hailing and logistics platforms</li>
+                    <li><strong>Healthcare Solutions:</strong> Patient management and medical data systems</li>
+                    <li><strong>Fintech Applications:</strong> Payment processing and financial management tools</li>
+                    <li><strong>Real-time Systems:</strong> Live tracking, notifications, and collaborative platforms</li>
+                    <li><strong>E-commerce Platforms:</strong> Scalable online marketplaces and inventory management</li>
+                </ul>
+                <p>Each project showcases modern development practices, scalable architecture, and user-centric design principles.</p>
+            ]]></content:encoded>
+            <author>mohamedhabibwork@gmail.com (Mohammad Habib)</author>
+            <category>Projects</category>
+            <category>Enterprise Solutions</category>
+            <category>Case Studies</category>
+            <pubDate>Thu, 26 Dec 2024 12:00:00 GMT</pubDate>
+            <guid isPermaLink="true">https://mohamedhabib.work/#projects</guid>
+        </item>
+        
+        <item>
+            <title>Professional Experience - Leadership & Technical Excellence</title>
+            <link>https://mohamedhabib.work/#experience</link>
+            <description>Comprehensive overview of 7+ years professional journey as Senior Full Stack Developer and Team Leader, highlighting key achievements in enterprise software development and team management.</description>
+            <content:encoded><![CDATA[
+                <p>My professional journey spans diverse industries and challenging technical projects:</p>
+                <h3>Leadership Experience:</h3>
+                <ul>
+                    <li><strong>Team Leadership:</strong> Led cross-functional development teams of 5-12 members</li>
+                    <li><strong>Project Management:</strong> Delivered 20+ enterprise-grade applications on time and within budget</li>
+                    <li><strong>Mentoring:</strong> Guided junior developers and established coding standards</li>
+                </ul>
+                <h3>Technical Achievements:</h3>
+                <ul>
+                    <li><strong>System Architecture:</strong> Designed scalable, maintainable software architectures</li>
+                    <li><strong>Performance Optimization:</strong> Improved application performance by up to 300%</li>
+                    <li><strong>Integration Expertise:</strong> Successfully integrated complex payment gateways and APIs</li>
+                </ul>
+                <h3>Industry Impact:</h3>
+                <ul>
+                    <li><strong>Transportation:</strong> Built ride-hailing platforms serving thousands of users</li>
+                    <li><strong>Healthcare:</strong> Developed HIPAA-compliant patient management systems</li>
+                    <li><strong>Fintech:</strong> Implemented secure payment processing solutions</li>
+                </ul>
+            ]]></content:encoded>
+            <author>mohamedhabibwork@gmail.com (Mohammad Habib)</author>
+            <category>Experience</category>
+            <category>Leadership</category>
+            <category>Career</category>
+            <pubDate>Wed, 25 Dec 2024 12:00:00 GMT</pubDate>
+            <guid isPermaLink="true">https://mohamedhabib.work/#experience</guid>
+        </item>
+        
+    </channel>
+</rss> 

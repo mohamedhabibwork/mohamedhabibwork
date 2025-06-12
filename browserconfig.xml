@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+    <msapplication>
+        <tile>
+            <square70x70logo src="logo.svg"/>
+            <square150x150logo src="logo.svg"/>
+            <wide310x150logo src="cover.svg"/>
+            <square310x310logo src="profile.png"/>
+            <TileColor>#2563eb</TileColor>
+        </tile>
+        <notification>
+            <polling-uri src="https://mohamedhabib.work/rss.xml"/>
+            <frequency>30</frequency>
+            <cycle>1</cycle>
+        </notification>
+    </msapplication>
+</browserconfig> 

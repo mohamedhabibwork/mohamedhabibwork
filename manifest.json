@@ -1,0 +1,83 @@
+{
+    "name": "Mohammad Habib - Senior Full Stack Developer",
+    "short_name": "Mohammad Habib",
+    "description": "Senior Full Stack Developer with 7+ years experience in PHP Laravel, Node.js, React, Vue.js. Expert in payment gateways, real-time systems, and team leadership.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1e293b",
+    "theme_color": "#2563eb",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "lang": "en-US",
+    "dir": "ltr",
+    "categories": [
+        "portfolio",
+        "developer",
+        "technology",
+        "business"
+    ],
+    "icons": [
+        {
+            "src": "logo.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "profile.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "cover.svg",
+            "sizes": "1280x720",
+            "type": "image/svg+xml",
+            "form_factor": "wide",
+            "label": "Mohammad Habib Portfolio Homepage"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "About",
+            "short_name": "About",
+            "description": "Learn about Mohammad Habib's background and expertise",
+            "url": "/#about",
+            "icons": [
+                {
+                    "src": "logo.svg",
+                    "sizes": "96x96",
+                    "type": "image/svg+xml"
+                }
+            ]
+        },
+        {
+            "name": "Projects",
+            "short_name": "Projects",
+            "description": "View featured projects and case studies",
+            "url": "/#projects",
+            "icons": [
+                {
+                    "src": "logo.svg",
+                    "sizes": "96x96",
+                    "type": "image/svg+xml"
+                }
+            ]
+        },
+        {
+            "name": "Contact",
+            "short_name": "Contact",
+            "description": "Get in touch for collaboration opportunities",
+            "url": "/#contact",
+            "icons": [
+                {
+                    "src": "logo.svg",
+                    "sizes": "96x96",
+                    "type": "image/svg+xml"
+                }
+            ]
+        }
+    ]
+}
