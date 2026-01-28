@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohammad Habib - Senior Backend Developer Resume</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <style>
+        /* ATS-Friendly Resume Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Times New Roman', 'Calibri', sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #000000;
+            background: #ffffff;
+            padding: 0.5in;
+            max-width: 8.5in;
+            margin: 0 auto;
+        }
+
+        /* Print Styles */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            body {
+                padding: 0;
+                margin: 0;
+                font-size: 11pt;
+                line-height: 1.4;
+            }
+            
+            .no-print {
+                display: none;
+            }
+
+            @page {
+                size: letter;
+                margin: 0.5in;
+            }
+            
+            /* Prevent orphaned content */
+            h1, h2, h3, h4, h5, h6 {
+                page-break-after: avoid;
+            }
+            
+            /* Allow page breaks within sections but keep items together */
+            .section {
+                page-break-inside: auto;
+                margin-bottom: 12px;
+            }
+            
+            .section-title {
+                page-break-after: avoid;
+                margin-top: 8px;
+                margin-bottom: 8px;
+            }
+            
+            /* Keep experience items together but allow breaking if too large */
+            .experience-item, .education-item {
+                page-break-inside: avoid;
+                margin-bottom: 10px;
+                page-break-after: auto;
+            }
+            
+            /* Prevent breaking between header and description */
+            .job-header {
+                page-break-after: avoid;
+            }
+            
+            .job-description {
+                page-break-before: avoid;
+            }
+            
+            /* Reduce spacing in print */
+            .header {
+                margin-bottom: 12px;
+                padding-bottom: 10px;
+            }
+            
+            .summary {
+                margin-bottom: 0;
+            }
+            
+            /* Skill categories - allow breaking but keep title with content */
+            .skill-category {
+                page-break-inside: avoid;
+                margin-bottom: 10px;
+            }
+            
+            .skill-category-title {
+                page-break-after: avoid;
+            }
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .name {
+            font-size: 24pt;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #000000;
+        }
+
+        .title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #000000;
+        }
+
+        .contact-info {
+            font-size: 10pt;
+            line-height: 1.6;
+        }
+
+        .contact-info span {
+            margin: 0 8px;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 14pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000000;
+            padding-bottom: 3px;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        /* Professional Summary */
+        .summary {
+            text-align: justify;
+            line-height: 1.5;
+        }
+
+        /* Experience Section */
+        .experience-item, .education-item {
+            margin-bottom: 12px;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            font-weight: bold;
+            font-size: 12pt;
+            color: #000000;
+        }
+
+        .company {
+            font-weight: bold;
+            font-size: 11pt;
+            color: #000000;
+        }
+
+        .date {
+            font-style: italic;
+            font-size: 10pt;
+            color: #000000;
+        }
+
+        .job-description {
+            margin-top: 5px;
+            text-align: justify;
+        }
+
+        .job-description ul {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+        .job-description li {
+            margin-bottom: 3px;
+            line-height: 1.4;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: block;
+        }
+
+        .skill-category {
+            margin-bottom: 10px;
+        }
+
+        .skill-category-title {
+            font-weight: bold;
+            font-size: 11pt;
+            margin-bottom: 6px;
+        }
+
+        .skills-list {
+            margin-left: 15px;
+            line-height: 1.5;
+        }
+
+        .skills-list span {
+            display: inline-block;
+            margin-right: 12px;
+            margin-bottom: 4px;
+        }
+
+        /* Education Section */
+        .education-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .degree {
+            font-weight: bold;
+            font-size: 11pt;
+        }
+
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .print-button:hover {
+            background: #1d4ed8;
+        }
+
+        /* Keywords for ATS */
+        .keywords {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Print Button -->
+    <!-- <button class="print-button no-print" onclick="window.print()">Print / Save as PDF</button> -->
+
+    <!-- Header -->
+    <div class="header">
+        <div class="name">MOHAMMAD HABIB</div>
+        <div class="title">Senior Backend Developer | PHP Laravel & Node.js Specialist</div>
+        <div class="contact-info">
+            <span>Email: mohamedhabibwork@gmail.com</span>
+            <span>|</span>
+            <span>Phone: +201151978927</span>
+            <span>|</span>
+            <span>LinkedIn: linkedin.com/in/mohamedhabibwork</span>
+            <span>|</span>
+            <span>Portfolio: mohamedhabib.work</span>
+            <span>|</span>
+            <span>GitHub: github.com/mohamedhabibwork</span>
+            <span>|</span>
+            <span>WhatsApp: wa.me/201151978927</span>
+        </div>
+    </div>
+
+    <!-- Professional Summary -->
+    <div class="section">
+        <div class="section-title">Professional Summary</div>
+        <div class="summary">
+            Senior Backend Developer with 7+ years of extensive experience in enterprise-level application development, specializing in PHP Laravel, Node.js, and ASP.NET Core. Proven track record of architecting scalable backend systems, RESTful API development, microservices architecture, and real-time application solutions (GoLang socket programming, WebSocket, Socket.io). Expert in database design (MySQL, PostgreSQL, MongoDB, Redis), performance optimization, payment gateway integrations (Fawry, Paymob, PayPal), and cloud infrastructure (AWS, Azure, Docker). Strong leadership experience managing cross-functional development teams of 5-10 developers across Egypt, Saudi Arabia, and UAE. Successfully delivered 50+ enterprise projects across transportation, healthcare, fintech, e-commerce, navigation, and education industries. Proficient in Agile/Scrum, CI/CD pipelines, and DevOps practices. International experience with Code700 Saudi Arabia and backstoreEIT UAE (EDE, SDDUMP projects).
+        </div>
+    </div>
+
+    <!-- Technical Skills - Full Quality Skills from Portfolio Data -->
+    <div class="section">
+        <div class="section-title">Technical Skills</div>
+        <div class="skills-container">
+            <div class="skill-category">
+                <div class="skill-category-title">Backend Technologies:</div>
+                <div class="skills-list">
+                    <span>PHP 7.x / 8.x (6+ Years)</span>
+                    <span>Laravel Framework (Expert)</span>
+                    <span>Node.js (Real-time Systems)</span>
+                    <span>Express.js</span>
+                    <span>GoLang (Socket Programming, 3+ Years)</span>
+                    <span>Python (Automation, Data Processing)</span>
+                    <span>ASP.NET Core (Enterprise)</span>
+                    <span>FastAPI</span>
+                    <span>RESTful API Development</span>
+                    <span>GraphQL</span>
+                    <span>Microservices Architecture</span>
+                    <span>Socket.io</span>
+                    <span>WebSocket Programming</span>
+                    <span>C#</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-category-title">Frontend (Full Stack):</div>
+                <div class="skills-list">
+                    <span>React.js (4+ Years, Hooks, Redux)</span>
+                    <span>Vue.js (4+ Years, Composition API, Vuex, Nuxt.js)</span>
+                    <span>JavaScript ES6+ (6+ Years, Expert)</span>
+                    <span>TypeScript</span>
+                    <span>HTML5 & CSS3 (7+ Years)</span>
+                    <span>Tailwind CSS</span>
+                    <span>Bootstrap</span>
+                    <span>SASS</span>
+                    <span>jQuery</span>
+                    <span>Responsive Design</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-category-title">Databases & Data Management:</div>
+                <div class="skills-list">
+                    <span>MySQL (6+ Years, Optimization, Indexing, Replication)</span>
+                    <span>PostgreSQL (4+ Years, Complex Queries, JSON)</span>
+                    <span>MongoDB</span>
+                    <span>Redis (Caching, Sessions)</span>
+                    <span>Database Design</span>
+                    <span>Query Optimization</span>
+                    <span>Database Migration</span>
+                    <span>Data Modeling</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-category-title">Cloud & DevOps:</div>
+                <div class="skills-list">
+                    <span>AWS (EC2, S3, RDS, Lambda, 3+ Years)</span>
+                    <span>Azure</span>
+                    <span>DigitalOcean</span>
+                    <span>Docker (Containerization)</span>
+                    <span>Kubernetes (Orchestration)</span>
+                    <span>CI/CD Pipelines</span>
+                    <span>Git</span>
+                    <span>GitHub</span>
+                    <span>GitHub Actions</span>
+                    <span>Linux Server Administration</span>
+                    <span>Nginx</span>
+                    <span>Apache</span>
+                    <span>Vercel</span>
+                    <span>Cloudflare</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-category-title">Payment & Integration Systems:</div>
+                <div class="skills-list">
+                    <span>Fawry Integration (3+ Years)</span>
+                    <span>Paymob (2+ Years, Financial Services, ERP)</span>
+                    <span>PayPal Integration (2+ Years)</span>
+                    <span>Stripe API</span>
+                    <span>Custom Payment APIs (4+ Years)</span>
+                    <span>Third-party API Integration</span>
+                    <span>OAuth 2.0</span>
+                    <span>JWT Authentication</span>
+                    <span>Webhook Implementation</span>
+                    <span>ERPNext Integration</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-category-title">Enterprise & Real-time Solutions:</div>
+                <div class="skills-list">
+                    <span>ERP Systems</span>
+                    <span>CRM Solutions</span>
+                    <span>Real-time GPS Tracking</span>
+                    <span>Live Tracking Systems</span>
+                    <span>Chat Applications</span>
+                    <span>Push Notifications</span>
+                    <span>Real-time Analytics</span>
+                    <span>Mobile API Development</span>
+                    <span>Business Intelligence & Reporting</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-category-title">Development Tools & Practices:</div>
+                <div class="skills-list">
+                    <span>VS Code</span>
+                    <span>Postman (API Testing)</span>
+                    <span>Figma</span>
+                    <span>Agile Methodology</span>
+                    <span>Scrum</span>
+                    <span>Test-Driven Development (TDD)</span>
+                    <span>Unit Testing</span>
+                    <span>Code Review</span>
+                    <span>System Architecture</span>
+                    <span>Performance Optimization</span>
+                    <span>Security Best Practices</span>
+                    <span>HIPAA Compliance</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Experience -->
+    <div class="section">
+        <div class="section-title">Professional Experience</div>
+
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Senior Full Stack Developer (ASP.NET Core) & Team Leader</div>
+                    <div class="company">backstoreEIT</div>
+                </div>
+                <div class="date">September 2025 - Present</div>
+            </div>
+            <div class="job-description">
+                <ul>
+                    <li>Lead full stack development with ASP.NET Core on projects including EDE and SDDUMP in UAE</li>
+                    <li>Manage cross-functional development teams, providing technical guidance and mentorship to developers</li>
+                    <li>Design and implement RESTful APIs and enterprise solutions using ASP.NET Core and C#</li>
+                    <li>Architect scalable backend systems and deliver high-quality enterprise applications</li>
+                    <li>Implement CI/CD pipelines and DevOps best practices for automated deployment</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Senior Full Stack Developer & Team Leader</div>
+                    <div class="company">Mugsult</div>
+                </div>
+                <div class="date">2024 - 2025</div>
+            </div>
+            <div class="job-description">
+                <ul>
+                    <li>Led development of Team1 Emergency Transportation Platform - critical healthcare transportation coordination system</li>
+                    <li>Architected real-time emergency dispatch system with WebSocket communication for medical team coordination</li>
+                    <li>Developed scalable backend APIs using Node.js and PHP Laravel handling high-volume emergency requests</li>
+                    <li>Implemented secure data handling and HIPAA-compliant backend systems for healthcare industry</li>
+                    <li>Managed team of 8 developers across frontend and backend development</li>
+                    <li>Optimized database queries and system performance to handle real-time tracking of emergency vehicles</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Senior Full Stack Developer</div>
+                    <div class="company">Code700 (Riyadh, Saudi Arabia)</div>
+                </div>
+                <div class="date">2024</div>
+            </div>
+            <div class="job-description">
+                <ul>
+                    <li>International team leadership developing enterprise applications for Saudi Arabian market (Ensany, Qaff, Mozn, Cashback applications)</li>
+                    <li>Built scalable backend systems using Node.js, React, Python, and ERPNext integration</li>
+                    <li>Led cross-cultural development team, coordinating between Egypt, Saudi Arabia and UAE offices</li>
+                    <li>Implemented payment gateway integrations for cashback and financial transaction processing</li>
+                    <li>Developed RESTful APIs and microservices for multi-application ecosystem</li>
+                    <li>Managed project delivery and client relations in international market</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Senior Full Stack Developer & Team Leader</div>
+                    <div class="company">Enjoy Driving</div>
+                </div>
+                <div class="date">2023 - 2024</div>
+            </div>
+            <div class="job-description">
+                <ul>
+                    <li>Led development of driver management systems, agent management platforms, and store management solutions</li>
+                    <li>Managed team of 5-10 developers, implementing Agile/Scrum methodologies</li>
+                    <li>Architected backend systems using PHP Laravel and Node.js for transportation and logistics platform</li>
+                    <li>Developed real-time tracking systems and notification services using WebSocket technology</li>
+                    <li>Implemented payment processing and financial transaction management systems</li>
+                    <li>Optimized database performance and API response times for high-traffic applications</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Senior Full Stack Developer</div>
+                    <div class="company">Gulf Communication Company</div>
+                </div>
+                <div class="date">2021 - 2023</div>
+            </div>
+            <div class="job-description">
+                <ul>
+                    <li>Led development of transportation applications, mapping solutions, and medical tracking systems</li>
+                    <li>Designed and implemented security management platforms with real-time monitoring capabilities</li>
+                    <li>Developed backend APIs using PHP Laravel and Node.js for enterprise-level applications</li>
+                    <li>Implemented GoLang-based socket programming for real-time communication systems</li>
+                    <li>Architected scalable system architecture supporting concurrent user operations</li>
+                    <li>Collaborated with cross-functional teams on complex system integration projects</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="experience-item">
+            <div class="job-header">
+                <div>
+                    <div class="job-title">Full Stack Developer</div>
+                    <div class="company">Rawabet Company</div>
+                </div>
+                <div class="date">2020 - 2021</div>
+            </div>
+            <div class="job-description">
+                <ul>
+                    <li>Developed enterprise solutions including ERP and CRM systems</li>
+                    <li>Built mobile API backends using PHP Laravel for cross-platform applications</li>
+                    <li>Implemented payment gateway integrations for e-commerce platforms</li>
+                    <li>Developed database schemas and optimized queries for high-performance applications</li>
+                    <li>Collaborated on cross-platform integration projects</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Achievements -->
+    <div class="section">
+        <div class="section-title">Key Achievements</div>
+        <div class="job-description">
+            <ul>
+                <li>Led international development teams across Egypt, Saudi Arabia, and UAE; managed 5-10 developers per project</li>
+                <li>Delivered 50+ enterprise projects with 95%+ success rate across transportation, healthcare, fintech, e-commerce, navigation, and education industries</li>
+                <li>Architected backend systems processing $1M+ in secure payment transactions (Paymob suite, Fawry, PayPal) with 99.99% accuracy</li>
+                <li>Built real-time GPS tracking with GoLang socket programming serving 1M+ concurrent users (TOO APP ride-hailing)</li>
+                <li>TOO APP: 10K+ daily rides, payment gateways (Fawry, Paymob, PayPal) 99.9% uptime, ERP integration, AI-powered dispatch</li>
+                <li>Team1 Emergency Platform: 2-second emergency response time, real-time medical team communication, hospital integration API</li>
+                <li>Mappy (mapy.world): 100K+ monthly active users, custom mapping, 99.5% geocoding accuracy, international team 7 developers</li>
+                <li>Too Medical: 200+ medical representatives; Too Security: 500+ guards real-time tracking; TOO Bus: 5K+ students safety</li>
+                <li>Code700 Saudi Arabia: Delivered Ensany, Qaff, Mozn, Cashback applications for Saudi market with Node.js, React, Python, ERPNext</li>
+                <li>Implemented scalable microservices architecture; established CI/CD pipelines; performance optimization and legacy migration</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Education -->
+    <div class="section">
+        <div class="section-title">Education & Certifications</div>
+        <div class="education-item">
+            <div class="education-header">
+                <div>
+                    <div class="degree">NEN Training Certification</div>
+                    <div class="company">Professional Development Program</div>
+                </div>
+                <div class="date">2018-2020</div>
+            </div>
+        </div>
+        <div class="education-item">
+            <div class="education-header">
+                <div>
+                    <div class="degree">C++ Programming Fundamentals</div>
+                    <div class="company">Foundation Phase</div>
+                </div>
+                <div class="date">2017</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ATS Keywords (Hidden but readable by ATS systems) -->
+    <div class="keywords">
+        Senior Backend Developer, Senior Full Stack Developer, PHP Developer, Laravel Developer, Node.js Developer, 
+        Backend Engineer, ASP.NET Core, C#, API Development, RESTful API, Microservices, Database Design, 
+        MySQL, PostgreSQL, MongoDB, Redis, AWS, Azure, Cloud Computing, Docker, Kubernetes, CI/CD, 
+        Payment Gateway, Fawry, Paymob, PayPal, Real-time Systems, WebSocket, Socket Programming, GoLang, 
+        System Architecture, Performance Optimization, Team Leadership, Agile, Scrum, Enterprise Solutions, 
+        Backend Systems, Server-side Development, Database Optimization, API Integration, Third-party Integration, 
+        Authentication, Authorization, Security, DevOps, Linux, Nginx, Apache, Git, GitHub, TDD, Code Review, 
+        Technical Leadership, Mentorship, Cross-functional Teams, International Experience, Saudi Arabia, UAE, Egypt, 
+        Transportation, Healthcare, Fintech, E-commerce, Emergency Systems, Real-time Tracking, GPS Tracking, 
+        Payment Processing, Financial Transactions, HIPAA Compliance, High Availability, Scalability, 
+        Concurrent Users, System Integration, Legacy Migration, Python, FastAPI, Express.js, GraphQL, OAuth, JWT, 
+        Webhooks, ERP, CRM, ERPNext, Mobile API, Cross-platform, React, Vue.js, TypeScript, Tailwind, Bootstrap, 
+        Ride-hailing, Emergency Dispatch, Mappy, mapy.world, EDE, SDDUMP, backstoreEIT, Mugsult, Code700
+    </div>
+
+    <script>
+        // PDF.js initialization for better PDF rendering
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+
+        // Enhanced print functionality
+        document.querySelector('.print-button').addEventListener('click', function() {
+            window.print();
+        });
+
+        // Ensure proper page breaks for printing
+        window.addEventListener('beforeprint', function() {
+            document.body.style.fontSize = '11pt';
+        });
+
+        window.addEventListener('afterprint', function() {
+            document.body.style.fontSize = '11pt';
+        });
+    </script>
+</body>
+</html>

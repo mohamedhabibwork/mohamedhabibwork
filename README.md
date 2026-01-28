@@ -8,11 +8,11 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=header&text=Full%20Stack%20Excellence&fontSize=30&fontAlignY=35&animation=twinkling&fontColor=ffffff" />
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Arial&size=16&duration=4000&pause=2000&color=36BCF7&center=true&vCenter=true&width=600&lines=🚀+Leading+Development+Teams+Across+6%2B+Industries;💳+Processing+%241M%2B+in+Secure+Payment+Transactions;🌍+International+Experience+in+Saudi+Arabia+%26+Gulf;⚡+Real-time+Systems+Serving+1M%2B+Concurrent+Users" alt="Achievements Typing" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Arial&size=16&duration=4000&pause=2000&color=36BCF7&center=true&vCenter=true&width=600&lines=🚀+Leading+Development+Teams+Across+6%2B+Industries;💳+Processing+%241M%2B+in+Secure+Payment+Transactions;🌍+International+Experience+in+Egypt%2C+Saudi+Arabia+%26+UAE;⚡+Real-time+Systems+Serving+1M%2B+Concurrent+Users" alt="Achievements Typing" />
 </p>
 
 <p align="center">
-  <a href="https://linkedin.com/in/mohamedhabibwork">
+  <a href="https://www.linkedin.com/in/mohamedhabibwork/">
     <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0077B5&logoWidth=20" alt="LinkedIn" />
   </a>
   <a href="mailto:mohamedhabibwork@gmail.com">
@@ -61,7 +61,7 @@
 👥 Leadership: ██████████████████████████████ 3+ Years (85%)
 🏆 Projects:   ████████████████████████████████████████ 50+ Delivered (100%)
 📊 Success:    ██████████████████████████████████████ 95%+ Rate (98%)
-🌍 Global:     ████████████████████████████ Saudi Arabia + Gulf (80%)
+🌍 Global:     ████████████████████████████ Egypt, Saudi Arabia & UAE (80%)
 ```
 
 </div>
@@ -71,7 +71,7 @@
 | **🎯 Metric** | **📊 Value** | **🚀 Impact** | **📈 Growth** |
 |:------------:|:------------:|:-------------:|:-------------:|
 | ![Experience](https://img.shields.io/badge/Experience-7%2B%20Years-brightgreen?style=flat-square) | ![Leadership](https://img.shields.io/badge/Leadership-3%2B%20Years-blue?style=flat-square) | ![Projects](https://img.shields.io/badge/Projects-50%2B%20Delivered-orange?style=flat-square) | ![Success](https://img.shields.io/badge/Success-95%25%2B-success?style=flat-square) |
-| ![International](https://img.shields.io/badge/International-Saudi%20Arabia-red?style=flat-square) | ![Team Size](https://img.shields.io/badge/Team%20Size-5--10%20Developers-purple?style=flat-square) | ![Industries](https://img.shields.io/badge/Industries-6%2B%20Served-yellow?style=flat-square) | ![Value](https://img.shields.io/badge/Project%20Value-%24500K%2B-green?style=flat-square) |
+| ![International](https://img.shields.io/badge/International-Egypt%2C%20Saudi%20Arabia%20%26%20UAE-red?style=flat-square) | ![Team Size](https://img.shields.io/badge/Team%20Size-5--10%20Developers-purple?style=flat-square) | ![Industries](https://img.shields.io/badge/Industries-6%2B%20Served-yellow?style=flat-square) | ![Value](https://img.shields.io/badge/Project%20Value-%24500K%2B-green?style=flat-square) |
 
 </div>
 
@@ -181,45 +181,35 @@ mindmap
   root((Full Stack Expertise))
     Backend
       PHP_Laravel
-        ::icon(fa fa-code)
         6+ Years Experience
         Enterprise Solutions
       Node_js
-        ::icon(fa fa-server)
         Real-time Systems
         Socket Programming
       GoLang
-        ::icon(fa fa-bolt)
         High Performance
         Tracking Systems
       Python
-        ::icon(fa fa-python)
         Automation
         Data Processing
     Frontend
       React
-        ::icon(fa fa-react)
         Modern SPAs
         Component Architecture
       Vue_js
-        ::icon(fa fa-vuejs)
         Progressive Apps
         Reactive Systems
       JavaScript
-        ::icon(fa fa-js)
         ES6+ Features
         Async Programming
     Infrastructure
       AWS
-        ::icon(fa fa-cloud)
         Cloud Architecture
         Scalable Solutions
       Docker
-        ::icon(fa fa-docker)
         Containerization
         Microservices
       Databases
-        ::icon(fa fa-database)
         MySQL PostgreSQL
         Performance Optimization
 ```
@@ -276,7 +266,7 @@ mindmap
 |:----------:|:---------------:|:----------:|
 | **👥 Team Size** | 5-10 Developers | Multi-disciplinary teams |
 | **📊 Success Rate** | 95%+ Projects | Consistent delivery excellence |
-| **🌍 International** | Saudi Arabia, Gulf | Cross-cultural leadership |
+| **🌍 International** | Egypt, Saudi Arabia, UAE | Cross-cultural leadership |
 | **📈 Career Growth** | 3+ Years Leadership | Progressive responsibility |
 | **🎯 Project Value** | $100K+ Projects | Enterprise-level solutions |
 
@@ -593,53 +583,21 @@ mindmap
 timeline
     title Senior Full Stack Developer & Team Leader Journey
     
-    2017 : Foundation Phase
-         : C++ Programming Fundamentals
-         : Web Development Transition
-         : Core Programming Concepts Mastery
+****    2017 : Foundation Phase : C++ Programming Fundamentals : Web Development Transition : Core Programming Concepts Mastery
     
-    2018-2020 : Professional Development
-              : GDG Full Stack Developer
-              : NEN Training Certification
-              : Payment Gateway Specialist
-              : Laravel Vue.js Mastery
-              : Team Collaboration Skills
+    2018-2020 : Professional Development : NEN Training Certification : Payment Gateway Specialist : Laravel Vue.js Mastery : Team Collaboration Skills
     
-    2020-2021 : E-commerce Expertise
-              : Rawabet Company
-              : Enterprise Solutions Development
-              : Mobile API Development
-              : ERP CRM Systems
-              : Cross-platform Integration
+    2020-2021 : E-commerce Expertise : Rawabet Company : Enterprise Solutions Development : Mobile API Development : ERP CRM Systems : Cross-platform Integration
     
-    2021-2023 : Senior Developer Phase
-              : Gulf Communication
-              : Complex System Architecture
-              : Transportation Apps Development
-              : Medical Security Systems
-              : GoLang Socket Programming
-              : Enterprise-Level Projects
+    2021-2023 : Senior Developer Phase : Gulf Communication : Complex System Architecture : Transportation Apps Development : Medical Security Systems : GoLang Socket Programming : Enterprise-Level Projects
     
-    2023-2024 : Team Leadership Evolution
-              : Enjoy Driving Team Leader
-              : First Formal Leadership Role
-              : Team Management 5+ developers
-              : Driver Management Systems
-              : Project Delivery Excellence
+    2023-2024 : Team Leadership Evolution : Enjoy Driving Team Leader : First Formal Leadership Role : Team Management 5+ developers : Driver Management Systems : Project Delivery Excellence
     
-    2024 : International Leadership
-         : Code700 Saudi Arabia
-         : Cross-Cultural Team Management
-         : Ensany Qaff Mozn Cashback Apps
-         : International Project Delivery
-         : Cultural Adaptation Skills
+    2024 : International Leadership : Code700 Saudi Arabia : Cross-Cultural Team Management : Ensany Qaff Mozn Cashback Apps : International Project Delivery : Cultural Adaptation Skills
     
-    2024-Present : Senior Leadership Excellence
-                 : Mugsult Senior Team Leader
-                 : Team1 Emergency Transportation Platform
-                 : Strategic Technology Leadership
-                 : Enterprise Solution Architecture
-                 : Critical System Development
+    2024-2025 : Senior Leadership Excellence : Mugsult Senior Team Leader : Team1 Emergency Transportation Platform : Strategic Technology Leadership : Enterprise Solution Architecture : Critical System Development
+    
+    2025-Present : backstoreEIT Experience : Senior Full Stack Developer (ASP.NET Core) and Team Leader : EDE and SDDUMP Projects in UAE : ASP.NET Core Full Stack : Team Leadership and Technical Architecture
 ```
 
 </div>
@@ -649,12 +607,17 @@ timeline
 ### **📊 Career Growth Metrics Visualization**
 
 ```mermaid
-xychart-beta
-    title "Professional Growth Over Time"
-    x-axis [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, Present]
-    y-axis "Skill Level" 0 --> 100
-    bar [15, 30, 45, 60, 70, 80, 85, 90, 95]
-    line [10, 25, 40, 55, 65, 75, 80, 85, 90]
+gantt
+    title Professional Growth Over Time
+    dateFormat YYYY
+    section Technical Skills
+    2017-2020 : 60
+    2020-2023 : 85
+    2023-Present : 95
+    section Leadership
+    2017-2020 : 25
+    2020-2023 : 75
+    2023-Present : 90
 ```
 
 </div>
@@ -705,10 +668,16 @@ xychart-beta
 <td>Global Team Management</td>
 </tr>
 <tr>
-<td><b>2024-Present</b><br>Senior Leadership</td>
+<td><b>2024-2025</b><br>Senior Leadership</td>
 <td>Senior Team Leader</td>
-<td>Strategic Technology Direction</td>
+<td>Mugsult • Team1 Emergency Transportation Platform</td>
 <td>Organizational Impact</td>
+</tr>
+<tr>
+<td><b>2025-Present</b><br>backstoreEIT</td>
+<td>Senior Full Stack Developer (ASP.NET Core) & Team Leader</td>
+<td>EDE and SDDUMP projects in UAE; enterprise solutions with ASP.NET Core</td>
+<td>Team Leadership & Technical Architecture</td>
 </tr>
 </table>
 
@@ -1001,10 +970,23 @@ mindmap
 <td>✅ Team Leader Role</td>
 </tr>
 <tr>
-<td><b>2024-Present</b><br><i>Innovation</i></td>
+<td><b>2024-2025</b><br><i>Mugsult</i></td>
 <td>
-<img src="https://skillicons.dev/icons?i=kubernetes,terraform" width="60" height="30" alt="Kubernetes Terraform">
-<br><b>Future Technologies</b>
+<img src="https://skillicons.dev/icons?i=php,laravel,nodejs,react" width="120" height="30" alt="PHP Laravel Node React">
+<br><b>Team1 Emergency Transportation</b>
+</td>
+<td>
+<div style="background: linear-gradient(90deg, #9C27B0 95%, #E0E0E0 5%); height: 20px; border-radius: 10px;">
+  <div style="padding: 2px 8px; color: white; font-size: 12px; font-weight: bold;">Senior Leader</div>
+</div>
+</td>
+<td>✅ Mugsult • Team1 Platform</td>
+</tr>
+<tr>
+<td><b>2025-Present</b><br><i>backstoreEIT</i></td>
+<td>
+<img src="https://skillicons.dev/icons?i=dotnet" width="60" height="30" alt="ASP.NET Core">
+<br><b>ASP.NET Core • EDE & SDDUMP in UAE</b>
 </td>
 <td>
 <div style="background: linear-gradient(90deg, #9C27B0 100%); height: 20px; border-radius: 10px;">
@@ -1086,7 +1068,7 @@ mindmap
 <details>
 <summary><b>🌍 International Leadership</b></summary>
 
-- ✅ **Cross-Cultural Management**: Successfully led teams across Saudi Arabia and Gulf regions
+- ✅ **Cross-Cultural Management**: Successfully led teams across Egypt, Saudi Arabia and UAE
 - ✅ **Cultural Adaptation**: Delivered culturally-sensitive solutions for Middle Eastern markets
 - ✅ **Global Collaboration**: Coordinated international development teams across time zones
 - ✅ **Market Penetration**: Launched applications serving diverse international user bases
