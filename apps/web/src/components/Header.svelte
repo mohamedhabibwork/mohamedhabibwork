@@ -35,10 +35,20 @@
 			<!-- Logo -->
 			<a
 				href="/"
-				class="text-xl font-bold transition-all duration-200 hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] rounded-lg px-2 py-1 -ml-2"
-				style="color: var(--text-primary);"
+				class="flex items-center gap-2 transition-all duration-200 hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] rounded-lg px-2 py-1 -ml-2"
+				aria-label="Mohammad Habib - Home"
 			>
-				MH
+				<img
+					src="/logo.png"
+					alt="Mohammad Habib logo, an MH monogram with code brackets and circuit lines"
+					width="36"
+					height="36"
+					class="rounded-md"
+					loading="eager"
+				/>
+				<span class="text-xl font-bold hidden sm:inline" style="color: var(--text-primary);">
+					MH
+				</span>
 			</a>
 
 			<!-- Desktop Navigation -->
