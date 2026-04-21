@@ -3,6 +3,7 @@ Allow: /
 
 # Sitemap location
 Sitemap: https://mohamedhabib.work/sitemap.xml
+Sitemap: https://mohamedhabib.work/rss.xml
 
 # Crawl-delay for courtesy (in seconds)
 Crawl-delay: 1

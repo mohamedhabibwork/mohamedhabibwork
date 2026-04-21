@@ -24,7 +24,7 @@
         <atom:link href="https://mohamedhabib.work/rss.xml" rel="self" type="application/rss+xml"/>
         
         <item>
-            <title>Portfolio Website Launch - Enhanced SEO & Performance</title>
+            <title>Portfolio Website Launch - Enhanced SEO &amp; Performance</title>
             <link>https://mohamedhabib.work/#home</link>
             <description>Launched comprehensive portfolio website showcasing 7+ years of full-stack development experience with enhanced SEO optimization, modern responsive design, and complete project showcase.</description>
             <content:encoded><![CDATA[
@@ -43,11 +43,11 @@
             <category>Web Development</category>
             <category>SEO</category>
             <pubDate>Sat, 28 Dec 2024 12:00:00 GMT</pubDate>
-            <guid isPermaLink="true">https://mohamedhabib.work/#home</guid>
+            <guid isPermaLink="false">https://mohamedhabib.work/#home</guid>
         </item>
         
         <item>
-            <title>Skills & Technologies - Full Stack Excellence</title>
+            <title>Skills &amp; Technologies - Full Stack Excellence</title>
             <link>https://mohamedhabib.work/#skills</link>
             <description>Comprehensive overview of technical expertise spanning PHP Laravel, Node.js, React, Vue.js, GoLang, Python, and modern development practices with 7+ years of professional experience.</description>
             <content:encoded><![CDATA[
@@ -77,11 +77,11 @@
             <category>Technology</category>
             <category>Full Stack Development</category>
             <pubDate>Fri, 27 Dec 2024 12:00:00 GMT</pubDate>
-            <guid isPermaLink="true">https://mohamedhabib.work/#skills</guid>
+            <guid isPermaLink="false">https://mohamedhabib.work/#skills</guid>
         </item>
         
         <item>
-            <title>Featured Projects - Enterprise Solutions & Innovation</title>
+            <title>Featured Projects - Enterprise Solutions &amp; Innovation</title>
             <link>https://mohamedhabib.work/#projects</link>
             <description>Showcase of key projects including transportation management systems, healthcare platforms, fintech solutions, and real-time applications built with modern technologies and best practices.</description>
             <content:encoded><![CDATA[
@@ -100,11 +100,11 @@
             <category>Enterprise Solutions</category>
             <category>Case Studies</category>
             <pubDate>Thu, 26 Dec 2024 12:00:00 GMT</pubDate>
-            <guid isPermaLink="true">https://mohamedhabib.work/#projects</guid>
+            <guid isPermaLink="false">https://mohamedhabib.work/#projects</guid>
         </item>
         
         <item>
-            <title>Professional Experience - Leadership & Technical Excellence</title>
+            <title>Professional Experience - Leadership &amp; Technical Excellence</title>
             <link>https://mohamedhabib.work/#experience</link>
             <description>Comprehensive overview of 7+ years professional journey as Senior Full Stack Developer and Team Leader, highlighting key achievements in enterprise software development and team management.</description>
             <content:encoded><![CDATA[
@@ -133,7 +133,7 @@
             <category>Leadership</category>
             <category>Career</category>
             <pubDate>Wed, 25 Dec 2024 12:00:00 GMT</pubDate>
-            <guid isPermaLink="true">https://mohamedhabib.work/#experience</guid>
+            <guid isPermaLink="false">https://mohamedhabib.work/#experience</guid>
         </item>
         
     </channel>
