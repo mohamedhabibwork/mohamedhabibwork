@@ -1,16 +1,15 @@
-import { createORPCClient } from "@orpc/client";
-import { RPCLink } from "@orpc/client/fetch";
+import { appRouter } from "@habib-app/api/routers/index";
+import { createContext } from "@habib-app/api/context";
+import { createRouterClient } from "@orpc/server";
 import { getRequestEvent } from "$app/server";
 
 if (typeof window !== "undefined") {
 	throw new Error("orpc.server.ts should only be imported on the server");
 }
 
-const link = new RPCLink({
-	url: async () => `${getRequestEvent().url.origin}/rpc`,
-	async fetch(request, init) {
-		return getRequestEvent().fetch(request, init);
+export const serverClient = createRouterClient(appRouter, {
+	context: async () => {
+		const event = getRequestEvent();
+		return createContext({ request: event.request });
 	},
 });
-
-export const serverClient = createORPCClient(link);

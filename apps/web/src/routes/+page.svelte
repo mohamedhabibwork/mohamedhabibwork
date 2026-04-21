@@ -6,20 +6,12 @@
 	import Projects from "../components/Projects.svelte";
 	import Skills from "../components/Skills.svelte";
 	import Timeline from "../components/Timeline.svelte";
-	import {
-		useExperienceQuery,
-		useProfileQuery,
-		useProjectsQuery,
-		useSkillsQuery,
-	} from "../lib/queries";
+	import type { PageData } from "./$types";
 
-	const profileQuery = useProfileQuery();
-	const skillsQuery = useSkillsQuery();
-	const projectsQuery = useProjectsQuery();
-	const experienceQuery = useExperienceQuery();
+	const { data }: { data: PageData } = $props();
 
 	const profile = $derived(
-		$profileQuery.data ?? {
+		data.profile ?? {
 			name: "Mohamed Habib",
 			title: "",
 			tagline: "",
@@ -36,7 +28,7 @@
 	);
 
 	const skills = $derived(
-		$skillsQuery.data ?? {
+		data.skills ?? {
 			backend: [],
 			frontend: [],
 			database: [],
@@ -46,11 +38,9 @@
 		}
 	);
 
-	const featuredProjects = $derived(
-		$projectsQuery.data?.projects.slice(0, 6) ?? []
-	);
+	const featuredProjects = $derived(data.projects?.projects.slice(0, 6) ?? []);
 
-	const experience = $derived($experienceQuery.data?.slice(0, 5) ?? []);
+	const experience = $derived(data.experience?.slice(0, 5) ?? []);
 </script>
 
 <svelte:head>

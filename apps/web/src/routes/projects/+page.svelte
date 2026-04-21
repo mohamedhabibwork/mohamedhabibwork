@@ -5,14 +5,13 @@
 	import Badge from "../../components/ui/Badge.svelte";
 	import Card from "../../components/ui/Card.svelte";
 	import Section from "../../components/ui/Section.svelte";
-	import { useProfileQuery, useProjectsQuery } from "../../lib/queries";
+	import type { PageData } from "./$types";
 
-	const projectsQuery = useProjectsQuery();
-	const profileQuery = useProfileQuery();
+	const { data }: { data: PageData } = $props();
 
-	const projects = $derived($projectsQuery.data?.projects ?? []);
-	const categories = $derived($projectsQuery.data?.categories ?? ["All"]);
-	const profile = $derived($profileQuery.data ?? defaultProfile);
+	const projects = $derived(data.projects?.projects ?? []);
+	const categories = $derived(data.projects?.categories ?? ["All"]);
+	const profile = $derived(data.profile ?? defaultProfile);
 
 	let activeCategory = $state<Category>("All");
 

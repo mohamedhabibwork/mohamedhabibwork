@@ -2,8 +2,8 @@ export interface Profile {
 	availability: string;
 	bio: string;
 	email: string;
-	github: string;
-	linkedin: string;
+	github: string | null;
+	linkedin: string | null;
 	location: string;
 	name: string;
 	stats: {
@@ -15,7 +15,7 @@ export interface Profile {
 	tagline: string;
 	timezone: string;
 	title: string;
-	whatsapp: string;
+	whatsapp: string | null;
 }
 
 export interface Skill {

@@ -8,7 +8,7 @@
 		children: Snippet;
 		class?: string;
 		disabled?: boolean;
-		href?: string;
+		href?: string | null;
 		onclick?: (event: MouseEvent) => void;
 		size?: Size;
 		type?: "button" | "submit" | "reset";

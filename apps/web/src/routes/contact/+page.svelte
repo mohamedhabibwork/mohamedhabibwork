@@ -3,13 +3,13 @@
 	import Button from "../../components/ui/Button.svelte";
 	import Card from "../../components/ui/Card.svelte";
 	import Section from "../../components/ui/Section.svelte";
-	import { useContactMutation, useProfileQuery } from "../../lib/queries";
+	import { useContactMutation } from "../../lib/queries";
+	import type { PageData } from "./$types";
 
-	const profileQuery = useProfileQuery();
-	const contactMutation = useContactMutation();
+	const { data }: { data: PageData } = $props();
 
 	const profile = $derived(
-		$profileQuery.data ?? {
+		data.profile ?? {
 			name: "Mohamed Habib",
 			email: "",
 			whatsapp: "",
@@ -24,6 +24,9 @@
 			stats: { years: 0, projects: 0, industries: 0, successRate: 0 },
 		}
 	);
+
+	// biome-ignore lint/correctness/useHookAtTopLevel: Svelte component top-level is valid for hooks
+	const contactMutation = useContactMutation();
 
 	let formState = $state({
 		name: "",

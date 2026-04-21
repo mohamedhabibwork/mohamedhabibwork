@@ -4,7 +4,7 @@ import { Stack } from "expo-router";
 import { HeroUINativeProvider } from "heroui-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
-
+import { QueryErrorHandler } from "@/components/error";
 import { AppThemeProvider } from "@/contexts/app-theme-context";
 import { queryClient } from "@/utils/orpc";
 
@@ -31,6 +31,7 @@ export default function Layout() {
 				<KeyboardProvider>
 					<AppThemeProvider>
 						<HeroUINativeProvider>
+							<QueryErrorHandler />
 							<StackLayout />
 						</HeroUINativeProvider>
 					</AppThemeProvider>

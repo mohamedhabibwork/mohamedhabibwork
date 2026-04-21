@@ -4,18 +4,12 @@
 	import Skills from "../../components/Skills.svelte";
 	import Timeline from "../../components/Timeline.svelte";
 	import Button from "../../components/ui/Button.svelte";
-	import {
-		useExperienceQuery,
-		useProfileQuery,
-		useSkillsQuery,
-	} from "../../lib/queries";
+	import type { PageData } from "./$types";
 
-	const profileQuery = useProfileQuery();
-	const skillsQuery = useSkillsQuery();
-	const experienceQuery = useExperienceQuery();
+	const { data }: { data: PageData } = $props();
 
 	const profile = $derived(
-		$profileQuery.data ?? {
+		data.profile ?? {
 			name: "Mohamed Habib",
 			title: "",
 			bio: "",
@@ -31,7 +25,7 @@
 		}
 	);
 	const skills = $derived(
-		$skillsQuery.data ?? {
+		data.skills ?? {
 			backend: [],
 			frontend: [],
 			database: [],
@@ -40,7 +34,7 @@
 			specializations: [],
 		}
 	);
-	const experience = $derived($experienceQuery.data ?? []);
+	const experience = $derived(data.experience ?? []);
 </script>
 
 <svelte:head>
