@@ -1,12 +1,91 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%sveltekit.assets%/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    %sveltekit.head%
-  </head>
-  <body data-sveltekit-preload-data="hover">
-    <div style="display: contents">%sveltekit.body%</div>
-  </body>
+<html lang="en" class="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta
+			name="theme-color"
+			content="#09090b"
+			media="(prefers-color-scheme: dark)"
+		>
+		<meta
+			name="theme-color"
+			content="#ffffff"
+			media="(prefers-color-scheme: light)"
+		>
+
+		<link rel="icon" href="/favicon.png" type="image/png">
+		<link rel="apple-touch-icon" href="/favicon.png">
+
+		<meta
+			name="title"
+			content="Mohammad Habib - Senior Full Stack Developer & Team Leader"
+		>
+		<meta
+			name="description"
+			content="Transforming ideas into scalable digital solutions with 7+ years of expertise in enterprise development and team leadership. Expert in Laravel, Node.js, React, Vue.js, and cloud architecture."
+		>
+		<meta name="author" content="Mohammad Habib">
+		<meta name="robots" content="index, follow">
+		<meta
+			name="keywords"
+			content="Full Stack Developer, Team Leader, Laravel, Node.js, React, Vue.js, Enterprise Solutions, Egypt, Remote"
+		>
+
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://mohamedhabib.work/">
+		<meta
+			property="og:title"
+			content="Mohammad Habib - Senior Full Stack Developer & Team Leader"
+		>
+		<meta
+			property="og:description"
+			content="Transforming ideas into scalable digital solutions with 7+ years of expertise in enterprise development and team leadership."
+		>
+		<meta property="og:image" content="https://mohamedhabib.work/og-image.png">
+		<meta property="og:locale" content="en_US">
+
+		<meta property="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content="https://mohamedhabib.work/">
+		<meta
+			property="twitter:title"
+			content="Mohammad Habib - Senior Full Stack Developer & Team Leader"
+		>
+		<meta
+			property="twitter:description"
+			content="Transforming ideas into scalable digital solutions with 7+ years of expertise in enterprise development and team leadership."
+		>
+		<meta
+			property="twitter:image"
+			content="https://mohamedhabib.work/og-image.png"
+		>
+
+		<meta
+			name="linkedin:profile"
+			content="https://linkedin.com/in/mohamedhabibwork"
+		>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+			rel="stylesheet"
+		>
+
+		<script>
+			"use strict";
+			(() => {
+				const stored = localStorage.getItem("theme");
+				const prefersDark = window.matchMedia(
+					"(prefers-color-scheme: dark)"
+				).matches;
+				const theme = stored || (prefersDark ? "dark" : "light");
+				document.documentElement.classList.toggle("dark", theme === "dark");
+			})();
+		</script>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover" class="antialiased">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
 </html>

@@ -97,5 +97,9 @@
       }
     }
   ],
-  "extends": ["ultracite/biome/core", "ultracite/biome/svelte", "ultracite/biome/react"]
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/svelte",
+    "ultracite/biome/react"
+  ]
 }
