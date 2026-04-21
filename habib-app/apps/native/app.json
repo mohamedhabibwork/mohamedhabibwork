@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "scheme": "habib-app",
+    "userInterfaceStyle": "automatic",
+    "orientation": "default",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "habib-app",
+    "slug": "habib-app",
+    "plugins": ["expo-font"],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

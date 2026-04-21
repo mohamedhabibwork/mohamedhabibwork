@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "better-t-stack": {
+      "command": "bunx",
+      "args": ["create-better-t-stack@latest", "mcp"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "cloudflare-docs": {
+      "url": "https://docs.mcp.cloudflare.com/sse"
+    },
+    "svelte": {
+      "url": "https://mcp.svelte.dev/mcp"
+    },
+    "expo-mcp": {
+      "url": "https://mcp.expo.dev/mcp"
+    }
+  }
+}

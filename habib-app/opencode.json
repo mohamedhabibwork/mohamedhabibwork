@@ -1,0 +1,31 @@
+{
+  "mcp": {
+    "better-t-stack": {
+      "type": "local",
+      "command": ["bunx", "create-better-t-stack@latest", "mcp"],
+      "enabled": true,
+      "environment": {}
+    },
+    "context7": {
+      "type": "local",
+      "command": ["npx", "-y", "@upstash/context7-mcp"],
+      "enabled": true,
+      "environment": {}
+    },
+    "cloudflare-docs": {
+      "type": "remote",
+      "url": "https://docs.mcp.cloudflare.com/sse",
+      "enabled": true
+    },
+    "svelte": {
+      "type": "remote",
+      "url": "https://mcp.svelte.dev/mcp",
+      "enabled": true
+    },
+    "expo-mcp": {
+      "type": "remote",
+      "url": "https://mcp.expo.dev/mcp",
+      "enabled": true
+    }
+  }
+}

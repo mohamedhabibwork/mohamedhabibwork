@@ -1,0 +1,64 @@
+{
+  "name": "habib-app",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "dotenv": "^17.2.2",
+      "zod": "^4.1.13",
+      "typescript": "^6",
+      "@cloudflare/workers-types": "^4.20251213.0",
+      "hono": "^4.8.2",
+      "@orpc/server": "^1.13.14",
+      "@orpc/openapi": "^1.13.14",
+      "@orpc/zod": "^1.13.14",
+      "alchemy": "^0.91.2",
+      "@orpc/tanstack-query": "^1.13.14",
+      "@orpc/client": "^1.13.14",
+      "tailwindcss": "^4.2.2"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev:native": "turbo -F native dev",
+    "dev:web": "turbo -F web dev",
+    "dev:server": "turbo -F server dev",
+    "db:push": "turbo -F @habib-app/db db:push",
+    "db:studio": "turbo -F @habib-app/db db:studio",
+    "db:generate": "turbo -F @habib-app/db db:generate",
+    "db:migrate": "turbo -F @habib-app/db db:migrate",
+    "deploy": "turbo -F @habib-app/infra deploy",
+    "destroy": "turbo -F @habib-app/infra destroy",
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@habib-app/env": "workspace:*",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.12",
+    "@cloudflare/workers-types": "catalog:",
+    "@habib-app/config": "workspace:*",
+    "@types/node": "^22.13.14",
+    "husky": "latest",
+    "lint-staged": "latest",
+    "turbo": "^2.8.12",
+    "typescript": "catalog:",
+    "ultracite": "7.6.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
+      "bun x ultracite fix"
+    ]
+  },
+  "packageManager": "bun@1.3.10"
+}
