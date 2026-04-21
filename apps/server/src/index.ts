@@ -1,8 +1,9 @@
 import { createContext } from "@habib-app/api/context";
 import { appRouter } from "@habib-app/api/routers/index";
 import { env } from "@habib-app/env/server";
+import { SmartCoercionPlugin } from "@orpc/json-schema";
+import { OpenAPIGenerator } from "@orpc/openapi";
 import { OpenAPIHandler } from "@orpc/openapi/fetch";
-import { OpenAPIReferencePlugin } from "@orpc/openapi/plugins";
 import { onError } from "@orpc/server";
 import { RPCHandler } from "@orpc/server/fetch";
 import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
@@ -21,10 +22,12 @@ app.use(
 	})
 );
 
+const schemaConverters = [new ZodToJsonSchemaConverter()];
+
 export const apiHandler = new OpenAPIHandler(appRouter, {
 	plugins: [
-		new OpenAPIReferencePlugin({
-			schemaConverters: [new ZodToJsonSchemaConverter()],
+		new SmartCoercionPlugin({
+			schemaConverters,
 		}),
 	],
 	interceptors: [
@@ -42,8 +45,13 @@ export const rpcHandler = new RPCHandler(appRouter, {
 	],
 });
 
-app.use("/*", async (c, next) => {
-	const context = await createContext({ context: c });
+const openAPIGenerator = new OpenAPIGenerator({
+	schemaConverters,
+});
+
+// Handle RPC requests at /rpc
+app.post("/rpc", async (c) => {
+	const context = await createContext({ request: c.req.raw });
 
 	const rpcResult = await rpcHandler.handle(c.req.raw, {
 		prefix: "/rpc",
@@ -54,8 +62,55 @@ app.use("/*", async (c, next) => {
 		return c.newResponse(rpcResult.response.body, rpcResult.response);
 	}
 
+	return c.json({ error: "Not found" }, 404);
+});
+
+// OpenAPI spec endpoint
+app.get("/spec.json", async (c) => {
+	const spec = await openAPIGenerator.generate(appRouter, {
+		info: {
+			title: "Habib App API",
+			version: "1.0.0",
+		},
+		servers: [{ url: "/api" }],
+	});
+
+	return c.json(spec);
+});
+
+// Scalar API Reference UI
+app.get("/api-reference", (c) => {
+	const html = `
+    <!doctype html>
+    <html>
+      <head>
+        <title>Habib App API Reference</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/svg+xml" href="https://orpc.dev/icon.svg" />
+      </head>
+      <body>
+        <div id="app"></div>
+
+        <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+        <script>
+          Scalar.createApiReference('#app', {
+            url: '/spec.json',
+          })
+        </script>
+      </body>
+    </html>
+  `;
+
+	return c.html(html);
+});
+
+// Handle all other API requests
+app.use("/api/*", async (c, next) => {
+	const context = await createContext({ request: c.req.raw });
+
 	const apiResult = await apiHandler.handle(c.req.raw, {
-		prefix: "/api-reference",
+		prefix: "/api",
 		context,
 	});
 
@@ -66,6 +121,11 @@ app.use("/*", async (c, next) => {
 	await next();
 });
 
-app.get("/", (c) => c.json({ status: "OK" }));
+app.get("/", (c) =>
+	c.json({
+		status: "OK",
+		routes: ["/rpc", "/api-reference", "/spec.json", "/api/*", "/"],
+	})
+);
 
 export default app;

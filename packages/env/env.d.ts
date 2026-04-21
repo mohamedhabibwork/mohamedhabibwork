@@ -9,7 +9,9 @@ declare global {
 	type Env = CloudflareEnv;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
 declare module "cloudflare:workers" {
+	// biome-ignore lint/style/noNamespace: Cloudflare Workers type declarations require namespace
 	namespace Cloudflare {
 		export interface Env extends CloudflareEnv {}
 	}

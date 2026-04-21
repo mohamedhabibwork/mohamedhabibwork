@@ -18,6 +18,7 @@
       "alchemy": "^0.91.2",
       "@orpc/tanstack-query": "^1.13.14",
       "@orpc/client": "^1.13.14",
+      "@orpc/json-schema": "^1.13.14",
       "tailwindcss": "^4.2.2"
     }
   },
@@ -33,6 +34,7 @@
     "db:studio": "turbo -F @habib-app/db db:studio",
     "db:generate": "turbo -F @habib-app/db db:generate",
     "db:migrate": "turbo -F @habib-app/db db:migrate",
+    "db:seed": "turbo -F @habib-app/db db:seed",
     "deploy": "turbo -F @habib-app/infra deploy",
     "destroy": "turbo -F @habib-app/infra destroy",
     "check": "ultracite check",
@@ -41,18 +43,18 @@
   },
   "dependencies": {
     "@habib-app/env": "workspace:*",
-    "dotenv": "catalog:",
-    "zod": "catalog:"
+    "dotenv": "^17.4.2",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.12",
-    "@cloudflare/workers-types": "catalog:",
+    "@cloudflare/workers-types": "^4.20260421.1",
     "@habib-app/config": "workspace:*",
-    "@types/node": "^22.13.14",
+    "@types/node": "^22.19.17",
     "husky": "latest",
     "lint-staged": "latest",
-    "turbo": "^2.8.12",
-    "typescript": "catalog:",
+    "turbo": "^2.9.6",
+    "typescript": "^6.0.3",
     "ultracite": "7.6.0"
   },
   "lint-staged": {

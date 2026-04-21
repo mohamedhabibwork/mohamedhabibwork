@@ -179,8 +179,10 @@
 		</p>
 
 		<div class="controls">
-			<button class="btn btn-add" onclick="addRow()">+ Add Query</button>
-			<button class="btn btn-export" onclick="exportEvalSet()">
+			<button type="button" class="btn btn-add" onclick="addRow()">
+				+ Add Query
+			</button>
+			<button type="button" class="btn btn-export" onclick="exportEvalSet()">
 				Export Eval Set
 			</button>
 		</div>
@@ -200,6 +202,7 @@
 
 		<script>
 			"use strict";
+			// biome-ignore lint/correctness/noUndeclaredVariables: template placeholder replaced at build time
 			const EVAL_DATA = __EVAL_DATA_PLACEHOLDER__;
 
 			const evalItems = [...EVAL_DATA];
@@ -216,7 +219,7 @@
 					);
 
 				let lastGroup = null;
-				sorted.forEach((item) => {
+				for (const item of sorted) {
 					const group = item.should_trigger ? "trigger" : "no-trigger";
 					if (group !== lastGroup) {
 						const headerRow = document.createElement("tr");
@@ -229,18 +232,18 @@
 					const idx = item.origIdx;
 					const tr = document.createElement("tr");
 					tr.innerHTML = `
-			              <td><textarea class="query-input" onchange="updateQuery(${idx}, this.value)">${escapeHtml(item.query)}</textarea></td>
-			              <td>
-			                <label class="toggle">
-			                  <input type="checkbox" ${item.should_trigger ? "checked" : ""} onchange="updateTrigger(${idx}, this.checked)">
-			                  <span class="slider"></span>
-			                </label>
-			                <span style="margin-left:8px;font-size:0.8rem;color:#b0aea5">${item.should_trigger ? "Yes" : "No"}</span>
-			              </td>
-			              <td><button class="btn-delete" onclick="deleteRow(${idx})">Delete</button></td>
-			            `;
+																														              <td><textarea class="query-input" onchange="updateQuery(${idx}, this.value)">${escapeHtml(item.query)}</textarea></td>
+																														              <td>
+																														                <label class="toggle">
+																														                  <input type="checkbox" ${item.should_trigger ? "checked" : ""} onchange="updateTrigger(${idx}, this.checked)">
+																														                  <span class="slider"></span>
+																														                </label>
+																														                <span style="margin-left:8px;font-size:0.8rem;color:#b0aea5">${item.should_trigger ? "Yes" : "No"}</span>
+																														              </td>
+																														              <td><button class="btn-delete" onclick="deleteRow(${idx})">Delete</button></td>
+																														            `;
 					tbody.appendChild(tr);
-				});
+				}
 				updateSummary();
 			}
 
@@ -250,24 +253,24 @@
 				return div.innerHTML;
 			}
 
-			function updateQuery(idx, value) {
+			function _updateQuery(idx, value) {
 				evalItems[idx].query = value;
 				updateSummary();
 			}
-			function updateTrigger(idx, value) {
+			function _updateTrigger(idx, value) {
 				evalItems[idx].should_trigger = value;
 				render();
 			}
-			function deleteRow(idx) {
+			function _deleteRow(idx) {
 				evalItems.splice(idx, 1);
 				render();
 			}
 
-			function addRow() {
+			function _addRow() {
 				evalItems.push({ query: "", should_trigger: true });
 				render();
 				const inputs = document.querySelectorAll(".query-input");
-				inputs[inputs.length - 1].focus();
+				inputs.at(-1).focus();
 			}
 
 			function updateSummary() {
@@ -277,7 +280,7 @@
 					`${evalItems.length} queries total: ${trigger} should trigger, ${noTrigger} should not trigger`;
 			}
 
-			function exportEvalSet() {
+			function _exportEvalSet() {
 				const valid = evalItems.filter((i) => i.query.trim() !== "");
 				const data = valid.map((i) => ({
 					query: i.query.trim(),

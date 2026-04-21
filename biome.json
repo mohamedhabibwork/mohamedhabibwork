@@ -26,7 +26,9 @@
       "!**/.svelte-kit",
       "!**/wrangler.jsonc",
       "!**/.source",
-      "!**/convex/_generated"
+      "!**/convex/_generated",
+      "!packages/db/src/schema/index.ts",
+      "!old-web"
     ]
   },
   "formatter": {
@@ -73,7 +75,25 @@
   "javascript": {
     "formatter": {
       "quoteStyle": "double"
-    }
+    },
+    "globals": [
+      "background",
+      "createCanvas",
+      "createVector",
+      "cos",
+      "fill",
+      "floor",
+      "height",
+      "noise",
+      "noiseSeed",
+      "noStroke",
+      "random",
+      "randomSeed",
+      "rect",
+      "saveCanvas",
+      "sin",
+      "width"
+    ]
   },
   "css": {
     "parser": {
@@ -87,7 +107,8 @@
         "rules": {
           "style": {
             "useConst": "off",
-            "useImportType": "off"
+            "useImportType": "off",
+            "useFilenamingConvention": "off"
           },
           "correctness": {
             "noUnusedVariables": "off",

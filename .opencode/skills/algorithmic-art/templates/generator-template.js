@@ -1,3 +1,5 @@
+/* global createVector, cos, createCanvas, height, noise, noiseSeed, noStroke, random, randomSeed, rect, saveCanvas, sin, width */
+
 /**
  * ═══════════════════════════════════════════════════════════════════════════
  *                  P5.JS GENERATIVE ART - BEST PRACTICES
@@ -50,7 +52,7 @@ function initializeSeed(seed) {
 // 3. P5.JS LIFECYCLE
 // ============================================================================
 
-function setup() {
+function _setup() {
 	createCanvas(800, 800);
 
 	// Initialize seed first
@@ -67,7 +69,7 @@ function setup() {
 	// For animated art: let draw() keep running
 }
 
-function draw() {
+function _draw() {
 	// Option 1: Static generation (runs once, then stops)
 	// - Generate everything in setup()
 	// - Call noLoop() in setup()
@@ -87,25 +89,20 @@ function draw() {
 // Use classes when your algorithm involves multiple entities
 // Examples: particles, agents, cells, nodes, etc.
 
-class Entity {
-	constructor() {
-		// Initialize entity properties
-		// Use random() here - it will be seeded
-	}
+// class Entity {
+// 	update() {
+// 		// Update entity state
+// 		// This might involve:
+// 		// - Physics calculations
+// 		// - Behavioral rules
+// 		// - Interactions with neighbors
+// 	}
 
-	update() {
-		// Update entity state
-		// This might involve:
-		// - Physics calculations
-		// - Behavioral rules
-		// - Interactions with neighbors
-	}
-
-	display() {
-		// Render the entity
-		// Keep rendering logic separate from update logic
-	}
-}
+// 	display() {
+// 		// Render the entity
+// 		// Keep rendering logic separate from update logic
+// 	}
+// }
 
 // ============================================================================
 // 5. PERFORMANCE CONSIDERATIONS
@@ -126,9 +123,11 @@ class Entity {
 // 6. UTILITY FUNCTIONS
 // ============================================================================
 
+const HEX_COLOR_REGEX = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
+
 // Color utilities
-function hexToRgb(hex) {
-	const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+function _hexToRgb(hex) {
+	const result = HEX_COLOR_REGEX.exec(hex);
 	return result
 		? {
 				r: Number.parseInt(result[1], 16),
@@ -138,21 +137,21 @@ function hexToRgb(hex) {
 		: null;
 }
 
-function colorFromPalette(index) {
+function _colorFromPalette(index) {
 	return params.colorPalette[index % params.colorPalette.length];
 }
 
 // Mapping and easing
-function mapRange(value, inMin, inMax, outMin, outMax) {
+function _mapRange(value, inMin, inMax, outMin, outMax) {
 	return outMin + (outMax - outMin) * ((value - inMin) / (inMax - inMin));
 }
 
-function easeInOutCubic(t) {
+function _easeInOutCubic(t) {
 	return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
 }
 
 // Constrain to bounds
-function wrapAround(value, max) {
+function _wrapAround(value, max) {
 	if (value < 0) {
 		return max;
 	}
@@ -166,13 +165,13 @@ function wrapAround(value, max) {
 // 7. PARAMETER UPDATES (Connect to UI)
 // ============================================================================
 
-function updateParameter(paramName, value) {
+function _updateParameter(paramName, value) {
 	params[paramName] = value;
 	// Decide if you need to regenerate or just update
 	// Some params can update in real-time, others need full regeneration
 }
 
-function regenerate() {
+function _regenerate() {
 	// Reinitialize your generative system
 	// Useful when parameters change significantly
 	initializeSeed(params.seed);
@@ -184,19 +183,19 @@ function regenerate() {
 // ============================================================================
 
 // Drawing with transparency for trails/fading
-function fadeBackground(opacity) {
+function _fadeBackground(opacity) {
 	fill(250, 249, 245, opacity); // Anthropic light with alpha
 	noStroke();
 	rect(0, 0, width, height);
 }
 
 // Using noise for organic variation
-function getNoiseValue(x, y, scale = 0.01) {
+function _getNoiseValue(x, y, scale = 0.01) {
 	return noise(x * scale, y * scale);
 }
 
 // Creating vectors from angles
-function vectorFromAngle(angle, magnitude = 1) {
+function _vectorFromAngle(angle, magnitude = 1) {
 	return createVector(cos(angle), sin(angle)).mult(magnitude);
 }
 
@@ -204,8 +203,8 @@ function vectorFromAngle(angle, magnitude = 1) {
 // 9. EXPORT FUNCTIONS
 // ============================================================================
 
-function exportImage() {
-	saveCanvas("generative-art-" + params.seed, "png");
+function _exportImage() {
+	saveCanvas(`generative-art-${params.seed}`, "png");
 }
 
 // ============================================================================

@@ -13,7 +13,8 @@
 
 	function getNavLinkClasses(href: string): string {
 		const isActive = currentPath === href;
-		const base = "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200";
+		const base =
+			"px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200";
 		if (isActive) {
 			return `${base} bg-blue-600 text-white shadow-md shadow-blue-600/20`;
 		}
@@ -57,13 +58,21 @@
 			<div class="flex items-center gap-2">
 				<!-- Theme Toggle -->
 				<button
+					type="button"
 					onclick={() => theme.toggle()}
 					class={getIconButtonClasses()}
 					aria-label="Toggle theme"
 					title="Toggle theme"
 				>
 					{#if theme.current === "dark"}
-						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg
+							class="w-5 h-5"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							role="img"
+							aria-label="Sun icon"
+						>
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
@@ -72,7 +81,14 @@
 							/>
 						</svg>
 					{:else}
-						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<svg
+							class="w-5 h-5"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							role="img"
+							aria-label="Moon icon"
+						>
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
@@ -94,12 +110,20 @@
 
 				<!-- Mobile Menu Button -->
 				<button
+					type="button"
 					class="sm:hidden {getIconButtonClasses()}"
 					aria-label="Menu"
 					aria-expanded="false"
 					title="Menu"
 				>
-					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<svg
+						class="w-6 h-6"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						role="img"
+						aria-label="Menu icon"
+					>
 						<path
 							stroke-linecap="round"
 							stroke-linejoin="round"

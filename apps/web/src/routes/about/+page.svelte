@@ -4,20 +4,50 @@
 	import Skills from "../../components/Skills.svelte";
 	import Timeline from "../../components/Timeline.svelte";
 	import Button from "../../components/ui/Button.svelte";
-	import type { PageData } from "./$types";
+	import {
+		useExperienceQuery,
+		useProfileQuery,
+		useSkillsQuery,
+	} from "../../lib/queries";
 
-	interface Props {
-		data: PageData;
-	}
+	const profileQuery = useProfileQuery();
+	const skillsQuery = useSkillsQuery();
+	const experienceQuery = useExperienceQuery();
 
-	const { data }: Props = $props();
+	const profile = $derived(
+		$profileQuery.data ?? {
+			name: "Mohamed Habib",
+			title: "",
+			bio: "",
+			location: "",
+			stats: { years: 0, projects: 0, industries: 0, successRate: 0 },
+			availability: "",
+			email: "",
+			github: "",
+			linkedin: "",
+			tagline: "",
+			timezone: "",
+			whatsapp: "",
+		}
+	);
+	const skills = $derived(
+		$skillsQuery.data ?? {
+			backend: [],
+			frontend: [],
+			database: [],
+			cloud: [],
+			leadership: [],
+			specializations: [],
+		}
+	);
+	const experience = $derived($experienceQuery.data ?? []);
 </script>
 
 <svelte:head>
-	<title>About - {data.profile.name}</title>
+	<title>About - {profile.name}</title>
 	<meta
 		name="description"
-		content="Learn more about {data.profile.name}, {data.profile.title} with {data.profile.stats.years}+ years of experience."
+		content="Learn more about {profile.name}, {profile.title} with {profile.stats.years}+ years of experience."
 	>
 </svelte:head>
 
@@ -30,15 +60,11 @@
 			>
 				About Me
 			</h1>
-			<p class="text-xl" style="color: var(--accent);">{data.profile.title}</p>
+			<p class="text-xl" style="color: var(--accent);">{profile.title}</p>
 		</div>
 	</div>
 
-	<About
-		bio={data.profile.bio}
-		stats={data.profile.stats}
-		location={data.profile.location}
-	/>
+	<About bio={profile.bio} stats={profile.stats} location={profile.location} />
 
 	<div
 		class="py-16 px-4 sm:px-6 lg:px-8"
@@ -70,7 +96,7 @@
 					style="background-color: var(--card-bg); border: 1px solid var(--border-color);"
 				>
 					<p style="color: var(--text-secondary);">
-						{data.profile.stats.successRate}%+ project delivery success rate
+						{profile.stats.successRate}%+ project delivery success rate
 					</p>
 				</div>
 				<div
@@ -85,9 +111,9 @@
 		</div>
 	</div>
 
-	<Timeline experience={data.experience} />
+	<Timeline {experience} />
 
-	<Skills skills={data.skills} />
+	<Skills {skills} />
 
 	<div
 		class="py-16 px-4 sm:px-6 lg:px-8"
@@ -106,5 +132,5 @@
 		</div>
 	</div>
 
-	<Footer profile={data.profile} />
+	<Footer {profile} />
 </main>

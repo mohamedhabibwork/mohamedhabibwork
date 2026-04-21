@@ -1,24 +1,25 @@
 <script lang="ts">
-	import { profile } from "$lib/data/profile";
-	import type { Category } from "$lib/data/projects";
+	import type { Category, Project } from "@habib-app/api/data";
+	import { profile as defaultProfile } from "@habib-app/api/data";
 	import Footer from "../../components/Footer.svelte";
 	import Badge from "../../components/ui/Badge.svelte";
 	import Card from "../../components/ui/Card.svelte";
 	import Section from "../../components/ui/Section.svelte";
-	import type { PageData } from "./$types";
+	import { useProfileQuery, useProjectsQuery } from "../../lib/queries";
 
-	interface Props {
-		data: PageData;
-	}
+	const projectsQuery = useProjectsQuery();
+	const profileQuery = useProfileQuery();
 
-	const { data }: Props = $props();
+	const projects = $derived($projectsQuery.data?.projects ?? []);
+	const categories = $derived($projectsQuery.data?.categories ?? ["All"]);
+	const profile = $derived($profileQuery.data ?? defaultProfile);
 
 	let activeCategory = $state<Category>("All");
 
 	const filteredProjects = $derived(
 		activeCategory === "All"
-			? data.projects
-			: data.projects.filter((p) => p.category === activeCategory)
+			? projects
+			: projects.filter((p: Project) => p.category === activeCategory)
 	);
 </script>
 
@@ -52,8 +53,9 @@
 
 	<Section class="py-8">
 		<div class="flex flex-wrap justify-center gap-2 mb-12">
-			{#each data.categories as category}
+			{#each categories as category}
 				<button
+					type="button"
 					onclick={() => (activeCategory = category)}
 					class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
 					style={activeCategory === category

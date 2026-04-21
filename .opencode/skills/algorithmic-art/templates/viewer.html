@@ -356,14 +356,19 @@
 						onchange="updateSeed()"
 					>
 					<div class="seed-controls">
-						<button class="button secondary" onclick="previousSeed()">
+						<button
+							type="button"
+							class="button secondary"
+							onclick="previousSeed()"
+						>
 							← Prev
 						</button>
-						<button class="button secondary" onclick="nextSeed()">
+						<button type="button" class="button secondary" onclick="nextSeed()">
 							Next →
 						</button>
 					</div>
 					<button
+						type="button"
 						class="button tertiary regen-button"
 						onclick="randomSeedAndUpdate()"
 					>
@@ -495,7 +500,9 @@
 				<div class="control-section">
 					<h3>Actions</h3>
 					<div class="button-row">
-						<button class="button" onclick="resetParameters()">Reset</button>
+						<button type="button" class="button" onclick="resetParameters()">
+							Reset
+						</button>
 					</div>
 				</div>
 			</div>
@@ -509,6 +516,7 @@
 		</div>
 
 		<script>
+			/* global background, createCanvas, floor, height, noiseSeed, randomSeed, width */
 			"use strict";
 			// ═══════════════════════════════════════════════════════════════════════
 			// GENERATIVE ART PARAMETERS - CUSTOMIZE FOR YOUR ALGORITHM
@@ -530,11 +538,12 @@
 			// ═══════════════════════════════════════════════════════════════════════
 
 			let particles = [];
-			const flowField = [];
-			let cols, rows;
+			const _flowField = [];
+			let _cols;
+			let _rows;
 			const scl = 10; // Flow field resolution
 
-			function setup() {
+			function _setup() {
 				const canvas = createCanvas(1200, 1200);
 				canvas.parent("canvas-container");
 
@@ -558,8 +567,8 @@
 				}
 
 				// Calculate flow field dimensions
-				cols = floor(width / scl);
-				rows = floor(height / scl);
+				_cols = floor(width / scl);
+				_rows = floor(height / scl);
 
 				// Generate flow field
 				generateFlowField();
@@ -572,7 +581,7 @@
 				// fill this in
 			}
 
-			function draw() {
+			function _draw() {
 				// fill this in
 			}
 
@@ -581,9 +590,6 @@
 			// ═══════════════════════════════════════════════════════════════════════
 
 			class Particle {
-				constructor() {
-					// fill this in
-				}
 				// fill this in
 			}
 
@@ -591,11 +597,11 @@
 			// UI CONTROL HANDLERS - CUSTOMIZE FOR YOUR PARAMETERS
 			// ═══════════════════════════════════════════════════════════════════════
 
-			function updateParam(paramName, value) {
+			function _updateParam(_paramName, _value) {
 				// fill this in
 			}
 
-			function updateColor(colorId, value) {
+			function _updateColor(_colorId, _value) {
 				// fill this in
 			}
 
@@ -607,9 +613,9 @@
 				document.getElementById("seed-input").value = params.seed;
 			}
 
-			function updateSeed() {
+			function _updateSeed() {
 				const input = document.getElementById("seed-input");
-				const newSeed = Number.parseInt(input.value);
+				const newSeed = Number.parseInt(input.value, 10);
 				if (newSeed && newSeed > 0) {
 					params.seed = newSeed;
 					initializeSystem();
@@ -619,25 +625,25 @@
 				}
 			}
 
-			function previousSeed() {
+			function _previousSeed() {
 				params.seed = Math.max(1, params.seed - 1);
 				updateSeedDisplay();
 				initializeSystem();
 			}
 
-			function nextSeed() {
-				params.seed = params.seed + 1;
+			function _nextSeed() {
+				params.seed += 1;
 				updateSeedDisplay();
 				initializeSystem();
 			}
 
-			function randomSeedAndUpdate() {
+			function _randomSeedAndUpdate() {
 				params.seed = Math.floor(Math.random() * 999_999) + 1;
 				updateSeedDisplay();
 				initializeSystem();
 			}
 
-			function resetParameters() {
+			function _resetParameters() {
 				params = { ...defaultParams };
 
 				// Update UI elements

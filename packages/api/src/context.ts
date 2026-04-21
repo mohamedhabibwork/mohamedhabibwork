@@ -1,13 +1,46 @@
-import type { Context as HonoContext } from "hono";
+import { createDb } from "@habib-app/db";
 
-export type CreateContextOptions = {
-	context: HonoContext;
-};
+export interface CreateContextOptions {
+	request: Request;
+}
 
-export async function createContext({ context }: CreateContextOptions) {
+function parseLocale(acceptLanguage: string | undefined): "en" | "ar" {
+	if (!acceptLanguage) {
+		return "en";
+	}
+
+	const locales = acceptLanguage
+		.split(",")
+		.map((part) => {
+			const [lang] = part.trim().split(";");
+			return lang?.trim().toLowerCase() ?? "";
+		})
+		.filter(Boolean);
+
+	for (const locale of locales) {
+		if (locale.startsWith("ar")) {
+			return "ar";
+		}
+
+		if (locale.startsWith("en")) {
+			return "en";
+		}
+	}
+
+	return "en";
+}
+
+export function createContext(options: CreateContextOptions) {
+	const db = createDb();
+	const locale = parseLocale(
+		options.request.headers.get("accept-language") ?? undefined
+	);
+
 	return {
 		auth: null,
 		session: null,
+		db,
+		locale,
 	};
 }
 

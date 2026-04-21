@@ -11,7 +11,7 @@ Use `betaZodTool` with Zod schemas to define tools with a `run` function, then p
 ```typescript
 import Anthropic from "@anthropic-ai/sdk";
 import { betaZodTool } from "@anthropic-ai/sdk/helpers/beta/zod";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 const client = new Anthropic();
 
@@ -459,7 +459,7 @@ For full implementation examples, use WebFetch:
 
 ```typescript
 import Anthropic from "@anthropic-ai/sdk";
-import { z } from "zod";
+import { z } from "zod/v4";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 
 const ContactInfoSchema = z.object({

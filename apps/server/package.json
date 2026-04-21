@@ -11,6 +11,7 @@
     "@habib-app/api": "workspace:*",
     "@habib-app/db": "workspace:*",
     "@habib-app/env": "workspace:*",
+    "@orpc/json-schema": "catalog:",
     "@orpc/openapi": "catalog:",
     "@orpc/server": "catalog:",
     "@orpc/zod": "catalog:",

@@ -3,8 +3,8 @@
  * Get complete component documentation (MDX) for HeroUI Native components.
  *
  * Usage:
- *   node get_component_docs.mjs Button
- *   node get_component_docs.mjs Button Card TextField
+ *   node get-component-docs.mjs Button
+ *   node get-component-docs.mjs Button Card TextField
  *
  * Output:
  *   MDX documentation including imports, usage, variants, props, examples
@@ -97,9 +97,9 @@ async function main() {
 
 	if (args.length === 0) {
 		console.error(
-			"Usage: node get_component_docs.mjs <Component1> [Component2] ..."
+			"Usage: node get-component-docs.mjs <Component1> [Component2] ..."
 		);
-		console.error("Example: node get_component_docs.mjs Button Card");
+		console.error("Example: node get-component-docs.mjs Button Card");
 		process.exit(1);
 	}
 
@@ -109,7 +109,7 @@ async function main() {
 	console.error(`# Fetching Native docs for: ${components.join(", ")}...`);
 	const data = await fetchApi("/v1/components/docs", "POST", { components });
 
-	if (data && data.results) {
+	if (data?.results) {
 		// Output results
 		if (data.results.length === 1) {
 			// Single component - output content directly for easier reading

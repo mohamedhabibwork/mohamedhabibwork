@@ -11,7 +11,7 @@ const app = await alchemy("habib-app");
 export const web = await SvelteKit("web", {
 	cwd: "../../apps/web",
 	bindings: {
-		PUBLIC_SERVER_URL: alchemy.env.PUBLIC_SERVER_URL!,
+		PUBLIC_SERVER_URL: alchemy.env.PUBLIC_SERVER_URL || "mohamedhabib.work",
 	},
 });
 
@@ -20,8 +20,10 @@ export const server = await Worker("server", {
 	entrypoint: "src/index.ts",
 	compatibility: "node",
 	bindings: {
-		DATABASE_URL: alchemy.secret.env.DATABASE_URL!,
-		CORS_ORIGIN: alchemy.env.CORS_ORIGIN!,
+		DATABASE_URL:
+			alchemy.secret.env.DATABASE_URL ||
+			"postgresql://postgres:@localhost:5432/profile",
+		CORS_ORIGIN: alchemy.env.CORS_ORIGIN || "mohamedhabib.work,mohamedhabib.me",
 	},
 	dev: {
 		port: 3000,

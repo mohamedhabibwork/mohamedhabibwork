@@ -194,20 +194,115 @@
 				height: 600px;
 				border: none;
 			}
+
+			/* ---- Benchmark view ---- */
+			.benchmark-view {
+				flex: 1;
+				padding: 1.5rem 2rem;
+				overflow-y: auto;
+			}
+			.benchmark-table {
+				width: 100%;
+				margin-bottom: 1.5rem;
+				font-size: 0.8125rem;
+				border-collapse: collapse;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+			}
+			.benchmark-table th {
+				padding: 0.625rem 0.75rem;
+				font-family: "Poppins", sans-serif;
+				font-size: 0.75rem;
+				font-weight: 500;
+				color: var(--header-text);
+				text-align: left;
+				text-transform: uppercase;
+				letter-spacing: 0.04em;
+				background: var(--header-bg);
+				border: 1px solid var(--border);
+			}
+			.benchmark-table td {
+				padding: 0.625rem 0.75rem;
+				text-align: left;
+				border: 1px solid var(--border);
+			}
+			.benchmark-table tr:hover {
+				background: var(--bg);
+			}
+			.benchmark-table tr.benchmark-row-with {
+				background: rgba(33, 150, 243, 0.06);
+			}
+			.benchmark-table tr.benchmark-row-without {
+				background: rgba(255, 193, 7, 0.06);
+			}
+			.benchmark-table tr.benchmark-row-with:hover {
+				background: rgba(33, 150, 243, 0.12);
+			}
+			.benchmark-table tr.benchmark-row-without:hover {
+				background: rgba(255, 193, 7, 0.12);
+			}
+			.benchmark-table tr.benchmark-row-avg {
+				font-weight: 600;
+				border-top: 2px solid var(--border);
+			}
+			.benchmark-table tr.benchmark-row-avg.benchmark-row-with {
+				background: rgba(33, 150, 243, 0.12);
+			}
+			.benchmark-table tr.benchmark-row-avg.benchmark-row-without {
+				background: rgba(255, 193, 7, 0.12);
+			}
+			.benchmark-delta-positive {
+				font-weight: 600;
+				color: var(--green);
+			}
+			.benchmark-delta-negative {
+				font-weight: 600;
+				color: var(--red);
+			}
+			.benchmark-notes {
+				padding: 1rem;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+			}
+			.benchmark-notes h3 {
+				margin-bottom: 0.75rem;
+				font-family: "Poppins", sans-serif;
+				font-size: 0.875rem;
+			}
+			.benchmark-notes ul {
+				padding-left: 1.25rem;
+				list-style: disc;
+			}
+			.benchmark-notes li {
+				margin-bottom: 0.375rem;
+				font-size: 0.8125rem;
+				line-height: 1.6;
+			}
+			.benchmark-empty {
+				padding: 3rem;
+				font-style: italic;
+				color: var(--text-muted);
+				text-align: center;
+			}
+
 			.output-file-content table {
 				width: 100%;
 				font-size: 0.8125rem;
 				border-collapse: collapse;
 			}
-			.output-file-content table td,
 			.output-file-content table th {
+				padding: 0.375rem 0.5rem;
+				font-weight: 600;
+				text-align: left;
+				background: var(--bg);
+				border: 1px solid var(--border);
+			}
+			.output-file-content table td {
 				padding: 0.375rem 0.5rem;
 				text-align: left;
 				border: 1px solid var(--border);
-			}
-			.output-file-content table th {
-				font-weight: 600;
-				background: var(--bg);
 			}
 			.output-file-content .download-link {
 				display: inline-flex;
@@ -388,96 +483,6 @@
 				overflow: hidden;
 			}
 
-			/* ---- Benchmark view ---- */
-			.benchmark-view {
-				flex: 1;
-				padding: 1.5rem 2rem;
-				overflow-y: auto;
-			}
-			.benchmark-table {
-				width: 100%;
-				margin-bottom: 1.5rem;
-				font-size: 0.8125rem;
-				border-collapse: collapse;
-				background: var(--surface);
-				border: 1px solid var(--border);
-				border-radius: var(--radius);
-			}
-			.benchmark-table th,
-			.benchmark-table td {
-				padding: 0.625rem 0.75rem;
-				text-align: left;
-				border: 1px solid var(--border);
-			}
-			.benchmark-table th {
-				font-family: "Poppins", sans-serif;
-				font-size: 0.75rem;
-				font-weight: 500;
-				color: var(--header-text);
-				text-transform: uppercase;
-				letter-spacing: 0.04em;
-				background: var(--header-bg);
-			}
-			.benchmark-table tr:hover {
-				background: var(--bg);
-			}
-			.benchmark-table tr.benchmark-row-with {
-				background: rgba(33, 150, 243, 0.06);
-			}
-			.benchmark-table tr.benchmark-row-without {
-				background: rgba(255, 193, 7, 0.06);
-			}
-			.benchmark-table tr.benchmark-row-with:hover {
-				background: rgba(33, 150, 243, 0.12);
-			}
-			.benchmark-table tr.benchmark-row-without:hover {
-				background: rgba(255, 193, 7, 0.12);
-			}
-			.benchmark-table tr.benchmark-row-avg {
-				font-weight: 600;
-				border-top: 2px solid var(--border);
-			}
-			.benchmark-table tr.benchmark-row-avg.benchmark-row-with {
-				background: rgba(33, 150, 243, 0.12);
-			}
-			.benchmark-table tr.benchmark-row-avg.benchmark-row-without {
-				background: rgba(255, 193, 7, 0.12);
-			}
-			.benchmark-delta-positive {
-				font-weight: 600;
-				color: var(--green);
-			}
-			.benchmark-delta-negative {
-				font-weight: 600;
-				color: var(--red);
-			}
-			.benchmark-notes {
-				padding: 1rem;
-				background: var(--surface);
-				border: 1px solid var(--border);
-				border-radius: var(--radius);
-			}
-			.benchmark-notes h3 {
-				margin-bottom: 0.75rem;
-				font-family: "Poppins", sans-serif;
-				font-size: 0.875rem;
-			}
-			.benchmark-notes ul {
-				padding-left: 1.25rem;
-				list-style: disc;
-			}
-			.benchmark-notes li {
-				margin-bottom: 0.375rem;
-				font-size: 0.8125rem;
-				line-height: 1.6;
-			}
-			.benchmark-empty {
-				padding: 3rem;
-				font-style: italic;
-				color: var(--text-muted);
-				text-align: center;
-			}
-
 			/* ---- Navigation ---- */
 			.nav {
 				display: flex;
@@ -616,10 +621,18 @@
 
 			<!-- View tabs (only shown when benchmark data exists) -->
 			<div class="view-tabs" id="view-tabs" style="display:none;">
-				<button class="view-tab active" onclick="switchView('outputs')">
+				<button
+					type="button"
+					class="view-tab active"
+					onclick="switchView('outputs')"
+				>
 					Outputs
 				</button>
-				<button class="view-tab" onclick="switchView('benchmark')">
+				<button
+					type="button"
+					class="view-tab"
+					onclick="switchView('benchmark')"
+				>
 					Benchmark
 				</button>
 			</div>
@@ -695,13 +708,28 @@
 				</div>
 
 				<div class="nav" id="outputs-nav">
-					<button class="nav-btn" id="prev-btn" onclick="navigate(-1)">
+					<button
+						type="button"
+						class="nav-btn"
+						id="prev-btn"
+						onclick="navigate(-1)"
+					>
 						&#8592; Previous
 					</button>
-					<button class="done-btn" id="done-btn" onclick="showDoneDialog()">
+					<button
+						type="button"
+						class="done-btn"
+						id="done-btn"
+						onclick="showDoneDialog()"
+					>
 						Submit All Reviews
 					</button>
-					<button class="nav-btn" id="next-btn" onclick="navigate(1)">
+					<button
+						type="button"
+						class="nav-btn"
+						id="next-btn"
+						onclick="navigate(1)"
+					>
 						Next &#8594;
 					</button>
 				</div>
@@ -727,7 +755,7 @@
 					tell Claude you're done reviewing.
 				</p>
 				<div class="btn-row">
-					<button onclick="closeDoneDialog()">OK</button>
+					<button type="button" onclick="closeDoneDialog()">OK</button>
 				</div>
 			</div>
 		</div>
@@ -736,9 +764,12 @@
 		<div class="toast" id="toast"></div>
 
 		<script>
+			/* global EMBEDDED_DATA, XLSX */
+			/* eslint-env browser */
 			"use strict";
 			// ---- Embedded data (injected by generate_review.py) ----
-			/*__EMBEDDED_DATA__*/
+			const EMBEDDED_DATA = window.EMBEDDED_DATA || {};
+			const XLSX = window.XLSX;
 
 			// ---- State ----
 			const feedbackMap = {}; // run_id -> feedback text
@@ -797,6 +828,9 @@
 					currentIndex === EMBEDDED_DATA.runs.length - 1;
 			}
 
+			const CONFIG_REGEX = /(with_skill|without_skill|new_skill|old_skill)/;
+			const UNDERSCORE_REGEX = /_/g;
+
 			// ---- Show a run ----
 			function showRun(index) {
 				currentIndex = index;
@@ -811,14 +845,12 @@
 
 				// Config badge
 				const badge = document.getElementById("config-badge");
-				const configMatch = run.id.match(
-					/(with_skill|without_skill|new_skill|old_skill)/
-				);
+				const configMatch = run.id.match(CONFIG_REGEX);
 				if (configMatch) {
 					const config = configMatch[1];
 					const isBaseline =
 						config === "without_skill" || config === "old_skill";
-					badge.textContent = config.replace(/_/g, " ");
+					badge.textContent = config.replace(UNDERSCORE_REGEX, " ");
 					badge.className =
 						"config-badge " +
 						(isBaseline ? "config-baseline" : "config-primary");
@@ -837,7 +869,7 @@
 				renderGrades(run);
 
 				// Previous feedback
-				const prevFb = (EMBEDDED_DATA.previous_feedback || {})[run.id];
+				const prevFb = EMBEDDED_DATA.previous_feedback?.[run.id];
 				const prevEl = document.getElementById("prev-feedback");
 				if (prevFb) {
 					document.getElementById("prev-feedback-text").textContent = prevFb;
@@ -916,7 +948,7 @@
 						a.className = "download-link";
 						a.href = file.data_uri;
 						a.download = file.name;
-						a.textContent = "Download " + file.name;
+						a.textContent = `Download ${file.name}`;
 						content.appendChild(a);
 					} else if (file.type === "error") {
 						const pre = document.createElement("pre");
@@ -936,15 +968,14 @@
 					const raw = Uint8Array.from(atob(b64Data), (c) => c.charCodeAt(0));
 					const wb = XLSX.read(raw, { type: "array" });
 
-					for (let i = 0; i < wb.SheetNames.length; i++) {
-						const sheetName = wb.SheetNames[i];
+					for (const sheetName of wb.SheetNames) {
 						const ws = wb.Sheets[sheetName];
 
 						if (wb.SheetNames.length > 1) {
 							const sheetLabel = document.createElement("div");
 							sheetLabel.style.cssText =
 								"font-weight:600; font-size:0.8rem; color:#b0aea5; margin-top:0.5rem; margin-bottom:0.25rem;";
-							sheetLabel.textContent = "Sheet: " + sheetName;
+							sheetLabel.textContent = `Sheet: ${sheetName}`;
 							container.appendChild(sheetLabel);
 						}
 
@@ -954,8 +985,18 @@
 						container.appendChild(wrapper);
 					}
 				} catch (err) {
-					container.textContent = "Error rendering spreadsheet: " + err.message;
+					container.textContent = `Error rendering spreadsheet: ${err.message}`;
 				}
+			}
+
+			function _getGradeBadgeClass(passRate) {
+				if (passRate >= 0.8) {
+					return "grade-pass";
+				}
+				if (passRate < 0.5) {
+					return "grade-fail";
+				}
+				return "";
 			}
 
 			// ---- Grades ----
@@ -983,13 +1024,8 @@
 				const passRate =
 					summary.pass_rate == null
 						? "?"
-						: Math.round(summary.pass_rate * 100) + "%";
-				const badgeClass =
-					summary.pass_rate >= 0.8
-						? "grade-pass"
-						: summary.pass_rate >= 0.5
-							? ""
-							: "grade-fail";
+						: `${Math.round(summary.pass_rate * 100)}%`;
+				const badgeClass = _getGradeBadgeClass(summary.pass_rate);
 				html += '<div class="grades-summary">';
 				html +=
 					'<span class="grade-badge ' +
@@ -1019,7 +1055,7 @@
 						'">' +
 						statusIcon +
 						"</span>";
-					html += "<span>" + escapeHtml(exp.text) + "</span>";
+					html += `<span>${escapeHtml(exp.text)}</span>`;
 					if (exp.evidence) {
 						html +=
 							'<div class="assertion-evidence">' +
@@ -1034,7 +1070,7 @@
 				content.innerHTML = html;
 			}
 
-			function toggleGrades() {
+			function _toggleGrades() {
 				const content = document.getElementById("grades-content");
 				const arrow = document.getElementById("grades-arrow");
 				content.classList.toggle("open");
@@ -1045,7 +1081,7 @@
 			function renderPrevOutputs(run) {
 				const section = document.getElementById("prev-outputs-section");
 				const content = document.getElementById("prev-outputs-content");
-				const prevOutputs = (EMBEDDED_DATA.previous_outputs || {})[run.id];
+				const prevOutputs = EMBEDDED_DATA.previous_outputs?.[run.id];
 
 				if (!prevOutputs || prevOutputs.length === 0) {
 					section.style.display = "none";
@@ -1102,7 +1138,7 @@
 						a.className = "download-link";
 						a.href = file.data_uri;
 						a.download = file.name;
-						a.textContent = "Download " + file.name;
+						a.textContent = `Download ${file.name}`;
 						fc.appendChild(a);
 					}
 
@@ -1113,7 +1149,7 @@
 				content.appendChild(wrapper);
 			}
 
-			function togglePrevOutputs() {
+			function _togglePrevOutputs() {
 				const content = document.getElementById("prev-outputs-content");
 				const arrow = document.getElementById("prev-outputs-arrow");
 				content.classList.toggle("open");
@@ -1160,7 +1196,7 @@
 			}
 
 			// ---- Done ----
-			function showDoneDialog() {
+			function _showDoneDialog() {
 				// Save current textarea to feedbackMap (but don't POST yet)
 				const run = EMBEDDED_DATA.runs[currentIndex];
 				const text = document.getElementById("feedback").value;
@@ -1207,14 +1243,14 @@
 					});
 			}
 
-			function closeDoneDialog() {
+			function _closeDoneDialog() {
 				// Reset status back to in_progress
 				saveCurrentFeedback();
 				document.getElementById("done-overlay").classList.remove("visible");
 			}
 
 			// ---- Toast ----
-			function showToast(message) {
+			function _showToast(message) {
 				const toast = document.getElementById("toast");
 				toast.textContent = message;
 				toast.classList.add("visible");
@@ -1243,12 +1279,10 @@
 					return file.data_uri;
 				}
 				if (file.data_b64) {
-					return "data:application/octet-stream;base64," + file.data_b64;
+					return `data:application/octet-stream;base64,${file.data_b64}`;
 				}
 				if (file.type === "text") {
-					return (
-						"data:text/plain;charset=utf-8," + encodeURIComponent(file.content)
-					);
+					return `data:text/plain;charset=utf-8,${encodeURIComponent(file.content)}`;
 				}
 				return "#";
 			}
@@ -1260,98 +1294,70 @@
 			}
 
 			// ---- View switching ----
-			function switchView(view) {
-				document
-					.querySelectorAll(".view-tab")
-					.forEach((t) => t.classList.remove("active"));
-				document
-					.querySelectorAll(".view-panel")
-					.forEach((p) => p.classList.remove("active"));
+			function _switchView(view) {
+				for (const t of document.querySelectorAll(".view-tab")) {
+					t.classList.remove("active");
+				}
+				for (const p of document.querySelectorAll(".view-panel")) {
+					p.classList.remove("active");
+				}
 				document
 					.querySelector(`[onclick="switchView('${view}')"]`)
 					.classList.add("active");
-				document.getElementById("panel-" + view).classList.add("active");
+				document.getElementById(`panel-${view}`).classList.add("active");
 			}
 
-			// ---- Benchmark rendering ----
-			function renderBenchmark() {
-				const data = EMBEDDED_DATA.benchmark;
-				if (!data) {
-					return;
+			function _fmtStat(stat, pct) {
+				if (!stat) {
+					return "—";
 				}
+				const suffix = pct ? "%" : "";
+				const m = pct ? (stat.mean * 100).toFixed(0) : stat.mean.toFixed(1);
+				const s = pct ? (stat.stddev * 100).toFixed(0) : stat.stddev.toFixed(1);
+				return `${m + suffix} ± ${s}${suffix}`;
+			}
 
-				// Show the tabs
-				document.getElementById("view-tabs").style.display = "flex";
-
-				const container = document.getElementById("benchmark-content");
-				const summary = data.run_summary || {};
-				const metadata = data.metadata || {};
-				const notes = data.notes || [];
-
-				let html = "";
-
-				// Header
-				html +=
-					"<h2 style='font-family: Poppins, sans-serif; margin-bottom: 0.5rem;'>Benchmark Results</h2>";
-				html +=
-					"<p style='color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.25rem;'>";
-				if (metadata.skill_name) {
-					html +=
-						"<strong>" + escapeHtml(metadata.skill_name) + "</strong> &mdash; ";
-				}
-				if (metadata.timestamp) {
-					html += metadata.timestamp + " &mdash; ";
-				}
-				if (metadata.evals_run) {
-					html += "Evals: " + metadata.evals_run.join(", ") + " &mdash; ";
-				}
-				html +=
-					(metadata.runs_per_configuration || "?") + " runs per configuration";
-				html += "</p>";
-
-				// Summary table
-				html += '<table class="benchmark-table">';
-
-				function fmtStat(stat, pct) {
-					if (!stat) {
-						return "—";
-					}
-					const suffix = pct ? "%" : "";
-					const m = pct ? (stat.mean * 100).toFixed(0) : stat.mean.toFixed(1);
-					const s = pct
-						? (stat.stddev * 100).toFixed(0)
-						: stat.stddev.toFixed(1);
-					return m + suffix + " ± " + s + suffix;
-				}
-
-				function deltaClass(val) {
-					if (!val) {
-						return "";
-					}
-					const n = Number.parseFloat(val);
-					if (n > 0) {
-						return "benchmark-delta-positive";
-					}
-					if (n < 0) {
-						return "benchmark-delta-negative";
-					}
+			function _deltaClass(val) {
+				if (!val) {
 					return "";
 				}
+				const n = Number.parseFloat(val);
+				if (n > 0) {
+					return "benchmark-delta-positive";
+				}
+				if (n < 0) {
+					return "benchmark-delta-negative";
+				}
+				return "";
+			}
 
-				// Discover config names dynamically (everything except "delta")
+			function _formatConfigLabel(config) {
+				return config
+					.replace(UNDERSCORE_REGEX, " ")
+					.replace(/\b\w/g, (c) => c.toUpperCase());
+			}
+
+			function _getBenchmarkPrClass(passRate) {
+				if (passRate >= 0.8) {
+					return "benchmark-delta-positive";
+				}
+				if (passRate < 0.5) {
+					return "benchmark-delta-negative";
+				}
+				return "";
+			}
+
+			function _renderBenchmarkSummaryTable(summary) {
 				const configs = Object.keys(summary).filter((k) => k !== "delta");
 				const configA = configs[0] || "config_a";
 				const configB = configs[1] || "config_b";
-				const labelA = configA
-					.replace(/_/g, " ")
-					.replace(/\b\w/g, (c) => c.toUpperCase());
-				const labelB = configB
-					.replace(/_/g, " ")
-					.replace(/\b\w/g, (c) => c.toUpperCase());
+				const labelA = _formatConfigLabel(configA);
+				const labelB = _formatConfigLabel(configB);
 				const a = summary[configA] || {};
 				const b = summary[configB] || {};
 				const delta = summary.delta || {};
 
+				let html = '<table class="benchmark-table">';
 				html +=
 					"<thead><tr><th>Metric</th><th>" +
 					escapeHtml(labelA) +
@@ -1361,258 +1367,341 @@
 				html += "<tbody>";
 
 				html += "<tr><td><strong>Pass Rate</strong></td>";
-				html += "<td>" + fmtStat(a.pass_rate, true) + "</td>";
-				html += "<td>" + fmtStat(b.pass_rate, true) + "</td>";
+				html += `<td>${_fmtStat(a.pass_rate, true)}</td>`;
+				html += `<td>${_fmtStat(b.pass_rate, true)}</td>`;
 				html +=
 					'<td class="' +
-					deltaClass(delta.pass_rate) +
+					_deltaClass(delta.pass_rate) +
 					'">' +
 					(delta.pass_rate || "—") +
 					"</td></tr>";
 
-				// Time (only show row if data exists)
 				if (a.time_seconds || b.time_seconds) {
 					html += "<tr><td><strong>Time (s)</strong></td>";
-					html += "<td>" + fmtStat(a.time_seconds, false) + "</td>";
-					html += "<td>" + fmtStat(b.time_seconds, false) + "</td>";
+					html += `<td>${_fmtStat(a.time_seconds, false)}</td>`;
+					html += `<td>${_fmtStat(b.time_seconds, false)}</td>`;
 					html +=
 						'<td class="' +
-						deltaClass(delta.time_seconds) +
+						_deltaClass(delta.time_seconds) +
 						'">' +
-						(delta.time_seconds ? delta.time_seconds + "s" : "—") +
+						(delta.time_seconds ? `${delta.time_seconds}s` : "—") +
 						"</td></tr>";
 				}
 
-				// Tokens (only show row if data exists)
 				if (a.tokens || b.tokens) {
 					html += "<tr><td><strong>Tokens</strong></td>";
-					html += "<td>" + fmtStat(a.tokens, false) + "</td>";
-					html += "<td>" + fmtStat(b.tokens, false) + "</td>";
+					html += `<td>${_fmtStat(a.tokens, false)}</td>`;
+					html += `<td>${_fmtStat(b.tokens, false)}</td>`;
 					html +=
 						'<td class="' +
-						deltaClass(delta.tokens) +
+						_deltaClass(delta.tokens) +
 						'">' +
 						(delta.tokens || "—") +
 						"</td></tr>";
 				}
 
 				html += "</tbody></table>";
+				return html;
+			}
 
-				// Per-eval breakdown (if runs data available)
-				const runs = data.runs || [];
-				if (runs.length > 0) {
-					const evalIds = [...new Set(runs.map((r) => r.eval_id))].sort(
-						(a, b) => a - b
+			function _renderBenchmarkRunRow(
+				run,
+				rowClass,
+				configLabel,
+				hasTime,
+				hasErrors
+			) {
+				const r = run.result || {};
+				const prClass = _getBenchmarkPrClass(r.pass_rate);
+				let html = `<tr class="${rowClass}">`;
+				html += `<td>${configLabel}</td>`;
+				html += `<td>${run.run_number}</td>`;
+				html +=
+					'<td class="' +
+					prClass +
+					'">' +
+					((r.pass_rate || 0) * 100).toFixed(0) +
+					"% (" +
+					(r.passed || 0) +
+					"/" +
+					(r.total || 0) +
+					")</td>";
+				if (hasTime) {
+					html +=
+						"<td>" +
+						(r.time_seconds == null ? "—" : r.time_seconds.toFixed(1)) +
+						"</td>";
+				}
+				if (hasErrors) {
+					html += `<td>${r.errors || 0}</td>`;
+				}
+				html += "</tr>";
+				return html;
+			}
+
+			function _renderBenchmarkAvgRow(
+				runs,
+				rowClass,
+				configLabel,
+				hasTime,
+				hasErrors
+			) {
+				const rates = runs.map((r) => r.result?.pass_rate || 0);
+				const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+				const avgPrClass = _getBenchmarkPrClass(avgRate);
+				let html = `<tr class="benchmark-row-avg ${rowClass}">`;
+				html += `<td>${configLabel}</td>`;
+				html += "<td>Avg</td>";
+				html +=
+					'<td class="' +
+					avgPrClass +
+					'">' +
+					(avgRate * 100).toFixed(0) +
+					"%</td>";
+				if (hasTime) {
+					const times = runs
+						.map((r) => r.result?.time_seconds)
+						.filter((t) => t != null);
+					html +=
+						"<td>" +
+						(times.length
+							? (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1)
+							: "—") +
+						"</td>";
+				}
+				if (hasErrors) {
+					html += "<td></td>";
+				}
+				html += "</tr>";
+				return html;
+			}
+
+			function _renderBenchmarkEvalRuns(evalRuns, hasTime, hasErrors) {
+				const configGroups = [...new Set(evalRuns.map((r) => r.configuration))];
+				let html = "";
+
+				for (let ci = 0; ci < configGroups.length; ci++) {
+					const config = configGroups[ci];
+					const runs = evalRuns.filter((r) => r.configuration === config);
+					if (runs.length === 0) {
+						continue;
+					}
+
+					const rowClass =
+						ci === 0 ? "benchmark-row-with" : "benchmark-row-without";
+					const configLabel = _formatConfigLabel(config);
+
+					for (const run of runs) {
+						html += _renderBenchmarkRunRow(
+							run,
+							rowClass,
+							configLabel,
+							hasTime,
+							hasErrors
+						);
+					}
+					html += _renderBenchmarkAvgRow(
+						runs,
+						rowClass,
+						configLabel,
+						hasTime,
+						hasErrors
 					);
+				}
+				return html;
+			}
+
+			function _collectBenchmarkAssertions(runsWithExpectations, configGroups) {
+				const allAssertions = [];
+				const seen = new Set();
+				for (const config of configGroups) {
+					for (const run of runsWithExpectations[config]) {
+						for (const exp of run.expectations || []) {
+							if (!seen.has(exp.text)) {
+								seen.add(exp.text);
+								allAssertions.push(exp.text);
+							}
+						}
+					}
+				}
+				return allAssertions;
+			}
+
+			function _renderBenchmarkAssertionCell(
+				runsWithExpectations,
+				config,
+				assertionText
+			) {
+				let html = "<td>";
+				for (const run of runsWithExpectations[config]) {
+					const exp = (run.expectations || []).find(
+						(e) => e.text === assertionText
+					);
+					if (exp) {
+						const cls = exp.passed
+							? "benchmark-delta-positive"
+							: "benchmark-delta-negative";
+						const icon = exp.passed ? "\u2713" : "\u2717";
+						html +=
+							'<span class="' +
+							cls +
+							'" title="Run ' +
+							run.run_number +
+							": " +
+							escapeHtml(exp.evidence || "") +
+							'">' +
+							icon +
+							"</span> ";
+					} else {
+						html += "— ";
+					}
+				}
+				html += "</td>";
+				return html;
+			}
+
+			function _renderBenchmarkAssertions(evalRuns, configGroups) {
+				const runsWithExpectations = {};
+				for (const config of configGroups) {
+					runsWithExpectations[config] = evalRuns.filter(
+						(r) =>
+							r.configuration === config &&
+							r.expectations &&
+							r.expectations.length > 0
+					);
+				}
+				const hasAnyExpectations = Object.values(runsWithExpectations).some(
+					(runs) => runs.length > 0
+				);
+				if (!hasAnyExpectations) {
+					return "";
+				}
+
+				const allAssertions = _collectBenchmarkAssertions(
+					runsWithExpectations,
+					configGroups
+				);
+
+				let html =
+					'<table class="benchmark-table" style="margin-top: 0.5rem;">';
+				html += "<thead><tr><th>Assertion</th>";
+				for (const config of configGroups) {
+					const label = _formatConfigLabel(config);
+					html += `<th>${escapeHtml(label)}</th>`;
+				}
+				html += "</tr></thead><tbody>";
+
+				for (const assertionText of allAssertions) {
+					html += `<tr><td>${escapeHtml(assertionText)}</td>`;
+					for (const config of configGroups) {
+						html += _renderBenchmarkAssertionCell(
+							runsWithExpectations,
+							config,
+							assertionText
+						);
+					}
+					html += "</tr>";
+				}
+				html += "</tbody></table>";
+				return html;
+			}
+
+			function _renderBenchmarkPerEval(data) {
+				const runs = data.runs || [];
+				if (runs.length === 0) {
+					return "";
+				}
+
+				const evalIds = [...new Set(runs.map((r) => r.eval_id))].sort(
+					(a, b) => a - b
+				);
+				const hasTime = runs.some(
+					(r) => r.result && r.result.time_seconds != null
+				);
+				const hasErrors = runs.some((r) => r.result && r.result.errors > 0);
+
+				let html =
+					"<h3 style='font-family: Poppins, sans-serif; margin-bottom: 0.75rem;'>Per-Eval Breakdown</h3>";
+
+				for (const evalId of evalIds) {
+					const evalRuns = runs.filter((r) => r.eval_id === evalId);
+					const evalName = evalRuns[0]?.eval_name
+						? evalRuns[0].eval_name
+						: `Eval ${evalId}`;
 
 					html +=
-						"<h3 style='font-family: Poppins, sans-serif; margin-bottom: 0.75rem;'>Per-Eval Breakdown</h3>";
-
-					const hasTime = runs.some(
-						(r) => r.result && r.result.time_seconds != null
-					);
-					const hasErrors = runs.some((r) => r.result && r.result.errors > 0);
-
-					for (const evalId of evalIds) {
-						const evalRuns = runs.filter((r) => r.eval_id === evalId);
-						const evalName =
-							evalRuns[0] && evalRuns[0].eval_name
-								? evalRuns[0].eval_name
-								: "Eval " + evalId;
-
-						html +=
-							"<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" +
-							escapeHtml(evalName) +
-							"</h4>";
-						html += '<table class="benchmark-table">';
-						html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
-						if (hasTime) {
-							html += "<th>Time (s)</th>";
-						}
-						if (hasErrors) {
-							html += "<th>Crashes During Execution</th>";
-						}
-						html += "</tr></thead>";
-						html += "<tbody>";
-
-						// Group by config and render with average rows
-						const configGroups = [
-							...new Set(evalRuns.map((r) => r.configuration)),
-						];
-						for (let ci = 0; ci < configGroups.length; ci++) {
-							const config = configGroups[ci];
-							const configRuns = evalRuns.filter(
-								(r) => r.configuration === config
-							);
-							if (configRuns.length === 0) {
-								continue;
-							}
-
-							const rowClass =
-								ci === 0 ? "benchmark-row-with" : "benchmark-row-without";
-							const configLabel = config
-								.replace(/_/g, " ")
-								.replace(/\b\w/g, (c) => c.toUpperCase());
-
-							for (const run of configRuns) {
-								const r = run.result || {};
-								const prClass =
-									r.pass_rate >= 0.8
-										? "benchmark-delta-positive"
-										: r.pass_rate < 0.5
-											? "benchmark-delta-negative"
-											: "";
-								html += '<tr class="' + rowClass + '">';
-								html += "<td>" + configLabel + "</td>";
-								html += "<td>" + run.run_number + "</td>";
-								html +=
-									'<td class="' +
-									prClass +
-									'">' +
-									((r.pass_rate || 0) * 100).toFixed(0) +
-									"% (" +
-									(r.passed || 0) +
-									"/" +
-									(r.total || 0) +
-									")</td>";
-								if (hasTime) {
-									html +=
-										"<td>" +
-										(r.time_seconds == null ? "—" : r.time_seconds.toFixed(1)) +
-										"</td>";
-								}
-								if (hasErrors) {
-									html += "<td>" + (r.errors || 0) + "</td>";
-								}
-								html += "</tr>";
-							}
-
-							// Average row
-							const rates = configRuns.map(
-								(r) => (r.result || {}).pass_rate || 0
-							);
-							const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
-							const avgPrClass =
-								avgRate >= 0.8
-									? "benchmark-delta-positive"
-									: avgRate < 0.5
-										? "benchmark-delta-negative"
-										: "";
-							html += '<tr class="benchmark-row-avg ' + rowClass + '">';
-							html += "<td>" + configLabel + "</td>";
-							html += "<td>Avg</td>";
-							html +=
-								'<td class="' +
-								avgPrClass +
-								'">' +
-								(avgRate * 100).toFixed(0) +
-								"%</td>";
-							if (hasTime) {
-								const times = configRuns
-									.map((r) => (r.result || {}).time_seconds)
-									.filter((t) => t != null);
-								html +=
-									"<td>" +
-									(times.length
-										? (times.reduce((a, b) => a + b, 0) / times.length).toFixed(
-												1
-											)
-										: "—") +
-									"</td>";
-							}
-							if (hasErrors) {
-								html += "<td></td>";
-							}
-							html += "</tr>";
-						}
-						html += "</tbody></table>";
-
-						// Per-assertion detail for this eval
-						const runsWithExpectations = {};
-						for (const config of configGroups) {
-							runsWithExpectations[config] = evalRuns.filter(
-								(r) =>
-									r.configuration === config &&
-									r.expectations &&
-									r.expectations.length > 0
-							);
-						}
-						const hasAnyExpectations = Object.values(runsWithExpectations).some(
-							(runs) => runs.length > 0
-						);
-						if (hasAnyExpectations) {
-							// Collect all unique assertion texts across all configs
-							const allAssertions = [];
-							const seen = new Set();
-							for (const config of configGroups) {
-								for (const run of runsWithExpectations[config]) {
-									for (const exp of run.expectations || []) {
-										if (!seen.has(exp.text)) {
-											seen.add(exp.text);
-											allAssertions.push(exp.text);
-										}
-									}
-								}
-							}
-
-							html +=
-								'<table class="benchmark-table" style="margin-top: 0.5rem;">';
-							html += "<thead><tr><th>Assertion</th>";
-							for (const config of configGroups) {
-								const label = config
-									.replace(/_/g, " ")
-									.replace(/\b\w/g, (c) => c.toUpperCase());
-								html += "<th>" + escapeHtml(label) + "</th>";
-							}
-							html += "</tr></thead><tbody>";
-
-							for (const assertionText of allAssertions) {
-								html += "<tr><td>" + escapeHtml(assertionText) + "</td>";
-
-								for (const config of configGroups) {
-									html += "<td>";
-									for (const run of runsWithExpectations[config]) {
-										const exp = (run.expectations || []).find(
-											(e) => e.text === assertionText
-										);
-										if (exp) {
-											const cls = exp.passed
-												? "benchmark-delta-positive"
-												: "benchmark-delta-negative";
-											const icon = exp.passed ? "\u2713" : "\u2717";
-											html +=
-												'<span class="' +
-												cls +
-												'" title="Run ' +
-												run.run_number +
-												": " +
-												escapeHtml(exp.evidence || "") +
-												'">' +
-												icon +
-												"</span> ";
-										} else {
-											html += "— ";
-										}
-									}
-									html += "</td>";
-								}
-								html += "</tr>";
-							}
-							html += "</tbody></table>";
-						}
+						"<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" +
+						escapeHtml(evalName) +
+						"</h4>";
+					html += '<table class="benchmark-table">';
+					html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
+					if (hasTime) {
+						html += "<th>Time (s)</th>";
 					}
+					if (hasErrors) {
+						html += "<th>Crashes During Execution</th>";
+					}
+					html += "</tr></thead>";
+					html += "<tbody>";
+
+					const configGroups = [
+						...new Set(evalRuns.map((r) => r.configuration)),
+					];
+					html += _renderBenchmarkEvalRuns(evalRuns, hasTime, hasErrors);
+					html += "</tbody></table>";
+					html += _renderBenchmarkAssertions(evalRuns, configGroups);
+				}
+				return html;
+			}
+
+			function _renderBenchmarkNotes(notes) {
+				if (notes.length === 0) {
+					return "";
+				}
+				let html = '<div class="benchmark-notes">';
+				html += "<h3>Analysis Notes</h3>";
+				html += "<ul>";
+				for (const note of notes) {
+					html += `<li>${escapeHtml(note)}</li>`;
+				}
+				html += "</ul></div>";
+				return html;
+			}
+
+			// ---- Benchmark rendering ----
+			function renderBenchmark() {
+				const data = EMBEDDED_DATA.benchmark;
+				if (!data) {
+					return;
 				}
 
-				// Notes
-				if (notes.length > 0) {
-					html += '<div class="benchmark-notes">';
-					html += "<h3>Analysis Notes</h3>";
-					html += "<ul>";
-					for (const note of notes) {
-						html += "<li>" + escapeHtml(note) + "</li>";
-					}
-					html += "</ul></div>";
+				document.getElementById("view-tabs").style.display = "flex";
+
+				const container = document.getElementById("benchmark-content");
+				const summary = data.run_summary || {};
+				const metadata = data.metadata || {};
+				const notes = data.notes || [];
+
+				let html = "";
+				html +=
+					"<h2 style='font-family: Poppins, sans-serif; margin-bottom: 0.5rem;'>Benchmark Results</h2>";
+				html +=
+					"<p style='color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.25rem;'>";
+				if (metadata.skill_name) {
+					html += `<strong>${escapeHtml(metadata.skill_name)}</strong> &mdash; `;
 				}
+				if (metadata.timestamp) {
+					html += `${metadata.timestamp} &mdash; `;
+				}
+				if (metadata.evals_run) {
+					html += `Evals: ${metadata.evals_run.join(", ")} &mdash; `;
+				}
+				html += `${metadata.runs_per_configuration || "?"} runs per configuration`;
+				html += "</p>";
+
+				html += _renderBenchmarkSummaryTable(summary);
+				html += _renderBenchmarkPerEval(data);
+				html += _renderBenchmarkNotes(notes);
 
 				container.innerHTML = html;
 			}

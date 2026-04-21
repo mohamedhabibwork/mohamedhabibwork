@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Project } from "$lib/data/projects";
+	import type { Project } from "@habib-app/api/data";
 	import Badge from "./ui/Badge.svelte";
 	import Card from "./ui/Card.svelte";
 	import Section from "./ui/Section.svelte";

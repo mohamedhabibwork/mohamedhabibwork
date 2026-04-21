@@ -293,7 +293,7 @@ Validation targets: `json`, `form`, `query`, `header`, `param`, `cookie`.
 
 ```ts
 import { zValidator } from "@hono/zod-validator";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 const schema = z.object({
   title: z.string().min(1),

@@ -68,7 +68,7 @@ Use the tool runner with `stream: true`. The outer loop iterates over tool runne
 ```typescript
 import Anthropic from "@anthropic-ai/sdk";
 import { betaZodTool } from "@anthropic-ai/sdk/helpers/beta/zod";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 const client = new Anthropic();
 

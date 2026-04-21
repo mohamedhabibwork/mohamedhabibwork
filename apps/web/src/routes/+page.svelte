@@ -6,40 +6,70 @@
 	import Projects from "../components/Projects.svelte";
 	import Skills from "../components/Skills.svelte";
 	import Timeline from "../components/Timeline.svelte";
+	import {
+		useExperienceQuery,
+		useProfileQuery,
+		useProjectsQuery,
+		useSkillsQuery,
+	} from "../lib/queries";
 
-	interface Props {
-		data: {
-			profile: typeof import("$lib/data/profile").profile;
-			skills: typeof import("$lib/data/skills").skills;
-			featuredProjects: typeof import("$lib/data/projects").projects;
-			experience: typeof import("$lib/data/experience").experience;
-		};
-	}
+	const profileQuery = useProfileQuery();
+	const skillsQuery = useSkillsQuery();
+	const projectsQuery = useProjectsQuery();
+	const experienceQuery = useExperienceQuery();
 
-	const { data }: Props = $props();
+	const profile = $derived(
+		$profileQuery.data ?? {
+			name: "Mohamed Habib",
+			title: "",
+			tagline: "",
+			bio: "",
+			location: "",
+			stats: { years: 0, projects: 0, industries: 0, successRate: 0 },
+			linkedin: "",
+			github: "",
+			whatsapp: "",
+			email: "",
+			availability: "",
+			timezone: "",
+		}
+	);
+
+	const skills = $derived(
+		$skillsQuery.data ?? {
+			backend: [],
+			frontend: [],
+			database: [],
+			cloud: [],
+			leadership: [],
+			specializations: [],
+		}
+	);
+
+	const featuredProjects = $derived(
+		$projectsQuery.data?.projects.slice(0, 6) ?? []
+	);
+
+	const experience = $derived($experienceQuery.data?.slice(0, 5) ?? []);
 </script>
 
 <svelte:head>
-	<title>{data.profile.name} - {data.profile.title}</title>
-	<meta name="description" content={data.profile.tagline}>
+	<title>{profile.name} - {profile.title}</title>
+	<meta name="description" content={profile.tagline}>
 </svelte:head>
 
 <main>
-	<Hero />
+	<Hero {profile} />
 
-	<About
-		bio={data.profile.bio}
-		stats={data.profile.stats}
-		location={data.profile.location}
-	/>
+	<About bio={profile.bio} stats={profile.stats} location={profile.location} />
 
-	<Skills skills={data.skills} />
+	<Skills {skills} />
 
-	<Projects projects={data.featuredProjects} />
+	<Projects projects={featuredProjects} />
 
-	<Timeline experience={data.experience} />
+	<Timeline {experience} />
 
-	<Contact profile={data.profile} />
+	<Contact {profile} />
 
-	<Footer profile={data.profile} />
+	<Footer {profile} />
 </main>

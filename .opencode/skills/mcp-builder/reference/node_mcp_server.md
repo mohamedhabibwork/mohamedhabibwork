@@ -14,7 +14,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import express from "express";
-import { z } from "zod";
+import { z } from "zod/v4";
 ```
 
 ### Server Initialization
@@ -115,7 +115,7 @@ Tools are registered using the `registerTool` method with the following requirem
 
 ```typescript
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 const server = new McpServer({
   name: "example-mcp",
@@ -278,7 +278,7 @@ Error Handling:
 Zod provides runtime type validation:
 
 ```typescript
-import { z } from "zod";
+import { z } from "zod/v4";
 
 // Basic schema with validation
 const CreateUserSchema = z.object({
@@ -594,7 +594,7 @@ async function getUser(id: string): Promise<any> {
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { z } from "zod";
+import { z } from "zod/v4";
 import axios, { AxiosError } from "axios";
 
 // Constants

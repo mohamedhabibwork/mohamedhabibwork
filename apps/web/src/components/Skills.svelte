@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Skills } from "$lib/data/skills";
+	import type { Skills } from "@habib-app/api/data";
 	import Badge from "./ui/Badge.svelte";
 	import Card from "./ui/Card.svelte";
 	import Section from "./ui/Section.svelte";
@@ -50,6 +50,7 @@
 	<div class="flex flex-wrap justify-center gap-2 mb-12">
 		{#each tabs as tab}
 			<button
+				type="button"
 				onclick={() => (activeTab = tab.key)}
 				class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
 				style={activeTab === tab.key
@@ -89,7 +90,7 @@
 						{/if}
 					</div>
 					<p class="text-sm" style="color: var(--text-secondary);">
-						{item.desc}
+						{item.description}
 					</p>
 				</Card>
 			{/each}
@@ -112,7 +113,7 @@
 						>
 						<span style="color: var(--border-color);">|</span>
 						<span class="text-sm" style="color: var(--accent);"
-							>{skill.desc}</span
+							>{skill.description}</span
 						>
 					</div>
 				</Card>

@@ -7,11 +7,12 @@ import process from "node:process";
 
 const CACHE_DIRECTORY = resolve(import.meta.dirname, ".cache");
 const DEFAULT_TTL_SECONDS = 15 * 60; // 15 minutes
+const MAX_AGE_REGEX = /max-age=(\d+)/i;
 
 export async function fetchCached(url) {
 	await mkdir(CACHE_DIRECTORY, { recursive: true });
 
-	const cacheFile = resolve(CACHE_DIRECTORY, hashUrl(url) + ".json");
+	const cacheFile = resolve(CACHE_DIRECTORY, `${hashUrl(url)}.json`);
 	const cached = await loadCacheEntry(cacheFile);
 	if (cached && cached.expires > Math.floor(Date.now() / 1000)) {
 		return cached.data;
@@ -88,7 +89,7 @@ function parseMaxAge(cacheControl) {
 	if (!cacheControl) {
 		return null;
 	}
-	const match = cacheControl.match(/max-age=(\d+)/i);
+	const match = cacheControl.match(MAX_AGE_REGEX);
 	return match ? Number.parseInt(match[1], 10) : null;
 }
 

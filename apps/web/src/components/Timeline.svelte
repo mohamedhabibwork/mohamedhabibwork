@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ExperienceEntry } from "$lib/data/experience";
+	import type { ExperienceEntry } from "@habib-app/api/data";
 	import Card from "./ui/Card.svelte";
 	import Section from "./ui/Section.svelte";
 

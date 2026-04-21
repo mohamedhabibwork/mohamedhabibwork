@@ -7,6 +7,15 @@
     },
     "./*": {
       "default": "./src/*.ts"
+    },
+    "./data": {
+      "default": "./src/data/index.ts"
+    },
+    "./data/*": {
+      "default": "./src/data/*.ts"
+    },
+    "./routers": {
+      "default": "./src/routers/index.ts"
     }
   },
   "scripts": {},

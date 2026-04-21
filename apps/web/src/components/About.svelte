@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Profile } from "$lib/data/profile";
+	import type { Profile } from "@habib-app/api/data";
 	import Card from "./ui/Card.svelte";
 	import Section from "./ui/Section.svelte";
 

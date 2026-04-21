@@ -3,7 +3,7 @@
  * Get theme variables and design tokens for HeroUI Native.
  *
  * Usage:
- *   node get_theme.mjs
+ *   node get-theme.mjs
  *
  * Output:
  *   Theme variables organized by light/dark with HSL color format
@@ -188,13 +188,13 @@ async function main() {
 	console.log();
 
 	// Light mode colors
-	if (data.light && data.light.colors) {
+	if (data.light?.colors) {
 		console.log("/* Light Mode Colors */");
 		console.log(formatColors(data.light.colors));
 	}
 
 	// Dark mode colors
-	if (data.dark && data.dark.colors) {
+	if (data.dark?.colors) {
 		console.log("/* Dark Mode Colors */");
 		console.log(formatColors(data.dark.colors));
 	}

@@ -393,7 +393,7 @@ This skill includes helpful templates and documentation:
   - **Replace**: The p5.js algorithm, parameter definitions, and UI controls in Parameters section
   - The extensive comments in the file mark exactly what to keep vs replace
 
-- **templates/generator_template.js**: Reference for p5.js best practices and code structure principles.
+- **templates/generator-template.js**: Reference for p5.js best practices and code structure principles.
   - Shows how to organize parameters, use seeded randomness, structure classes
   - NOT a pattern menu - use these principles to build unique algorithms
   - Embed algorithms inline in the HTML artifact (don't create separate .js files)

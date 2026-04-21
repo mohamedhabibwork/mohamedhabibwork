@@ -55,11 +55,15 @@ export default function Home() {
 								ORPC Backend
 							</Text>
 							<Text className="mt-0.5 text-muted text-xs">
-								{isLoading
-									? "Checking connection..."
-									: isConnected
-										? "Connected to API"
-										: "API Disconnected"}
+								{(() => {
+									if (isLoading) {
+										return "Checking connection...";
+									}
+									if (isConnected) {
+										return "Connected to API";
+									}
+									return "API Disconnected";
+								})()}
 							</Text>
 						</View>
 						{isLoading && <Spinner size="sm" />}
