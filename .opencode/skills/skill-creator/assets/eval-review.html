@@ -232,16 +232,16 @@
 					const idx = item.origIdx;
 					const tr = document.createElement("tr");
 					tr.innerHTML = `
-																																	              <td><textarea class="query-input" onchange="updateQuery(${idx}, this.value)">${escapeHtml(item.query)}</textarea></td>
-																																	              <td>
-																																	                <label class="toggle">
-																																	                  <input type="checkbox" ${item.should_trigger ? "checked" : ""} onchange="updateTrigger(${idx}, this.checked)">
-																																	                  <span class="slider"></span>
-																																	                </label>
-																																	                <span style="margin-left:8px;font-size:0.8rem;color:#b0aea5">${item.should_trigger ? "Yes" : "No"}</span>
-																																	              </td>
-																																	              <td><button class="btn-delete" onclick="deleteRow(${idx})">Delete</button></td>
-																																	            `;
+																																																															              <td><textarea class="query-input" onchange="updateQuery(${idx}, this.value)">${escapeHtml(item.query)}</textarea></td>
+																																																															              <td>
+																																																															                <label class="toggle">
+																																																															                  <input type="checkbox" ${item.should_trigger ? "checked" : ""} onchange="updateTrigger(${idx}, this.checked)">
+																																																															                  <span class="slider"></span>
+																																																															                </label>
+																																																															                <span style="margin-left:8px;font-size:0.8rem;color:#b0aea5">${item.should_trigger ? "Yes" : "No"}</span>
+																																																															              </td>
+																																																															              <td><button class="btn-delete" onclick="deleteRow(${idx})">Delete</button></td>
+																																																															            `;
 					tbody.appendChild(tr);
 				}
 				updateSummary();

@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
+# Sitemap
 Sitemap: https://mohamedhabib.work/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1

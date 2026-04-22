@@ -12,21 +12,17 @@
 
 <Section id="timeline" class="py-24 sm:py-32">
 	<div class="text-center mb-16">
-		<h2
-			class="text-3xl sm:text-4xl font-bold mb-4"
-			style="color: var(--text-primary);"
-		>
+		<h2 class="text-3xl sm:text-4xl font-bold mb-4 text-foreground">
 			Professional Journey
 		</h2>
-		<p class="max-w-2xl mx-auto" style="color: var(--text-secondary);">
+		<p class="max-w-2xl mx-auto text-muted-foreground">
 			My career path and the experiences that shaped my expertise
 		</p>
 	</div>
 
 	<div class="relative max-w-4xl mx-auto">
 		<div
-			class="absolute left-0 md:left-1/2 top-0 bottom-0 w-px -translate-x-1/2"
-			style="background-color: var(--border-color);"
+			class="absolute left-0 md:left-1/2 top-0 bottom-0 w-px -translate-x-1/2 bg-border"
 		></div>
 
 		<div class="space-y-12">
@@ -37,40 +33,34 @@
 						: ''}"
 				>
 					<div
-						class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full -translate-x-1/2 border-4"
-						style="border-color: var(--bg-primary);"
-						class:bg-green-500={entry.current}
-						class:bg-blue-600={!entry.current}
+						class="absolute left-0 md:left-1/2 w-4 h-4 rounded-full -translate-x-1/2 border-4 border-background"
+						class:bg-primary={entry.current}
+						class:bg-muted-foreground={!entry.current}
 					></div>
 
 					<Card class="ml-8 md:ml-0 md:w-[calc(50%-2rem)] p-6">
 						<div class="flex items-center gap-2 mb-1">
-							<span class="text-sm font-medium" style="color: var(--accent);"
-								>{entry.period}</span
-							>
+							<span class="text-sm font-medium text-primary">
+								{entry.period}
+							</span>
 							{#if entry.current}
 								<span
-									class="px-2 py-0.5 text-xs rounded-full"
-									style="background-color: rgba(34, 197, 94, 0.2); color: var(--text-primary);"
+									class="px-2 py-0.5 text-xs rounded-full bg-accent/20 text-accent"
 									>Current</span
 								>
 							{/if}
 						</div>
-						<h3
-							class="text-xl font-semibold mb-1"
-							style="color: var(--text-primary);"
-						>
+						<h3 class="text-xl font-semibold mb-1 text-card-foreground">
 							{entry.role}
 						</h3>
-						<div style="color: var(--text-secondary);">{entry.company}</div>
-						<p class="text-sm mb-4" style="color: var(--text-muted);">
+						<div class="text-muted-foreground">{entry.company}</div>
+						<p class="text-sm mb-4 text-muted-foreground">
 							{entry.description}
 						</p>
 						<div class="flex flex-wrap gap-2">
 							{#each entry.tech as tech}
 								<span
-									class="px-2 py-1 text-xs rounded"
-									style="background-color: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color);"
+									class="px-2 py-1 text-xs rounded bg-secondary text-secondary-foreground border border-border"
 								>
 									{tech}
 								</span>

@@ -2,13 +2,9 @@ import { serverClient } from "$lib/orpc.server";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async () => {
-	const [profile, projects] = await Promise.all([
-		serverClient.profile(),
-		serverClient.projects(),
-	]);
+	const resumeData = await serverClient.resume.generate();
 
 	return {
-		profile,
-		projects,
+		resume: resumeData,
 	};
 };

@@ -13,13 +13,10 @@
 
 <Section id="contact" class="py-24 sm:py-32">
 	<div class="text-center mb-16">
-		<h2
-			class="text-3xl sm:text-4xl font-bold mb-4"
-			style="color: var(--text-primary);"
-		>
+		<h2 class="text-3xl sm:text-4xl font-bold mb-4 text-foreground">
 			Let's Build Something Amazing
 		</h2>
-		<p class="max-w-2xl mx-auto" style="color: var(--text-secondary);">
+		<p class="max-w-2xl mx-auto text-muted-foreground">
 			Ready to bring your vision to life? Let's discuss how I can help with your
 			next project.
 		</p>
@@ -28,15 +25,13 @@
 	<div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
 		<Card class="p-6 text-center">
 			<div
-				class="w-12 h-12 mx-auto mb-4 rounded-full flex items-center justify-center"
-				style="background-color: rgba(59, 130, 246, 0.15);"
+				class="w-12 h-12 mx-auto mb-4 rounded-full flex items-center justify-center bg-primary/10"
 			>
 				<svg
-					class="w-6 h-6"
+					class="w-6 h-6 text-primary"
 					fill="none"
 					stroke="currentColor"
 					viewBox="0 0 24 24"
-					style="color: var(--accent);"
 					role="img"
 					aria-label="Email icon"
 				>
@@ -48,28 +43,19 @@
 					/>
 				</svg>
 			</div>
-			<h3
-				class="text-lg font-semibold mb-2"
-				style="color: var(--text-primary);"
-			>
-				Email
-			</h3>
-			<p class="text-sm mb-4" style="color: var(--text-secondary);">
-				{profile.email}
-			</p>
+			<h3 class="text-lg font-semibold mb-2 text-card-foreground">Email</h3>
+			<p class="text-sm mb-4 text-muted-foreground">{profile.email}</p>
 			<Button href="mailto:{profile.email}" size="sm">Send Email</Button>
 		</Card>
 
 		<Card class="p-6 text-center">
 			<div
-				class="w-12 h-12 mx-auto mb-4 rounded-full flex items-center justify-center"
-				style="background-color: rgba(34, 197, 94, 0.15);"
+				class="w-12 h-12 mx-auto mb-4 rounded-full flex items-center justify-center bg-accent/10"
 			>
 				<svg
-					class="w-6 h-6"
+					class="w-6 h-6 text-accent"
 					fill="currentColor"
 					viewBox="0 0 24 24"
-					style="color: #22c55e;"
 					role="img"
 					aria-label="WhatsApp icon"
 				>
@@ -78,29 +64,24 @@
 					/>
 				</svg>
 			</div>
-			<h3
-				class="text-lg font-semibold mb-2"
-				style="color: var(--text-primary);"
+			<h3 class="text-lg font-semibold mb-2 text-card-foreground">WhatsApp</h3>
+			<p class="text-sm mb-4 text-muted-foreground">{profile.whatsapp}</p>
+			<Button
+				href={`https://wa.me/${(profile.whatsapp?.toString())?.replace("+", "")}`}
+				size="sm"
+				>Message Me</Button
 			>
-				WhatsApp
-			</h3>
-			<p class="text-sm mb-4" style="color: var(--text-secondary);">
-				{profile.whatsapp}
-			</p>
-			<Button href={profile.whatsapp} size="sm">Message Me</Button>
 		</Card>
 
 		<Card class="p-6 text-center">
 			<div
-				class="w-12 h-12 mx-auto mb-4 rounded-full flex items-center justify-center"
-				style="background-color: rgba(168, 85, 247, 0.15);"
+				class="w-12 h-12 mx-auto mb-4 rounded-full flex items-center justify-center bg-secondary"
 			>
 				<svg
-					class="w-6 h-6"
+					class="w-6 h-6 text-secondary-foreground"
 					fill="none"
 					stroke="currentColor"
 					viewBox="0 0 24 24"
-					style="color: #a855f7;"
 					role="img"
 					aria-label="Calendar icon"
 				>
@@ -112,13 +93,10 @@
 					/>
 				</svg>
 			</div>
-			<h3
-				class="text-lg font-semibold mb-2"
-				style="color: var(--text-primary);"
-			>
+			<h3 class="text-lg font-semibold mb-2 text-card-foreground">
 				Schedule Meeting
 			</h3>
-			<p class="text-sm mb-4" style="color: var(--text-secondary);">
+			<p class="text-sm mb-4 text-muted-foreground">
 				Book a time to discuss your project
 			</p>
 			<Button href="mailto:{profile.email}?subject=Meeting Request" size="sm"

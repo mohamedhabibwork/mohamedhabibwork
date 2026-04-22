@@ -81,6 +81,7 @@
       "createCanvas",
       "createVector",
       "cos",
+      "dataLayer",
       "fill",
       "floor",
       "height",
@@ -113,6 +114,16 @@
           "correctness": {
             "noUnusedVariables": "off",
             "noUnusedImports": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["apps/native/components/error/index.ts"],
+      "linter": {
+        "rules": {
+          "performance": {
+            "noBarrelFile": "off"
           }
         }
       }

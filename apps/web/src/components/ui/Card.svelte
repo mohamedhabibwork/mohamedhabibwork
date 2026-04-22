@@ -4,6 +4,7 @@
 	interface Props {
 		children: Snippet;
 		class?: string;
+		glow?: boolean;
 		hover?: boolean;
 		style?: string;
 	}
@@ -12,13 +13,15 @@
 		class: className = "",
 		hover = true,
 		style = "",
+		glow = false,
 		children,
 	}: Props = $props();
 
 	const classes = $derived(
 		[
-			"rounded-xl border",
-			hover && "transition-all duration-300 hover:-translate-y-0.5",
+			"rounded-xl border bg-card text-card-foreground theme-transition",
+			hover && "card-lift cursor-pointer",
+			glow && "glow-hover",
 			className,
 		]
 			.filter(Boolean)
@@ -28,16 +31,16 @@
 
 <div
 	class={classes}
-	style="background-color: var(--card-bg); border-color: var(--border-color); {style}"
+	style="border-color: var(--border); {style}"
 	role="article"
 	onmouseenter={(e) => {
 		if (hover) {
-			e.currentTarget.style.borderColor = "var(--text-muted)";
+			e.currentTarget.style.borderColor = "var(--ring)";
 		}
 	}}
 	onmouseleave={(e) => {
 		if (hover) {
-			e.currentTarget.style.borderColor = "var(--border-color)";
+			e.currentTarget.style.borderColor = "var(--border)";
 		}
 	}}
 >

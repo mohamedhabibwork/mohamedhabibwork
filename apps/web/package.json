@@ -19,6 +19,7 @@
     "@orpc/tanstack-query": "catalog:",
     "@tanstack/svelte-query": "^5.85.3",
     "dotenv": "catalog:",
+    "jspdf": "^4.2.1",
     "zod": "catalog:"
   },
   "devDependencies": {

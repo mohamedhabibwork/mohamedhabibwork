@@ -51,7 +51,10 @@ const openAPIGenerator = new OpenAPIGenerator({
 
 // Handle RPC requests at /rpc
 app.post("/rpc", async (c) => {
-	const context = await createContext({ request: c.req.raw });
+	const context = await createContext({
+		request: c.req.raw,
+		env: c.env as Parameters<typeof createContext>[0]["env"],
+	});
 
 	const rpcResult = await rpcHandler.handle(c.req.raw, {
 		prefix: "/rpc",
@@ -107,7 +110,10 @@ app.get("/api-reference", (c) => {
 
 // Handle all other API requests
 app.use("/api/*", async (c, next) => {
-	const context = await createContext({ request: c.req.raw });
+	const context = await createContext({
+		request: c.req.raw,
+		env: c.env as Parameters<typeof createContext>[0]["env"],
+	});
 
 	const apiResult = await apiHandler.handle(c.req.raw, {
 		prefix: "/api",

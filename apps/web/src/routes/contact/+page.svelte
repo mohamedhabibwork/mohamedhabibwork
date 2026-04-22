@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Footer from "../../components/Footer.svelte";
+	import SEO from "../../components/SEO.svelte";
 	import Button from "../../components/ui/Button.svelte";
 	import Card from "../../components/ui/Card.svelte";
 	import Section from "../../components/ui/Section.svelte";
@@ -14,14 +15,14 @@
 			email: "",
 			whatsapp: "",
 			linkedin: "",
-			location: "",
+			location: "Egypt",
 			timezone: "",
 			availability: "",
 			bio: "",
 			github: "",
 			tagline: "",
-			title: "",
-			stats: { years: 0, projects: 0, industries: 0, successRate: 0 },
+			title: "Senior Full Stack Developer & Team Leader",
+			stats: { years: 7, projects: 50, industries: 5, successRate: 95 },
 		}
 	);
 
@@ -63,24 +64,20 @@
 	}
 </script>
 
-<svelte:head>
-	<title>Contact - {profile.name}</title>
-	<meta
-		name="description"
-		content="Get in touch with {profile.name} for project inquiries, collaborations, or job opportunities."
-	>
-</svelte:head>
+<SEO
+	title="Contact {profile.name} - Full Stack Developer & Team Leader"
+	description="Get in touch with {profile.name} for project inquiries, collaborations, or job opportunities. Available for freelance and full-time positions."
+	canonical="/contact"
+	ogType="website"
+/>
 
 <main class="min-h-screen">
 	<div class="pt-16 pb-8 px-4 sm:px-6 lg:px-8">
 		<div class="max-w-4xl mx-auto text-center">
-			<h1
-				class="text-4xl sm:text-5xl font-bold mb-4"
-				style="color: var(--text-primary);"
-			>
+			<h1 class="text-4xl sm:text-5xl font-bold mb-4 text-foreground">
 				Get in Touch
 			</h1>
-			<p class="text-xl" style="color: var(--text-secondary);">
+			<p class="text-xl text-muted-foreground">
 				Ready to discuss your next project or collaboration opportunity?
 			</p>
 		</div>
@@ -89,19 +86,13 @@
 	<Section class="py-8">
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
 			<div>
-				<h2 class="text-2xl font-bold mb-6" style="color: var(--text-primary);">
-					Send a Message
-				</h2>
+				<h2 class="text-2xl font-bold mb-6 text-foreground">Send a Message</h2>
 
 				{#if status === "success"}
-					<Card
-						class="p-6"
-						style="border-color: rgba(34, 197, 94, 0.5); background-color: rgba(34, 197, 94, 0.1);"
-					>
+					<Card class="p-6 border-green-500/50 bg-green-500/10">
 						<div class="flex items-start gap-4">
 							<svg
-								class="w-6 h-6 flex-shrink-0 mt-0.5"
-								style="color: #22c55e;"
+								class="w-6 h-6 flex-shrink-0 mt-0.5 text-green-500"
 								fill="none"
 								stroke="currentColor"
 								viewBox="0 0 24 24"
@@ -116,22 +107,18 @@
 								/>
 							</svg>
 							<div>
-								<h3 class="text-lg font-semibold mb-1" style="color: #22c55e;">
+								<h3 class="text-lg font-semibold mb-1 text-green-500">
 									Message Sent!
 								</h3>
-								<p style="color: var(--text-secondary);">{statusMessage}</p>
+								<p class="text-muted-foreground">{statusMessage}</p>
 							</div>
 						</div>
 					</Card>
 				{:else if status === "error"}
-					<Card
-						class="p-6"
-						style="border-color: rgba(239, 68, 68, 0.5); background-color: rgba(239, 68, 68, 0.1);"
-					>
+					<Card class="p-6 border-red-500/50 bg-red-500/10">
 						<div class="flex items-start gap-4">
 							<svg
-								class="w-6 h-6 flex-shrink-0 mt-0.5"
-								style="color: #ef4444;"
+								class="w-6 h-6 flex-shrink-0 mt-0.5 text-red-500"
 								fill="none"
 								stroke="currentColor"
 								viewBox="0 0 24 24"
@@ -146,10 +133,8 @@
 								/>
 							</svg>
 							<div>
-								<h3 class="text-lg font-semibold mb-1" style="color: #ef4444;">
-									Error
-								</h3>
-								<p style="color: var(--text-secondary);">{statusMessage}</p>
+								<h3 class="text-lg font-semibold mb-1 text-red-500">Error</h3>
+								<p class="text-muted-foreground">{statusMessage}</p>
 							</div>
 						</div>
 					</Card>
@@ -159,8 +144,7 @@
 					<div>
 						<label
 							for="name"
-							class="block text-sm font-medium mb-2"
-							style="color: var(--text-secondary);"
+							class="block text-sm font-medium mb-2 text-muted-foreground"
 							>Name</label
 						>
 						<input
@@ -169,8 +153,7 @@
 							bind:value={formState.name}
 							required
 							minlength="2"
-							class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-							style="background-color: var(--card-bg); color: var(--text-primary); border: 1px solid var(--border-color);"
+							class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-card text-foreground border border-border"
 							placeholder="Your name"
 						>
 					</div>
@@ -178,8 +161,7 @@
 					<div>
 						<label
 							for="email"
-							class="block text-sm font-medium mb-2"
-							style="color: var(--text-secondary);"
+							class="block text-sm font-medium mb-2 text-muted-foreground"
 							>Email</label
 						>
 						<input
@@ -187,8 +169,7 @@
 							id="email"
 							bind:value={formState.email}
 							required
-							class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-							style="background-color: var(--card-bg); color: var(--text-primary); border: 1px solid var(--border-color);"
+							class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-card text-foreground border border-border"
 							placeholder="you@example.com"
 						>
 					</div>
@@ -196,8 +177,7 @@
 					<div>
 						<label
 							for="subject"
-							class="block text-sm font-medium mb-2"
-							style="color: var(--text-secondary);"
+							class="block text-sm font-medium mb-2 text-muted-foreground"
 							>Subject</label
 						>
 						<input
@@ -206,8 +186,7 @@
 							bind:value={formState.subject}
 							required
 							minlength="5"
-							class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-							style="background-color: var(--card-bg); color: var(--text-primary); border: 1px solid var(--border-color);"
+							class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-card text-foreground border border-border"
 							placeholder="Project inquiry"
 						>
 					</div>
@@ -215,8 +194,7 @@
 					<div>
 						<label
 							for="message"
-							class="block text-sm font-medium mb-2"
-							style="color: var(--text-secondary);"
+							class="block text-sm font-medium mb-2 text-muted-foreground"
 							>Message</label
 						>
 						<textarea
@@ -225,8 +203,7 @@
 							required
 							minlength="20"
 							rows="5"
-							class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-							style="background-color: var(--card-bg); color: var(--text-primary); border: 1px solid var(--border-color);"
+							class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent resize-none bg-card text-foreground border border-border"
 							placeholder="Tell me about your project..."
 						></textarea>
 					</div>
@@ -244,22 +221,17 @@
 
 			<div class="space-y-8">
 				<div>
-					<h2
-						class="text-2xl font-bold mb-6"
-						style="color: var(--text-primary);"
-					>
+					<h2 class="text-2xl font-bold mb-6 text-foreground">
 						Direct Contact
 					</h2>
 					<div class="space-y-4">
 						<Card class="p-6">
 							<div class="flex items-center gap-4">
 								<div
-									class="w-12 h-12 rounded-lg flex items-center justify-center"
-									style="background-color: rgba(59, 130, 246, 0.15);"
+									class="w-12 h-12 rounded-lg flex items-center justify-center bg-primary/15"
 								>
 									<svg
-										class="w-6 h-6"
-										style="color: var(--accent);"
+										class="w-6 h-6 text-primary"
 										fill="none"
 										stroke="currentColor"
 										viewBox="0 0 24 24"
@@ -275,13 +247,10 @@
 									</svg>
 								</div>
 								<div>
-									<h3 class="font-semibold" style="color: var(--text-primary);">
-										Email
-									</h3>
+									<h3 class="font-semibold text-foreground">Email</h3>
 									<a
 										href="mailto:{profile.email}"
-										class="transition-colors hover:opacity-80"
-										style="color: var(--accent);"
+										class="transition-colors hover:opacity-80 text-primary"
 									>
 										{profile.email}
 									</a>
@@ -292,12 +261,10 @@
 						<Card class="p-6">
 							<div class="flex items-center gap-4">
 								<div
-									class="w-12 h-12 rounded-lg flex items-center justify-center"
-									style="background-color: rgba(34, 197, 94, 0.15);"
+									class="w-12 h-12 rounded-lg flex items-center justify-center bg-green-500/15"
 								>
 									<svg
-										class="w-6 h-6"
-										style="color: #22c55e;"
+										class="w-6 h-6 text-green-500"
 										fill="currentColor"
 										viewBox="0 0 24 24"
 										role="img"
@@ -309,15 +276,12 @@
 									</svg>
 								</div>
 								<div>
-									<h3 class="font-semibold" style="color: var(--text-primary);">
-										WhatsApp
-									</h3>
+									<h3 class="font-semibold text-foreground">WhatsApp</h3>
 									<a
-										href={profile.whatsapp}
+										href={`https://wa.me/${(profile.whatsapp?.toString())?.replace('+','')}`}
 										target="_blank"
 										rel="noopener noreferrer"
-										class="transition-colors hover:opacity-80"
-										style="color: var(--accent);"
+										class="transition-colors hover:opacity-80 text-primary"
 									>
 										{profile.whatsapp}
 									</a>
@@ -328,12 +292,10 @@
 						<Card class="p-6">
 							<div class="flex items-center gap-4">
 								<div
-									class="w-12 h-12 rounded-lg flex items-center justify-center"
-									style="background-color: rgba(168, 85, 247, 0.15);"
+									class="w-12 h-12 rounded-lg flex items-center justify-center bg-purple-500/15"
 								>
 									<svg
-										class="w-6 h-6"
-										style="color: #a855f7;"
+										class="w-6 h-6 text-purple-500"
 										fill="currentColor"
 										viewBox="0 0 24 24"
 										role="img"
@@ -345,15 +307,12 @@
 									</svg>
 								</div>
 								<div>
-									<h3 class="font-semibold" style="color: var(--text-primary);">
-										LinkedIn
-									</h3>
+									<h3 class="font-semibold text-foreground">LinkedIn</h3>
 									<a
 										href={profile.linkedin}
 										target="_blank"
 										rel="noopener noreferrer"
-										class="transition-colors hover:opacity-80"
-										style="color: var(--accent);"
+										class="transition-colors hover:opacity-80 text-primary"
 									>
 										Connect with me
 									</a>
@@ -364,40 +323,28 @@
 				</div>
 
 				<div>
-					<h3
-						class="text-lg font-semibold mb-4"
-						style="color: var(--text-primary);"
-					>
+					<h3 class="text-lg font-semibold mb-4 text-foreground">
 						Availability
 					</h3>
-					<Card
-						class="p-6"
-						style="border-color: rgba(34, 197, 94, 0.3); background-color: rgba(34, 197, 94, 0.05);"
-					>
+					<Card class="p-6 border-green-500/30 bg-green-500/5">
 						<div class="flex items-center gap-3">
 							<span
-								class="w-3 h-3 rounded-full animate-pulse"
-								style="background-color: #22c55e;"
+								class="w-3 h-3 rounded-full animate-pulse bg-green-500"
 							></span>
-							<span class="font-medium" style="color: #22c55e;"
-								>Available for hire</span
-							>
+							<span class="font-medium text-green-500">Available for hire</span>
 						</div>
-						<p class="text-sm mt-2" style="color: var(--text-secondary);">
-							{profile.location}
+						<p class="text-sm mt-2 text-muted-foreground">
+							{profile?.location}
 							• {profile.timezone}
 						</p>
 					</Card>
 				</div>
 
 				<div>
-					<h3
-						class="text-lg font-semibold mb-4"
-						style="color: var(--text-primary);"
-					>
+					<h3 class="text-lg font-semibold mb-4 text-foreground">
 						Response Time
 					</h3>
-					<p style="color: var(--text-secondary);">
+					<p class="text-muted-foreground">
 						Usually within 24 hours. For urgent matters, WhatsApp is the fastest
 						way to reach me.
 					</p>

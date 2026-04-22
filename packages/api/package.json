@@ -28,10 +28,12 @@
     "@orpc/zod": "catalog:",
     "dotenv": "catalog:",
     "drizzle-orm": "^0.45.1",
+    "nodemailer": "^6.9.16",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@habib-app/config": "workspace:*",
+    "@types/nodemailer": "^6.4.17",
     "hono": "catalog:",
     "typescript": "catalog:"
   }

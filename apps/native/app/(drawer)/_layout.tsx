@@ -23,7 +23,7 @@ function DrawerLayout() {
 					color: themeColorForeground,
 				},
 				headerRight: renderThemeToggle,
-				drawerStyle: { backgroundColor: themeColorBackground },
+				drawerStyle: { backgroundColor: themeColorBackground, width: 280 },
 			}}
 		>
 			<Drawer.Screen

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Profile } from "@habib-app/api/data";
+	import AnimatedBackground from "./AnimatedBackground.svelte";
 	import Button from "./ui/Button.svelte";
 
 	interface Props {
@@ -10,7 +11,7 @@
 	const name = $derived(profile.name);
 	const title = $derived(profile.title);
 	const tagline = $derived(profile.tagline);
-	const stats = $derived(profile.stats);
+	const stats = $derived(profile?.stats);
 	const linkedin = $derived(profile.linkedin);
 	const github = $derived(profile.github);
 	const whatsapp = $derived(profile.whatsapp);
@@ -18,107 +19,86 @@
 </script>
 
 <section
-	class="relative min-h-screen flex items-center justify-center overflow-hidden"
-	style="background-color: var(--bg-primary);"
+	class="relative min-h-screen flex items-center justify-center overflow-hidden animated-gradient-bg"
 >
-	<div class="absolute inset-0 -z-10">
-		<div
-			class="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl animate-pulse"
-		></div>
-		<div
-			class="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl animate-pulse"
-			style="animation-delay: 1s;"
-		></div>
-		<div
-			class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-600/10 rounded-full blur-3xl animate-pulse"
-			style="animation-delay: 2s;"
-		></div>
-	</div>
+	<AnimatedBackground />
 
 	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+		<!-- Name -->
 		<h1
-			class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4"
-			style="color: var(--text-primary);"
+			class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 animate-fade-in text-foreground"
 		>
 			{name}
 		</h1>
 
+		<!-- Title with accent -->
 		<p
-			class="text-xl sm:text-2xl font-medium mb-6"
-			style="color: var(--accent);"
+			class="text-xl sm:text-2xl font-medium mb-6 animate-slide-up"
+			style="animation-delay: 0.2s; color: var(--primary);"
 		>
 			{title}
 		</p>
 
+		<!-- Tagline -->
 		<p
-			class="text-lg sm:text-xl max-w-2xl mx-auto mb-12"
-			style="color: var(--text-secondary);"
+			class="text-lg sm:text-xl max-w-2xl mx-auto mb-12 animate-slide-up text-muted-foreground"
+			style="animation-delay: 0.3s;"
 		>
 			{tagline}
 		</p>
 
+		<!-- Stats with stagger -->
 		<div
-			class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mb-12 max-w-3xl mx-auto"
+			class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mb-12 max-w-3xl mx-auto stagger-children"
 		>
 			<div class="text-center">
-				<p
-					class="text-3xl sm:text-4xl font-bold"
-					style="color: var(--text-primary);"
-				>
+				<p class="text-3xl sm:text-4xl font-bold gradient-text">
 					{stats.years}+
 				</p>
-				<p class="text-sm mt-1" style="color: var(--text-muted);">Years</p>
+				<p class="text-sm mt-1 text-muted-foreground">Years</p>
 			</div>
 			<div class="text-center">
-				<p
-					class="text-3xl sm:text-4xl font-bold"
-					style="color: var(--text-primary);"
-				>
+				<p class="text-3xl sm:text-4xl font-bold gradient-text">
 					{stats.projects}+
 				</p>
-				<p class="text-sm mt-1" style="color: var(--text-muted);">Projects</p>
+				<p class="text-sm mt-1 text-muted-foreground">Projects</p>
 			</div>
 			<div class="text-center">
-				<p
-					class="text-3xl sm:text-4xl font-bold"
-					style="color: var(--text-primary);"
-				>
+				<p class="text-3xl sm:text-4xl font-bold gradient-text">
 					{stats.industries}+
 				</p>
-				<p class="text-sm mt-1" style="color: var(--text-muted);">Industries</p>
+				<p class="text-sm mt-1 text-muted-foreground">Industries</p>
 			</div>
 			<div class="text-center">
-				<p
-					class="text-3xl sm:text-4xl font-bold"
-					style="color: var(--text-primary);"
-				>
+				<p class="text-3xl sm:text-4xl font-bold gradient-text">
 					{stats.successRate}%
 				</p>
-				<p class="text-sm mt-1" style="color: var(--text-muted);">Success</p>
+				<p class="text-sm mt-1 text-muted-foreground">Success</p>
 			</div>
 		</div>
 
-		<div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+		<!-- CTA Buttons -->
+		<div
+			class="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-up"
+			style="animation-delay: 0.6s;"
+		>
 			<Button href="#projects" size="lg">View Portfolio</Button>
 			<Button href="#contact" variant="secondary" size="lg"
 				>Let's Work Together</Button
 			>
 		</div>
 
-		<div class="flex justify-center gap-6">
+		<!-- Social Links -->
+		<div
+			class="flex justify-center gap-6 animate-slide-up"
+			style="animation-delay: 0.7s;"
+		>
 			<a
 				href={linkedin}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="transition-colors"
-				style="color: var(--text-muted);"
+				class="transition-all duration-300 hover:scale-110 text-muted-foreground hover:text-primary"
 				aria-label="LinkedIn"
-				onmouseenter={(e) => {
-					e.currentTarget.style.color = "var(--text-primary)";
-				}}
-				onmouseleave={(e) => {
-					e.currentTarget.style.color = "var(--text-muted)";
-				}}
 			>
 				<svg
 					class="w-6 h-6"
@@ -136,15 +116,8 @@
 				href={github}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="transition-colors"
-				style="color: var(--text-muted);"
+				class="transition-all duration-300 hover:scale-110 text-muted-foreground hover:text-primary"
 				aria-label="GitHub"
-				onmouseenter={(e) => {
-					e.currentTarget.style.color = "var(--text-primary)";
-				}}
-				onmouseleave={(e) => {
-					e.currentTarget.style.color = "var(--text-muted)";
-				}}
 			>
 				<svg
 					class="w-6 h-6"
@@ -162,15 +135,8 @@
 				href={whatsapp}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="transition-colors"
-				style="color: var(--text-muted);"
+				class="transition-all duration-300 hover:scale-110 text-muted-foreground hover:text-primary"
 				aria-label="WhatsApp"
-				onmouseenter={(e) => {
-					e.currentTarget.style.color = "var(--text-primary)";
-				}}
-				onmouseleave={(e) => {
-					e.currentTarget.style.color = "var(--text-muted)";
-				}}
 			>
 				<svg
 					class="w-6 h-6"
@@ -186,15 +152,8 @@
 			</a>
 			<a
 				href="mailto:{email}"
-				class="transition-colors"
-				style="color: var(--text-muted);"
+				class="transition-all duration-300 hover:scale-110 text-muted-foreground hover:text-primary"
 				aria-label="Email"
-				onmouseenter={(e) => {
-					e.currentTarget.style.color = "var(--text-primary)";
-				}}
-				onmouseleave={(e) => {
-					e.currentTarget.style.color = "var(--text-muted)";
-				}}
 			>
 				<svg
 					class="w-6 h-6"

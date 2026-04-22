@@ -8,6 +8,7 @@ import { os } from "@orpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod/v4";
 import type { Context } from "../context";
+import { formatContactEmail, sendEmail } from "../lib/email";
 
 const o = os.$context<Context>();
 
@@ -254,7 +255,7 @@ function mapIndustry(i: typeof industries.$inferSelect, locale: string) {
 	};
 }
 
-export const appRouter: import("@orpc/server").AnyRouter = {
+export const appRouter = {
 	healthCheck: o.handler(() => "OK"),
 
 	// Profile endpoint
@@ -361,6 +362,14 @@ export const appRouter: import("@orpc/server").AnyRouter = {
 				subject,
 				message,
 			});
+
+			if (context.env.SMTP_TO) {
+				await sendEmail(context, {
+					to: context.env.SMTP_TO,
+					subject: `Contact Form: ${subject}`,
+					html: formatContactEmail(name, email, subject, message),
+				});
+			}
 
 			return {
 				success: true,
@@ -847,6 +856,77 @@ export const appRouter: import("@orpc/server").AnyRouter = {
 					throw new Error("Profile not found");
 				}
 				return { success: true, message: "Profile updated successfully" };
+			}),
+	},
+
+	resume: {
+		generate: o
+			.output(
+				z.object({
+					profile: profileSchema,
+					skills: z.object({
+						backend: z.array(skillSchema),
+						frontend: z.array(skillSchema),
+						database: z.array(skillSchema),
+						cloud: z.array(skillSchema),
+						leadership: z.array(skillSchema),
+						specializations: z.array(z.string()),
+					}),
+					experience: z.array(experienceSchema),
+					projects: z.array(projectSchema),
+					industries: z.array(industrySchema),
+				})
+			)
+			.handler(async ({ context }) => {
+				const isArabic = context.locale === "ar";
+
+				const profileResult = await context.db.select().from(profile).limit(1);
+				const p = profileResult[0];
+
+				const allSkills = await context.db.select().from(skills);
+				const specializations = await context.db
+					.select()
+					.from(skillSpecializations);
+				const experienceItems = await context.db.select().from(experience);
+				const projectItems = await context.db.select().from(projects);
+				const industryItems = await context.db.select().from(industries);
+
+				const mappedProfile = p ? mapProfile(p, context.locale) : null;
+
+				if (!mappedProfile) {
+					throw new Error("Profile not found");
+				}
+
+				const mappedSkills = allSkills.map((s) => mapSkill(s, context.locale));
+
+				return {
+					profile: mappedProfile,
+					skills: {
+						backend: mappedSkills.filter(
+							(s) => s.category === (isArabic ? "الخلفية" : "backend")
+						),
+						frontend: mappedSkills.filter(
+							(s) => s.category === (isArabic ? "الواجهة الأمامية" : "frontend")
+						),
+						database: mappedSkills.filter(
+							(s) => s.category === (isArabic ? "قواعد البيانات" : "database")
+						),
+						cloud: mappedSkills.filter(
+							(s) => s.category === (isArabic ? "السحابة" : "cloud")
+						),
+						leadership: mappedSkills.filter(
+							(s) => s.category === (isArabic ? "القيادة" : "leadership")
+						),
+						specializations: specializations.map((s) =>
+							isArabic ? s.nameAr : s.nameEn
+						),
+					},
+					experience: experienceItems.map((e) =>
+						mapExperience(e, context.locale)
+					),
+					projects: projectItems.map((p) => mapProject(p, context.locale)),
+					industries: industryItems.map((i) => mapIndustry(i, context.locale)),
+				};
 			}),
 	},
 };

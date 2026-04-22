@@ -1,5 +1,5 @@
-import { appRouter } from "@habib-app/api/routers/index";
 import { createContext } from "@habib-app/api/context";
+import { appRouter } from "@habib-app/api/routers/index";
 import { createRouterClient } from "@orpc/server";
 import { getRequestEvent } from "$app/server";
 
@@ -8,7 +8,7 @@ if (typeof window !== "undefined") {
 }
 
 export const serverClient = createRouterClient(appRouter, {
-	context: async () => {
+	context: () => {
 		const event = getRequestEvent();
 		return createContext({ request: event.request });
 	},

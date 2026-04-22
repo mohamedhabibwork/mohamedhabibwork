@@ -16,13 +16,10 @@
 
 <Section id="projects" class="py-24 sm:py-32">
 	<div class="text-center mb-16">
-		<h2
-			class="text-3xl sm:text-4xl font-bold mb-4"
-			style="color: var(--text-primary);"
-		>
+		<h2 class="text-3xl sm:text-4xl font-bold mb-4 text-foreground">
 			Featured Projects
 		</h2>
-		<p class="max-w-2xl mx-auto" style="color: var(--text-secondary);">
+		<p class="max-w-2xl mx-auto text-muted-foreground">
 			A selection of projects that showcase my expertise in building scalable,
 			user-friendly applications
 		</p>
@@ -32,20 +29,16 @@
 		{#each displayProjects as project (project.id)}
 			<Card class="p-6 flex flex-col h-full">
 				<Badge class="self-start mb-3">{project.category}</Badge>
-				<h3
-					class="text-xl font-semibold mb-3"
-					style="color: var(--text-primary);"
-				>
+				<h3 class="text-xl font-semibold mb-3 text-card-foreground">
 					{project.title}
 				</h3>
-				<p class="text-sm mb-4 flex-grow" style="color: var(--text-secondary);">
+				<p class="text-sm mb-4 flex-grow text-muted-foreground">
 					{project.description}
 				</p>
 				<div class="flex flex-wrap gap-2 mt-auto">
 					{#each project.techStack as tech}
 						<span
-							class="px-2 py-1 text-xs rounded"
-							style="background-color: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color);"
+							class="px-2 py-1 text-xs rounded bg-secondary text-secondary-foreground border border-border"
 						>
 							{tech}
 						</span>
@@ -56,8 +49,7 @@
 						href={project.url}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="mt-4 text-sm transition-colors hover:opacity-80"
-						style="color: var(--accent);"
+						class="mt-4 text-sm transition-colors hover:opacity-80 text-primary"
 					>
 						Visit → {project.url}
 					</a>

@@ -1,76 +1,55 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta
 			name="theme-color"
-			content="#09090b"
+			content="#1f3552"
 			media="(prefers-color-scheme: dark)"
 		>
 		<meta
 			name="theme-color"
-			content="#ffffff"
+			content="#f3f4f6"
 			media="(prefers-color-scheme: light)"
 		>
 
+		<!-- Favicon -->
 		<link rel="icon" href="/favicon.png" type="image/png">
 		<link rel="apple-touch-icon" href="/favicon.png">
+		<link rel="mask-icon" href="/favicon.png" color="#1f3552">
 
-		<meta
-			name="title"
-			content="Mohammad Habib - Senior Full Stack Developer & Team Leader"
-		>
-		<meta
-			name="description"
-			content="Transforming ideas into scalable digital solutions with 7+ years of expertise in enterprise development and team leadership. Expert in Laravel, Node.js, React, Vue.js, and cloud architecture."
-		>
-		<meta name="author" content="Mohammad Habib">
-		<meta name="robots" content="index, follow">
-		<meta
-			name="keywords"
-			content="Full Stack Developer, Team Leader, Laravel, Node.js, React, Vue.js, Enterprise Solutions, Egypt, Remote"
-		>
-
-		<meta property="og:type" content="website">
-		<meta property="og:url" content="https://mohamedhabib.work/">
-		<meta
-			property="og:title"
-			content="Mohammad Habib - Senior Full Stack Developer & Team Leader"
-		>
-		<meta
-			property="og:description"
-			content="Transforming ideas into scalable digital solutions with 7+ years of expertise in enterprise development and team leadership."
-		>
-		<meta property="og:image" content="https://mohamedhabib.work/logo.png">
-		<meta property="og:locale" content="en_US">
-
-		<meta property="twitter:card" content="summary_large_image">
-		<meta property="twitter:url" content="https://mohamedhabib.work/">
-		<meta
-			property="twitter:title"
-			content="Mohammad Habib - Senior Full Stack Developer & Team Leader"
-		>
-		<meta
-			property="twitter:description"
-			content="Transforming ideas into scalable digital solutions with 7+ years of expertise in enterprise development and team leadership."
-		>
-		<meta
-			property="twitter:image"
-			content="https://mohamedhabib.work/logo.png"
-		>
-
-		<meta
-			name="linkedin:profile"
-			content="https://linkedin.com/in/mohamedhabibwork"
-		>
-
+		<!-- Preconnect to external domains -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link
 			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
 			rel="stylesheet"
 		>
+
+		<!-- Base meta (will be overridden by page-specific SEO) -->
+		<meta name="author" content="Mohammad Habib">
+		<meta name="copyright" content="Mohammad Habib">
+		<meta name="language" content="en">
+		<meta name="revisit-after" content="7 days">
+		<meta name="rating" content="general">
+		<meta name="geo.region" content="EG">
+		<meta name="geo.placename" content="Cairo">
+		<meta name="ICBM" content="30.0444,31.2357">
+
+		<!-- PWA -->
+		<link rel="manifest" href="/manifest.json">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="default">
+		<meta name="apple-mobile-web-app-title" content="Mohammad Habib">
+		<meta name="application-name" content="Mohammad Habib">
+		<meta name="msapplication-TileColor" content="#1f3552">
+		<meta name="msapplication-config" content="/browserconfig.xml">
+
+		<!-- Verification (placeholder - update with actual values) -->
+		<!-- <meta name="google-site-verification" content="YOUR_CODE"> -->
+		<!-- <meta name="msvalidate.01" content="YOUR_CODE"> -->
 
 		<script>
 			"use strict";
@@ -87,5 +66,37 @@
 	</head>
 	<body data-sveltekit-preload-data="hover" class="antialiased">
 		<div style="display: contents">%sveltekit.body%</div>
+
+		<!-- Google tag (gtag.js) -->
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-8FCT98HHW4"
+		></script>
+		<script>
+			"use strict";
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				// biome-ignore lint/complexity/noArguments: Google Analytics required
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
+
+			gtag("config", "G-8FCT98HHW4");
+		</script>
+		<!-- Google Tag Manager -->
+		<script>
+			"use strict";
+			((w, d, s, l, i) => {
+				w[l] = w[l] || [];
+				w[l].push({ "gtm.start": Date.now(), event: "gtm.js" });
+				const f = d.getElementsByTagName(s)[0];
+				const j = d.createElement(s);
+				const dl = l === "dataLayer" ? "" : `&l=${l}`;
+				j.async = true;
+				j.src = `https://www.googletagmanager.com/gtm.js?id=${i}${dl}`;
+				f.parentNode.insertBefore(j, f);
+			})(window, document, "script", "dataLayer", "GTM-NSW3QFH5");
+		</script>
+		<!-- End Google Tag Manager -->
 	</body>
 </html>

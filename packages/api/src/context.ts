@@ -1,6 +1,16 @@
 import { createDb } from "@habib-app/db";
 
+export interface Env {
+	SMTP_FROM: string;
+	SMTP_HOST: string;
+	SMTP_PASS: string;
+	SMTP_PORT: string;
+	SMTP_TO: string;
+	SMTP_USER: string;
+}
+
 export interface CreateContextOptions {
+	env?: Env;
 	request: Request;
 }
 
@@ -41,6 +51,14 @@ export function createContext(options: CreateContextOptions) {
 		session: null,
 		db,
 		locale,
+		env: options.env ?? {
+			SMTP_HOST: "",
+			SMTP_PORT: "587",
+			SMTP_USER: "",
+			SMTP_PASS: "",
+			SMTP_FROM: "noreply@mohamedhabib.work",
+			SMTP_TO: "",
+		},
 	};
 }
 

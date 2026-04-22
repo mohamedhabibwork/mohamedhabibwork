@@ -10,10 +10,7 @@
 	const currentYear = new Date().getFullYear();
 </script>
 
-<footer
-	class="border-t py-12"
-	style="background-color: var(--bg-primary); border-color: var(--border-color);"
->
+<footer class="border-t py-12 bg-background">
 	<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex flex-col items-center gap-6">
 			<div class="flex gap-6">
@@ -21,15 +18,8 @@
 					href={profile.linkedin}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="transition-colors"
-					style="color: var(--text-muted);"
+					class="transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110"
 					aria-label="LinkedIn"
-					onmouseenter={(e) => {
-						e.currentTarget.style.color = "var(--text-primary)";
-					}}
-					onmouseleave={(e) => {
-						e.currentTarget.style.color = "var(--text-muted)";
-					}}
 				>
 					<svg
 						class="w-5 h-5"
@@ -47,15 +37,8 @@
 					href={profile.github}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="transition-colors"
-					style="color: var(--text-muted);"
+					class="transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110"
 					aria-label="GitHub"
-					onmouseenter={(e) => {
-						e.currentTarget.style.color = "var(--text-primary)";
-					}}
-					onmouseleave={(e) => {
-						e.currentTarget.style.color = "var(--text-muted)";
-					}}
 				>
 					<svg
 						class="w-5 h-5"
@@ -70,18 +53,11 @@
 					</svg>
 				</a>
 				<a
-					href={profile.whatsapp}
+					href={`https://wa.me/${(profile.whatsapp?.toString())?.replace("+", "")}`}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="transition-colors"
-					style="color: var(--text-muted);"
+					class="transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110"
 					aria-label="WhatsApp"
-					onmouseenter={(e) => {
-						e.currentTarget.style.color = "var(--text-primary)";
-					}}
-					onmouseleave={(e) => {
-						e.currentTarget.style.color = "var(--text-muted)";
-					}}
 				>
 					<svg
 						class="w-5 h-5"
@@ -97,15 +73,8 @@
 				</a>
 				<a
 					href="mailto:{profile.email}"
-					class="transition-colors"
-					style="color: var(--text-muted);"
+					class="transition-all duration-300 text-muted-foreground hover:text-foreground hover:scale-110"
 					aria-label="Email"
-					onmouseenter={(e) => {
-						e.currentTarget.style.color = "var(--text-primary)";
-					}}
-					onmouseleave={(e) => {
-						e.currentTarget.style.color = "var(--text-muted)";
-					}}
 				>
 					<svg
 						class="w-5 h-5"
@@ -125,7 +94,7 @@
 				</a>
 			</div>
 
-			<p class="text-sm" style="color: var(--text-muted);">
+			<p class="text-sm text-muted-foreground">
 				&copy; {currentYear} {profile.name}. All rights reserved.
 			</p>
 		</div>
