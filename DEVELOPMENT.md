@@ -87,3 +87,12 @@ New contact-form messages are emailed from `no-reply@mohamedhabib.work` to `CONT
 via the Cloudflare Email Service `EMAIL` binding (Reply-To is the visitor). One-time setup:
 `bunx wrangler email sending enable mohamedhabib.work` (adds SPF/DKIM DNS records — the domain must be on Cloudflare).
 Local dev only simulates sending; the email is written under `.wrangler/tmp/email/`.
+
+## Turnstile (bot protection)
+
+The contact form (`contact` action) and dashboard login (`login` action) require a Cloudflare Turnstile token,
+verified server-side in `src/server/turnstile.ts` (fails closed; checks action and hostname).
+- `VITE_TURNSTILE_SITEKEY` — public sitekey, baked in at build time (`.env.local`)
+- `TURNSTILE_SECRET` — `wrangler secret put TURNSTILE_SECRET`
+- `TURNSTILE_HOSTNAMES` — accepted frontend hostnames (`mohamedhabib.work` in `wrangler.jsonc`)
+- Local dev uses Cloudflare's public always-pass test keys with `TURNSTILE_ALLOW_TEST_KEYS=1` (never set in production).

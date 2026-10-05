@@ -1,8 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequestHeader } from "@tanstack/react-start/server";
 import { and, asc, desc, eq, ne } from "drizzle-orm";
 import { z } from "zod";
 import { withDb } from "#/db";
 import { notifyOwnerOfMessage } from "#/server/mail";
+import { verifyTurnstile } from "#/server/turnstile";
 import { cvs, experiences, messages, projects, services, skills } from "#/db/schema";
 
 /** Everything the public portfolio page renders, in one round trip. */
@@ -72,6 +74,7 @@ const contactSchema = z.object({
 	subject: z.string().trim().max(200).default(""),
 	service: z.string().trim().max(120).regex(/^[a-z0-9-]*$/).default(""),
 	body: z.string().trim().min(10, "Tell me a little more (10+ characters)").max(5000),
+	"cf-turnstile-response": z.string().max(2048).default(""),
 	/** Honeypot: real visitors leave it empty. */
 	company: z.string().max(0).optional(),
 });
@@ -79,6 +82,9 @@ const contactSchema = z.object({
 export const sendMessage = createServerFn({ method: "POST" })
 	.validator((input: unknown) => contactSchema.parse(input))
 	.handler(async ({ data }) => {
+		if (!(await verifyTurnstile(data["cf-turnstile-response"], "contact", getRequestHeader("cf-connecting-ip")))) {
+			return { ok: false as const, error: "Please complete the verification and try again." };
+		}
 		const msg = { name: data.name, email: data.email, subject: data.subject, service: data.service, body: data.body };
 		// Only keep a service tag that matches a real published service.
 		const serviceTitle = await withDb(async (db) => {

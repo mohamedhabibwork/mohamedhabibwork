@@ -402,3 +402,7 @@ a.mh-card {
 .site-nav a[aria-current="page"] {
 	color: var(--accent-text);
 }
+
+.turnstile {
+	min-height: 65px;
+}

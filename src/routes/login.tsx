@@ -1,5 +1,6 @@
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { Turnstile, type TurnstileHandle } from "#/components/Turnstile";
 import { Alert, Button, Input, Logo, MarkArt, ThemeToggle } from "#/design-system/ui";
 import { getSession, signIn } from "#/server/fn/auth";
 
@@ -15,6 +16,8 @@ function Login() {
 	const router = useRouter();
 	const [error, setError] = useState("");
 	const [busy, setBusy] = useState(false);
+	const [token, setToken] = useState("");
+	const turnstile = useRef<TurnstileHandle>(null);
 
 	async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -22,13 +25,14 @@ function Login() {
 		setBusy(true);
 		setError("");
 		try {
-			const res = await signIn({ data: { email: String(fd.get("email")), password: String(fd.get("password")) } });
+			const res = await signIn({ data: { email: String(fd.get("email")), password: String(fd.get("password")), turnstile: token } });
 			if (!res.ok) setError(res.error);
 			else await router.navigate({ to: "/admin" });
 		} catch {
 			setError("Enter a valid email and your password.");
 		} finally {
 			setBusy(false);
+			turnstile.current?.reset();
 		}
 	}
 
@@ -40,7 +44,7 @@ function Login() {
 					<p className="mh-auth__quote">Build calm systems. Ship often.</p>
 					<MarkArt className="mh-auth__shape" fill="var(--lime-500)" />
 				</div>
-				<form className="mh-auth__form" onSubmit={onSubmit}>
+				<form className="mh-auth__form" method="post" onSubmit={onSubmit}>
 					<div className="mh-row mh-row--between">
 						<h1 className="mh-auth__title">Sign in</h1>
 						<ThemeToggle />
@@ -49,7 +53,8 @@ function Login() {
 					{error && <Alert variant="danger" title="Couldn't sign in">{error}</Alert>}
 					<Input name="email" type="email" label="Email" leadingIcon="mail" autoComplete="username" required />
 					<Input name="password" type="password" label="Password" autoComplete="current-password" required />
-					<Button type="submit" size="lg" block loading={busy}>Sign in</Button>
+					<Turnstile ref={turnstile} action="login" onToken={setToken} />
+					<Button type="submit" size="lg" block loading={busy} disabled={!token}>Sign in</Button>
 					<a className="mh-link" href="/" style={{ fontSize: 14 }}>← Back to the site</a>
 				</form>
 			</div>

@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { Turnstile, type TurnstileHandle } from "#/components/Turnstile";
 import { Alert, Button, Icon, Input, LinkButton, Logo, Select, Textarea, ThemeToggle } from "#/design-system/ui";
 import { sendMessage } from "#/server/fn/public";
 
@@ -58,16 +59,27 @@ export function ContactForm({ service, services }: { service?: ServiceOption; se
 	const [state, setState] = useState<"idle" | "sending" | "sent">("idle");
 	const [errors, setErrors] = useState<Record<string, string>>({});
 	const [formError, setFormError] = useState("");
+	const [token, setToken] = useState("");
+	const turnstile = useRef<TurnstileHandle>(null);
 
 	async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		const form = e.currentTarget;
-		const input = Object.fromEntries(new FormData(form).entries());
+		if (!token) {
+			setFormError("Please complete the verification below.");
+			return;
+		}
+		const input = { ...Object.fromEntries(new FormData(form).entries()), "cf-turnstile-response": token };
 		setState("sending");
 		setErrors({});
 		setFormError("");
 		try {
-			await sendMessage({ data: input });
+			const res = await sendMessage({ data: input });
+			if (!res.ok) {
+				setState("idle");
+				setFormError(res.error);
+				return;
+			}
 			setState("sent");
 			form.reset();
 		} catch (err) {
@@ -75,6 +87,9 @@ export function ContactForm({ service, services }: { service?: ServiceOption; se
 			const issues = parseIssues(err);
 			if (issues) setErrors(issues);
 			else setFormError("Couldn't send your message. Please email me directly instead.");
+		} finally {
+			// Tokens are single-use: get a fresh one for any further submit.
+			turnstile.current?.reset();
 		}
 	}
 
@@ -95,7 +110,8 @@ export function ContactForm({ service, services }: { service?: ServiceOption; se
 			<div className="hp" aria-hidden>
 				<label>Company<input name="company" tabIndex={-1} autoComplete="off" /></label>
 			</div>
-			<div><Button type="submit" loading={state === "sending"} trailingIcon="send">Send message</Button></div>
+			<Turnstile ref={turnstile} action="contact" onToken={setToken} />
+			<div><Button type="submit" loading={state === "sending"} disabled={!token} trailingIcon="send">Send message</Button></div>
 		</form>
 	);
 }
