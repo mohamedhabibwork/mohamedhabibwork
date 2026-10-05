@@ -19,7 +19,7 @@ const profile = {
 	summary:
 		"Senior full-stack engineer and team leader with 7+ years building scalable web platforms from product requirements to production, across transportation, healthcare, fintech, e-commerce and education in Egypt, Saudi Arabia and the UAE. Backend in .NET Core/C#, PHP/Laravel and Node.js; frontend in React, Vue.js and TypeScript; data on PostgreSQL, MySQL, MongoDB, Redis and Elasticsearch; delivery on AWS, Azure, Docker and Kubernetes with CI/CD. I bring practical system design, a performance mindset and strong execution, paired with mentoring and clear communication.",
 	email: "mohamedhabibwork@gmail.com",
-	phone: "+966 50 869 0501",
+	phone: "+20 115 197 8927",
 	location: "Cairo, Egypt · Remote worldwide",
 	website: "https://mohamedhabib.work",
 	github: "https://github.com/mohamedhabibwork",
