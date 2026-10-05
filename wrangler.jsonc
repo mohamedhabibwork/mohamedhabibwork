@@ -57,10 +57,6 @@
 			"binding": "HYPERDRIVE",
 			"id": "6db10d8d70e94200a26c7d339055d568",
 			"localConnectionString": "postgres://postgres:local@127.0.0.1:5432/habib_portfolio"
-		},
-		{
-			"binding": "habib_portfolio",
-			"id": "6db10d8d70e94200a26c7d339055d568"
 		}
 	]
 	// Secrets (never commit): bunx wrangler secret put ADMIN_PASSWORD_HASH / MCP_TOKEN
