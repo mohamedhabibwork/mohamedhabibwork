@@ -22,6 +22,7 @@
     "db:seed": "tsx scripts/seed.ts",
     "ds:sync": "node scripts/sync-design-system.mjs",
     "hash-password": "node scripts/hash-password.mjs",
+    "set-admin-password": "node scripts/set-admin-password.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
