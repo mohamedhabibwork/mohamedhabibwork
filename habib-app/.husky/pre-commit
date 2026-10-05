@@ -1,5 +1,0 @@
-bun test
-
-# ultracite
-#!/bin/sh
-bun x lint-staged

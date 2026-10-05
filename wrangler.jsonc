@@ -1,0 +1,24 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "mohamed-habib-portfolio",
+	"compatibility_date": "2025-09-02",
+	"compatibility_flags": ["nodejs_compat"],
+	"main": "@tanstack/react-start/server-entry",
+	"observability": { "enabled": true },
+	"vars": {
+		"SITE_URL": "https://habib.dev",
+		"ADMIN_EMAIL": "admin@mohamedhabib.work"
+	},
+	// Postgres via Hyperdrive. Create once and paste the id:
+	//   bunx wrangler hyperdrive create habib-portfolio-db --connection-string="$DATABASE_URL"
+	// `localConnectionString` is used by `vite dev` (Hyperdrive requires a password in the URL;
+	// a local trust-auth Postgres ignores it). Override with CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE.
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "REPLACE_WITH_HYPERDRIVE_ID",
+			"localConnectionString": "postgres://postgres:local@127.0.0.1:5432/habib_portfolio"
+		}
+	]
+	// Secrets (never commit): bunx wrangler secret put ADMIN_PASSWORD_HASH / MCP_TOKEN
+}

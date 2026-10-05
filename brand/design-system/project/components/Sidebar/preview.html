@@ -1,0 +1,13 @@
+<!-- @dsCard group="Admin" height=496 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return h("div",{style:{width:240,height:400,display:"flex"}},h(M.Sidebar,{active:"Dashboard",groups:[{items:[{label:"Dashboard",icon:"home"},{label:"Projects",icon:"briefcase",count:3},{label:"Messages",icon:"mail",count:12}]},{label:"Manage",items:[{label:"Users",icon:"users"},{label:"Settings",icon:"settings"}]}],user:{name:"Mohamed Habib",role:"Owner",avatarAsset:"profile"}}));
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>

@@ -1,0 +1,13 @@
+<!-- @dsCard group="Feedback" height=366 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return h("div",{className:"mh-stack",style:{gap:10}},h(M.Alert,{variant:"brand",title:"New: case study published"},"Read how LEAP ships web and mobile from one API."),h(M.Alert,{variant:"success",title:"Deployed to staging"}),h(M.Alert,{variant:"warning",title:"Certificate expires in 7 days"}),h(M.Alert,{variant:"danger",title:"Build failed",onDismiss:()=>{}},"Type errors in 3 files."));
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>

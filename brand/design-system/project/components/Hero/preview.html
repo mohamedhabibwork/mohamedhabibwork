@@ -1,0 +1,13 @@
+<!-- @dsCard group="Site" height=506 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return h(M.Hero,{eyebrow:"Tech Lead · Cairo / Remote",title:"I build platforms that",highlight:"ship.",lead:"Twelve years turning product ideas into reliable systems for web and mobile.",actions:[h(M.Button,{key:1,size:"lg",trailingIcon:"arrow-right"},"See my work"),h(M.Button,{key:2,size:"lg",variant:"outline",leadingIcon:"download"},"Résumé")]});
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>

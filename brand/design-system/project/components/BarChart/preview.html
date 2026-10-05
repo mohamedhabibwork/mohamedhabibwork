@@ -1,0 +1,13 @@
+<!-- @dsCard group="Data" height=346 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return h(M.BarChart,{label:"Traffic by channel",labels:["Jun","Jul","Aug","Sep","Oct"],series:[{name:"Organic",data:[420,510,610,580,720]},{name:"Referral",data:[210,260,240,330,390]},{name:"Social",data:[120,180,150,210,260]}]});
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>

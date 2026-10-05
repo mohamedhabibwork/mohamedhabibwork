@@ -1,0 +1,133 @@
+:root, [data-theme="dark"] {
+  --lime-100: #f0fdd4;
+  --lime-300: #dcfb98;
+  --lime-500: #c2f852;
+  --lime-600: #a9de36;
+  --lime-700: #86b41c;
+  --lime-900: #3d5806;
+  --carbon-950: #0b0d0a;
+  --carbon-900: #14170f;
+  --carbon-800: #1d2117;
+  --carbon-700: #2b3023;
+  --carbon-500: #6c7660;
+  --bone-50: #fafaf7;
+  --bone-100: #f1f2ec;
+  --bone-200: #e3e5dc;
+  --bone-400: #83887a;
+  --surface: var(--carbon-950);
+  --surface-raised: var(--carbon-900);
+  --surface-field: var(--carbon-800);
+  --surface-inverse: var(--bone-50);
+  --overlay: rgba(0, 0, 0, 0.72);
+  --line: var(--carbon-700);
+  --line-strong: var(--carbon-500);
+  --text: #f4f5ef;
+  --text-muted: #a6ab9a;
+  --text-subtle: #8a8f7f;
+  --text-inverse: var(--carbon-950);
+  --accent: var(--lime-500);
+  --accent-hover: var(--lime-600);
+  --accent-active: var(--lime-700);
+  --accent-text: var(--lime-500);
+  --logo-mark: var(--lime-500);
+  --accent-indicator: var(--lime-500);
+  --accent-soft: #232c10;
+  --accent-line: #4b6316;
+  --on-accent: var(--carbon-950);
+  --positive: #5fd48f;
+  --positive-soft: #11291b;
+  --caution: #f2b84b;
+  --caution-soft: #2e230b;
+  --critical: #ff7d87;
+  --critical-soft: #33141a;
+  --on-critical: var(--carbon-950);
+  --info: #7bcdf2;
+  --info-soft: #0f2531;
+  --chart-1: var(--lime-500);
+  --chart-2: #7bcdf2;
+  --chart-3: #f2994b;
+  --chart-4: #c39cff;
+  --chart-5: #ff8fb5;
+  --chart-6: #e6e8df;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-raised: 0 16px 40px rgba(0, 0, 0, 0.55);
+  --shadow-focus: 0 0 0 3px rgba(194, 248, 82, 0.45);
+}
+[data-theme="light"] {
+  --surface: var(--bone-50);
+  --surface-raised: #ffffff;
+  --surface-field: var(--bone-100);
+  --surface-inverse: var(--carbon-950);
+  --overlay: rgba(11, 13, 10, 0.48);
+  --line: var(--bone-200);
+  --line-strong: var(--bone-400);
+  --text: #14170f;
+  --text-muted: #565c4c;
+  --text-subtle: #676d5d;
+  --text-inverse: #f4f5ef;
+  --accent: var(--lime-500);
+  --accent-hover: var(--lime-600);
+  --accent-active: var(--lime-700);
+  --accent-text: var(--lime-900);
+  --logo-mark: var(--carbon-950);
+  --accent-indicator: #5d8a0c;
+  --accent-soft: #eefbcf;
+  --accent-line: #b9df6a;
+  --on-accent: var(--carbon-950);
+  --positive: #1d7a49;
+  --positive-soft: #e2f5ea;
+  --caution: #8f5400;
+  --caution-soft: #fff2d9;
+  --critical: #b42335;
+  --critical-soft: #fce8eb;
+  --on-critical: #ffffff;
+  --info: #2366a8;
+  --info-soft: #e5f1fb;
+  --chart-1: #5d8a0c;
+  --chart-2: #2a78d6;
+  --chart-3: #d4600f;
+  --chart-4: #7a5fc9;
+  --chart-5: #c74b7d;
+  --chart-6: #4c5442;
+  --shadow-sm: 0 1px 2px rgba(20, 23, 15, 0.08);
+  --shadow-raised: 0 12px 32px rgba(20, 23, 15, 0.14);
+  --shadow-focus: 0 0 0 3px rgba(61, 88, 6, 0.35);
+}
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-control: 4px;
+  --radius-card: 8px;
+  --radius-round: 9999px;
+  --z-sticky: 10;
+  --z-overlay: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+  --font-display: "Barlow", "Readex Pro", system-ui, sans-serif;
+  --font-sans: "Poppins", "Readex Pro", system-ui, sans-serif;
+  --font-arabic: "Readex Pro", "Poppins", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+}
+@font-face { font-family: "Barlow"; src: url(../project/fonts/Barlow-600.woff2) format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Barlow"; src: url(../project/fonts/Barlow-700.woff2) format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Barlow"; src: url(../project/fonts/Barlow-800.woff2) format("woff2"); font-weight: 800; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url(../project/fonts/Poppins-400.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url(../project/fonts/Poppins-500.woff2) format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url(../project/fonts/Poppins-600.woff2) format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url(../project/fonts/Poppins-700.woff2) format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Readex Pro"; src: url(../project/fonts/ReadexPro-400-arabic.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Readex Pro"; src: url(../project/fonts/ReadexPro-500-arabic.woff2) format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Readex Pro"; src: url(../project/fonts/ReadexPro-600-arabic.woff2) format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Readex Pro"; src: url(../project/fonts/ReadexPro-700-arabic.woff2) format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url(../project/fonts/JetBrainsMono-400.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url(../project/fonts/JetBrainsMono-600.woff2) format("woff2"); font-weight: 600; font-display: swap; }

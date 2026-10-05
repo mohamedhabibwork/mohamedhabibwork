@@ -1,0 +1,13 @@
+<!doctype html><html data-theme="dark"><meta charset=utf-8>
+<link rel=stylesheet href="tokens.css"><link rel=stylesheet href="../project/components/bundle.css">
+<style>html,body{margin:0;height:100%}</style>
+<script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="../project/components/bundle.js"></script>
+<body><div id=host></div><script>
+var c=new URLSearchParams(location.search).get('c');
+fetch('../project/components/'+c+'/preview.html').then(r=>r.text()).then(function(t){
+  var host=document.getElementById('host'); host.innerHTML=t.replace(/<script>[\s\S]*<\/script>/,'');
+  var code=/<script>([\s\S]*)<\/script>/.exec(t)[1]; try{ new Function(code)(); }catch(e){ host.insertAdjacentHTML('beforeend','<pre style=color:red>'+e+'</pre>'); console.error(c,e); }
+});
+</script></body></html>

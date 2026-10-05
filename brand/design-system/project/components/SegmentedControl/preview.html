@@ -1,0 +1,13 @@
+<!-- @dsCard group="Forms" height=146 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return h("div",{className:"mh-row",style:{gap:16}},h(M.SegmentedControl,{label:"Range",options:[{value:"7d",label:"7d"},{value:"30d",label:"30d"},{value:"90d",label:"90d"}],defaultValue:"30d"}),h(M.SegmentedControl,{label:"View",options:[{value:"grid",label:"Grid",icon:"layout"},{value:"list",label:"List",icon:"menu"}]}));
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>
