@@ -21,7 +21,7 @@ const profile = {
 	email: "mohamedhabibwork@gmail.com",
 	phone: "+20 115 197 8927",
 	location: "Egypt · Remote worldwide",
-	website: "https://mohamedhabib.me",
+	website: "https://mohamedhabib.work",
 	github: "https://github.com/mohamedhabibwork",
 	linkedin: "https://www.linkedin.com/in/mohamedhabibwork/",
 	availability: "Full-time, contract and consulting · replies within 24 hours",
@@ -108,6 +108,15 @@ const projects = [
 ].map((p, i) => ({ ...p, ...projectDetails[p.slug], published: true, sort: i }));
 
 
+const services = [
+	{ slug: "full-stack-development", title: "Full stack web development", icon: "code", summary: "End-to-end web platforms: APIs, dashboards and customer-facing apps built to scale.", description: "I design and build complete web products, from database schema and APIs to the admin dashboard and the customer-facing front end.\n\nTypical stacks are Laravel or Node.js on the backend with React or Vue on the front end, deployed with CI/CD and monitoring from day one.", deliverables: ["Architecture and data model", "REST or GraphQL API", "Admin dashboard", "Responsive web app", "CI/CD and deployment"], tech: ["Laravel", "Node.js", "React", "Vue.js", "PostgreSQL", "MySQL"], startingAt: "" },
+	{ slug: "realtime-tracking", title: "Real-time tracking & dispatch", icon: "map-pin", summary: "Live GPS tracking, dispatch and notifications for fleets, rides, deliveries and field teams.", description: "I've built ride-hailing, school transport, ambulance dispatch and field-rep tracking platforms. I can deliver the location pipeline, dispatch logic and live dashboards your operations team needs.", deliverables: ["Live location ingestion", "Dispatch and assignment logic", "Driver and customer apps API", "Live operations dashboard", "Push and SMS notifications"], tech: ["GoLang", "Node.js", "Socket.io", "WebSocket", "Redis"], startingAt: "" },
+	{ slug: "payment-integration", title: "Payment gateway integration", icon: "zap", summary: "Secure payments with Fawry, Paymob, PayPal and Stripe, including reconciliation and payouts.", description: "I integrate local and international payment gateways, handle webhooks and refunds safely, and reconcile transactions into your ERP or accounting system.", deliverables: ["Gateway integration", "Webhooks and idempotent processing", "Refunds and payouts", "Reconciliation reports"], tech: ["Fawry", "Paymob", "PayPal", "Stripe", "Laravel"], startingAt: "" },
+	{ slug: "erp-crm", title: "ERP & CRM systems", icon: "layers", summary: "Custom ERP/CRM modules or ERPNext integrations for sales, inventory, HR and operations.", description: "From multi-vendor inventory to workforce scheduling, I build or integrate the back-office systems that keep operations running, including ERPNext customisation.", deliverables: ["Requirements and process mapping", "Custom modules", "ERPNext integration", "Reporting and dashboards", "Data migration"], tech: ["Laravel", "ERPNext", "Python", "PostgreSQL"], startingAt: "" },
+	{ slug: "mobile-api", title: "Mobile app backends & APIs", icon: "monitor", summary: "Fast, versioned APIs for iOS and Android apps with auth, notifications and file storage.", description: "I build the backend your mobile team needs: authentication, versioned REST or GraphQL APIs, push notifications and media storage, documented and tested.", deliverables: ["API design and docs", "Auth and roles", "Push notifications", "File and media storage", "Monitoring"], tech: ["Laravel", "Node.js", "GraphQL", "AWS"], startingAt: "" },
+	{ slug: "technical-leadership", title: "Technical leadership & consulting", icon: "users", summary: "Team leadership, architecture reviews and delivery process for teams of 5–10 developers.", description: "I've led distributed teams across Egypt, Saudi Arabia and the UAE. I can lead your team, review architecture, set up code review and release practices, or help hire and onboard developers.", deliverables: ["Architecture review", "Code review and standards", "Release and QA process", "Mentoring and hiring support"], tech: ["Agile / Scrum", "System design", "CI/CD"], startingAt: "" },
+].map((s, i) => ({ ...s, published: true, sort: i }));
+
 const skillRows: [string, string, number, number][] = [
 	["PHP & Laravel", "Backend", 5, 6], ["Node.js & Express", "Backend", 4, 4], ["GoLang", "Backend", 4, 3], ["ASP.NET Core / C#", "Backend", 4, 2], ["Python", "Backend", 3, 2],
 	["JavaScript / TypeScript", "Frontend", 5, 6], ["React", "Frontend", 4, 4], ["Vue.js / Nuxt", "Frontend", 4, 4], ["HTML5 & CSS3", "Frontend", 5, 7],
@@ -123,6 +132,8 @@ async function main() {
 		await tx.insert(schema.experiences).values(experiences);
 		await tx.delete(schema.projects);
 		await tx.insert(schema.projects).values(projects);
+		await tx.delete(schema.services);
+		await tx.insert(schema.services).values(services);
 		await tx.delete(schema.skills);
 		await tx.insert(schema.skills).values(skillRows.map(([name, category, level, years], i) => ({ name, category, level, years, sort: i })));
 
@@ -141,7 +152,7 @@ async function main() {
 			await tx.insert(schema.cvs).values({ title: "Main CV", slug: "mohamed-habib", template: "modern", accent: "#3d5806", isPublic: true, data });
 		}
 	});
-	console.log("Seeded profile, experiences, projects, skills (and a public 'mohamed-habib' CV if none existed).");
+	console.log("Seeded profile, experiences, projects, services, skills (and a public 'mohamed-habib' CV if none existed).");
 }
 
 main()

@@ -21,8 +21,12 @@ import { Route as AdminExperienceRouteImport } from './routes/admin/experience'
 import { Route as AdminMessagesRouteImport } from './routes/admin/messages'
 import { Route as AdminProfileRouteImport } from './routes/admin/profile'
 import { Route as AdminProjectsRouteImport } from './routes/admin/projects'
+import { Route as AdminServicesRouteImport } from './routes/admin/services'
 import { Route as AdminSkillsRouteImport } from './routes/admin/skills'
+import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects/$slug'
+import { Route as ServicesIndexRouteImport } from './routes/services/index'
+import { Route as ServicesSlugRouteImport } from './routes/services/$slug'
 import { Route as AdminCvsIndexRouteImport } from './routes/admin/cvs/index'
 import { Route as AdminCvsIdRouteImport } from './routes/admin/cvs/$id'
 import { Route as OgProjectsFileRouteImport } from './routes/og/projects.$file'
@@ -88,14 +92,34 @@ const AdminProjectsRoute = AdminProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminSkillsRoute = AdminSkillsRouteImport.update({
   id: '/skills',
   path: '/skills',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
   id: '/projects/$slug',
   path: '/projects/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesSlugRoute = ServicesSlugRouteImport.update({
+  id: '/services/$slug',
+  path: '/services/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminCvsIndexRoute = AdminCvsIndexRouteImport.update({
@@ -131,9 +155,13 @@ export interface FileRoutesByFullPath {
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/services': typeof AdminServicesRoute
   '/admin/skills': typeof AdminSkillsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/admin/cvs/$id': typeof AdminCvsIdRoute
   '/og/projects/$file': typeof OgProjectsFileRoute
   '/admin/cvs/': typeof AdminCvsIndexRoute
@@ -150,9 +178,13 @@ export interface FileRoutesByTo {
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/services': typeof AdminServicesRoute
   '/admin/skills': typeof AdminSkillsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/projects': typeof ProjectsIndexRoute
+  '/services': typeof ServicesIndexRoute
   '/admin/cvs/$id': typeof AdminCvsIdRoute
   '/og/projects/$file': typeof OgProjectsFileRoute
   '/admin/cvs': typeof AdminCvsIndexRoute
@@ -171,9 +203,13 @@ export interface FileRoutesById {
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/services': typeof AdminServicesRoute
   '/admin/skills': typeof AdminSkillsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/admin/cvs/$id': typeof AdminCvsIdRoute
   '/og/projects/$file': typeof OgProjectsFileRoute
   '/admin/cvs/': typeof AdminCvsIndexRoute
@@ -193,9 +229,13 @@ export interface FileRouteTypes {
     | '/admin/messages'
     | '/admin/profile'
     | '/admin/projects'
+    | '/admin/services'
     | '/admin/skills'
     | '/projects/$slug'
+    | '/services/$slug'
     | '/admin/'
+    | '/projects/'
+    | '/services/'
     | '/admin/cvs/$id'
     | '/og/projects/$file'
     | '/admin/cvs/'
@@ -212,9 +252,13 @@ export interface FileRouteTypes {
     | '/admin/messages'
     | '/admin/profile'
     | '/admin/projects'
+    | '/admin/services'
     | '/admin/skills'
     | '/projects/$slug'
+    | '/services/$slug'
     | '/admin'
+    | '/projects'
+    | '/services'
     | '/admin/cvs/$id'
     | '/og/projects/$file'
     | '/admin/cvs'
@@ -232,9 +276,13 @@ export interface FileRouteTypes {
     | '/admin/messages'
     | '/admin/profile'
     | '/admin/projects'
+    | '/admin/services'
     | '/admin/skills'
     | '/projects/$slug'
+    | '/services/$slug'
     | '/admin/'
+    | '/projects/'
+    | '/services/'
     | '/admin/cvs/$id'
     | '/og/projects/$file'
     | '/admin/cvs/'
@@ -250,6 +298,9 @@ export interface RootRouteChildren {
   SiteDotwebmanifestRoute: typeof SiteDotwebmanifestRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
+  ServicesSlugRoute: typeof ServicesSlugRoute
+  ProjectsIndexRoute: typeof ProjectsIndexRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
   OgProjectsFileRoute: typeof OgProjectsFileRoute
   ApiCvSlugPdfRoute: typeof ApiCvSlugPdfRoute
 }
@@ -340,6 +391,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProjectsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/services': {
+      id: '/admin/services'
+      path: '/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AdminServicesRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/skills': {
       id: '/admin/skills'
       path: '/skills'
@@ -347,11 +405,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSkillsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/projects/': {
+      id: '/projects/'
+      path: '/projects'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof ProjectsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects/$slug': {
       id: '/projects/$slug'
       path: '/projects/$slug'
       fullPath: '/projects/$slug'
       preLoaderRoute: typeof ProjectsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/$slug': {
+      id: '/services/$slug'
+      path: '/services/$slug'
+      fullPath: '/services/$slug'
+      preLoaderRoute: typeof ServicesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/cvs/': {
@@ -390,6 +469,7 @@ interface AdminRouteRouteChildren {
   AdminMessagesRoute: typeof AdminMessagesRoute
   AdminProfileRoute: typeof AdminProfileRoute
   AdminProjectsRoute: typeof AdminProjectsRoute
+  AdminServicesRoute: typeof AdminServicesRoute
   AdminSkillsRoute: typeof AdminSkillsRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminCvsIdRoute: typeof AdminCvsIdRoute
@@ -401,6 +481,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminMessagesRoute: AdminMessagesRoute,
   AdminProfileRoute: AdminProfileRoute,
   AdminProjectsRoute: AdminProjectsRoute,
+  AdminServicesRoute: AdminServicesRoute,
   AdminSkillsRoute: AdminSkillsRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminCvsIdRoute: AdminCvsIdRoute,
@@ -420,6 +501,9 @@ const rootRouteChildren: RootRouteChildren = {
   SiteDotwebmanifestRoute: SiteDotwebmanifestRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
+  ServicesSlugRoute: ServicesSlugRoute,
+  ProjectsIndexRoute: ProjectsIndexRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
   OgProjectsFileRoute: OgProjectsFileRoute,
   ApiCvSlugPdfRoute: ApiCvSlugPdfRoute,
 }

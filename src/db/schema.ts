@@ -91,6 +91,27 @@ export const skills = pgTable("skills", {
 	...timestamps,
 });
 
+/** Services offered on /services. Each page has a contact form tagged with the service. */
+export const services = pgTable(
+	"services",
+	{
+		id: serial().primaryKey(),
+		slug: text().notNull(),
+		title: text().notNull(),
+		icon: text().notNull().default("code"),
+		summary: text().notNull().default(""),
+		/** Long-form copy for /services/$slug. Paragraphs separated by blank lines. */
+		description: text().notNull().default(""),
+		deliverables: text().array().notNull().default([]),
+		tech: text().array().notNull().default([]),
+		startingAt: text("starting_at").notNull().default(""),
+		published: boolean().notNull().default(true),
+		sort: integer().notNull().default(0),
+		...timestamps,
+	},
+	(t) => [uniqueIndex("services_slug_idx").on(t.slug)],
+);
+
 /** Contact-form submissions from the public site. */
 export const messages = pgTable(
 	"messages",
@@ -99,6 +120,8 @@ export const messages = pgTable(
 		name: text().notNull(),
 		email: text().notNull(),
 		subject: text().notNull().default(""),
+		/** Slug of the service the visitor enquired about, if any. */
+		service: text().notNull().default(""),
 		body: text().notNull(),
 		read: boolean().notNull().default(false),
 		createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
