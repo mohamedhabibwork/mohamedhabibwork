@@ -1,6 +1,6 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
-import { Alert, Button, Input, Textarea } from "#/design-system/ui";
+import { Alert, Button, Input, LinesField, Textarea } from "#/design-system/ui";
 import { useSave } from "#/design-system/use-save";
 import { getProfile, type ProfileInput, saveProfile } from "#/server/fn/admin";
 
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/admin/profile")({
 	component: ProfilePage,
 });
 
-const EMPTY: ProfileInput = { name: "", headline: "", tagline: "", summary: "", email: "", phone: "", location: "", website: "", github: "", linkedin: "", availability: "", photoUrl: "/brand/images/profile.jpg", stats: [] };
+const EMPTY: ProfileInput = { name: "", headline: "", tagline: "", summary: "", email: "", phone: "", location: "", website: "", github: "", linkedin: "", availability: "", photoUrl: "/brand/marks/mh-mark.svg", stats: [], certifications: [] };
 
 function ProfilePage() {
 	const loaded = Route.useLoaderData();
@@ -53,6 +53,12 @@ function ProfilePage() {
 					<Input label="Website" value={form.website} onChange={set("website")} error={f("website")} />
 					<Input label="GitHub" value={form.github} onChange={set("github")} error={f("github")} />
 					<Input label="LinkedIn" value={form.linkedin} onChange={set("linkedin")} error={f("linkedin")} />
+				</div>
+			</section>
+			<section className="mh-formsec">
+				<div className="mh-formsec__head"><h3 className="mh-formsec__title">Certifications</h3><p className="mh-formsec__desc">One per line. Shown on your site and new CVs.</p></div>
+				<div className="mh-formsec__body">
+					<LinesField label="Certifications" value={form.certifications} onChange={(certifications) => setForm({ ...form, certifications })} rows={5} />
 				</div>
 			</section>
 			<section className="mh-formsec">
