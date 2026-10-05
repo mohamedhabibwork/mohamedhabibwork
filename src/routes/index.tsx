@@ -1,4 +1,4 @@
-import { createFileRoute, } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
 	Alert,
 	Icon,
@@ -11,6 +11,7 @@ import {
 	Timeline,
 } from "#/design-system/ui";
 import { absoluteUrl, jsonLd, SITE_URL, seo } from "#/lib/seo";
+import { type SkillEvidence, skillEvidence } from "#/lib/skill-evidence";
 import { ProjectCard, ServiceCard } from "#/components/cards";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
 import { getPortfolio } from "#/server/fn/public";
@@ -93,7 +94,7 @@ function Home() {
 				<Projects projects={data.projects} />
 				<Services services={data.services} />
 				<Experience items={data.experiences} />
-				<Skills skills={data.skills} />
+				<Skills skills={data.skills} projects={data.projects} roles={data.experiences} />
 				<Credentials education={p.education} certifications={p.certifications} />
 				<Contact profile={p} services={data.services} />
 			</main>
@@ -146,22 +147,53 @@ function Experience({ items }: { items: Portfolio["experiences"] }) {
 	);
 }
 
-function Skills({ skills }: { skills: Portfolio["skills"] }) {
+function Skills({ skills, projects, roles }: { skills: Portfolio["skills"]; projects: Portfolio["projects"]; roles: Portfolio["experiences"] }) {
 	const groups = [...new Set(skills.map((s) => s.category))];
 	return (
 		<section className="site-section" id="skills" aria-labelledby="skills-title">
-			<SectionHeading id="skills-title" eyebrow="Toolbox" title="Skills" />
+			<SectionHeading id="skills-title" eyebrow="Toolbox" title="Skills" description="Each skill links to the projects and roles where I used it." />
 			<div className="mh-grid-2">
 				{groups.map((g) => (
 					<div key={g} className="mh-card">
 						<span className="mh-card__eyebrow">{g}</span>
-						<SkillMeter skills={skills.filter((s) => s.category === g)} />
+						<div className="mh-skills">
+							{skills.filter((s) => s.category === g).map((s) => <SkillRow key={s.id} skill={s} evidence={skillEvidence(s.name, projects, roles)} />)}
+						</div>
 					</div>
 				))}
 			</div>
 		</section>
 	);
 }
+
+const MAX_EVIDENCE_LINKS = 3;
+
+function SkillRow({ skill: s, evidence }: { skill: Portfolio["skills"][number]; evidence: SkillEvidence }) {
+	const shownProjects = evidence.projects.slice(0, MAX_EVIDENCE_LINKS);
+	const more = evidence.projects.length - shownProjects.length;
+	return (
+		<div className="skill-row">
+			<SkillMeter skills={[s]} />
+			<p className="skill-row__evidence">
+				{s.years ? <span className="skill-row__years">{s.years}+ yrs</span> : null}
+				{evidence.companies.length > 0 && <span>at {evidence.companies.slice(0, 3).join(", ")}</span>}
+				{shownProjects.length > 0 && (
+					<span>
+						in{" "}
+						{shownProjects.map((p, i) => (
+							<span key={p.slug}>
+								{i > 0 && ", "}
+								<Link to="/projects/$slug" params={{ slug: p.slug }}>{p.title}</Link>
+							</span>
+						))}
+						{more > 0 && <> and <Link to="/projects">{more} more</Link></>}
+					</span>
+				)}
+			</p>
+		</div>
+	);
+}
+
 function Credentials({ education, certifications }: { education: NonNullable<Portfolio["profile"]>["education"]; certifications: string[] }) {
 	if (education.length === 0 && certifications.length === 0) return null;
 	return (

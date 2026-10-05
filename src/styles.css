@@ -406,3 +406,30 @@ a.mh-card {
 .turnstile {
 	min-height: 65px;
 }
+
+/* Skill rows with evidence links */
+.skill-row {
+	display: grid;
+	gap: 4px;
+}
+.skill-row__evidence {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 10px;
+	font-size: 13px;
+	line-height: 1.5;
+	color: var(--text-muted);
+}
+.skill-row__evidence:empty {
+	display: none;
+}
+.skill-row__evidence a {
+	color: var(--accent-text);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+.skill-row__years {
+	font-family: var(--font-mono);
+	color: var(--text-subtle);
+}
