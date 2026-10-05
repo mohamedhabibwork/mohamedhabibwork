@@ -33,7 +33,7 @@
 	],
 	"vars": {
 		"SITE_URL": "https://mohamedhabib.work",
-		"ADMIN_EMAIL": "admin@mohamedhabib.work",
+		"ADMIN_EMAIL": "mohamedhabibwork@gmail.com",
 		"MAIL_FROM": "no-reply@mohamedhabib.work",
 		"CONTACT_TO": "mohamedhabibwork@gmail.com",
 		"TURNSTILE_HOSTNAMES": "mohamedhabib.work"

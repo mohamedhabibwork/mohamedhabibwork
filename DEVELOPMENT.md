@@ -65,7 +65,7 @@ One-time setup (requires `bunx wrangler login`):
    `bun run db:migrate && bun run db:seed`
 2. Create the Hyperdrive config and paste its id into `wrangler.jsonc` (`hyperdrive[0].id`):
    `bunx wrangler hyperdrive create habib-portfolio-db --connection-string="$DATABASE_URL"`
-3. Set secrets:
+3. Set secrets (or sync them from `.env.local`: `node scripts/env-value.mjs MCP_TOKEN | bunx wrangler secret put MCP_TOKEN`):
    - `bun run hash-password '<12+ char password>'` → `bunx wrangler secret put ADMIN_PASSWORD_HASH`
    - `openssl rand -hex 32` → `bunx wrangler secret put MCP_TOKEN`
 4. Set `SITE_URL`/`VITE_SITE_URL` to your real domain, then deploy: `bun run deploy`.
