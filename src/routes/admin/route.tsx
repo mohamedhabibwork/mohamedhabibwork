@@ -6,7 +6,7 @@ export const Route = createFileRoute("/admin")({
 	beforeLoad: async () => {
 		if (!(await getSession()).signedIn) throw redirect({ to: "/login" });
 	},
-	head: () => ({ meta: [{ title: "Dashboard · habib.dev" }, { name: "robots", content: "noindex" }] }),
+	head: () => ({ meta: [{ title: "Dashboard · mohamedhabib.me" }, { name: "robots", content: "noindex" }] }),
 	component: AdminLayout,
 });
 

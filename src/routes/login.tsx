@@ -7,7 +7,7 @@ export const Route = createFileRoute("/login")({
 	beforeLoad: async () => {
 		if ((await getSession()).signedIn) throw redirect({ to: "/admin" });
 	},
-	head: () => ({ meta: [{ title: "Sign in · habib.dev" }, { name: "robots", content: "noindex" }] }),
+	head: () => ({ meta: [{ title: "Sign in · mohamedhabib.me" }, { name: "robots", content: "noindex" }] }),
 	component: Login,
 });
 
@@ -45,7 +45,7 @@ function Login() {
 						<h1 className="mh-auth__title">Sign in</h1>
 						<ThemeToggle />
 					</div>
-					<p className="mh-auth__sub">Dashboard for habib.dev</p>
+					<p className="mh-auth__sub">Dashboard for mohamedhabib.me</p>
 					{error && <Alert variant="danger" title="Couldn't sign in">{error}</Alert>}
 					<Input name="email" type="email" label="Email" leadingIcon="mail" autoComplete="username" required />
 					<Input name="password" type="password" label="Password" autoComplete="current-password" required />

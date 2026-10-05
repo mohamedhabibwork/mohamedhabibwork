@@ -1,22 +1,30 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "mohamed-habib-portfolio",
+	"account_id": "dfd0934ada854fb30ecb91fe050f5294",
 	"compatibility_date": "2025-09-02",
 	"compatibility_flags": ["nodejs_compat"],
-	"main": "@tanstack/react-start/server-entry",
+	"main": "./src/server-entry.ts",
 	"observability": { "enabled": true },
+	// mohamedhabib.me is canonical; the others 301 to it (see src/server.ts).
+	"routes": [
+		{ "pattern": "mohamedhabib.me", "custom_domain": true },
+		{ "pattern": "www.mohamedhabib.me", "custom_domain": true },
+		{ "pattern": "mohamedhabib.work", "custom_domain": true },
+		{ "pattern": "habib.cloud", "custom_domain": true }
+	],
 	"vars": {
-		"SITE_URL": "https://habib.dev",
+		"SITE_URL": "https://mohamedhabib.me",
 		"ADMIN_EMAIL": "admin@mohamedhabib.work",
-		"MAIL_FROM": "no-reply@mohamedhabib.work",
+		"MAIL_FROM": "no-reply@mohamedhabib.me",
 		"CONTACT_TO": "mohamedhabibwork@gmail.com"
 	},
 	// Cloudflare Email Service. Onboard the domain once:
-	//   bunx wrangler email sending enable mohamedhabib.work
+	//   bunx wrangler email sending enable mohamedhabib.me (already enabled)
 	"send_email": [
 		{
 			"name": "EMAIL",
-			"allowed_sender_addresses": ["no-reply@mohamedhabib.work"],
+			"allowed_sender_addresses": ["no-reply@mohamedhabib.me"],
 			"allowed_destination_addresses": ["mohamedhabibwork@gmail.com"]
 		}
 	],

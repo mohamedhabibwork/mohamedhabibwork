@@ -164,8 +164,8 @@ export async function renderCvPdf(cv: CvData, opts: { template: CvTemplate; acce
 	doc.setAuthor(cv.name);
 	doc.setSubject(cv.title);
 	doc.setKeywords(cv.skills.flatMap((g) => g.items).slice(0, 40));
-	doc.setCreator("habib.dev CV builder");
-	doc.setProducer("habib.dev");
+	doc.setCreator("mohamedhabib.me CV builder");
+	doc.setProducer("mohamedhabib.me");
 
 	// Header
 	w.text(s.upperName ? cv.name.toUpperCase() : cv.name, { font: opts.template === "classic" ? fonts.bold : fonts.display, size: s.name });

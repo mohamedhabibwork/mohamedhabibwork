@@ -19,7 +19,7 @@ const config = defineConfig({
     }),
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tailwindcss(),
-    tanstackStart(),
+    tanstackStart({ server: { entry: 'server-entry.ts' } }),
     viteReact(),
   ],
 })
