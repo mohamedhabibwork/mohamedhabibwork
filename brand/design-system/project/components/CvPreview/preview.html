@@ -1,0 +1,13 @@
+<!-- @dsCard group="CV builder" height=816 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return (function(){var t=React.useState("modern");return h("div",{className:"mh-stack",style:{gap:12,maxWidth:540}},h(M.TemplatePicker,{value:t[0],onChange:t[1]}),h(M.CvPreview,{template:t[0]}))})();
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>

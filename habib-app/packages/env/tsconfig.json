@@ -1,6 +1,0 @@
-{
-  "extends": "@habib-app/config/tsconfig.base.json",
-  "compilerOptions": {
-    "strictNullChecks": true
-  }
-}

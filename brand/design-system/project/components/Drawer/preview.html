@@ -1,0 +1,13 @@
+<!-- @dsCard group="Admin" height=436 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return (function(){var s=React.useState("right");return h("div",{className:"mh-stack",style:{gap:12}},h(M.SegmentedControl,{label:"Side",value:s[0],onChange:s[1],options:[{value:"left",label:"Left"},{value:"right",label:"Right"},{value:"bottom",label:"Bottom sheet"}]}),h(M.Drawer,{key:s[0],side:s[0],inline:true,title:s[0]==="bottom"?"Share CV":"Edit project",onClose:()=>{},footer:[h(M.Button,{key:1,variant:"ghost"},"Cancel"),h(M.Button,{key:2},"Save")]},h(M.Input,{label:"Title",defaultValue:"LEAP platform"}),h(M.Select,{label:"Status",options:[{value:"live",label:"Live"},{value:"draft",label:"Draft"}]})))})();
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>

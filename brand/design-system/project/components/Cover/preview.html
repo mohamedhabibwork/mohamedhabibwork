@@ -1,0 +1,25 @@
+<!-- @dsCard height=300 -->
+<style>
+  html,body{margin:0}
+  .cv{position:relative;width:960px;height:300px;overflow:hidden;background:var(--surface)}
+  .lime{fill:var(--lime-500)} .tint{fill:var(--accent-soft)} .ink{fill:var(--text)}
+  .name{position:absolute;left:48px;bottom:84px;margin:0;width:440px;font:800 80px/.95 var(--font-display);text-transform:none;color:var(--text);letter-spacing:-.01em}
+  .tag{position:absolute;left:50px;bottom:48px;margin:0;font:600 13px/1 var(--font-display);letter-spacing:.3em;text-transform:uppercase;color:var(--text-muted)}
+</style>
+<div class="cv">
+  <!-- blocks: the mark's three planes in lime-500 at 300px tall (scale .93 of the 442x348 master, bleeding top and bottom), accent-soft slab 112x300, text sliver 24x(space-16)
+       arrangement: one tall slab with the mark as satellites, staggered like the M and H strokes, all right of x=480
+       pattern row: "a literal motif": the monogram's slanted planes, cut at its own 33-degree angle; the README calls the slant the system's motif
+       steps and radii: slab width = space-24 + space-4, sliver = space-6 x space-16; corners radius-none (the mark has no rounds) -->
+  <svg width="960" height="300" viewBox="0 0 960 300" aria-hidden="true">
+    <polygon class="tint" points="500,40 612,-34 612,300 500,300"/>
+    <g transform="translate(548 -24) scale(0.93)">
+      <polygon class="lime" points="0,0 145,97 295,0 295,158 237,197 237,113 145,172 60,116 60,276 0,314"/>
+      <polygon class="lime" points="164,178 224,139 224,348 164,314"/>
+      <polygon class="lime" points="383,54 442,14 442,314 383,348 383,218 233,218 323,158 383,158"/>
+    </g>
+    <polygon class="ink" points="936,236 960,220 960,300 936,300"/>
+  </svg>
+  <p class="name">MH Design System</p>
+  <p class="tag">Mohamed Habib · Tech Lead</p>
+</div>

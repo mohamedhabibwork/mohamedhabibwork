@@ -1,0 +1,13 @@
+<!-- @dsCard group="Display" height=206 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return h("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}},h(M.StatCard,{label:"Test coverage",value:"82%",delta:"+4.1 pts",trend:"up"}),h(M.StatCard,{label:"p95 latency",value:"184ms",delta:"-38ms",trend:"down"}));
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>

@@ -1,0 +1,13 @@
+<!-- @dsCard group="CV builder" height=386 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return h(M.RepeatableList,{addLabel:"Add experience",defaultItems:[{role:"Tech Lead",company:"LEAP",start:"2024",end:"Present"},{role:"Senior Developer",company:"Freelance",start:"2020",end:"2024"}],titleOf:x=>(x.role||"New role")+(x.company?" · "+x.company:""),subtitleOf:x=>x.start+" — "+x.end,newItem:()=>({role:"",company:"",start:"",end:""}),renderItem:(x,i,patch)=>h("div",{className:"mh-formsec__body mh-formsec__body--2"},h(M.Input,{label:"Role",value:x.role,onChange:e=>patch({role:e.target.value})}),h(M.Input,{label:"Company",value:x.company,onChange:e=>patch({company:e.target.value})}))});
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>

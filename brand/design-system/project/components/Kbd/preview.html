@@ -1,0 +1,13 @@
+<!-- @dsCard group="Display" height=126 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return h("span",{className:"mh-row",style:{gap:4}},h(M.Kbd,null,"⌘"),h(M.Kbd,null,"K"),h("span",{style:{marginLeft:8,color:"var(--text-muted)",fontSize:14}},"to search"));
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>

@@ -1,0 +1,1 @@
+ALTER TABLE "profile" ALTER COLUMN "photo_url" SET DEFAULT '/brand/marks/mh-mark.svg';

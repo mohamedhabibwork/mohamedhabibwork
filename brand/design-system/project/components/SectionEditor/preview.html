@@ -1,0 +1,13 @@
+<!-- @dsCard group="CV builder" height=326 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return h("div",{className:"mh-stack",style:{gap:8}},h(M.SectionEditor,{title:"Profile summary",icon:"edit",onMoveUp:()=>{},onMoveDown:()=>{}},h(M.Textarea,{label:"Summary",defaultValue:"Tech lead with 12 years building reliable platforms."})),h(M.SectionEditor,{title:"Experience",icon:"briefcase",count:2,defaultOpen:false}));
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>

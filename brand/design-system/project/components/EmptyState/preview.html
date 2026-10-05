@@ -1,0 +1,13 @@
+<!-- @dsCard group="Feedback" height=336 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return h(M.EmptyState,{icon:"code",title:"No projects yet",description:"Add your first project to show it on your portfolio.",action:h(M.Button,{size:"sm",leadingIcon:"plus"},"Add project")});
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>

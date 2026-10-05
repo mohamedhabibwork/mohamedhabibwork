@@ -1,0 +1,13 @@
+<!-- @dsCard group="Data" height=296 -->
+<div class="mh-pv-single"><section class="mh-pv"><div class="mh-pv__toggle" id="t"></div><div id="d"></div></section></div>
+<script>
+(function () {
+  var h = React.createElement, M = window.MH;
+  function Demo() {
+    return h(M.DataTable,{caption:"Services",columns:[{key:"svc",label:"Service"},{key:"status",label:"Status",render:r=>h(M.Badge,{variant:r.ok?"success":"danger",dot:true},r.ok?"Healthy":"Down")},{key:"p95",label:"p95 ms",align:"end"}],rows:[{svc:"api",ok:true,p95:184},{svc:"web",ok:true,p95:96},{svc:"worker",ok:false,p95:1204}]});
+  }
+  M.loadAssets("../../design-system.json");
+  ReactDOM.createRoot(document.getElementById("t")).render(h(M.ThemeToggle, { persist: false }));
+  ReactDOM.createRoot(document.getElementById("d")).render(h(Demo));
+})();
+</script>
