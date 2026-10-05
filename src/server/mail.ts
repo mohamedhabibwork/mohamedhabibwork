@@ -15,7 +15,7 @@ async function emailBinding(): Promise<EmailBinding | null> {
 	}
 }
 
-type ContactMessage = { name: string; email: string; subject: string; body: string };
+type ContactMessage = { name: string; email: string; subject: string; body: string; serviceTitle?: string };
 
 /**
  * Emails a new contact-form message to the owner from MAIL_FROM.
@@ -29,9 +29,11 @@ export async function notifyOwnerOfMessage(msg: ContactMessage): Promise<boolean
 		console.warn("Contact email skipped: EMAIL binding, MAIL_FROM or CONTACT_TO not configured");
 		return false;
 	}
-	const subject = oneLine(`New message from ${msg.name}${msg.subject ? `: ${msg.subject}` : ""}`).slice(0, 200);
-	const text = `${msg.name} <${msg.email}> wrote:\n\n${msg.body}\n\n— Sent from the contact form. Reply to answer directly.`;
-	const html = `<p><strong>${esc(msg.name)}</strong> &lt;<a href="mailto:${esc(msg.email)}">${esc(msg.email)}</a>&gt; wrote:</p>
+	const tag = msg.serviceTitle ? `[${msg.serviceTitle}] ` : "";
+	const subject = oneLine(`${tag}New message from ${msg.name}${msg.subject ? `: ${msg.subject}` : ""}`).slice(0, 200);
+	const serviceLine = msg.serviceTitle ? `Service: ${msg.serviceTitle}\n\n` : "";
+	const text = `${serviceLine}${msg.name} <${msg.email}> wrote:\n\n${msg.body}\n\n— Sent from the contact form. Reply to answer directly.`;
+	const html = `${msg.serviceTitle ? `<p>Service: <strong>${esc(msg.serviceTitle)}</strong></p>` : ""}<p><strong>${esc(msg.name)}</strong> &lt;<a href="mailto:${esc(msg.email)}">${esc(msg.email)}</a>&gt; wrote:</p>
 <blockquote style="border-left:3px solid #c2f852;margin:0;padding:8px 16px;white-space:pre-wrap">${esc(msg.body)}</blockquote>
 <p style="color:#666;font-size:12px">Sent from the contact form. Reply to answer directly.</p>`;
 	try {

@@ -2,7 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { asc, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { withDb } from "#/db";
-import { experiences, messages, profile, projects, skills } from "#/db/schema";
+import { experiences, messages, profile, projects, services, skills } from "#/db/schema";
 import { projectSchema } from "#/server/fn/admin";
 
 const json = (data: unknown) => ({ content: [{ type: "text" as const, text: JSON.stringify(data, null, 2) }] });
@@ -38,6 +38,10 @@ export function createPortfolioMcp({ owner }: { owner: boolean }): McpServer {
 
 	server.registerTool("list_skills", { title: "List skills", description: "Skills grouped by category with level (1–5) and years." }, async () =>
 		json(await withDb((db) => db.select().from(skills).orderBy(asc(skills.sort)))),
+	);
+
+	server.registerTool("list_services", { title: "List services", description: "Services offered, with deliverables and tech." }, async () =>
+		json(await withDb((db) => db.select().from(services).where(eq(services.published, true)).orderBy(asc(services.sort)))),
 	);
 
 	if (!owner) return server;

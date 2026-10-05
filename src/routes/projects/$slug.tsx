@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ChipList, EmptyState, Icon, LinkButton, Logo, MarkArt, ThemeToggle } from "#/design-system/ui";
+import { SiteFooter, SiteHeader } from "#/components/site";
+import { ChipList, EmptyState, Icon, LinkButton, MarkArt } from "#/design-system/ui";
 import { absoluteUrl, jsonLd, SITE_URL, seo } from "#/lib/seo";
 import { getProject } from "#/server/fn/public";
 
@@ -40,7 +41,7 @@ export const Route = createFileRoute("/projects/$slug")({
 			"@type": "BreadcrumbList",
 			itemListElement: [
 				{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-				{ "@type": "ListItem", position: 2, name: "Projects", item: `${SITE_URL}/#work` },
+				{ "@type": "ListItem", position: 2, name: "Projects", item: absoluteUrl("/projects") },
 				{ "@type": "ListItem", position: 3, name: pr.title, item: absoluteUrl(path) },
 			],
 		};
@@ -48,7 +49,7 @@ export const Route = createFileRoute("/projects/$slug")({
 	},
 	notFoundComponent: () => (
 		<main id="main" className="site" style={{ padding: "96px 0" }}>
-			<EmptyState icon="search" title="Project not found" description="It may have been renamed or unpublished." action={<LinkButton href="/#work">Back to projects</LinkButton>} />
+			<EmptyState icon="search" title="Project not found" description="It may have been renamed or unpublished." action={<LinkButton href="/projects">See all projects</LinkButton>} />
 		</main>
 	),
 	component: ProjectPage,
@@ -59,16 +60,7 @@ function ProjectPage() {
 	const paragraphs = pr.description.split(/\n{2,}/).map((t) => t.trim()).filter(Boolean);
 	return (
 		<>
-			<header className="site-header">
-				<div className="site site-header__inner">
-					<Logo size={26} href="/" />
-					<nav className="site-nav" aria-label="Breadcrumb">
-						<Link to="/" hash="work">Projects</Link>
-					</nav>
-					<ThemeToggle />
-					<LinkButton href="/#contact" size="sm">Hire me</LinkButton>
-				</div>
-			</header>
+			<SiteHeader />
 
 			<main id="main" className="site">
 				<article className="project-detail" aria-labelledby="project-title">
@@ -131,6 +123,7 @@ function ProjectPage() {
 					</nav>
 				)}
 			</main>
+			<SiteFooter />
 		</>
 	);
 }

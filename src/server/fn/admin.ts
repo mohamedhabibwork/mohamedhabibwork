@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { asc, count, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { withDb } from "#/db";
-import { atsReports, cvs, experiences, messages, profile, projects, skills } from "#/db/schema";
+import { atsReports, cvs, experiences, messages, profile, projects, services, skills } from "#/db/schema";
 import { requireOwner } from "#/server/auth";
 
 const list = z.array(z.string().trim().max(400)).max(30);
@@ -140,6 +140,47 @@ export const deleteProject = createServerFn({ method: "POST" })
 	.handler(async ({ data }) => {
 		await requireOwner();
 		await withDb((db) => db.delete(projects).where(eq(projects.id, data.id)));
+		return { ok: true as const };
+	});
+
+/* ── Services ── */
+export const serviceSchema = z.object({
+	id: z.number().int().positive().optional(),
+	slug: z.string().trim().min(2).max(80).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "lowercase-with-dashes"),
+	title: z.string().trim().min(1).max(160),
+	icon: z.string().trim().max(40).default("code"),
+	summary: z.string().trim().max(500),
+	description: z.string().trim().max(10000).default(""),
+	deliverables: list.default([]),
+	tech: list.default([]),
+	startingAt: z.string().trim().max(80).default(""),
+	published: z.boolean(),
+	sort: z.number().int(),
+});
+export type ServiceInput = z.infer<typeof serviceSchema>;
+
+export const listServices = createServerFn({ method: "GET" }).handler(async () => {
+	await requireOwner();
+	return withDb((db) => db.select().from(services).orderBy(asc(services.sort)));
+});
+export const saveService = createServerFn({ method: "POST" })
+	.validator((i: unknown) => serviceSchema.parse(i))
+	.handler(async ({ data }) => {
+		await requireOwner();
+		const { id: rowId, ...values } = data;
+		return withDb(async (db) => {
+			const clash = await db.query.services.findFirst({ where: eq(services.slug, values.slug) });
+			if (clash && clash.id !== rowId) return { ok: false as const, error: "Another service already uses that slug." };
+			if (rowId) await db.update(services).set(values).where(eq(services.id, rowId));
+			else await db.insert(services).values(values);
+			return { ok: true as const };
+		});
+	});
+export const deleteService = createServerFn({ method: "POST" })
+	.validator((i: unknown) => id.parse(i))
+	.handler(async ({ data }) => {
+		await requireOwner();
+		await withDb((db) => db.delete(services).where(eq(services.id, data.id)));
 		return { ok: true as const };
 	});
 

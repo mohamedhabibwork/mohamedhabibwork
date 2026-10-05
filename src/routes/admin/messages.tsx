@@ -31,6 +31,7 @@ function Messages() {
 									<div className="admin-row__sub">{new Date(m.createdAt).toLocaleString()}</div>
 								</div>
 								<div className="mh-row" style={{ gap: 4 }}>
+									{m.service && <Badge variant="info">{m.service}</Badge>}
 									{!m.read && <Badge variant="brand" dot>New</Badge>}
 									<Button size="sm" variant="ghost" onClick={async () => { await setMessageRead({ data: { id: m.id, read: !m.read } }); refresh(); }}>{m.read ? "Mark unread" : "Mark read"}</Button>
 									<ConfirmButton label="Delete" confirmTitle="Delete this message?" confirmText="It's removed permanently." onConfirm={async () => { await deleteMessage({ data: { id: m.id } }); refresh(); }} />

@@ -13,7 +13,7 @@ bun run db:seed                    # your real portfolio content + a public "moh
 bun run dev                        # http://localhost:3000, dashboard at /admin
 ```
 
-Vite 8 needs **Node 20.19+** (Node 18 fails with `styleText` errors). Use `nvm use 22` or Homebrew's `node`.
+Vite 8 needs **Node 22.19+** (Node 18 fails with `styleText` errors). Use `nvm use 22` or Homebrew's `node`.
 
 ## What's where
 
@@ -83,7 +83,7 @@ with canonical/Open Graph/Twitter tags and JSON-LD, and project covers at `/og/p
 
 ## Contact email
 
-New contact-form messages are emailed from `no-reply@mohamedhabib.me` to `CONTACT_TO`
+New contact-form messages are emailed from `no-reply@mohamedhabib.work` to `CONTACT_TO`
 via the Cloudflare Email Service `EMAIL` binding (Reply-To is the visitor). One-time setup:
 `bunx wrangler email sending enable mohamedhabib.me` (adds SPF/DKIM DNS records — the domain must be on Cloudflare).
 Local dev only simulates sending; the email is written under `.wrangler/tmp/email/`.
