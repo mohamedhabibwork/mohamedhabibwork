@@ -19,10 +19,6 @@
 			"custom_domain": true
 		},
 		{
-			"pattern": "www.mohamedhabib.me",
-			"custom_domain": true
-		},
-		{
 			"pattern": "mohamedhabib.work",
 			"custom_domain": true
 		},
@@ -39,7 +35,8 @@
 		"SITE_URL": "https://mohamedhabib.work",
 		"ADMIN_EMAIL": "admin@mohamedhabib.work",
 		"MAIL_FROM": "no-reply@mohamedhabib.work",
-		"CONTACT_TO": "mohamedhabibwork@gmail.com"
+		"CONTACT_TO": "mohamedhabibwork@gmail.com",
+		"TURNSTILE_HOSTNAMES": "mohamedhabib.work"
 	},
 	// Cloudflare Email Service. Onboard the domain once:
 	//   bunx wrangler email sending enable mohamedhabib.work (already enabled)
@@ -65,5 +62,5 @@
 			"localConnectionString": "postgres://postgres:local@127.0.0.1:5432/habib_portfolio"
 		}
 	]
-	// Secrets (never commit): bunx wrangler secret put ADMIN_PASSWORD_HASH / MCP_TOKEN
+	// Secrets (never commit): bunx wrangler secret put ADMIN_PASSWORD_HASH / MCP_TOKEN / TURNSTILE_SECRET
 }
