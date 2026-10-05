@@ -71,7 +71,7 @@ function Home() {
 						<span className="mh-hero__eyebrow">{p.availability || p.location}</span>
 					</div>
 					<h1 className="mh-hero__title" id="hero-title">
-						{p.headline.replace(/&.*$/, "").trim()} <em>& team leader.</em>
+						{p.headline.split(/[·|&]/)[0].trim()} <em>& team leader.</em>
 					</h1>
 					<p className="mh-hero__lead">{p.tagline}</p>
 					<div className="mh-hero__actions">
@@ -94,6 +94,7 @@ function Home() {
 				<Services services={data.services} />
 				<Experience items={data.experiences} />
 				<Skills skills={data.skills} />
+				<Credentials education={p.education} certifications={p.certifications} />
 				<Contact profile={p} services={data.services} />
 			</main>
 
@@ -161,6 +162,36 @@ function Skills({ skills }: { skills: Portfolio["skills"] }) {
 		</section>
 	);
 }
+function Credentials({ education, certifications }: { education: NonNullable<Portfolio["profile"]>["education"]; certifications: string[] }) {
+	if (education.length === 0 && certifications.length === 0) return null;
+	return (
+		<section className="site-section" id="education" aria-labelledby="edu-title">
+			<SectionHeading id="edu-title" eyebrow="Background" title="Education & certifications" />
+			<div className="mh-grid-2">
+				{education.length > 0 && (
+					<div className="mh-card">
+						<span className="mh-card__eyebrow">Education</span>
+						<ul className="project-detail__list">
+							{education.map((e) => (
+								<li key={e.school}>
+									<Icon name="book" size={16} />
+									<span><strong>{e.degree}</strong> · {e.school}{(e.start || e.end) && <span style={{ color: "var(--text-subtle)" }}> · {[e.start, e.end].filter(Boolean).join("–")}</span>}</span>
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
+				{certifications.length > 0 && (
+					<div className="mh-card">
+						<span className="mh-card__eyebrow">Certifications</span>
+						<ul className="project-detail__list">{certifications.map((c) => <li key={c}><Icon name="award" size={16} />{c}</li>)}</ul>
+					</div>
+				)}
+			</div>
+		</section>
+	);
+}
+
 function Contact({ profile, services }: { profile: NonNullable<Portfolio["profile"]>; services: Portfolio["services"] }) {
 	return (
 		<section className="site-section" id="contact" aria-labelledby="contact-title">

@@ -29,6 +29,13 @@
       "when": 1791183440159,
       "tag": "0003_services",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791187774699,
+      "tag": "0004_profile_education",
+      "breakpoints": true
     }
   ]
 }

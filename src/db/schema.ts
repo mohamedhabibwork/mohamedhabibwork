@@ -36,6 +36,8 @@ export const profile = pgTable("profile", {
 	availability: text().notNull().default(""),
 	photoUrl: text("photo_url").notNull().default("/brand/marks/mh-mark.svg"),
 	stats: jsonb().$type<{ label: string; value: string }[]>().notNull().default([]),
+	education: jsonb().$type<{ degree: string; school: string; start: string; end: string }[]>().notNull().default([]),
+	certifications: text().array().notNull().default([]),
 	...timestamps,
 });
 

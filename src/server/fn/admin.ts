@@ -38,6 +38,7 @@ const profileSchema = z.object({
 	github: z.string().trim().max(300),
 	linkedin: z.string().trim().max(300),
 	availability: z.string().trim().max(200),
+	certifications: list.default([]),
 	photoUrl: z.string().trim().max(500),
 	stats: z.array(z.object({ label: z.string().trim().max(60), value: z.string().trim().max(20) })).max(8),
 });

@@ -14,17 +14,17 @@ const db = drizzle(pool, { schema });
 const profile = {
 	id: 1,
 	name: "Mohamed Habib",
-	headline: "Senior Full Stack Developer & Team Leader",
-	tagline: "Transforming ideas into scalable digital solutions with 7+ years of enterprise development and team leadership.",
+	headline: "Senior Full-Stack Engineer · .NET Core & C# · PHP/Laravel",
+	tagline: "Microservices, cloud-native and scalable systems — from product requirements to production.",
 	summary:
-		"Senior full stack developer and team leader with 7+ years building enterprise platforms across transportation, healthcare, fintech, e-commerce, security and education. Led teams of 5–10 developers across Egypt, Saudi Arabia and the UAE, delivering 50+ projects with real-time tracking, payment integrations and ERP/CRM systems in PHP Laravel, Node.js, Go, React, Vue and ASP.NET Core.",
+		"Senior full-stack engineer and team leader with 7+ years building scalable web platforms from product requirements to production, across transportation, healthcare, fintech, e-commerce and education in Egypt, Saudi Arabia and the UAE. Backend in .NET Core/C#, PHP/Laravel and Node.js; frontend in React, Vue.js and TypeScript; data on PostgreSQL, MySQL, MongoDB, Redis and Elasticsearch; delivery on AWS, Azure, Docker and Kubernetes with CI/CD. I bring practical system design, a performance mindset and strong execution, paired with mentoring and clear communication.",
 	email: "mohamedhabibwork@gmail.com",
-	phone: "+20 115 197 8927",
-	location: "Egypt · Remote worldwide",
+	phone: "+966 50 869 0501",
+	location: "Cairo, Egypt · Remote worldwide",
 	website: "https://mohamedhabib.work",
 	github: "https://github.com/mohamedhabibwork",
 	linkedin: "https://www.linkedin.com/in/mohamedhabibwork/",
-	availability: "Full-time, contract and consulting · replies within 24 hours",
+	availability: "Open to cloud-native, high-impact products · replies within 24 hours",
 	photoUrl: "/brand/marks/mh-mark.svg",
 	stats: [
 		{ label: "Years experience", value: "7+" },
@@ -32,16 +32,27 @@ const profile = {
 		{ label: "Industries served", value: "6+" },
 		{ label: "Delivery success", value: "95%" },
 	],
+	education: [
+		{ degree: "Master's degree", school: "Faculty of Graduate Studies for Statistical Research (FGSSR), Cairo University", start: "", end: "2021" },
+		{ degree: "MIS, Web Development", school: "High Institute for Computers and Management Information Systems (HICMIS)", start: "2016", end: "2020" },
+	],
+	certifications: [
+		"PHP Essential Training",
+		"PHP with MySQL Essential Training: 1 The Basics",
+		"JavaScript and AJAX: Integration Techniques",
+		"Learning Node.js",
+		"Learning NPM the Node Package Manager",
+	],
 };
 
 const experiences = [
-	{ company: "backstoreEIT", role: "Senior Full Stack Developer (ASP.NET Core) & Team Leader", location: "UAE (remote)", start: "Sep 2025", end: "", current: true, summary: "Full stack delivery on EDE and SDDUMP for the UAE market.", highlights: ["Lead full stack development of the EDE and SDDUMP platforms in ASP.NET Core for UAE clients.", "Own technical architecture and delivery for a cross-functional team.", "Set code review, testing and release practices for scalable enterprise applications."], tech: ["ASP.NET Core", "C#", "SQL Server"] },
-	{ company: "Mugsult", role: "Senior Full Stack Developer & Team Leader", location: "Egypt", start: "2024", end: "2025", current: false, summary: "Team1 emergency transportation platform.", highlights: ["Led development of Team1, an emergency healthcare transportation platform with real-time dispatch.", "Built real-time medical team chat and patient tracking over WebSockets.", "Coordinated hospital integrations and a team of 5+ developers."], tech: ["Laravel", "Node.js", "MySQL", "WebSocket"] },
-	{ company: "Code700", role: "Senior Developer & Team Leader", location: "Riyadh, Saudi Arabia", start: "2024", end: "2024", current: false, summary: "Multi-app suite for the Saudi market.", highlights: ["Led an international team delivering Ensany, Qaff, Mozn and Cashback apps for the Saudi market in 3 months.", "Built services in Node.js, React and Python with ERPNext integration."], tech: ["Node.js", "React", "Python", "ERPNext"] },
-	{ company: "Enjoy Driving", role: "Senior Full Stack Developer & Team Leader", location: "Egypt", start: "2023", end: "2024", current: false, summary: "Driver apps, agent management and store platforms.", highlights: ["Led a team of 5–10 developers building driver apps, agent management and store operations.", "Improved release cadence and user experience across three products."], tech: ["Laravel", "Vue.js", "MySQL"] },
-	{ company: "Gulf Communication Company", role: "Full Stack Developer", location: "Egypt", start: "2021", end: "2023", current: false, summary: "Transportation, mapping, medical and security platforms.", highlights: ["Built TOO APP, an Uber-like ride-hailing platform with real-time GPS dispatch and Fawry/PayPal payments.", "Developed Mappy, a custom mapping engine with route optimisation and enterprise mapping APIs.", "Delivered TOO Bus school transport tracking, Too Medical rep tracking and Too Security workforce management."], tech: ["Laravel", "GoLang", "ASP.NET", "PostgreSQL", "Socket.io"] },
-	{ company: "Rawabet Company", role: "Full Stack Developer", location: "Egypt", start: "2020", end: "2021", current: false, summary: "E-commerce, ERP and CRM.", highlights: ["Built multi-vendor online stores with integrated ERP, CRM and inventory management.", "Developed mobile APIs for store and delivery apps."], tech: ["Laravel", "Vue.js", "MySQL"] },
-	{ company: "Early roles", role: "Full Stack Developer", location: "Egypt", start: "2018", end: "2020", current: false, summary: "Distance learning and payments.", highlights: ["Built distance-learning platforms and mobile API integrations.", "Integrated Fawry, Paymob and PayPal payment gateways."], tech: ["PHP", "Laravel", "Vue.js", "React"] },
+	{ company: "BlackStone eIT", role: "Senior Full Stack Developer", location: "UAE (remote)", start: "Sep 2025", end: "", current: true, summary: "Feature delivery across backend and frontend with a focus on reliability and performance.", highlights: ["Design and implement .NET Core microservices with RabbitMQ/Kafka messaging and async workflows.", "Build CI/CD pipelines and raise release quality through automation and observability.", "Work across PostgreSQL/SQL Server, Redis, Elasticsearch, Kubernetes, Docker and the ABP/ASP.NET stack."], tech: [".NET Core", "C#", "ABP", "RabbitMQ", "Kafka", "PostgreSQL", "SQL Server", "Redis", "Elasticsearch", "Kubernetes", "Docker"] },
+	{ company: "Mugsult", role: "Senior Full Stack Developer & Team Leader", location: "Egypt", start: "Sep 2024", end: "Aug 2025", current: false, summary: "Team1 emergency transportation platform.", highlights: ["Led development of Team1, an emergency healthcare transportation platform with real-time dispatch.", "Built real-time medical team chat and patient tracking over WebSockets.", "Coordinated hospital integrations and a team of 5+ developers."], tech: ["Laravel", "Node.js", "MySQL", "WebSocket"] },
+	{ company: "Code700", role: "Full Stack Engineer", location: "Riyadh, Saudi Arabia", start: "Feb 2024", end: "Aug 2024", current: false, summary: "Full-stack modules, dashboards and admin tooling for the Saudi market.", highlights: ["Delivered full-stack modules in Laravel and Vue.js with integrated dashboards and admin tooling.", "Built REST/GraphQL APIs and microservices backed by MongoDB and Redis caches.", "Integrated third-party and payment services and improved API performance and reliability.", "Shipped Ensany, Qaff, Mozn and Cashback with product, design and QA using Scrum and CI/CD."], tech: ["Laravel", "Vue.js", "GraphQL", "MongoDB", "Redis", "Node.js", "Python"] },
+	{ company: "Enjoy Driving", role: "Back End Developer · Team Lead", location: "Cairo, Egypt", start: "May 2023", end: "Feb 2024", current: false, summary: "Driver management and transportation applications.", highlights: ["Led a team of 5+ developers building driver management and transportation applications.", "Developed driver applications and agent management systems.", "Implemented store management with real-time inventory tracking.", "Achieved a 95%+ project delivery success rate with consistent client satisfaction."], tech: ["Laravel", "GoLang", "Socket programming", "MySQL", "React"] },
+	{ company: "Al-Tawasol (Gulf Communication Company)", role: "PHP Developer", location: "New Cairo, Egypt", start: "Mar 2021", end: "Oct 2023", current: false, summary: "Transportation, mapping, medical and security platforms.", highlights: ["Built TOO APP, an Uber-like ride-hailing platform with real-time GPS dispatch and Fawry/PayPal payments.", "Developed Mappy, a custom mapping engine with route optimisation and enterprise mapping APIs.", "Delivered TOO Bus school transport tracking, Too Medical rep tracking and Too Security workforce management."], tech: ["Laravel", "GoLang", "ASP.NET", "PostgreSQL", "Socket.io"] },
+	{ company: "Rwabett", role: "Back End Developer", location: "Egypt", start: "Aug 2020", end: "Jun 2021", current: false, summary: "E-commerce, ERP and CRM.", highlights: ["Built multi-vendor online stores with integrated ERP, CRM and inventory management.", "Developed mobile APIs for store and delivery apps."], tech: ["Laravel", "Vue.js", "MySQL"] },
+	{ company: "Global Dev Gate", role: "Web Developer (training program)", location: "Egypt", start: "Sep 2018", end: "Jun 2020", current: false, summary: "NEN certification training and advanced web development program.", highlights: ["Developed distance-learning platforms and educational management systems.", "Integrated Fawry, Paymob and PayPal payment gateways for secure transactions.", "Built mobile API integrations for educational applications."], tech: ["PHP", "Laravel", "Vue.js", "React", "Node.js", "Python"] },
 ].map((e, i) => ({ ...e, sort: i }));
 
 /** Case-study copy for each /projects/$slug page. */
@@ -118,11 +129,13 @@ const services = [
 ].map((s, i) => ({ ...s, published: true, sort: i }));
 
 const skillRows: [string, string, number, number][] = [
-	["PHP & Laravel", "Backend", 5, 6], ["Node.js & Express", "Backend", 4, 4], ["GoLang", "Backend", 4, 3], ["ASP.NET Core / C#", "Backend", 4, 2], ["Python", "Backend", 3, 2],
-	["JavaScript / TypeScript", "Frontend", 5, 6], ["React", "Frontend", 4, 4], ["Vue.js / Nuxt", "Frontend", 4, 4], ["HTML5 & CSS3", "Frontend", 5, 7],
-	["MySQL", "Data & Cloud", 5, 6], ["PostgreSQL", "Data & Cloud", 4, 4], ["AWS", "Data & Cloud", 4, 3], ["Docker & CI/CD", "Data & Cloud", 3, 2],
-	["Payment gateways", "Specialties", 5, 5], ["Real-time systems (WebSocket)", "Specialties", 5, 5], ["ERP / CRM", "Specialties", 4, 4], ["Mobile APIs (REST, GraphQL)", "Specialties", 5, 6],
-	["Team leadership", "Leadership", 5, 3], ["System architecture", "Leadership", 4, 3], ["Agile / Scrum", "Leadership", 4, 4],
+	["PHP & Laravel", "Backend", 5, 7], [".NET Core / C# / ASP.NET", "Backend", 4, 3], ["Node.js & Express", "Backend", 4, 5], ["GoLang", "Backend", 4, 3], ["Python", "Backend", 3, 2],
+	["JavaScript / TypeScript", "Frontend", 5, 7], ["Vue.js / Nuxt", "Frontend", 5, 5], ["React", "Frontend", 4, 5], ["HTML5 & CSS3", "Frontend", 5, 7],
+	["PostgreSQL", "Data", 4, 5], ["MySQL", "Data", 5, 7], ["MongoDB", "Data", 4, 3], ["Redis", "Data", 4, 4], ["Elasticsearch", "Data", 3, 2],
+	["Docker", "Cloud & DevOps", 4, 4], ["Kubernetes", "Cloud & DevOps", 3, 2], ["AWS", "Cloud & DevOps", 4, 3], ["Azure", "Cloud & DevOps", 3, 2], ["CI/CD", "Cloud & DevOps", 4, 4],
+	["Microservices", "Architecture", 4, 3], ["REST & GraphQL APIs", "Architecture", 5, 6], ["Event-driven (RabbitMQ / Kafka)", "Architecture", 4, 2], ["Real-time systems (WebSocket)", "Architecture", 5, 5],
+	["Payment gateways", "Specialties", 5, 6], ["ERP / CRM", "Specialties", 4, 4],
+	["Team leadership", "Leadership", 5, 3], ["System design", "Leadership", 4, 4], ["Agile / Scrum", "Leadership", 4, 5],
 ];
 
 async function main() {
@@ -147,6 +160,8 @@ async function main() {
 				experience: experiences.map((e) => ({ role: e.role, company: e.company, location: e.location, start: e.start, end: e.end, current: e.current, bullets: e.highlights })),
 				projects: projects.filter((p) => p.featured).map((p) => ({ name: p.title, description: p.summary, tech: p.tech, url: p.url })),
 				skills: [...groups.entries()].map(([name, items]) => ({ name, items })),
+				education: profile.education,
+				certifications: profile.certifications,
 				languages: [{ name: "Arabic", level: "Native" }, { name: "English", level: "Professional" }],
 			});
 			await tx.insert(schema.cvs).values({ title: "Main CV", slug: "mohamed-habib", template: "modern", accent: "#3d5806", isPublic: true, data });
