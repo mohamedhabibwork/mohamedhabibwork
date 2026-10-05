@@ -1,8 +1,8 @@
 import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
 
 /** Canonical host; every other domain bound to this Worker 301s here, keeping path and query. */
-const CANONICAL_HOST = "mohamedhabib.me";
-const REDIRECT_HOSTS = new Set(["www.mohamedhabib.me", "mohamedhabib.work", "www.mohamedhabib.work", "habib.cloud", "www.habib.cloud"]);
+const CANONICAL_HOST = "mohamedhabib.work";
+const REDIRECT_HOSTS = new Set(["www.mohamedhabib.work", "mohamedhabib.me", "www.mohamedhabib.me", "habib.cloud", "www.habib.cloud"]);
 
 export default createServerEntry({
 	fetch(request) {

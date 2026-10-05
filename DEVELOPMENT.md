@@ -85,5 +85,5 @@ with canonical/Open Graph/Twitter tags and JSON-LD, and project covers at `/og/p
 
 New contact-form messages are emailed from `no-reply@mohamedhabib.work` to `CONTACT_TO`
 via the Cloudflare Email Service `EMAIL` binding (Reply-To is the visitor). One-time setup:
-`bunx wrangler email sending enable mohamedhabib.me` (adds SPF/DKIM DNS records — the domain must be on Cloudflare).
+`bunx wrangler email sending enable mohamedhabib.work` (adds SPF/DKIM DNS records — the domain must be on Cloudflare).
 Local dev only simulates sending; the email is written under `.wrangler/tmp/email/`.

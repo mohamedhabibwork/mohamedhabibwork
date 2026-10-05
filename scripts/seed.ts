@@ -21,7 +21,7 @@ const profile = {
 	email: "mohamedhabibwork@gmail.com",
 	phone: "+20 115 197 8927",
 	location: "Egypt · Remote worldwide",
-	website: "https://mohamedhabib.me",
+	website: "https://mohamedhabib.work",
 	github: "https://github.com/mohamedhabibwork",
 	linkedin: "https://www.linkedin.com/in/mohamedhabibwork/",
 	availability: "Full-time, contract and consulting · replies within 24 hours",

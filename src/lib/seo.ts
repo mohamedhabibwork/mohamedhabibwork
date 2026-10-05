@@ -1,5 +1,5 @@
 /** Canonical origin for links, sitemap and structured data. Override with VITE_SITE_URL at build time. */
-export const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, "") || "https://mohamedhabib.me";
+export const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, "") || "https://mohamedhabib.work";
 export const SITE_NAME = "Mohamed Habib";
 export const DEFAULT_OG_IMAGE = "/icon-512.png";
 
