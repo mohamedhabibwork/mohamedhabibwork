@@ -19,6 +19,10 @@
 			"custom_domain": true
 		},
 		{
+			"pattern": "www.mohamedhabib.me",
+			"custom_domain": true
+		},
+		{
 			"pattern": "mohamedhabib.work",
 			"custom_domain": true
 		},
