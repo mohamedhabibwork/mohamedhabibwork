@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Turnstile, type TurnstileHandle } from "#/components/Turnstile";
 import { Alert, Button, Icon, Input, LinkButton, Logo, Select, Textarea, ThemeToggle } from "#/design-system/ui";
 import { sendMessage } from "#/server/fn/public";
@@ -61,6 +61,13 @@ export function ContactForm({ service, services }: { service?: ServiceOption; se
 	const [formError, setFormError] = useState("");
 	const [token, setToken] = useState("");
 	const turnstile = useRef<TurnstileHandle>(null);
+	const statusRef = useRef<HTMLDivElement>(null);
+	const hasFieldErrors = Object.keys(errors).length > 0;
+
+	// Bring the outcome into view: the form is tall and the visitor is at the button.
+	useEffect(() => {
+		if (state === "sent" || formError || hasFieldErrors) statusRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+	}, [state, formError, hasFieldErrors]);
 
 	async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -95,8 +102,6 @@ export function ContactForm({ service, services }: { service?: ServiceOption; se
 
 	return (
 		<form className="mh-card form-grid" method="post" onSubmit={onSubmit} noValidate>
-			{state === "sent" && <Alert variant="success" title="Message sent">Thanks! I'll reply within a day.</Alert>}
-			{formError && <Alert variant="danger" title="Not sent">{formError}</Alert>}
 			{service && <input type="hidden" name="service" value={service.slug} />}
 			{!service && services && services.length > 0 && (
 				<Select name="service" label="Service (optional)" defaultValue="" options={[{ value: "", label: "General enquiry" }, ...services.map((s) => ({ value: s.slug, label: s.title }))]} error={errors.service} />
@@ -112,6 +117,11 @@ export function ContactForm({ service, services }: { service?: ServiceOption; se
 			</div>
 			<Turnstile ref={turnstile} action="contact" onToken={setToken} />
 			<div><Button type="submit" loading={state === "sending"} disabled={!token} trailingIcon="send">Send message</Button></div>
+			<div ref={statusRef} aria-live="polite">
+				{state === "sent" && <Alert variant="success" title="Message sent">Thanks! I'll reply within a day.</Alert>}
+				{formError && <Alert variant="danger" title="Not sent">{formError}</Alert>}
+				{hasFieldErrors && !formError && <Alert variant="danger" title="Not sent">Please fix the highlighted fields above.</Alert>}
+			</div>
 		</form>
 	);
 }
