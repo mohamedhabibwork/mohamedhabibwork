@@ -7,8 +7,19 @@
 	"observability": { "enabled": true },
 	"vars": {
 		"SITE_URL": "https://habib.dev",
-		"ADMIN_EMAIL": "admin@mohamedhabib.work"
+		"ADMIN_EMAIL": "admin@mohamedhabib.work",
+		"MAIL_FROM": "no-reply@mohamedhabib.work",
+		"CONTACT_TO": "mohamedhabibwork@gmail.com"
 	},
+	// Cloudflare Email Service. Onboard the domain once:
+	//   bunx wrangler email sending enable mohamedhabib.work
+	"send_email": [
+		{
+			"name": "EMAIL",
+			"allowed_sender_addresses": ["no-reply@mohamedhabib.work"],
+			"allowed_destination_addresses": ["mohamedhabibwork@gmail.com"]
+		}
+	],
 	// Postgres via Hyperdrive. Create once and paste the id:
 	//   bunx wrangler hyperdrive create habib-portfolio-db --connection-string="$DATABASE_URL"
 	// `localConnectionString` is used by `vite dev` (Hyperdrive requires a password in the URL;

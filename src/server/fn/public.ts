@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { and, asc, desc, eq, ne } from "drizzle-orm";
 import { z } from "zod";
 import { withDb } from "#/db";
+import { notifyOwnerOfMessage } from "#/server/mail";
 import { cvs, experiences, messages, projects, skills } from "#/db/schema";
 
 /** Everything the public portfolio page renders, in one round trip. */
@@ -50,6 +51,8 @@ const contactSchema = z.object({
 export const sendMessage = createServerFn({ method: "POST" })
 	.validator((input: unknown) => contactSchema.parse(input))
 	.handler(async ({ data }) => {
-		await withDb((db) => db.insert(messages).values({ name: data.name, email: data.email, subject: data.subject, body: data.body }));
+		const msg = { name: data.name, email: data.email, subject: data.subject, body: data.body };
+		await withDb((db) => db.insert(messages).values(msg));
+		await notifyOwnerOfMessage(msg);
 		return { ok: true as const };
 	});

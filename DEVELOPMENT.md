@@ -80,3 +80,10 @@ with canonical/Open Graph/Twitter tags and JSON-LD, and project covers at `/og/p
 
 `POST /mcp` (JSON-RPC). Public tools: `get_profile`, `list_projects`, `get_project`, `list_experience`,
 `list_skills`. With `Authorization: Bearer $MCP_TOKEN` also: `list_messages`, `upsert_project`, `update_profile`.
+
+## Contact email
+
+New contact-form messages are emailed from `no-reply@mohamedhabib.work` to `CONTACT_TO`
+via the Cloudflare Email Service `EMAIL` binding (Reply-To is the visitor). One-time setup:
+`bunx wrangler email sending enable mohamedhabib.work` (adds SPF/DKIM DNS records — the domain must be on Cloudflare).
+Local dev only simulates sending; the email is written under `.wrangler/tmp/email/`.
