@@ -3,15 +3,31 @@
 	"name": "mohamed-habib-portfolio",
 	"account_id": "dfd0934ada854fb30ecb91fe050f5294",
 	"compatibility_date": "2025-09-02",
-	"compatibility_flags": ["nodejs_compat"],
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
 	"main": "./src/server-entry.ts",
-	"observability": { "enabled": true },
+	"observability": {
+		"enabled": true
+	},
 	// mohamedhabib.me is canonical; the others 301 to it (see src/server.ts).
 	"routes": [
-		{ "pattern": "mohamedhabib.me", "custom_domain": true },
-		{ "pattern": "www.mohamedhabib.me", "custom_domain": true },
-		{ "pattern": "mohamedhabib.work", "custom_domain": true },
-		{ "pattern": "habib.cloud", "custom_domain": true }
+		{
+			"pattern": "mohamedhabib.me",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.mohamedhabib.me",
+			"custom_domain": true
+		},
+		{
+			"pattern": "mohamedhabib.work",
+			"custom_domain": true
+		},
+		{
+			"pattern": "habib.cloud",
+			"custom_domain": true
+		}
 	],
 	"vars": {
 		"SITE_URL": "https://mohamedhabib.me",
@@ -24,8 +40,12 @@
 	"send_email": [
 		{
 			"name": "EMAIL",
-			"allowed_sender_addresses": ["no-reply@mohamedhabib.me"],
-			"allowed_destination_addresses": ["mohamedhabibwork@gmail.com"]
+			"allowed_sender_addresses": [
+				"no-reply@mohamedhabib.me"
+			],
+			"allowed_destination_addresses": [
+				"mohamedhabibwork@gmail.com"
+			]
 		}
 	],
 	// Postgres via Hyperdrive. Create once and paste the id:
@@ -35,8 +55,12 @@
 	"hyperdrive": [
 		{
 			"binding": "HYPERDRIVE",
-			"id": "REPLACE_WITH_HYPERDRIVE_ID",
+			"id": "6db10d8d70e94200a26c7d339055d568",
 			"localConnectionString": "postgres://postgres:local@127.0.0.1:5432/habib_portfolio"
+		},
+		{
+			"binding": "habib_portfolio",
+			"id": "6db10d8d70e94200a26c7d339055d568"
 		}
 	]
 	// Secrets (never commit): bunx wrangler secret put ADMIN_PASSWORD_HASH / MCP_TOKEN
