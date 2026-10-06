@@ -2,7 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { ServiceCard } from "#/components/cards";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
 import { ChipList, EmptyState, Icon, type IconName, LinkButton, MarkArt, SectionHeading } from "#/design-system/ui";
-import { absoluteUrl, jsonLd, SITE_URL, seo } from "#/lib/seo";
+import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getService } from "#/server/fn/public";
 
 export const Route = createFileRoute("/services/$slug")({
@@ -12,10 +12,10 @@ export const Route = createFileRoute("/services/$slug")({
 		return data;
 	},
 	head: ({ loaderData, params }) => {
-		if (!loaderData) return seo({ title: "Service not found · Mohamed Habib", description: "This service doesn't exist.", path: `/services/${params.slug}` });
+		if (!loaderData) return seo({ title: pageTitle("Service not found"), description: "This service doesn't exist.", path: `/services/${params.slug}`, noindex: true });
 		const { service: s } = loaderData;
 		const path = `/services/${s.slug}`;
-		const base = seo({ title: `${s.title} · Mohamed Habib`, description: s.summary.slice(0, 160), path });
+		const base = seo({ title: pageTitle(s.title), description: s.summary, path });
 		const service = {
 			"@context": "https://schema.org",
 			"@type": "Service",
@@ -24,18 +24,9 @@ export const Route = createFileRoute("/services/$slug")({
 			url: absoluteUrl(path),
 			serviceType: s.title,
 			areaServed: "Worldwide",
-			provider: { "@type": "Person", name: "Mohamed Habib", url: SITE_URL },
+			provider: { "@id": PERSON_ID },
 		};
-		const crumbs = {
-			"@context": "https://schema.org",
-			"@type": "BreadcrumbList",
-			itemListElement: [
-				{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-				{ "@type": "ListItem", position: 2, name: "Services", item: absoluteUrl("/services") },
-				{ "@type": "ListItem", position: 3, name: s.title, item: absoluteUrl(path) },
-			],
-		};
-		return { ...base, scripts: [jsonLd(service), jsonLd(crumbs)] };
+		return { ...base, scripts: [jsonLd(service), jsonLd(breadcrumbs(["Services", "/services"], [s.title, path]))] };
 	},
 	notFoundComponent: () => (
 		<main id="main" className="site" style={{ padding: "96px 0" }}>

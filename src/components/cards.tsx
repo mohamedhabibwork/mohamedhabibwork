@@ -9,7 +9,7 @@ export function ProjectCard({ project: pr }: { project: ProjectCardData }) {
 	return (
 		<Link className="mh-project" to="/projects/$slug" params={{ slug: pr.slug }}>
 			<div className="mh-project__media">
-				<img src={projectCover(pr)} alt="" loading="lazy" width={1200} height={630} />
+				<img src={projectCover(pr)} alt={`${pr.title} — ${pr.category} project cover`} loading="lazy" decoding="async" width={1200} height={630} />
 			</div>
 			<div className="mh-project__body">
 				<div className="mh-project__meta"><span>{pr.category}</span><span>{pr.year}</span></div>

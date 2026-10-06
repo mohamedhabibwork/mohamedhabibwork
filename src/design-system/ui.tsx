@@ -203,12 +203,13 @@ export function Timeline({ items }: { items: { meta?: string; title: string; bod
 	);
 }
 
-export function SectionHeading({ eyebrow, title, description, action, id }: { eyebrow?: string; title: string; description?: string; action?: ReactNode; id?: string }) {
+/** `as="h1"` when the heading is the page's main title (listing pages); sections keep `h2`. */
+export function SectionHeading({ eyebrow, title, description, action, id, as: Heading = "h2" }: { eyebrow?: string; title: string; description?: string; action?: ReactNode; id?: string; as?: "h1" | "h2" }) {
 	return (
 		<header className={cx("mh-section-head", Boolean(action) && "mh-section-head--row")}>
 			<div style={{ display: "grid", gap: 8 }}>
 				{eyebrow && <span className="mh-section-head__eyebrow">{eyebrow}</span>}
-				<h2 className="mh-section-head__title" id={id}>{title}</h2>
+				<Heading className="mh-section-head__title" id={id}>{title}</Heading>
 				{description && <p className="mh-section-head__desc">{description}</p>}
 			</div>
 			{action}

@@ -10,7 +10,7 @@ import {
 	StatCard,
 	Timeline,
 } from "#/design-system/ui";
-import { absoluteUrl, jsonLd, SITE_URL, seo } from "#/lib/seo";
+import { absoluteUrl, jsonLd, PERSON_ID, SITE_NAME, SITE_URL, seo, TITLE_MAX } from "#/lib/seo";
 import { type SkillEvidence, skillEvidence } from "#/lib/skill-evidence";
 import { ProjectCard, ServiceCard } from "#/components/cards";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
@@ -20,28 +20,37 @@ export const Route = createFileRoute("/")({
 	loader: () => getPortfolio(),
 	head: ({ loaderData }) => {
 		const p = loaderData?.profile;
+		const name = p?.name ?? SITE_NAME;
+		// Headline reads "Senior Full-Stack Engineer · .NET Core & C# · …"; the first part is the role.
+		const role = p?.headline.split(/[·|]/)[0].trim() || "Senior Full-Stack Engineer";
+		const title = [`${name} · ${role} & Team Leader`, `${name} · ${role}`].find((t) => t.length <= TITLE_MAX) ?? `${name} · ${role}`;
 		const base = seo({
-			title: p ? `${p.name} · ${p.headline}` : "Mohamed Habib · Senior Full Stack Developer",
-			description: p?.summary.slice(0, 160) || "Senior full stack developer and team leader.",
+			title,
+			description: p?.summary || "Senior full-stack engineer and team leader building scalable web platforms.",
 			path: "/",
 			type: "profile",
 		});
 		if (!p) return base;
+		const current = loaderData.experiences.find((e) => e.current);
 		const person = {
 			"@context": "https://schema.org",
 			"@type": "Person",
+			"@id": PERSON_ID,
 			name: p.name,
-			jobTitle: p.headline,
+			jobTitle: role,
 			description: p.summary,
 			email: `mailto:${p.email}`,
 			url: SITE_URL,
-			image: absoluteUrl("/icon-512.png"),
-			address: p.location,
+			image: absoluteUrl("/brand/images/profile.jpg"),
+			...(p.location ? { homeLocation: { "@type": "Place", name: p.location } } : {}),
+			...(current ? { worksFor: { "@type": "Organization", name: current.company } } : {}),
+			alumniOf: p.education.map((e) => ({ "@type": "EducationalOrganization", name: e.school })),
 			sameAs: [p.github, p.linkedin].filter(Boolean),
 			knowsAbout: [...new Set(loaderData.skills.map((s) => s.name))],
 		};
-		const site = { "@context": "https://schema.org", "@type": "WebSite", name: p.name, url: SITE_URL };
-		return { ...base, scripts: [jsonLd(person), jsonLd(site)] };
+		const site = { "@context": "https://schema.org", "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: p.name, url: SITE_URL, inLanguage: "en", publisher: { "@id": PERSON_ID } };
+		const page = { "@context": "https://schema.org", "@type": "ProfilePage", url: SITE_URL, name: title, isPartOf: { "@id": `${SITE_URL}/#website` }, mainEntity: { "@id": PERSON_ID } };
+		return { ...base, scripts: [jsonLd(person), jsonLd(site), jsonLd(page)] };
 	},
 	component: Home,
 });
