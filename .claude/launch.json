@@ -4,14 +4,35 @@
     {
       "name": "portfolio",
       "runtimeExecutable": "bun",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000
     },
     {
       "name": "portfolio-3001",
       "runtimeExecutable": "bunx",
-      "runtimeArgs": ["vite", "dev", "--port", "3001", "--strictPort"],
+      "runtimeArgs": [
+        "vite",
+        "dev",
+        "--port",
+        "3001",
+        "--strictPort"
+      ],
       "port": 3001
+    },
+    {
+      "name": "portfolio-prod-preview",
+      "runtimeExecutable": "bunx",
+      "runtimeArgs": [
+        "vite",
+        "preview",
+        "--port",
+        "4174",
+        "--strictPort"
+      ],
+      "port": 4174
     }
   ]
 }

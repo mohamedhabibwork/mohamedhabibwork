@@ -86,6 +86,9 @@ Generated at request time from the database (nothing static to keep in sync):
 - **Headings & images** — one `<h1>` per page, descriptive `alt` text, explicit image dimensions.
 - **Not found** — unknown URLs return HTTP 404 with a `noindex` page; private routes (`/login`, `/admin`) are `noindex`.
 
+**Analytics** — Google Analytics 4 (`VITE_GA_MEASUREMENT_ID` in `.env.production`, loaded from the root route's `head()`).
+It is omitted when the variable is unset, so `bun run dev` sends nothing.
+
 After deploying (one-time, in [Search Console](https://search.google.com/search-console)):
 
 1. Add a **Domain** property for `mohamedhabib.work` and verify with the DNS TXT record in Cloudflare

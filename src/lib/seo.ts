@@ -1,8 +1,15 @@
 /** Canonical origin for links, sitemap and structured data. Override with VITE_SITE_URL at build time. */
-export const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, "") || "https://mohamedhabib.work";
+export const SITE_URL =
+	(import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, "") ||
+	"https://mohamedhabib.work";
 export const SITE_NAME = "Mohamed Habib";
 /** 1200×630 PNG — social crawlers don't render SVG, and a square icon gets cropped. Rebuild: `python3 brand/build_og.py`. */
-export const DEFAULT_OG_IMAGE = { url: "/og-default.png", width: 1200, height: 630, alt: "Mohamed Habib — Senior Full-Stack Engineer & Tech Lead" };
+export const DEFAULT_OG_IMAGE = {
+	url: "/og-default.png",
+	width: 1200,
+	height: 630,
+	alt: "Mohamed Habib — Senior Full-Stack Engineer & Tech Lead",
+};
 /** Stable JSON-LD node id so every page can reference the same Person. */
 export const PERSON_ID = `${SITE_URL}/#person`;
 
@@ -10,14 +17,19 @@ export const PERSON_ID = `${SITE_URL}/#person`;
 export const TITLE_MAX = 60;
 export const DESCRIPTION_MAX = 160;
 
-export const absoluteUrl = (path: string) => (path.startsWith("http") ? path : `${SITE_URL}${path.startsWith("/") ? "" : "/"}${path}`);
+export const absoluteUrl = (path: string) =>
+	path.startsWith("http")
+		? path
+		: `${SITE_URL}${path.startsWith("/") ? "" : "/"}${path}`;
 
 /** Collapse whitespace and cut at a word boundary, adding an ellipsis when shortened. */
 export function truncate(text: string, max = DESCRIPTION_MAX) {
 	const clean = text.replace(/\s+/g, " ").trim();
 	if (clean.length <= max) return clean;
 	const cut = clean.slice(0, max - 1);
-	const atWord = cut.slice(0, cut.lastIndexOf(" ")).replace(/[\s,;:.·—-]+$/, "");
+	const atWord = cut
+		.slice(0, cut.lastIndexOf(" "))
+		.replace(/[\s,;:.·—-]+$/, "");
 	return `${atWord || cut}…`;
 }
 
@@ -27,14 +39,32 @@ export function truncate(text: string, max = DESCRIPTION_MAX) {
  */
 export function pageTitle(...candidates: string[]) {
 	const titles = candidates.filter(Boolean).map((c) => `${c} · ${SITE_NAME}`);
-	return titles.find((t) => t.length <= TITLE_MAX) ?? titles[titles.length - 1] ?? SITE_NAME;
+	return (
+		titles.find((t) => t.length <= TITLE_MAX) ??
+		titles[titles.length - 1] ??
+		SITE_NAME
+	);
 }
 
 type SeoImage = { url: string; width?: number; height?: number; alt?: string };
-type SeoInput = { title: string; description: string; path: string; image?: SeoImage; type?: "website" | "article" | "profile"; noindex?: boolean };
+type SeoInput = {
+	title: string;
+	description: string;
+	path: string;
+	image?: SeoImage;
+	type?: "website" | "article" | "profile";
+	noindex?: boolean;
+};
 
 /** Title, description, canonical, Open Graph and Twitter tags for a route's `head()`. */
-export function seo({ title, description, path, image = DEFAULT_OG_IMAGE, type = "website", noindex = false }: SeoInput) {
+export function seo({
+	title,
+	description,
+	path,
+	image = DEFAULT_OG_IMAGE,
+	type = "website",
+	noindex = false,
+}: SeoInput) {
 	const url = absoluteUrl(path);
 	const img = absoluteUrl(image.url);
 	const desc = truncate(description);
@@ -72,7 +102,14 @@ export function seo({ title, description, path, image = DEFAULT_OG_IMAGE, type =
 export const breadcrumbs = (...trail: [name: string, path: string][]) => ({
 	"@context": "https://schema.org",
 	"@type": "BreadcrumbList",
-	itemListElement: [["Home", "/"] as const, ...trail].map(([name, path], i) => ({ "@type": "ListItem", position: i + 1, name, item: absoluteUrl(path) })),
+	itemListElement: [["Home", "/"] as const, ...trail].map(
+		([name, path], i) => ({
+			"@type": "ListItem",
+			position: i + 1,
+			name,
+			item: absoluteUrl(path),
+		}),
+	),
 });
 
 /** A `<script type="application/ld+json">` entry for `head().scripts`. `<` is escaped so data can't close the tag. */

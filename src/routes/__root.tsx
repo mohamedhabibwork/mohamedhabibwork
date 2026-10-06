@@ -15,6 +15,16 @@ const SITE_VERIFICATION = [
 	{ name: "msvalidate.01", content: import.meta.env.VITE_BING_SITE_VERIFICATION as string | undefined },
 ].filter((m): m is { name: string; content: string } => Boolean(m.content));
 
+/** Google Analytics 4 measurement id, set at build time (.env.production) so local dev isn't tracked. */
+const GA_ID = (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined)?.trim();
+// Shape-checked because the id is interpolated into an inline script.
+const analyticsScripts = GA_ID && /^G-[A-Z0-9]+$/.test(GA_ID)
+	? [
+			{ src: `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`, async: true },
+			{ children: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","${GA_ID}");` },
+		]
+	: [];
+
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	head: () => ({
 		meta: [
@@ -36,6 +46,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			{ rel: "preload", href: "/brand/fonts/Poppins-400.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
 			{ rel: "preload", href: "/brand/fonts/Barlow-800.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
 		],
+		// GA4 tracks client-side navigations itself (enhanced measurement: "page changes based on browser history").
+		scripts: analyticsScripts,
 	}),
 	shellComponent: RootDocument,
 	notFoundComponent: NotFound,
