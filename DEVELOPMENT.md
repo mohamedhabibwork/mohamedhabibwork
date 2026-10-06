@@ -89,6 +89,18 @@ Generated at request time from the database (nothing static to keep in sync):
 **Analytics** — Google Analytics 4 (`VITE_GA_MEASUREMENT_ID` in `.env.production`, loaded from the root route's `head()`).
 It is omitted when the variable is unset, so `bun run dev` sends nothing.
 
+**Contact & paid services** — `src/lib/contact.ts` feeds both the page and JSON-LD, so Google sees what visitors see:
+`Person.telephone` + `contactPoint` (sales: phone, email, English/Arabic), call (`tel:`) and WhatsApp links,
+and an `Offer` (price, currency, `UnitPriceSpecification` per hour) for any service whose *Starting at* field holds a price
+such as `$100 / hour`. Set `VITE_BOOKING_URL` to a booking/payment page to turn "Request a session" into "Book & pay".
+
+**Conversions (GA4)** — the root head reports `click_call`, `click_whatsapp`, `click_email`, `begin_checkout` (booking link)
+and `generate_lead` (contact form sent). In GA → Admin → Events, mark them as **Key events**.
+
+**Google Business Profile** — the "Call" / "Website" buttons in Google Search and Maps come from a Business Profile, not from
+the site. Create one at https://business.google.com as a *service-area business* (no public address), use the same name,
+phone (+20 115 197 8927), website and the "Technical consultation — $100/hour" service, so it matches the site's structured data.
+
 After deploying (one-time, in [Search Console](https://search.google.com/search-console)):
 
 1. Add a **Domain** property for `mohamedhabib.work` and verify with the DNS TXT record in Cloudflare

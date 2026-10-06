@@ -2,6 +2,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Scripts } from "@tanstack/react-router";
 import { SiteFooter, SiteHeader } from "#/components/site";
 import { EmptyState, LinkButton, themeBootScript } from "#/design-system/ui";
+import { contactClickTracking } from "#/lib/analytics";
 import { pageTitle } from "#/lib/seo";
 import appCss from "../styles.css?url";
 
@@ -22,6 +23,7 @@ const analyticsScripts = GA_ID && /^G-[A-Z0-9]+$/.test(GA_ID)
 	? [
 			{ src: `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`, async: true },
 			{ children: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","${GA_ID}");` },
+			{ children: contactClickTracking },
 		]
 	: [];
 

@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ServiceCard } from "#/components/cards";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
+import { BOOKING_URL, parsePrice, serviceOffer } from "#/lib/contact";
 import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getServices } from "#/server/fn/public";
 
@@ -23,7 +24,11 @@ export const Route = createFileRoute("/services/")({
 			hasOfferCatalog: {
 				"@type": "OfferCatalog",
 				name: "Services",
-				itemListElement: rows.map((r) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: r.title, description: r.summary, url: absoluteUrl(`/services/${r.slug}`) } })),
+				itemListElement: rows.map((r) => {
+					const url = absoluteUrl(`/services/${r.slug}`);
+					const price = parsePrice(r.startingAt);
+					return { ...(price ? serviceOffer(price, BOOKING_URL ?? url) : { "@type": "Offer" }), itemOffered: { "@type": "Service", name: r.title, description: r.summary, url } };
+				}),
 			},
 		};
 		return { ...base, scripts: [jsonLd(catalog), jsonLd(breadcrumbs(["Services", "/services"]))] };

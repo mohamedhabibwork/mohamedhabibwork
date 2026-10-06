@@ -2,6 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { ServiceCard } from "#/components/cards";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
 import { ChipList, EmptyState, Icon, type IconName, LinkButton, MarkArt, SectionHeading } from "#/design-system/ui";
+import { BOOKING_URL, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
 import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getService } from "#/server/fn/public";
 
@@ -15,7 +16,8 @@ export const Route = createFileRoute("/services/$slug")({
 		if (!loaderData) return seo({ title: pageTitle("Service not found"), description: "This service doesn't exist.", path: `/services/${params.slug}`, noindex: true });
 		const { service: s } = loaderData;
 		const path = `/services/${s.slug}`;
-		const base = seo({ title: pageTitle(s.title), description: s.summary, path });
+		const price = parsePrice(s.startingAt);
+		const base = seo({ title: pageTitle(price ? `${s.title} — ${s.startingAt}` : s.title, s.title), description: s.summary, path });
 		const service = {
 			"@context": "https://schema.org",
 			"@type": "Service",
@@ -25,6 +27,7 @@ export const Route = createFileRoute("/services/$slug")({
 			serviceType: s.title,
 			areaServed: "Worldwide",
 			provider: { "@id": PERSON_ID },
+			...(price ? { offers: serviceOffer(price, BOOKING_URL ?? absoluteUrl(`${path}#enquire`)) } : {}),
 		};
 		return { ...base, scripts: [jsonLd(service), jsonLd(breadcrumbs(["Services", "/services"], [s.title, path]))] };
 	},
@@ -37,7 +40,10 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function ServicePage() {
-	const { service: s, others } = Route.useLoaderData();
+	const { service: s, others, owner } = Route.useLoaderData();
+	const price = parsePrice(s.startingAt);
+	// Priced services can be booked and paid directly when a booking page is configured.
+	const bookingHref = price && BOOKING_URL ? BOOKING_URL : "#enquire";
 	const paragraphs = s.description.split(/\n{2,}/).map((t) => t.trim()).filter(Boolean);
 	return (
 		<>
@@ -49,8 +55,22 @@ function ServicePage() {
 					<h1 className="mh-hero__title" id="service-title">{s.title}</h1>
 					<p className="mh-hero__lead">{s.summary}</p>
 					<div className="mh-hero__actions">
-						<LinkButton href="#enquire" size="lg" trailingIcon="arrow-right">Contact me about this</LinkButton>
-						{s.startingAt && <span className="mh-hero__eyebrow">From {s.startingAt}</span>}
+						<LinkButton
+							href={bookingHref}
+							size="lg"
+							trailingIcon="arrow-right"
+							data-track={bookingHref === BOOKING_URL ? "book" : undefined}
+							{...(bookingHref === BOOKING_URL ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+						>
+							{!price ? "Contact me about this" : bookingHref === BOOKING_URL ? `Book & pay · ${s.startingAt}` : `Request a session · ${s.startingAt}`}
+						</LinkButton>
+						{owner?.phone && <LinkButton href={telHref(owner.phone)} size="lg" variant="outline" leadingIcon="phone">Call me</LinkButton>}
+						{owner?.phone && (
+							<LinkButton href={whatsappHref(owner.phone, `Hi ${owner.name.split(" ")[0]}, I'm interested in: ${s.title}`)} target="_blank" rel="noopener noreferrer" size="lg" variant="ghost">
+								WhatsApp
+							</LinkButton>
+						)}
+						{s.startingAt && !price && <span className="mh-hero__eyebrow">From {s.startingAt}</span>}
 					</div>
 				</section>
 

@@ -10,6 +10,7 @@ import {
 	StatCard,
 	Timeline,
 } from "#/design-system/ui";
+import { contactPoints, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
 import { absoluteUrl, jsonLd, PERSON_ID, SITE_NAME, SITE_URL, seo, TITLE_MAX } from "#/lib/seo";
 import { type SkillEvidence, skillEvidence } from "#/lib/skill-evidence";
 import { ProjectCard, ServiceCard } from "#/components/cards";
@@ -40,6 +41,8 @@ export const Route = createFileRoute("/")({
 			jobTitle: role,
 			description: p.summary,
 			email: `mailto:${p.email}`,
+			...(p.phone ? { telephone: telHref(p.phone).slice(4) } : {}),
+			contactPoint: contactPoints(p),
 			url: SITE_URL,
 			image: absoluteUrl("/brand/images/profile.jpg"),
 			...(p.location ? { homeLocation: { "@type": "Place", name: p.location } } : {}),
@@ -47,6 +50,11 @@ export const Route = createFileRoute("/")({
 			alumniOf: p.education.map((e) => ({ "@type": "EducationalOrganization", name: e.school })),
 			sameAs: [p.github, p.linkedin].filter(Boolean),
 			knowsAbout: [...new Set(loaderData.skills.map((s) => s.name))],
+			makesOffer: loaderData.services.flatMap((s) => {
+				const price = parsePrice(s.startingAt);
+				const url = absoluteUrl(`/services/${s.slug}`);
+				return price ? [{ ...serviceOffer(price, url), itemOffered: { "@type": "Service", name: s.title, url } }] : [];
+			}),
 		};
 		const site = { "@context": "https://schema.org", "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: p.name, url: SITE_URL, inLanguage: "en", publisher: { "@id": PERSON_ID } };
 		const page = { "@context": "https://schema.org", "@type": "ProfilePage", url: SITE_URL, name: title, isPartOf: { "@id": `${SITE_URL}/#website` }, mainEntity: { "@id": PERSON_ID } };
@@ -240,7 +248,8 @@ function Contact({ profile, services }: { profile: NonNullable<Portfolio["profil
 			<div className="contact-grid">
 				<ul className="contact-list">
 					<li><Icon name="mail" /><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
-					{profile.phone && <li><Icon name="phone" /><a href={`https://wa.me/${profile.phone.replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer">{profile.phone} (WhatsApp)</a></li>}
+					{profile.phone && <li><Icon name="phone" /><a href={telHref(profile.phone)}>Call {profile.phone}</a></li>}
+					{profile.phone && <li><Icon name="send" /><a href={whatsappHref(profile.phone)} target="_blank" rel="noopener noreferrer">WhatsApp me</a></li>}
 					{profile.location && <li><Icon name="map-pin" /><span>{profile.location}</span></li>}
 					{profile.linkedin && <li><Icon name="linkedin" /><a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>}
 					{profile.github && <li><Icon name="github" /><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>}

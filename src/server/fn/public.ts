@@ -16,7 +16,7 @@ export const getPortfolio = createServerFn({ method: "GET" }).handler(async () =
 			db.select().from(projects).where(eq(projects.published, true)).orderBy(desc(projects.featured), asc(projects.sort)),
 			db.select().from(skills).orderBy(asc(skills.sort), desc(skills.level)),
 			db.select({ slug: cvs.slug, title: cvs.title }).from(cvs).where(eq(cvs.isPublic, true)).orderBy(desc(cvs.updatedAt)),
-			db.select({ slug: services.slug, title: services.title, icon: services.icon, summary: services.summary }).from(services).where(eq(services.published, true)).orderBy(asc(services.sort)),
+			db.select({ slug: services.slug, title: services.title, icon: services.icon, summary: services.summary, startingAt: services.startingAt }).from(services).where(eq(services.published, true)).orderBy(asc(services.sort)),
 		]);
 		return { profile: p ?? null, experiences: exp, projects: proj, skills: sk, publicCvs, services: svc };
 	}),
@@ -44,7 +44,8 @@ export const getService = createServerFn({ method: "GET" })
 				.from(services)
 				.where(and(eq(services.published, true), ne(services.id, service.id)))
 				.orderBy(asc(services.sort));
-			return { service, others };
+			const owner = await db.query.profile.findFirst({ columns: { name: true, email: true, phone: true } });
+			return { service, others, owner: owner ?? null };
 		}),
 	);
 

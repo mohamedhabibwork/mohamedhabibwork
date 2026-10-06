@@ -21,7 +21,7 @@ export function ProjectCard({ project: pr }: { project: ProjectCardData }) {
 	);
 }
 
-type ServiceCardData = { slug: string; title: string; icon: string; summary: string };
+type ServiceCardData = { slug: string; title: string; icon: string; summary: string; startingAt?: string };
 
 export function ServiceCard({ service: s }: { service: ServiceCardData }) {
 	return (
@@ -29,6 +29,7 @@ export function ServiceCard({ service: s }: { service: ServiceCardData }) {
 			<span className="service-card__icon" aria-hidden><Icon name={s.icon as IconName} size={22} /></span>
 			<h3 className="mh-project__title">{s.title}<Icon name="arrow-right" size={16} /></h3>
 			<p className="mh-project__desc">{s.summary}</p>
+			{s.startingAt && <span className="mh-card__eyebrow">{s.startingAt}</span>}
 		</Link>
 	);
 }
