@@ -36,7 +36,12 @@
 		"ADMIN_EMAIL": "mohamedhabibwork@gmail.com",
 		"MAIL_FROM": "no-reply@mohamedhabib.work",
 		"CONTACT_TO": "mohamedhabibwork@gmail.com",
-		"TURNSTILE_HOSTNAMES": "mohamedhabib.work"
+		"TURNSTILE_HOSTNAMES": "mohamedhabib.work",
+		"PAYPAL_ENV": "live",
+		"PAYPAL_LIVE_CLIENT_ID": "BAAP005TqIU0am2dpKGSjq2fWr5Zbu8XGQc4vRX_BFkTKajc_YrggMnT1BNvOU-aEPfzyIkCmPVI58dZxk",
+		"PAYPAL_LIVE_WEBHOOK_ID": "6GH01514843583038",
+		"PAYPAL_SANDBOX_CLIENT_ID": "BAAYHrDQ9fI_-uRot3r3J2wR274thA4CaJ1DsejuoEZpjouwBkvMwAvAn24waPgwH-ub-k7BgTHUvsihQQ",
+		"PAYPAL_SANDBOX_WEBHOOK_ID": "0J8973698L545935Y"
 	},
 	// Cloudflare Email Service. Onboard the domain once:
 	//   bunx wrangler email sending enable mohamedhabib.work (already enabled)

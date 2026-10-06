@@ -1,8 +1,9 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { ServiceCard } from "#/components/cards";
+import { canPayOnline, PayPalCheckout } from "#/components/PayPalCheckout";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
 import { ChipList, EmptyState, Icon, type IconName, LinkButton, MarkArt, SectionHeading } from "#/design-system/ui";
-import { BOOKING_URL, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
+import { parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
 import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getService } from "#/server/fn/public";
 
@@ -14,7 +15,7 @@ export const Route = createFileRoute("/services/$slug")({
 	},
 	head: ({ loaderData, params }) => {
 		if (!loaderData) return seo({ title: pageTitle("Service not found"), description: "This service doesn't exist.", path: `/services/${params.slug}`, noindex: true });
-		const { service: s } = loaderData;
+		const { service: s, paypal } = loaderData;
 		const path = `/services/${s.slug}`;
 		const price = parsePrice(s.startingAt);
 		const base = seo({ title: pageTitle(price ? `${s.title} — ${s.startingAt}` : s.title, s.title), description: s.summary, path });
@@ -27,7 +28,7 @@ export const Route = createFileRoute("/services/$slug")({
 			serviceType: s.title,
 			areaServed: "Worldwide",
 			provider: { "@id": PERSON_ID },
-			...(price ? { offers: serviceOffer(price, BOOKING_URL ?? absoluteUrl(`${path}#enquire`)) } : {}),
+			...(price ? { offers: serviceOffer(price, absoluteUrl(`${path}${canPayOnline(price, paypal) ? "#book" : "#enquire"}`)) } : {}),
 		};
 		return { ...base, scripts: [jsonLd(service), jsonLd(breadcrumbs(["Services", "/services"], [s.title, path]))] };
 	},
@@ -40,10 +41,10 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function ServicePage() {
-	const { service: s, others, owner } = Route.useLoaderData();
+	const { service: s, others, owner, paypal } = Route.useLoaderData();
 	const price = parsePrice(s.startingAt);
-	// Priced services can be booked and paid directly when a booking page is configured.
-	const bookingHref = price && BOOKING_URL ? BOOKING_URL : "#enquire";
+	// Priced services in a PayPal currency are paid on the page; others go to the enquiry form.
+	const payable = canPayOnline(price, paypal);
 	const paragraphs = s.description.split(/\n{2,}/).map((t) => t.trim()).filter(Boolean);
 	return (
 		<>
@@ -55,14 +56,8 @@ function ServicePage() {
 					<h1 className="mh-hero__title" id="service-title">{s.title}</h1>
 					<p className="mh-hero__lead">{s.summary}</p>
 					<div className="mh-hero__actions">
-						<LinkButton
-							href={bookingHref}
-							size="lg"
-							trailingIcon="arrow-right"
-							data-track={bookingHref === BOOKING_URL ? "book" : undefined}
-							{...(bookingHref === BOOKING_URL ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-						>
-							{!price ? "Contact me about this" : bookingHref === BOOKING_URL ? `Book & pay · ${s.startingAt}` : `Request a session · ${s.startingAt}`}
+						<LinkButton href={payable ? "#book" : "#enquire"} size="lg" trailingIcon="arrow-right" data-track={payable ? "book" : undefined}>
+							{!price ? "Contact me about this" : payable ? `Book & pay · ${s.startingAt}` : `Request a session · ${s.startingAt}`}
 						</LinkButton>
 						{owner?.phone && <LinkButton href={telHref(owner.phone)} size="lg" variant="outline" leadingIcon="phone">Call me</LinkButton>}
 						{owner?.phone && (
@@ -87,6 +82,13 @@ function ServicePage() {
 						</section>
 					)}
 				</div>
+
+				{payable && paypal && (
+					<section className="site-section" id="book" aria-labelledby="book-title">
+						<SectionHeading id="book-title" eyebrow="Book & pay" title={`Book your ${s.title.toLowerCase()}`} description={`${s.startingAt} · secure checkout with PayPal or card. I'll email you within 24 hours to pick a time.`} />
+						<PayPalCheckout service={{ slug: s.slug, title: s.title }} price={price} paypal={paypal} />
+					</section>
+				)}
 
 				<section className="site-section" id="enquire" aria-labelledby="enquire-title">
 					<SectionHeading id="enquire-title" eyebrow="Contact" title={`Let's talk about ${s.title.toLowerCase()}`} description="Your message comes straight to my inbox. I reply within 24 hours." />

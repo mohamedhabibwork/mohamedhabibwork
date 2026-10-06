@@ -1,6 +1,10 @@
 /** Google Analytics 4 events. No-ops when gtag isn't loaded (local dev, blockers). */
 
-type Gtag = (command: "event", name: string, params?: Record<string, string | number>) => void;
+type Gtag = (
+	command: "event",
+	name: string,
+	params?: Record<string, string | number>,
+) => void;
 
 export function track(name: string, params?: Record<string, string | number>) {
 	const gtag = (globalThis as { gtag?: Gtag }).gtag;

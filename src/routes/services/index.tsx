@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ServiceCard } from "#/components/cards";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
-import { BOOKING_URL, parsePrice, serviceOffer } from "#/lib/contact";
+import { parsePrice, serviceOffer } from "#/lib/contact";
 import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getServices } from "#/server/fn/public";
 
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/services/")({
 				itemListElement: rows.map((r) => {
 					const url = absoluteUrl(`/services/${r.slug}`);
 					const price = parsePrice(r.startingAt);
-					return { ...(price ? serviceOffer(price, BOOKING_URL ?? url) : { "@type": "Offer" }), itemOffered: { "@type": "Service", name: r.title, description: r.summary, url } };
+					return { ...(price ? serviceOffer(price, url) : { "@type": "Offer" }), itemOffered: { "@type": "Service", name: r.title, description: r.summary, url } };
 				}),
 			},
 		};

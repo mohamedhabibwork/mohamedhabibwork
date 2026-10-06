@@ -92,7 +92,7 @@ It is omitted when the variable is unset, so `bun run dev` sends nothing.
 **Contact & paid services** — `src/lib/contact.ts` feeds both the page and JSON-LD, so Google sees what visitors see:
 `Person.telephone` + `contactPoint` (sales: phone, email, English/Arabic), call (`tel:`) and WhatsApp links,
 and an `Offer` (price, currency, `UnitPriceSpecification` per hour) for any service whose *Starting at* field holds a price
-such as `$100 / hour`. Set `VITE_BOOKING_URL` to a booking/payment page to turn "Request a session" into "Book & pay".
+such as `$100 / hour`. Services priced in USD/EUR/GBP get an on-page **Book & pay** section (PayPal, below).
 
 **Conversions (GA4)** — the root head reports `click_call`, `click_whatsapp`, `click_email`, `begin_checkout` (booking link)
 and `generate_lead` (contact form sent). In GA → Admin → Events, mark them as **Key events**.
@@ -109,6 +109,33 @@ After deploying (one-time, in [Search Console](https://search.google.com/search-
 3. Use **URL Inspection** on `/` and a project page to confirm Google renders them as users see them, then **Request indexing**.
 4. Check **Rich results test** (https://search.google.com/test/rich-results) for the home and a project page.
 5. Link the site from LinkedIn, GitHub and your CV — Google discovers sites mainly through links.
+
+## PayPal checkout
+
+Standard Checkout ([docs](https://developer.paypal.com/studio/checkout/standard/integrate)) on priced service pages
+(`src/components/PayPalCheckout.tsx`). The browser never sends a price: the server reads it from the service's *Starting at* field.
+
+- `POST /api/paypal/orders` `{ service, notes? }` — creates the order and a `payments` row (`CREATED`).
+- `POST /api/paypal/orders/<id>/capture` — captures after the buyer approves; stores payer, capture id and status, and emails the owner.
+- `POST /api/paypal/webhook` — verified with PayPal (`verify-webhook-signature`) before anything is stored. Handles
+  `CHECKOUT.ORDER.APPROVED` (captures if the buyer closed the page early) and `PAYMENT.CAPTURE.*` (completed, pending,
+  denied, refunded, reversed). Statuses never move backwards, so a late event can't undo a refund.
+- Dashboard → **Payments** lists them, with links to the transaction in PayPal.
+
+**Switching live ↔ sandbox** — one variable, `PAYPAL_ENV` (`live` or `sandbox`), picks the PayPal app at runtime; each app has
+its own `PAYPAL_{LIVE,SANDBOX}_CLIENT_ID`, `…_CLIENT_SECRET` and `…_WEBHOOK_ID`. The browser gets the active client id from the
+server, so switching needs no rebuild. Sandbox mode shows a "Test mode" notice at checkout, and every payment records its
+`environment` (sandbox ones are tagged "Test" in the dashboard).
+
+- Local: `.env.local` (defaults to `PAYPAL_ENV=sandbox` — pay with a sandbox buyer account from developer.paypal.com).
+- Production: `PAYPAL_ENV` and the ids are `wrangler.jsonc` vars; secrets via
+  `bunx wrangler secret put PAYPAL_LIVE_CLIENT_SECRET` and `… PAYPAL_SANDBOX_CLIENT_SECRET`.
+  To test on the live site: set `"PAYPAL_ENV": "sandbox"`, `bun run deploy`, then switch back.
+
+| App | Client id | Webhook id (→ `https://mohamedhabib.work/api/paypal/webhook`, all events) |
+|---|---|---|
+| Mohamed Habib Work Live | `BAAP005Tq…PVI58dZxk` | `6GH01514843583038` |
+| Mohamed Habib Work Sandbox | `BAAYHrDQ9…7BgTHUvsihQQ` | `0J8973698L545935Y` |
 
 ## MCP
 

@@ -5,6 +5,7 @@ import { z } from "zod";
 import { withDb } from "#/db";
 import { notifyOwnerOfMessage } from "#/server/mail";
 import { verifyTurnstile } from "#/server/turnstile";
+import { paypalPublicConfig } from "#/server/paypal";
 import { cvs, experiences, messages, projects, services, skills } from "#/db/schema";
 
 /** Everything the public portfolio page renders, in one round trip. */
@@ -45,7 +46,7 @@ export const getService = createServerFn({ method: "GET" })
 				.where(and(eq(services.published, true), ne(services.id, service.id)))
 				.orderBy(asc(services.sort));
 			const owner = await db.query.profile.findFirst({ columns: { name: true, email: true, phone: true } });
-			return { service, others, owner: owner ?? null };
+			return { service, others, owner: owner ?? null, paypal: paypalPublicConfig() };
 		}),
 	);
 

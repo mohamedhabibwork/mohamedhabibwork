@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { asc, count, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { withDb } from "#/db";
-import { atsReports, cvs, experiences, messages, profile, projects, services, skills } from "#/db/schema";
+import { atsReports, cvs, experiences, messages, payments, profile, projects, services, skills } from "#/db/schema";
 import { requireOwner } from "#/server/auth";
 
 const list = z.array(z.string().trim().max(400)).max(30);
@@ -217,6 +217,12 @@ export const deleteSkill = createServerFn({ method: "POST" })
 	});
 
 /* ── Messages ── */
+/* ── Payments (PayPal) ── */
+export const listPayments = createServerFn({ method: "GET" }).handler(async () => {
+	await requireOwner();
+	return withDb((db) => db.select().from(payments).orderBy(desc(payments.createdAt)).limit(200));
+});
+
 export const listMessages = createServerFn({ method: "GET" }).handler(async () => {
 	await requireOwner();
 	return withDb((db) => db.select().from(messages).orderBy(desc(messages.createdAt)).limit(200));

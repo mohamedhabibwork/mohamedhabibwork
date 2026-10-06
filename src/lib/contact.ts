@@ -4,24 +4,18 @@ const digits = (phone: string) => phone.replace(/\D/g, "");
 
 /** `tel:` link in E.164 form (`+201151978927`) so phones dial it from any country. */
 export const telHref = (phone: string) => `tel:+${digits(phone)}`;
-export const whatsappHref = (phone: string, text?: string) => `https://wa.me/${digits(phone)}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
+export const whatsappHref = (phone: string, text?: string) =>
+	`https://wa.me/${digits(phone)}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
 
-/**
- * Optional booking / checkout page for paid consultations (Cal.com, Calendly, Google Calendar
- * appointment schedule, PayPal or Paymob link…), set at build time. Only https URLs are used.
- */
-export const BOOKING_URL = (() => {
-	const raw = (import.meta.env?.VITE_BOOKING_URL as string | undefined)?.trim();
-	if (!raw) return undefined;
-	try {
-		return new URL(raw).protocol === "https:" ? raw : undefined;
-	} catch {
-		return undefined;
-	}
-})();
-
-const CURRENCY_SYMBOLS: Record<string, string> = { $: "USD", "€": "EUR", "£": "GBP" };
+const CURRENCY_SYMBOLS: Record<string, string> = {
+	$: "USD",
+	"€": "EUR",
+	"£": "GBP",
+};
 const CURRENCY_CODES = ["USD", "EUR", "GBP", "EGP", "SAR", "AED"];
+
+/** Currencies PayPal can charge that services may be priced in (EGP, SAR, AED can't be charged). */
+export const PAYPAL_CURRENCIES = new Set(["USD", "EUR", "GBP"]);
 
 export type Price = { amount: number; currency: string; hourly: boolean };
 
@@ -30,11 +24,21 @@ export type Price = { amount: number; currency: string; hourly: boolean };
  * structured price. Returns null when there is no recognisable amount.
  */
 export function parsePrice(text: string): Price | null {
-	const match = /([$€£])\s*([\d,.]+)|\b([A-Z]{3})\s*([\d,.]+)|([\d,.]+)\s*([A-Z]{3})\b/.exec(text.toUpperCase());
+	const match =
+		/([$€£])\s*([\d,.]+)|\b([A-Z]{3})\s*([\d,.]+)|([\d,.]+)\s*([A-Z]{3})\b/.exec(
+			text.toUpperCase(),
+		);
 	if (!match) return null;
-	const currency = match[1] ? CURRENCY_SYMBOLS[match[1]] : (match[3] ?? match[6]);
+	const currency = match[1]
+		? CURRENCY_SYMBOLS[match[1]]
+		: (match[3] ?? match[6]);
 	const amount = Number((match[2] ?? match[4] ?? match[5]).replace(/,/g, ""));
-	if (!CURRENCY_CODES.includes(currency) || !Number.isFinite(amount) || amount <= 0) return null;
+	if (
+		!CURRENCY_CODES.includes(currency) ||
+		!Number.isFinite(amount) ||
+		amount <= 0
+	)
+		return null;
 	return { amount, currency, hourly: /\b(hour|hr|h)\b|\/\s*h/i.test(text) };
 }
 
@@ -47,7 +51,19 @@ export function serviceOffer(price: Price, url: string) {
 		availability: "https://schema.org/InStock",
 		url,
 		...(price.hourly
-			? { priceSpecification: { "@type": "UnitPriceSpecification", price: price.amount, priceCurrency: price.currency, unitCode: "HUR", referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitCode: "HUR" } } }
+			? {
+					priceSpecification: {
+						"@type": "UnitPriceSpecification",
+						price: price.amount,
+						priceCurrency: price.currency,
+						unitCode: "HUR",
+						referenceQuantity: {
+							"@type": "QuantitativeValue",
+							value: 1,
+							unitCode: "HUR",
+						},
+					},
+				}
 			: {}),
 	};
 }
