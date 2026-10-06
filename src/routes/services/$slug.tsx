@@ -1,8 +1,10 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { ServiceCard } from "#/components/cards";
+import { canPayOnline, PayPalCheckout } from "#/components/PayPalCheckout";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
 import { ChipList, EmptyState, Icon, type IconName, LinkButton, MarkArt, SectionHeading } from "#/design-system/ui";
-import { absoluteUrl, jsonLd, SITE_URL, seo } from "#/lib/seo";
+import { parseCheckoutPrice, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
+import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getService } from "#/server/fn/public";
 
 export const Route = createFileRoute("/services/$slug")({
@@ -12,10 +14,11 @@ export const Route = createFileRoute("/services/$slug")({
 		return data;
 	},
 	head: ({ loaderData, params }) => {
-		if (!loaderData) return seo({ title: "Service not found · Mohamed Habib", description: "This service doesn't exist.", path: `/services/${params.slug}` });
-		const { service: s } = loaderData;
+		if (!loaderData) return seo({ title: pageTitle("Service not found"), description: "This service doesn't exist.", path: `/services/${params.slug}`, noindex: true });
+		const { service: s, paypal } = loaderData;
 		const path = `/services/${s.slug}`;
-		const base = seo({ title: `${s.title} · Mohamed Habib`, description: s.summary.slice(0, 160), path });
+		const price = parsePrice(s.startingAt);
+		const base = seo({ title: pageTitle(price ? `${s.title} — ${s.startingAt}` : s.title, s.title), description: s.summary, path });
 		const service = {
 			"@context": "https://schema.org",
 			"@type": "Service",
@@ -24,18 +27,10 @@ export const Route = createFileRoute("/services/$slug")({
 			url: absoluteUrl(path),
 			serviceType: s.title,
 			areaServed: "Worldwide",
-			provider: { "@type": "Person", name: "Mohamed Habib", url: SITE_URL },
+			provider: { "@id": PERSON_ID },
+			...(price ? { offers: serviceOffer(price, absoluteUrl(`${path}${canPayOnline(parseCheckoutPrice(s.startingAt), paypal) ? "#book" : "#enquire"}`)) } : {}),
 		};
-		const crumbs = {
-			"@context": "https://schema.org",
-			"@type": "BreadcrumbList",
-			itemListElement: [
-				{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-				{ "@type": "ListItem", position: 2, name: "Services", item: absoluteUrl("/services") },
-				{ "@type": "ListItem", position: 3, name: s.title, item: absoluteUrl(path) },
-			],
-		};
-		return { ...base, scripts: [jsonLd(service), jsonLd(crumbs)] };
+		return { ...base, scripts: [jsonLd(service), jsonLd(breadcrumbs(["Services", "/services"], [s.title, path]))] };
 	},
 	notFoundComponent: () => (
 		<main id="main" className="site" style={{ padding: "96px 0" }}>
@@ -46,7 +41,11 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function ServicePage() {
-	const { service: s, others } = Route.useLoaderData();
+	const { service: s, others, owner, paypal } = Route.useLoaderData();
+	const price = parsePrice(s.startingAt);
+	// Services with one exact price in a PayPal currency are paid on the page; others go to the enquiry form.
+	const checkoutPrice = parseCheckoutPrice(s.startingAt);
+	const payable = canPayOnline(checkoutPrice, paypal);
 	const paragraphs = s.description.split(/\n{2,}/).map((t) => t.trim()).filter(Boolean);
 	return (
 		<>
@@ -58,8 +57,16 @@ function ServicePage() {
 					<h1 className="mh-hero__title" id="service-title">{s.title}</h1>
 					<p className="mh-hero__lead">{s.summary}</p>
 					<div className="mh-hero__actions">
-						<LinkButton href="#enquire" size="lg" trailingIcon="arrow-right">Contact me about this</LinkButton>
-						{s.startingAt && <span className="mh-hero__eyebrow">From {s.startingAt}</span>}
+						<LinkButton href={payable ? "#book" : "#enquire"} size="lg" trailingIcon="arrow-right" data-track={payable ? "book" : undefined}>
+							{!price ? "Contact me about this" : payable ? `Book & pay · ${s.startingAt}` : `Request a session · ${s.startingAt}`}
+						</LinkButton>
+						{owner?.phone && <LinkButton href={telHref(owner.phone)} size="lg" variant="outline" leadingIcon="phone">Call me</LinkButton>}
+						{owner?.phone && (
+							<LinkButton href={whatsappHref(owner.phone, `Hi ${owner.name.split(" ")[0]}, I'm interested in: ${s.title}`)} target="_blank" rel="noopener noreferrer" size="lg" variant="ghost">
+								WhatsApp
+							</LinkButton>
+						)}
+						{s.startingAt && !price && <span className="mh-hero__eyebrow">From {s.startingAt}</span>}
 					</div>
 				</section>
 
@@ -76,6 +83,13 @@ function ServicePage() {
 						</section>
 					)}
 				</div>
+
+				{payable && paypal && (
+					<section className="site-section" id="book" aria-labelledby="book-title">
+						<SectionHeading id="book-title" eyebrow="Book & pay" title={`Book your ${s.title.toLowerCase()}`} description={`${s.startingAt} · secure checkout with PayPal or card. I'll email you within 24 hours to pick a time.`} />
+						<PayPalCheckout service={{ slug: s.slug, title: s.title }} price={checkoutPrice} paypal={paypal} />
+					</section>
+				)}
 
 				<section className="site-section" id="enquire" aria-labelledby="enquire-title">
 					<SectionHeading id="enquire-title" eyebrow="Contact" title={`Let's talk about ${s.title.toLowerCase()}`} description="Your message comes straight to my inbox. I reply within 24 hours." />

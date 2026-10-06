@@ -131,6 +131,36 @@ export const messages = pgTable(
 	(t) => [index("messages_created_idx").on(t.createdAt)],
 );
 
+/**
+ * PayPal checkout for a priced service. One row per PayPal order, created when the buyer opens
+ * checkout and updated by the capture call and by verified webhooks (which win if they arrive later).
+ */
+export const payments = pgTable(
+	"payments",
+	{
+		id: serial().primaryKey(),
+		paypalOrderId: text("paypal_order_id").notNull(),
+		captureId: text("capture_id").notNull().default(""),
+		/** Slug of the service paid for. */
+		service: text().notNull(),
+		/** Decimal string as PayPal returns it, e.g. "100.00". */
+		amount: text().notNull(),
+		currency: text().notNull(),
+		/** PayPal status: CREATED, APPROVED, COMPLETED, PENDING, DECLINED, DENIED, REFUNDED, REVERSED, FAILED. */
+		status: text().notNull(),
+		payerName: text("payer_name").notNull().default(""),
+		payerEmail: text("payer_email").notNull().default(""),
+		/** What the buyer wants to discuss, entered before paying. */
+		notes: text().notNull().default(""),
+		/** Total refunded so far (PayPal's cumulative figure), decimal string; "" when nothing was refunded. */
+		refundedAmount: text("refunded_amount").notNull().default(""),
+		/** PayPal app that took the payment: "live" (real money) or "sandbox" (test). */
+		environment: text().notNull().default("live"),
+		...timestamps,
+	},
+	(t) => [uniqueIndex("payments_order_idx").on(t.paypalOrderId), index("payments_created_idx").on(t.createdAt)],
+);
+
 /** A CV built in the dashboard. `data` is the full document; `isPublic` exposes its PDF endpoint. */
 export const cvs = pgTable(
 	"cvs",

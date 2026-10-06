@@ -36,6 +36,13 @@
       "when": 1791187774699,
       "tag": "0004_profile_education",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1791293695853,
+      "tag": "0005_payments",
+      "breakpoints": true
     }
   ]
 }

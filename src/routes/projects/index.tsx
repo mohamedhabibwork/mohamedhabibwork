@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { ProjectCard } from "#/components/cards";
 import { SiteFooter, SiteHeader } from "#/components/site";
 import { EmptyState, SectionHeading, Tabs } from "#/design-system/ui";
-import { absoluteUrl, jsonLd, seo } from "#/lib/seo";
+import { absoluteUrl, breadcrumbs, jsonLd, pageTitle, seo } from "#/lib/seo";
 import { getProjects } from "#/server/fn/public";
 
 const ALL = "all";
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/projects/")({
 	head: ({ loaderData }) => {
 		const rows = loaderData ?? [];
 		const base = seo({
-			title: "Projects · Mohamed Habib",
+			title: pageTitle("Software Projects & Case Studies", "Projects"),
 			description: `${rows.length} platforms built and led across ${[...new Set(rows.map((r) => r.category))].slice(0, 4).join(", ").toLowerCase()} and more.`,
 			path: "/projects",
 		});
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/projects/")({
 			"@type": "ItemList",
 			itemListElement: rows.map((r, i) => ({ "@type": "ListItem", position: i + 1, url: absoluteUrl(`/projects/${r.slug}`), name: r.title })),
 		};
-		return { ...base, scripts: [jsonLd(list)] };
+		return { ...base, scripts: [jsonLd(list), jsonLd(breadcrumbs(["Projects", "/projects"]))] };
 	},
 	component: ProjectsPage,
 });
@@ -37,7 +37,7 @@ function ProjectsPage() {
 			<SiteHeader />
 			<main id="main" className="site">
 				<section className="site-section">
-					<SectionHeading eyebrow="Portfolio" title="All projects" description="Every platform I've built or led, from ride-hailing and emergency dispatch to fintech and ERP." />
+					<SectionHeading as="h1" eyebrow="Portfolio" title="All projects" description="Every platform I've built or led, from ride-hailing and emergency dispatch to fintech and ERP." />
 					{categories.length > 1 && (
 						<Tabs
 							label="Filter by category"

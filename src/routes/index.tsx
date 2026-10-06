@@ -10,7 +10,8 @@ import {
 	StatCard,
 	Timeline,
 } from "#/design-system/ui";
-import { absoluteUrl, jsonLd, SITE_URL, seo } from "#/lib/seo";
+import { contactPoints, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
+import { absoluteUrl, jsonLd, PERSON_ID, SITE_NAME, SITE_URL, seo, TITLE_MAX } from "#/lib/seo";
 import { type SkillEvidence, skillEvidence } from "#/lib/skill-evidence";
 import { ProjectCard, ServiceCard } from "#/components/cards";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
@@ -20,28 +21,44 @@ export const Route = createFileRoute("/")({
 	loader: () => getPortfolio(),
 	head: ({ loaderData }) => {
 		const p = loaderData?.profile;
+		const name = p?.name ?? SITE_NAME;
+		// Headline reads "Senior Full-Stack Engineer · .NET Core & C# · …"; the first part is the role.
+		const role = p?.headline.split(/[·|]/)[0].trim() || "Senior Full-Stack Engineer";
+		const title = [`${name} · ${role} & Team Leader`, `${name} · ${role}`].find((t) => t.length <= TITLE_MAX) ?? `${name} · ${role}`;
 		const base = seo({
-			title: p ? `${p.name} · ${p.headline}` : "Mohamed Habib · Senior Full Stack Developer",
-			description: p?.summary.slice(0, 160) || "Senior full stack developer and team leader.",
+			title,
+			description: p?.summary || "Senior full-stack engineer and team leader building scalable web platforms.",
 			path: "/",
 			type: "profile",
 		});
 		if (!p) return base;
+		const current = loaderData.experiences.find((e) => e.current);
 		const person = {
 			"@context": "https://schema.org",
 			"@type": "Person",
+			"@id": PERSON_ID,
 			name: p.name,
-			jobTitle: p.headline,
+			jobTitle: role,
 			description: p.summary,
 			email: `mailto:${p.email}`,
+			...(p.phone ? { telephone: telHref(p.phone).slice(4) } : {}),
+			contactPoint: contactPoints(p),
 			url: SITE_URL,
-			image: absoluteUrl("/icon-512.png"),
-			address: p.location,
+			image: absoluteUrl("/brand/images/profile.jpg"),
+			...(p.location ? { homeLocation: { "@type": "Place", name: p.location } } : {}),
+			...(current ? { worksFor: { "@type": "Organization", name: current.company } } : {}),
+			alumniOf: p.education.map((e) => ({ "@type": "EducationalOrganization", name: e.school })),
 			sameAs: [p.github, p.linkedin].filter(Boolean),
 			knowsAbout: [...new Set(loaderData.skills.map((s) => s.name))],
+			makesOffer: loaderData.services.flatMap((s) => {
+				const price = parsePrice(s.startingAt);
+				const url = absoluteUrl(`/services/${s.slug}`);
+				return price ? [{ ...serviceOffer(price, url), itemOffered: { "@type": "Service", name: s.title, url } }] : [];
+			}),
 		};
-		const site = { "@context": "https://schema.org", "@type": "WebSite", name: p.name, url: SITE_URL };
-		return { ...base, scripts: [jsonLd(person), jsonLd(site)] };
+		const site = { "@context": "https://schema.org", "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: p.name, url: SITE_URL, inLanguage: "en", publisher: { "@id": PERSON_ID } };
+		const page = { "@context": "https://schema.org", "@type": "ProfilePage", url: SITE_URL, name: title, isPartOf: { "@id": `${SITE_URL}/#website` }, mainEntity: { "@id": PERSON_ID } };
+		return { ...base, scripts: [jsonLd(person), jsonLd(site), jsonLd(page)] };
 	},
 	component: Home,
 });
@@ -231,7 +248,8 @@ function Contact({ profile, services }: { profile: NonNullable<Portfolio["profil
 			<div className="contact-grid">
 				<ul className="contact-list">
 					<li><Icon name="mail" /><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
-					{profile.phone && <li><Icon name="phone" /><a href={`https://wa.me/${profile.phone.replace(/\D/g, "")}`} target="_blank" rel="noopener noreferrer">{profile.phone} (WhatsApp)</a></li>}
+					{profile.phone && <li><Icon name="phone" /><a href={telHref(profile.phone)}>Call {profile.phone}</a></li>}
+					{profile.phone && <li><Icon name="send" /><a href={whatsappHref(profile.phone)} target="_blank" rel="noopener noreferrer">WhatsApp me</a></li>}
 					{profile.location && <li><Icon name="map-pin" /><span>{profile.location}</span></li>}
 					{profile.linkedin && <li><Icon name="linkedin" /><a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>}
 					{profile.github && <li><Icon name="github" /><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>}

@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Turnstile, type TurnstileHandle } from "#/components/Turnstile";
 import { Alert, Button, Icon, Input, LinkButton, Logo, Select, Textarea, ThemeToggle } from "#/design-system/ui";
+import { track } from "#/lib/analytics";
 import { sendMessage } from "#/server/fn/public";
 
 const NAV = [
@@ -88,6 +89,7 @@ export function ContactForm({ service, services }: { service?: ServiceOption; se
 				return;
 			}
 			setState("sent");
+			track("generate_lead", { form: "contact", service: String(new FormData(form).get("service") ?? "") });
 			form.reset();
 		} catch (err) {
 			setState("idle");

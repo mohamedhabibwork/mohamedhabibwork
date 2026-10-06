@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteFooter, SiteHeader } from "#/components/site";
 import { ChipList, EmptyState, Icon, LinkButton, MarkArt } from "#/design-system/ui";
-import { absoluteUrl, jsonLd, SITE_URL, seo } from "#/lib/seo";
+import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getProject } from "#/server/fn/public";
 
 export const Route = createFileRoute("/projects/$slug")({
@@ -11,15 +11,15 @@ export const Route = createFileRoute("/projects/$slug")({
 		return data;
 	},
 	head: ({ loaderData, params }) => {
-		if (!loaderData) return seo({ title: "Project not found · Mohamed Habib", description: "This project doesn't exist.", path: `/projects/${params.slug}` });
-		const { project: pr, owner } = loaderData;
+		if (!loaderData) return seo({ title: pageTitle("Project not found"), description: "This project doesn't exist.", path: `/projects/${params.slug}`, noindex: true });
+		const { project: pr } = loaderData;
 		const path = `/projects/${pr.slug}`;
 		const base = seo({
-			title: `${pr.title} — ${pr.subtitle || pr.category} · Mohamed Habib`,
-			description: pr.summary.slice(0, 160),
+			title: pageTitle(`${pr.title} — ${pr.subtitle || pr.category}`, pr.title),
+			description: pr.summary,
 			path,
-			// Social crawlers don't render SVG, so generated covers fall back to the PNG icon.
-			image: pr.imageUrl && !pr.imageUrl.endsWith(".svg") ? pr.imageUrl : undefined,
+			// Social crawlers don't render SVG, so generated covers fall back to the default PNG.
+			image: pr.imageUrl && !pr.imageUrl.endsWith(".svg") ? { url: pr.imageUrl, alt: `${pr.title} — ${pr.subtitle}` } : undefined,
 			type: "article",
 		});
 		const work = {
@@ -34,18 +34,9 @@ export const Route = createFileRoute("/projects/$slug")({
 			keywords: pr.tech.join(", "),
 			dateCreated: pr.year,
 			...(pr.url ? { sameAs: pr.url } : {}),
-			creator: { "@type": "Person", name: owner?.name ?? "Mohamed Habib", url: SITE_URL },
+			creator: { "@id": PERSON_ID },
 		};
-		const crumbs = {
-			"@context": "https://schema.org",
-			"@type": "BreadcrumbList",
-			itemListElement: [
-				{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-				{ "@type": "ListItem", position: 2, name: "Projects", item: absoluteUrl("/projects") },
-				{ "@type": "ListItem", position: 3, name: pr.title, item: absoluteUrl(path) },
-			],
-		};
-		return { ...base, scripts: [jsonLd(work), jsonLd(crumbs)] };
+		return { ...base, scripts: [jsonLd(work), jsonLd(breadcrumbs(["Projects", "/projects"], [pr.title, path]))] };
 	},
 	notFoundComponent: () => (
 		<main id="main" className="site" style={{ padding: "96px 0" }}>

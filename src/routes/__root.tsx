@@ -1,11 +1,25 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Scripts } from "@tanstack/react-router";
-import { themeBootScript } from "#/design-system/ui";
+import { SiteFooter, SiteHeader } from "#/components/site";
+import { EmptyState, LinkButton, themeBootScript } from "#/design-system/ui";
+import { analyticsBootstrap } from "#/lib/analytics";
+import { pageTitle, SITE_URL } from "#/lib/seo";
 import appCss from "../styles.css?url";
 
 interface MyRouterContext {
 	queryClient: QueryClient;
 }
+
+/** Search Console / Bing Webmaster ownership tokens, set at build time (optional — DNS verification also works). */
+const SITE_VERIFICATION = [
+	{ name: "google-site-verification", content: import.meta.env.VITE_GOOGLE_SITE_VERIFICATION as string | undefined },
+	{ name: "msvalidate.01", content: import.meta.env.VITE_BING_SITE_VERIFICATION as string | undefined },
+].filter((m): m is { name: string; content: string } => Boolean(m.content));
+
+/** Google Analytics 4 measurement id, set at build time (.env.production) so local dev isn't tracked. */
+const GA_ID = (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined)?.trim();
+// Shape-checked because the id is embedded in an inline script.
+const analyticsScripts = GA_ID && /^G-[A-Z0-9]+$/.test(GA_ID) ? [{ children: analyticsBootstrap(GA_ID, new URL(SITE_URL).hostname) }] : [];
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	head: () => ({
@@ -14,7 +28,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			{ name: "viewport", content: "width=device-width, initial-scale=1" },
 			{ name: "theme-color", content: "#0b0d0a" },
 			{ name: "author", content: "Mohamed Habib" },
-			{ name: "robots", content: "index, follow, max-image-preview:large" },
+			// Indexing is the default; this only lets Google show large image previews. Private routes add noindex.
+			{ name: "robots", content: "max-image-preview:large, max-snippet:-1" },
+			...SITE_VERIFICATION,
 		],
 		links: [
 			{ rel: "stylesheet", href: appCss },
@@ -26,9 +42,33 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			{ rel: "preload", href: "/brand/fonts/Poppins-400.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
 			{ rel: "preload", href: "/brand/fonts/Barlow-800.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
 		],
+		// GA4 tracks client-side navigations itself (enhanced measurement: "page changes based on browser history").
+		scripts: analyticsScripts,
 	}),
 	shellComponent: RootDocument,
+	notFoundComponent: NotFound,
 });
+
+/** Unknown URLs: the server answers 404; React 19 hoists the title and robots tag into <head>. */
+function NotFound() {
+	return (
+		<>
+			<title>{pageTitle("Page not found")}</title>
+			<meta name="robots" content="noindex" />
+			<SiteHeader />
+			<main id="main" className="site" style={{ padding: "96px 0" }}>
+				<EmptyState
+					icon="search"
+					title="Page not found"
+					description="The page you're looking for doesn't exist or has moved."
+					action={<LinkButton href="/projects">Browse projects</LinkButton>}
+				/>
+				<p style={{ textAlign: "center", marginTop: 16 }}><a className="mh-link" href="/">Back to the home page</a></p>
+			</main>
+			<SiteFooter />
+		</>
+	);
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (

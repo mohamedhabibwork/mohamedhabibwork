@@ -19,6 +19,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminExperienceRouteImport } from './routes/admin/experience'
 import { Route as AdminMessagesRouteImport } from './routes/admin/messages'
+import { Route as AdminPaymentsRouteImport } from './routes/admin/payments'
 import { Route as AdminProfileRouteImport } from './routes/admin/profile'
 import { Route as AdminProjectsRouteImport } from './routes/admin/projects'
 import { Route as AdminServicesRouteImport } from './routes/admin/services'
@@ -29,8 +30,11 @@ import { Route as ServicesIndexRouteImport } from './routes/services/index'
 import { Route as ServicesSlugRouteImport } from './routes/services/$slug'
 import { Route as AdminCvsIndexRouteImport } from './routes/admin/cvs/index'
 import { Route as AdminCvsIdRouteImport } from './routes/admin/cvs/$id'
+import { Route as ApiPaypalOrdersRouteImport } from './routes/api/paypal.orders'
+import { Route as ApiPaypalWebhookRouteImport } from './routes/api/paypal.webhook'
 import { Route as OgProjectsFileRouteImport } from './routes/og/projects.$file'
 import { Route as ApiCvSlugPdfRouteImport } from './routes/api/cv.$slug.pdf'
+import { Route as ApiPaypalOrdersOrderIdCaptureRouteImport } from './routes/api/paypal.orders.$orderId.capture'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -80,6 +84,11 @@ const AdminExperienceRoute = AdminExperienceRouteImport.update({
 const AdminMessagesRoute = AdminMessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminProfileRoute = AdminProfileRouteImport.update({
@@ -132,6 +141,16 @@ const AdminCvsIdRoute = AdminCvsIdRouteImport.update({
   path: '/cvs/$id',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const ApiPaypalOrdersRoute = ApiPaypalOrdersRouteImport.update({
+  id: '/api/paypal/orders',
+  path: '/api/paypal/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPaypalWebhookRoute = ApiPaypalWebhookRouteImport.update({
+  id: '/api/paypal/webhook',
+  path: '/api/paypal/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OgProjectsFileRoute = OgProjectsFileRouteImport.update({
   id: '/og/projects/$file',
   path: '/og/projects/$file',
@@ -142,6 +161,12 @@ const ApiCvSlugPdfRoute = ApiCvSlugPdfRouteImport.update({
   path: '/api/cv/$slug/pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPaypalOrdersOrderIdCaptureRoute =
+  ApiPaypalOrdersOrderIdCaptureRouteImport.update({
+    id: '/$orderId/capture',
+    path: '/$orderId/capture',
+    getParentRoute: () => ApiPaypalOrdersRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -153,6 +178,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/experience': typeof AdminExperienceRoute
   '/admin/messages': typeof AdminMessagesRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/services': typeof AdminServicesRoute
@@ -163,9 +189,12 @@ export interface FileRoutesByFullPath {
   '/projects/': typeof ProjectsIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/admin/cvs/$id': typeof AdminCvsIdRoute
+  '/api/paypal/orders': typeof ApiPaypalOrdersRouteWithChildren
+  '/api/paypal/webhook': typeof ApiPaypalWebhookRoute
   '/og/projects/$file': typeof OgProjectsFileRoute
   '/admin/cvs/': typeof AdminCvsIndexRoute
   '/api/cv/$slug/pdf': typeof ApiCvSlugPdfRoute
+  '/api/paypal/orders/$orderId/capture': typeof ApiPaypalOrdersOrderIdCaptureRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -176,6 +205,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/experience': typeof AdminExperienceRoute
   '/admin/messages': typeof AdminMessagesRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/services': typeof AdminServicesRoute
@@ -186,9 +216,12 @@ export interface FileRoutesByTo {
   '/projects': typeof ProjectsIndexRoute
   '/services': typeof ServicesIndexRoute
   '/admin/cvs/$id': typeof AdminCvsIdRoute
+  '/api/paypal/orders': typeof ApiPaypalOrdersRouteWithChildren
+  '/api/paypal/webhook': typeof ApiPaypalWebhookRoute
   '/og/projects/$file': typeof OgProjectsFileRoute
   '/admin/cvs': typeof AdminCvsIndexRoute
   '/api/cv/$slug/pdf': typeof ApiCvSlugPdfRoute
+  '/api/paypal/orders/$orderId/capture': typeof ApiPaypalOrdersOrderIdCaptureRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -201,6 +234,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin/experience': typeof AdminExperienceRoute
   '/admin/messages': typeof AdminMessagesRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/services': typeof AdminServicesRoute
@@ -211,9 +245,12 @@ export interface FileRoutesById {
   '/projects/': typeof ProjectsIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/admin/cvs/$id': typeof AdminCvsIdRoute
+  '/api/paypal/orders': typeof ApiPaypalOrdersRouteWithChildren
+  '/api/paypal/webhook': typeof ApiPaypalWebhookRoute
   '/og/projects/$file': typeof OgProjectsFileRoute
   '/admin/cvs/': typeof AdminCvsIndexRoute
   '/api/cv/$slug/pdf': typeof ApiCvSlugPdfRoute
+  '/api/paypal/orders/$orderId/capture': typeof ApiPaypalOrdersOrderIdCaptureRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -227,6 +264,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/admin/experience'
     | '/admin/messages'
+    | '/admin/payments'
     | '/admin/profile'
     | '/admin/projects'
     | '/admin/services'
@@ -237,9 +275,12 @@ export interface FileRouteTypes {
     | '/projects/'
     | '/services/'
     | '/admin/cvs/$id'
+    | '/api/paypal/orders'
+    | '/api/paypal/webhook'
     | '/og/projects/$file'
     | '/admin/cvs/'
     | '/api/cv/$slug/pdf'
+    | '/api/paypal/orders/$orderId/capture'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -250,6 +291,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/admin/experience'
     | '/admin/messages'
+    | '/admin/payments'
     | '/admin/profile'
     | '/admin/projects'
     | '/admin/services'
@@ -260,9 +302,12 @@ export interface FileRouteTypes {
     | '/projects'
     | '/services'
     | '/admin/cvs/$id'
+    | '/api/paypal/orders'
+    | '/api/paypal/webhook'
     | '/og/projects/$file'
     | '/admin/cvs'
     | '/api/cv/$slug/pdf'
+    | '/api/paypal/orders/$orderId/capture'
   id:
     | '__root__'
     | '/'
@@ -274,6 +319,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/admin/experience'
     | '/admin/messages'
+    | '/admin/payments'
     | '/admin/profile'
     | '/admin/projects'
     | '/admin/services'
@@ -284,9 +330,12 @@ export interface FileRouteTypes {
     | '/projects/'
     | '/services/'
     | '/admin/cvs/$id'
+    | '/api/paypal/orders'
+    | '/api/paypal/webhook'
     | '/og/projects/$file'
     | '/admin/cvs/'
     | '/api/cv/$slug/pdf'
+    | '/api/paypal/orders/$orderId/capture'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -301,6 +350,8 @@ export interface RootRouteChildren {
   ServicesSlugRoute: typeof ServicesSlugRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
+  ApiPaypalOrdersRoute: typeof ApiPaypalOrdersRouteWithChildren
+  ApiPaypalWebhookRoute: typeof ApiPaypalWebhookRoute
   OgProjectsFileRoute: typeof OgProjectsFileRoute
   ApiCvSlugPdfRoute: typeof ApiCvSlugPdfRoute
 }
@@ -377,6 +428,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMessagesRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/profile': {
       id: '/admin/profile'
       path: '/profile'
@@ -447,6 +505,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCvsIdRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/api/paypal/orders': {
+      id: '/api/paypal/orders'
+      path: '/api/paypal/orders'
+      fullPath: '/api/paypal/orders'
+      preLoaderRoute: typeof ApiPaypalOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/paypal/webhook': {
+      id: '/api/paypal/webhook'
+      path: '/api/paypal/webhook'
+      fullPath: '/api/paypal/webhook'
+      preLoaderRoute: typeof ApiPaypalWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/og/projects/$file': {
       id: '/og/projects/$file'
       path: '/og/projects/$file'
@@ -461,12 +533,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCvSlugPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/paypal/orders/$orderId/capture': {
+      id: '/api/paypal/orders/$orderId/capture'
+      path: '/$orderId/capture'
+      fullPath: '/api/paypal/orders/$orderId/capture'
+      preLoaderRoute: typeof ApiPaypalOrdersOrderIdCaptureRouteImport
+      parentRoute: typeof ApiPaypalOrdersRoute
+    }
   }
 }
 
 interface AdminRouteRouteChildren {
   AdminExperienceRoute: typeof AdminExperienceRoute
   AdminMessagesRoute: typeof AdminMessagesRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminProfileRoute: typeof AdminProfileRoute
   AdminProjectsRoute: typeof AdminProjectsRoute
   AdminServicesRoute: typeof AdminServicesRoute
@@ -479,6 +559,7 @@ interface AdminRouteRouteChildren {
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminExperienceRoute: AdminExperienceRoute,
   AdminMessagesRoute: AdminMessagesRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
   AdminProfileRoute: AdminProfileRoute,
   AdminProjectsRoute: AdminProjectsRoute,
   AdminServicesRoute: AdminServicesRoute,
@@ -490,6 +571,18 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
+)
+
+interface ApiPaypalOrdersRouteChildren {
+  ApiPaypalOrdersOrderIdCaptureRoute: typeof ApiPaypalOrdersOrderIdCaptureRoute
+}
+
+const ApiPaypalOrdersRouteChildren: ApiPaypalOrdersRouteChildren = {
+  ApiPaypalOrdersOrderIdCaptureRoute: ApiPaypalOrdersOrderIdCaptureRoute,
+}
+
+const ApiPaypalOrdersRouteWithChildren = ApiPaypalOrdersRoute._addFileChildren(
+  ApiPaypalOrdersRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
@@ -504,6 +597,8 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesSlugRoute: ServicesSlugRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
+  ApiPaypalOrdersRoute: ApiPaypalOrdersRouteWithChildren,
+  ApiPaypalWebhookRoute: ApiPaypalWebhookRoute,
   OgProjectsFileRoute: OgProjectsFileRoute,
   ApiCvSlugPdfRoute: ApiCvSlugPdfRoute,
 }

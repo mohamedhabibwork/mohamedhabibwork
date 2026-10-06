@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ServiceCard } from "#/components/cards";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
-import { absoluteUrl, jsonLd, SITE_URL, seo } from "#/lib/seo";
+import { parsePrice, serviceOffer } from "#/lib/contact";
+import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getServices } from "#/server/fn/public";
 
 export const Route = createFileRoute("/services/")({
@@ -10,7 +11,7 @@ export const Route = createFileRoute("/services/")({
 	head: ({ loaderData }) => {
 		const rows = loaderData ?? [];
 		const base = seo({
-			title: "Services · Mohamed Habib",
+			title: pageTitle("Software Development Services"),
 			description: `Hire me for ${rows.map((r) => r.title.toLowerCase()).slice(0, 4).join(", ")} and more.`,
 			path: "/services",
 		});
@@ -19,14 +20,18 @@ export const Route = createFileRoute("/services/")({
 			"@type": "ProfessionalService",
 			name: "Mohamed Habib — Software development",
 			url: absoluteUrl("/services"),
-			provider: { "@type": "Person", name: "Mohamed Habib", url: SITE_URL },
+			provider: { "@id": PERSON_ID },
 			hasOfferCatalog: {
 				"@type": "OfferCatalog",
 				name: "Services",
-				itemListElement: rows.map((r) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: r.title, description: r.summary, url: absoluteUrl(`/services/${r.slug}`) } })),
+				itemListElement: rows.map((r) => {
+					const url = absoluteUrl(`/services/${r.slug}`);
+					const price = parsePrice(r.startingAt);
+					return { ...(price ? serviceOffer(price, url) : { "@type": "Offer" }), itemOffered: { "@type": "Service", name: r.title, description: r.summary, url } };
+				}),
 			},
 		};
-		return { ...base, scripts: [jsonLd(catalog)] };
+		return { ...base, scripts: [jsonLd(catalog), jsonLd(breadcrumbs(["Services", "/services"]))] };
 	},
 	component: ServicesPage,
 });
@@ -38,7 +43,7 @@ function ServicesPage() {
 			<SiteHeader />
 			<main id="main" className="site">
 				<section className="site-section">
-					<SectionHeading eyebrow="Work with me" title="Services" description="Pick what you need. Every enquiry comes straight to my inbox, and I reply within 24 hours." />
+					<SectionHeading as="h1" eyebrow="Work with me" title="Services" description="Pick what you need. Every enquiry comes straight to my inbox, and I reply within 24 hours." />
 					{rows.length === 0 ? (
 						<EmptyState icon="briefcase" title="No services listed yet" />
 					) : (

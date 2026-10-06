@@ -72,9 +72,70 @@ One-time setup (requires `bunx wrangler login`):
 
 ## SEO
 
+Follows Google's [SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide).
 Generated at request time from the database (nothing static to keep in sync):
-`/sitemap.xml`, `/robots.txt`, `/site.webmanifest`, per-project pages at `/projects/<slug>`
-with canonical/Open Graph/Twitter tags and JSON-LD, and project covers at `/og/projects/<slug>.svg`.
+
+- **Crawling** — `/robots.txt` (blocks `/admin`, `/login`, `/mcp`, `/api/`) and `/sitemap.xml` (pages, projects, services, image entries, `lastmod`).
+- **One URL per page** — other domains and `www` 301 to `https://mohamedhabib.work`; trailing slashes 301 to the bare path
+  (`src/server-entry.ts`); every page has a self-referencing canonical; `*.workers.dev` previews send `X-Robots-Tag: noindex`.
+- **Titles & snippets** — `seo()` / `pageTitle()` in `src/lib/seo.ts` keep titles ≤ 60 chars and cut descriptions at a word boundary ≤ 160.
+- **Structured data** — `Person` (+ `WebSite`, `ProfilePage`) on `/`, `CreativeWork` per project, `Service`/`OfferCatalog`, `ItemList`,
+  and `BreadcrumbList` on listing and detail pages; all reference the same Person `@id`.
+- **Social previews** — Open Graph/Twitter tags with `public/og-default.png` (1200×630). Rebuild it with `python3 brand/build_og.py`.
+  Projects with a raster `imageUrl` use their own image; generated covers are SVG at `/og/projects/<slug>.svg` (shown on-site and in the image sitemap).
+- **Headings & images** — one `<h1>` per page, descriptive `alt` text, explicit image dimensions.
+- **Not found** — unknown URLs return HTTP 404 with a `noindex` page; private routes (`/login`, `/admin`) are `noindex`.
+
+**Analytics** — Google Analytics 4 (`VITE_GA_MEASUREMENT_ID` in `.env.production`, loaded from the root route's `head()`).
+It is omitted when the variable is unset, so `bun run dev` sends nothing.
+
+**Contact & paid services** — `src/lib/contact.ts` feeds both the page and JSON-LD, so Google sees what visitors see:
+`Person.telephone` + `contactPoint` (sales: phone, email, English/Arabic), call (`tel:`) and WhatsApp links,
+and an `Offer` (price, currency, `UnitPriceSpecification` per hour) for any service whose *Starting at* field holds a price
+such as `$100 / hour`. Services priced in USD/EUR/GBP get an on-page **Book & pay** section (PayPal, below).
+
+**Conversions (GA4)** — the root head reports `click_call`, `click_whatsapp`, `click_email`, `begin_checkout` (booking link)
+and `generate_lead` (contact form sent). In GA → Admin → Events, mark them as **Key events**.
+
+**Google Business Profile** — the "Call" / "Website" buttons in Google Search and Maps come from a Business Profile, not from
+the site. Create one at https://business.google.com as a *service-area business* (no public address), use the same name,
+phone (+20 115 197 8927), website and the "Technical consultation — $100/hour" service, so it matches the site's structured data.
+
+After deploying (one-time, in [Search Console](https://search.google.com/search-console)):
+
+1. Add a **Domain** property for `mohamedhabib.work` and verify with the DNS TXT record in Cloudflare
+   (or set `VITE_GOOGLE_SITE_VERIFICATION` and add a URL-prefix property instead). Bing: `VITE_BING_SITE_VERIFICATION`, or import from Search Console.
+2. Submit `https://mohamedhabib.work/sitemap.xml` under **Sitemaps**.
+3. Use **URL Inspection** on `/` and a project page to confirm Google renders them as users see them, then **Request indexing**.
+4. Check **Rich results test** (https://search.google.com/test/rich-results) for the home and a project page.
+5. Link the site from LinkedIn, GitHub and your CV — Google discovers sites mainly through links.
+
+## PayPal checkout
+
+Standard Checkout ([docs](https://developer.paypal.com/studio/checkout/standard/integrate)) on priced service pages
+(`src/components/PayPalCheckout.tsx`). The browser never sends a price: the server reads it from the service's *Starting at* field.
+
+- `POST /api/paypal/orders` `{ service, notes? }` — creates the order and a `payments` row (`CREATED`).
+- `POST /api/paypal/orders/<id>/capture` — captures after the buyer approves; stores payer, capture id and status, and emails the owner.
+- `POST /api/paypal/webhook` — verified with PayPal (`verify-webhook-signature`) before anything is stored. Handles
+  `CHECKOUT.ORDER.APPROVED` (captures if the buyer closed the page early) and `PAYMENT.CAPTURE.*` (completed, pending,
+  denied, refunded, reversed). Statuses never move backwards, so a late event can't undo a refund.
+- Dashboard → **Payments** lists them, with links to the transaction in PayPal.
+
+**Switching live ↔ sandbox** — one variable, `PAYPAL_ENV` (`live` or `sandbox`), picks the PayPal app at runtime; each app has
+its own `PAYPAL_{LIVE,SANDBOX}_CLIENT_ID`, `…_CLIENT_SECRET` and `…_WEBHOOK_ID`. The browser gets the active client id from the
+server, so switching needs no rebuild. Sandbox mode shows a "Test mode" notice at checkout, and every payment records its
+`environment` (sandbox ones are tagged "Test" in the dashboard).
+
+- Local: `.env.local` (defaults to `PAYPAL_ENV=sandbox` — pay with a sandbox buyer account from developer.paypal.com).
+- Production: `PAYPAL_ENV` and the ids are `wrangler.jsonc` vars; secrets via
+  `bunx wrangler secret put PAYPAL_LIVE_CLIENT_SECRET` and `… PAYPAL_SANDBOX_CLIENT_SECRET`.
+  To test on the live site: set `"PAYPAL_ENV": "sandbox"`, `bun run deploy`, then switch back.
+
+| App | Client id | Webhook id (→ `https://mohamedhabib.work/api/paypal/webhook`, all events) |
+|---|---|---|
+| Mohamed Habib Work Live | `BAAP005Tq…PVI58dZxk` | `6GH01514843583038` |
+| Mohamed Habib Work Sandbox | `BAAYHrDQ9…7BgTHUvsihQQ` | `0J8973698L545935Y` |
 
 ## MCP
 

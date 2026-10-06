@@ -11,7 +11,7 @@ export const Route = createFileRoute("/admin")({
 });
 
 const NAV: { group?: string; items: { to: string; label: string; icon: IconName; exact?: boolean }[] }[] = [
-	{ items: [{ to: "/admin", label: "Dashboard", icon: "home", exact: true }, { to: "/admin/messages", label: "Messages", icon: "mail" }] },
+	{ items: [{ to: "/admin", label: "Dashboard", icon: "home", exact: true }, { to: "/admin/messages", label: "Messages", icon: "mail" }, { to: "/admin/payments", label: "Payments", icon: "bar-chart" }] },
 	{ group: "Portfolio", items: [{ to: "/admin/profile", label: "Profile", icon: "user" }, { to: "/admin/projects", label: "Projects", icon: "briefcase" }, { to: "/admin/services", label: "Services", icon: "layers" }, { to: "/admin/experience", label: "Experience", icon: "clock" }, { to: "/admin/skills", label: "Skills", icon: "zap" }] },
 	{ group: "Career", items: [{ to: "/admin/cvs", label: "CVs & ATS", icon: "file" }] },
 ];
