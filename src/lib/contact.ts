@@ -42,6 +42,20 @@ export function parsePrice(text: string): Price | null {
 	return { amount, currency, hourly: /\b(hour|hr|h)\b|\/\s*h/i.test(text) };
 }
 
+const CHECKOUT_PRICE = /^\s*(?:([$€£])\s?(\d{1,6}(?:\.\d{2})?)|([A-Z]{3})\s?(\d{1,6}(?:\.\d{2})?)|(\d{1,6}(?:\.\d{2})?)\s?([A-Z]{3}))\s*(?:(?:\/|per)\s*(?:hour|hr|h))?\s*$/i;
+
+/**
+ * The price to charge at checkout, or null. Stricter than `parsePrice`: only one exact amount, optionally
+ * "per hour" (one session), so marketing text like "from $2,000", "$5k" or "$50–$200" is never charged.
+ */
+export function parseCheckoutPrice(text: string): Price | null {
+	const m = CHECKOUT_PRICE.exec(text);
+	if (!m) return null;
+	const currency = m[1] ? CURRENCY_SYMBOLS[m[1]] : (m[3] ?? m[6]).toUpperCase();
+	const amount = Number(m[2] ?? m[4] ?? m[5]);
+	return CURRENCY_CODES.includes(currency) && amount > 0 ? { amount, currency, hourly: /(?:\/|per)\s*(?:hour|hr|h)\s*$/i.test(text) } : null;
+}
+
 /** Schema.org `Offer` for a priced service; hourly prices use UN/CEFACT unit code HUR (hour). */
 export function serviceOffer(price: Price, url: string) {
 	return {

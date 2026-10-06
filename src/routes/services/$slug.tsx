@@ -3,7 +3,7 @@ import { ServiceCard } from "#/components/cards";
 import { canPayOnline, PayPalCheckout } from "#/components/PayPalCheckout";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
 import { ChipList, EmptyState, Icon, type IconName, LinkButton, MarkArt, SectionHeading } from "#/design-system/ui";
-import { parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
+import { parseCheckoutPrice, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
 import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getService } from "#/server/fn/public";
 
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/services/$slug")({
 			serviceType: s.title,
 			areaServed: "Worldwide",
 			provider: { "@id": PERSON_ID },
-			...(price ? { offers: serviceOffer(price, absoluteUrl(`${path}${canPayOnline(price, paypal) ? "#book" : "#enquire"}`)) } : {}),
+			...(price ? { offers: serviceOffer(price, absoluteUrl(`${path}${canPayOnline(parseCheckoutPrice(s.startingAt), paypal) ? "#book" : "#enquire"}`)) } : {}),
 		};
 		return { ...base, scripts: [jsonLd(service), jsonLd(breadcrumbs(["Services", "/services"], [s.title, path]))] };
 	},
@@ -43,8 +43,9 @@ export const Route = createFileRoute("/services/$slug")({
 function ServicePage() {
 	const { service: s, others, owner, paypal } = Route.useLoaderData();
 	const price = parsePrice(s.startingAt);
-	// Priced services in a PayPal currency are paid on the page; others go to the enquiry form.
-	const payable = canPayOnline(price, paypal);
+	// Services with one exact price in a PayPal currency are paid on the page; others go to the enquiry form.
+	const checkoutPrice = parseCheckoutPrice(s.startingAt);
+	const payable = canPayOnline(checkoutPrice, paypal);
 	const paragraphs = s.description.split(/\n{2,}/).map((t) => t.trim()).filter(Boolean);
 	return (
 		<>
@@ -86,7 +87,7 @@ function ServicePage() {
 				{payable && paypal && (
 					<section className="site-section" id="book" aria-labelledby="book-title">
 						<SectionHeading id="book-title" eyebrow="Book & pay" title={`Book your ${s.title.toLowerCase()}`} description={`${s.startingAt} · secure checkout with PayPal or card. I'll email you within 24 hours to pick a time.`} />
-						<PayPalCheckout service={{ slug: s.slug, title: s.title }} price={price} paypal={paypal} />
+						<PayPalCheckout service={{ slug: s.slug, title: s.title }} price={checkoutPrice} paypal={paypal} />
 					</section>
 				)}
 

@@ -106,25 +106,23 @@ export function createOrder(item: OrderItem) {
 	});
 }
 
-/** Captures an approved order. Idempotent per order id, so a retried request can't charge twice. */
-export const captureOrder = (orderId: string) => call<PayPalOrder>(`/v2/checkout/orders/${orderId}/capture`, { method: "POST", body: {}, requestId: `capture-${orderId}` });
+/**
+ * Captures an approved order. Each attempt gets its own request id so a retry after a declined card isn't
+ * answered from PayPal's cache; an order can still only be captured once (ORDER_ALREADY_CAPTURED).
+ */
+export const captureOrder = (orderId: string) => call<PayPalOrder>(`/v2/checkout/orders/${orderId}/capture`, { method: "POST", body: {}, requestId: crypto.randomUUID() });
 
 export const getOrder = (orderId: string) => call<PayPalOrder>(`/v2/checkout/orders/${orderId}`, { method: "GET" });
 
-/** Flattens an order into the fields stored in `payments`. */
-export function summarizeOrder(order: PayPalOrder) {
-	const unit = order.purchase_units?.[0];
-	const capture = unit?.payments?.captures?.[0];
-	const money = capture?.amount ?? unit?.amount;
-	const name = [order.payer?.name?.given_name, order.payer?.name?.surname].filter(Boolean).join(" ");
+/** What a captured (or fetched) order tells us, as an update for `updatePayment`. */
+export function orderUpdate(order: PayPalOrder) {
+	const capture = order.purchase_units?.[0]?.payments?.captures?.[0];
 	return {
 		status: capture?.status ?? order.status,
-		captureId: capture?.id ?? "",
-		amount: money?.value ?? "",
-		currency: money?.currency_code ?? "",
-		service: unit?.custom_id ?? unit?.reference_id ?? "",
-		payerName: name,
-		payerEmail: order.payer?.email_address ?? "",
+		captureId: capture?.id,
+		payerName: [order.payer?.name?.given_name, order.payer?.name?.surname].filter(Boolean).join(" "),
+		payerEmail: order.payer?.email_address,
+		paid: capture ? { amount: capture.amount.value, currency: capture.amount.currency_code } : undefined,
 	};
 }
 
