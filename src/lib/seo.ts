@@ -1,5 +1,5 @@
 /** Canonical origin for links, sitemap and structured data. Override with VITE_SITE_URL at build time. */
-export const SITE_URL = (import.meta.env.VITE_SITE_URL as string | undefined)?.replace(/\/$/, "") || "https://mohamedhabib.work";
+export const SITE_URL = (import.meta.env?.VITE_SITE_URL as string | undefined)?.replace(/\/$/, "") || "https://mohamedhabib.work";
 export const SITE_NAME = "Mohamed Habib";
 /** 1200×630 PNG — social crawlers don't render SVG, and a square icon gets cropped. Rebuild: `python3 brand/build_og.py`. */
 export const DEFAULT_OG_IMAGE = { url: "/og-default.png", width: 1200, height: 630, alt: "Mohamed Habib — Senior Full-Stack Engineer & Tech Lead" };
@@ -26,8 +26,13 @@ export function truncate(text: string, max = DESCRIPTION_MAX) {
  * TITLE_MAX. Candidates go most to least specific; the last one is used if nothing fits.
  */
 export function pageTitle(...candidates: string[]) {
-	const titles = candidates.filter(Boolean).map((c) => `${c} · ${SITE_NAME}`);
-	return titles.find((t) => t.length <= TITLE_MAX) ?? titles[titles.length - 1] ?? SITE_NAME;
+	const parts = candidates.filter(Boolean);
+	const suffix = ` · ${SITE_NAME}`;
+	const fitting = parts.find((c) => c.length + suffix.length <= TITLE_MAX);
+	if (fitting) return `${fitting}${suffix}`;
+	// Nothing fits: shorten the least specific candidate at a word boundary, keeping the brand.
+	const last = parts[parts.length - 1];
+	return last ? `${truncate(last, TITLE_MAX - suffix.length)}${suffix}` : SITE_NAME;
 }
 
 type SeoImage = { url: string; width?: number; height?: number; alt?: string };

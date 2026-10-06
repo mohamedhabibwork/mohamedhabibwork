@@ -57,16 +57,13 @@ export const getProject = createServerFn({ method: "GET" })
 		withDb(async (db) => {
 			const project = await db.query.projects.findFirst({ where: and(eq(projects.slug, slug), eq(projects.published, true)) });
 			if (!project) return null;
-			const [profile, related] = await Promise.all([
-				db.query.profile.findFirst(),
-				db
-					.select({ slug: projects.slug, title: projects.title, subtitle: projects.subtitle, category: projects.category })
-					.from(projects)
-					.where(and(eq(projects.published, true), ne(projects.id, project.id)))
-					.orderBy(desc(projects.featured), asc(projects.sort))
-					.limit(3),
-			]);
-			return { project, related, owner: profile ? { name: profile.name, github: profile.github, linkedin: profile.linkedin } : null };
+			const related = await db
+				.select({ slug: projects.slug, title: projects.title, subtitle: projects.subtitle, category: projects.category })
+				.from(projects)
+				.where(and(eq(projects.published, true), ne(projects.id, project.id)))
+				.orderBy(desc(projects.featured), asc(projects.sort))
+				.limit(3);
+			return { project, related };
 		}),
 	);
 

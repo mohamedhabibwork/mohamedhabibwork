@@ -22,6 +22,8 @@ const CAPTURE_STATUS: Record<string, string> = {
 	"PAYMENT.CAPTURE.REVERSED": "REVERSED",
 };
 const REFUNDED = "PAYMENT.CAPTURE.REFUNDED";
+/** PayPal 4xx answers worth a retry: bad/rotated credentials (401), timeout (408), rate limit (429). */
+const RETRYABLE = new Set([401, 408, 429]);
 
 /** Order id an event belongs to. Refunds only link "up" to their capture, which we look up. */
 async function orderIdOf(event: WebhookEvent): Promise<string | null> {
@@ -75,7 +77,7 @@ export const Route = createFileRoute("/api/paypal/webhook")({
 				try {
 					await handle(event);
 				} catch (error) {
-					const permanent = error instanceof PayPalError && error.status < 500;
+					const permanent = error instanceof PayPalError && error.status < 500 && !RETRYABLE.has(error.status);
 					console.error(`PayPal webhook ${event.event_type} (${event.id}) failed${permanent ? " (not retried)" : ""}:`, error instanceof Error ? error.message : error);
 					if (!permanent) return new Response("Retry later", { status: 500 });
 				}

@@ -19,27 +19,37 @@ type PayPalNamespace = {
 	}) => PayPalButtons;
 };
 
-let sdk: Promise<PayPalNamespace> | null = null;
+/** One SDK per client id + currency: PayPal requires the order currency to match the SDK's. */
+const sdks = new Map<string, Promise<PayPalNamespace>>();
 
-/** Loads the PayPal JS SDK once per page (https://developer.paypal.com/sdk/js/configuration/). */
+/**
+ * Loads the PayPal JS SDK for a client id and currency (https://developer.paypal.com/sdk/js/configuration/).
+ * Each load gets its own global via `data-namespace`, so navigating from a USD to a EUR service works without a reload.
+ */
 function loadPayPal(clientId: string, currency: string): Promise<PayPalNamespace> {
-	sdk ??= new Promise((resolve, reject) => {
+	const key = `${clientId}:${currency}`;
+	const cached = sdks.get(key);
+	if (cached) return cached;
+	const namespace = `paypal_${sdks.size}`;
+	const loading = new Promise<PayPalNamespace>((resolve, reject) => {
 		const params = new URLSearchParams({ "client-id": clientId, currency, intent: "capture", components: "buttons" });
 		const script = document.createElement("script");
 		script.src = `https://www.paypal.com/sdk/js?${params}`;
 		script.async = true;
+		script.dataset.namespace = namespace;
 		script.onload = () => {
-			const paypal = (window as { paypal?: PayPalNamespace }).paypal;
+			const paypal = (window as unknown as Record<string, PayPalNamespace | undefined>)[namespace];
 			if (paypal) resolve(paypal);
-			else reject(new Error("PayPal SDK loaded without the paypal global"));
+			else reject(new Error(`PayPal SDK loaded without the ${namespace} global`));
 		};
 		script.onerror = () => {
-			sdk = null;
+			sdks.delete(key);
 			reject(new Error("PayPal SDK failed to load"));
 		};
 		document.head.appendChild(script);
 	});
-	return sdk;
+	sdks.set(key, loading);
+	return loading;
 }
 
 async function postJson<T>(url: string, body?: unknown): Promise<{ ok: boolean; data: Partial<T> & { error?: string } }> {

@@ -37,7 +37,8 @@ type Row = typeof payments.$inferSelect;
 
 /** The status to store, given what PayPal reported and what we already have. */
 function nextStatus(existing: Row, update: PaymentUpdate): string {
-	let status = update.status;
+	// Never treat a payment as completed without capture details to check the amount against.
+	let status = update.status === "COMPLETED" && !update.paid ? "APPROVED" : update.status;
 	if (update.paid && (status === "COMPLETED" || status === "PENDING")) {
 		const matches = Number(update.paid.amount) === Number(existing.amount) && update.paid.currency === existing.currency;
 		if (!matches) {

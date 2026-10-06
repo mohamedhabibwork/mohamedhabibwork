@@ -2,8 +2,8 @@ import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Scripts } from "@tanstack/react-router";
 import { SiteFooter, SiteHeader } from "#/components/site";
 import { EmptyState, LinkButton, themeBootScript } from "#/design-system/ui";
-import { contactClickTracking } from "#/lib/analytics";
-import { pageTitle } from "#/lib/seo";
+import { analyticsBootstrap } from "#/lib/analytics";
+import { pageTitle, SITE_URL } from "#/lib/seo";
 import appCss from "../styles.css?url";
 
 interface MyRouterContext {
@@ -18,14 +18,8 @@ const SITE_VERIFICATION = [
 
 /** Google Analytics 4 measurement id, set at build time (.env.production) so local dev isn't tracked. */
 const GA_ID = (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined)?.trim();
-// Shape-checked because the id is interpolated into an inline script.
-const analyticsScripts = GA_ID && /^G-[A-Z0-9]+$/.test(GA_ID)
-	? [
-			{ src: `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`, async: true },
-			{ children: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","${GA_ID}");` },
-			{ children: contactClickTracking },
-		]
-	: [];
+// Shape-checked because the id is embedded in an inline script.
+const analyticsScripts = GA_ID && /^G-[A-Z0-9]+$/.test(GA_ID) ? [{ children: analyticsBootstrap(GA_ID, new URL(SITE_URL).hostname) }] : [];
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	head: () => ({
