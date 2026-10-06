@@ -29,11 +29,18 @@ export type PaymentUpdate = {
 	payerEmail?: string;
 	/** Money PayPal reports as captured; checked against the stored price, never stored over it. */
 	paid?: { amount: string; currency: string };
-	/** Amount of a refund event; decides REFUNDED vs PARTIALLY_REFUNDED. */
+	/** Cumulative amount refunded on the capture so far (PayPal's total, not this refund alone). */
 	refunded?: string;
 };
 
 type Row = typeof payments.$inferSelect;
+
+/** Refund events can arrive out of order; the cumulative total only ever grows. */
+function refundedTotal(existing: Row, update: PaymentUpdate): string {
+	const known = Number(existing.refundedAmount) || 0;
+	const reported = Number(update.refunded) || 0;
+	return reported > known ? update.refunded ?? "" : existing.refundedAmount;
+}
 
 /** The status to store, given what PayPal reported and what we already have. */
 function nextStatus(existing: Row, update: PaymentUpdate): string {
@@ -46,7 +53,7 @@ function nextStatus(existing: Row, update: PaymentUpdate): string {
 			status = "AMOUNT_MISMATCH";
 		}
 	}
-	if (status === "REFUNDED" && update.refunded && Number(update.refunded) < Number(existing.amount)) status = "PARTIALLY_REFUNDED";
+	if (status === "REFUNDED" && Number(refundedTotal(existing, update)) < Number(existing.amount)) status = "PARTIALLY_REFUNDED";
 	return stage(status) >= stage(existing.status) ? status : existing.status;
 }
 
@@ -61,7 +68,9 @@ export async function updatePayment(orderId: string, update: PaymentUpdate): Pro
 			const existing = await db.query.payments.findFirst({ where: eq(payments.paypalOrderId, orderId) });
 			if (!existing) return { status: null, row: null, changed: false };
 			const status = nextStatus(existing, update);
-			const details = Object.fromEntries(Object.entries({ captureId: update.captureId, payerName: update.payerName, payerEmail: update.payerEmail }).filter(([, v]) => v));
+			const details = Object.fromEntries(
+				Object.entries({ captureId: update.captureId, payerName: update.payerName, payerEmail: update.payerEmail, refundedAmount: update.refunded && refundedTotal(existing, update) }).filter(([, v]) => v),
+			);
 			const [row] = await db
 				.update(payments)
 				.set({ ...details, status })

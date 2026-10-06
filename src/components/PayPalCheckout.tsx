@@ -57,7 +57,7 @@ async function postJson<T>(url: string, body?: unknown): Promise<{ ok: boolean; 
 	return { ok: res.ok, data: await res.json().catch(() => ({})) };
 }
 
-type Result = { kind: "paid"; payerName: string } | { kind: "error"; message: string } | null;
+type Result = { kind: "paid" | "pending"; payerName: string } | { kind: "error"; message: string } | null;
 
 /** PayPal Standard Checkout buttons for one priced service, with an optional "what to discuss" note. */
 export function PayPalCheckout({ service, price, paypal }: { service: { slug: string; title: string }; price: Price; paypal: PayPalPublic }) {
@@ -88,6 +88,11 @@ export function PayPalCheckout({ service, price, paypal }: { service: { slug: st
 							setResult({ kind: "error", message: res.data.error ?? "Payment couldn't be completed. You have not been charged." });
 							return;
 						}
+						if (res.data.status === "PENDING") {
+							// Not credited yet (e.g. eCheck or PayPal review) and may still be denied: no purchase event.
+							setResult({ kind: "pending", payerName: res.data.payerName ?? "" });
+							return;
+						}
 						track("purchase", { transaction_id: orderID, value: Number(res.data.amount) || price.amount, currency: res.data.currency || price.currency, item_id: service.slug });
 						setResult({ kind: "paid", payerName: res.data.payerName ?? "" });
 					},
@@ -111,6 +116,13 @@ export function PayPalCheckout({ service, price, paypal }: { service: { slug: st
 		};
 	}, [paypal.clientId, service.slug, price.amount, price.currency]);
 
+	if (result?.kind === "pending") {
+		return (
+			<Alert variant="info" title="Payment is processing">
+				PayPal is still clearing your payment. I'll email you to schedule your session as soon as it completes — usually within a few days for bank-funded payments.
+			</Alert>
+		);
+	}
 	if (result?.kind === "paid") {
 		return (
 			<Alert variant="success" title="Payment received — thank you!">

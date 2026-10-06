@@ -428,6 +428,13 @@
           "notNull": true,
           "default": "''"
         },
+        "refunded_amount": {
+          "name": "refunded_amount",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "''"
+        },
         "environment": {
           "name": "environment",
           "type": "text",

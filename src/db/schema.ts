@@ -152,6 +152,8 @@ export const payments = pgTable(
 		payerEmail: text("payer_email").notNull().default(""),
 		/** What the buyer wants to discuss, entered before paying. */
 		notes: text().notNull().default(""),
+		/** Total refunded so far (PayPal's cumulative figure), decimal string; "" when nothing was refunded. */
+		refundedAmount: text("refunded_amount").notNull().default(""),
 		/** PayPal app that took the payment: "live" (real money) or "sandbox" (test). */
 		environment: text().notNull().default("live"),
 		...timestamps,

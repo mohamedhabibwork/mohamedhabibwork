@@ -9,6 +9,7 @@ CREATE TABLE "payments" (
 	"payer_name" text DEFAULT '' NOT NULL,
 	"payer_email" text DEFAULT '' NOT NULL,
 	"notes" text DEFAULT '' NOT NULL,
+	"refunded_amount" text DEFAULT '' NOT NULL,
 	"environment" text DEFAULT 'live' NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL

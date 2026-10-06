@@ -8,6 +8,8 @@ type WebhookEvent = {
 	resource: {
 		id: string;
 		amount?: { currency_code: string; value: string };
+		/** On refunds: running totals for the capture, including `total_refunded_amount`. */
+		seller_payable_breakdown?: { total_refunded_amount?: { value: string } };
 		supplementary_data?: { related_ids?: { order_id?: string } };
 		links?: { rel: string; href: string }[];
 	};
@@ -49,7 +51,8 @@ async function handle(event: WebhookEvent) {
 	const orderId = await orderIdOf(event);
 	if (!orderId) return;
 	if (event.event_type === REFUNDED) {
-		await updatePayment(orderId, { status: "REFUNDED", refunded: event.resource.amount?.value });
+		const total = event.resource.seller_payable_breakdown?.total_refunded_amount?.value ?? event.resource.amount?.value;
+		await updatePayment(orderId, { status: "REFUNDED", refunded: total });
 		return;
 	}
 	const status = CAPTURE_STATUS[event.event_type];
