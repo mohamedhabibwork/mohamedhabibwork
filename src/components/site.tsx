@@ -86,6 +86,7 @@ export function ContactForm({ service, services }: { service?: ServiceOption; se
 			if (!res.ok) {
 				setState("idle");
 				setFormError(res.error);
+				track("form_error", { form: "contact" });
 				return;
 			}
 			setState("sent");
@@ -93,6 +94,7 @@ export function ContactForm({ service, services }: { service?: ServiceOption; se
 			form.reset();
 		} catch (err) {
 			setState("idle");
+			track("form_error", { form: "contact" });
 			const issues = parseIssues(err);
 			if (issues) setErrors(issues);
 			else setFormError("Couldn't send your message. Please email me directly instead.");

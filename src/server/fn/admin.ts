@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { asc, count, desc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { withDb } from "#/db";
-import { atsReports, cvs, experiences, messages, payments, profile, projects, services, skills } from "#/db/schema";
+import { atsReports, cvs, experiences, messages, payments, profile, projects, pushTokens, services, skills } from "#/db/schema";
 import { requireOwner } from "#/server/auth";
 
 const list = z.array(z.string().trim().max(400)).max(30);
@@ -241,3 +241,38 @@ export const deleteMessage = createServerFn({ method: "POST" })
 		await withDb((db) => db.delete(messages).where(eq(messages.id, data.id)));
 		return { ok: true as const };
 	});
+
+/* ── Push notifications ── */
+const pushToken = z.object({ token: z.string().trim().min(20).max(4096), userAgent: z.string().max(400).default("") });
+
+export const getPushStatus = createServerFn({ method: "GET" }).handler(async () => {
+	await requireOwner();
+	const { isPushConfigured } = await import("#/server/push");
+	const [{ n }] = await withDb((db) => db.select({ n: count() }).from(pushTokens));
+	return { configured: isPushConfigured(), devices: n };
+});
+
+export const registerPushToken = createServerFn({ method: "POST" })
+	.validator((i: unknown) => pushToken.parse(i))
+	.handler(async ({ data }) => {
+		await requireOwner();
+		await withDb((db) =>
+			db.insert(pushTokens).values(data).onConflictDoUpdate({ target: pushTokens.token, set: { userAgent: data.userAgent } }),
+		);
+		return { ok: true as const };
+	});
+
+export const unregisterPushToken = createServerFn({ method: "POST" })
+	.validator((i: unknown) => pushToken.pick({ token: true }).parse(i))
+	.handler(async ({ data }) => {
+		await requireOwner();
+		await withDb((db) => db.delete(pushTokens).where(eq(pushTokens.token, data.token)));
+		return { ok: true as const };
+	});
+
+export const sendTestPush = createServerFn({ method: "POST" }).handler(async () => {
+	await requireOwner();
+	const { notifyOwnerPush } = await import("#/server/push");
+	const sent = await notifyOwnerPush({ title: "Test notification", body: "Admin notifications are working.", url: "/admin" });
+	return { sent };
+});

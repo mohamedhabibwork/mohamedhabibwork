@@ -1,8 +1,10 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Scripts } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { SiteFooter, SiteHeader } from "#/components/site";
 import { EmptyState, LinkButton, themeBootScript } from "#/design-system/ui";
 import { analyticsBootstrap } from "#/lib/analytics";
+import { initFirebaseAnalytics } from "#/lib/firebase";
 import { pageTitle, SITE_URL } from "#/lib/seo";
 import appCss from "../styles.css?url";
 
@@ -71,6 +73,9 @@ function NotFound() {
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+	useEffect(() => {
+		void initFirebaseAnalytics();
+	}, []);
 	return (
 		<html lang="en" data-theme="dark" suppressHydrationWarning>
 			<head>

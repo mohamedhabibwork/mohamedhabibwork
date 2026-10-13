@@ -1,8 +1,10 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { ServiceCard } from "#/components/cards";
 import { canPayOnline, PayPalCheckout } from "#/components/PayPalCheckout";
 import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
 import { ChipList, EmptyState, Icon, type IconName, LinkButton, MarkArt, SectionHeading } from "#/design-system/ui";
+import { trackView } from "#/lib/analytics";
 import { parseCheckoutPrice, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
 import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getService } from "#/server/fn/public";
@@ -47,6 +49,7 @@ function ServicePage() {
 	const checkoutPrice = parseCheckoutPrice(s.startingAt);
 	const payable = canPayOnline(checkoutPrice, paypal);
 	const paragraphs = s.description.split(/\n{2,}/).map((t) => t.trim()).filter(Boolean);
+	useEffect(() => trackView("service", s.slug, s.title, price ?? undefined), [s.slug, s.title, price?.amount, price?.currency]);
 	return (
 		<>
 			<SiteHeader />

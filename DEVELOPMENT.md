@@ -157,3 +157,17 @@ verified server-side in `src/server/turnstile.ts` (fails closed; checks action a
 - `TURNSTILE_SECRET` — `wrangler secret put TURNSTILE_SECRET`
 - `TURNSTILE_HOSTNAMES` — accepted frontend hostnames (`mohamedhabib.work` in `wrangler.jsonc`)
 - Local dev uses Cloudflare's public always-pass test keys with `TURNSTILE_ALLOW_TEST_KEYS=1` (never set in production).
+
+## Firebase (Analytics + admin push notifications)
+
+- **Web config**: `VITE_FIREBASE_*` in `.env.local` / `.env.production` (public client values; restrict the API key by HTTP referrer in Google Cloud). `VITE_FIREBASE_VAPID_KEY` is the Web Push public key from Firebase console → Cloud Messaging.
+- **Analytics**: `initFirebaseAnalytics()` (`src/lib/firebase.ts`) runs only on the canonical host and never on `/admin` or `/login`. Events sent with `track()` go to every configured GA property.
+- **Push**: Dashboard → Notifications → *Enable on this device* stores the browser's FCM token in `push_tokens` (migration `0006_push_tokens`). New contact messages and completed payments are pushed to every stored device; dead tokens are pruned automatically. `public/firebase-messaging-sw.js` shows them in the background.
+- **Server secret**: Firebase console → Project settings → Service accounts → *Generate new private key*, then:
+  `bunx wrangler secret put FIREBASE_SERVICE_ACCOUNT < service-account.json` (and delete the file). For local dev, add `FIREBASE_SERVICE_ACCOUNT='<json on one line>'` to `.env.local`.
+
+## Google Analytics events
+
+Page views, scrolls, outbound links and form interactions come from GA4 enhanced measurement. Custom events:
+`generate_lead` / `form_error` (contact form), `view_item` (service and project pages), `begin_checkout`, `purchase`, `payment_pending`, `payment_failed` (PayPal), `click_call`, `click_whatsapp`, `click_email`, `file_download` (CV PDF), `exception` (uncaught errors).
+Mark `generate_lead`, `purchase`, `click_call`, `click_whatsapp` and `click_email` as **Key events** in GA → Admin → Events.

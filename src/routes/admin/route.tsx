@@ -1,5 +1,7 @@
 import { createFileRoute, Link, Outlet, redirect, useRouter, useRouterState } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { Avatar, Icon, type IconName, IconButton, Logo, ThemeToggle } from "#/design-system/ui";
+import { showForegroundPushes } from "#/lib/firebase";
 import { getSession, signOut } from "#/server/fn/auth";
 
 export const Route = createFileRoute("/admin")({
@@ -21,6 +23,23 @@ function AdminLayout() {
 	const path = useRouterState({ select: (s) => s.location.pathname });
 	const isActive = (to: string, exact?: boolean) => (exact ? path === to || path === `${to}/` : path.startsWith(to));
 	const title = NAV.flatMap((g) => g.items).find((i) => isActive(i.to, i.exact))?.label ?? "Dashboard";
+
+	// Alerts that arrive while the dashboard is open, only once this browser has opted in.
+	useEffect(() => {
+		if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
+		let unsubscribe = () => {};
+		let active = true;
+		showForegroundPushes()
+			.then((off) => {
+				if (active) unsubscribe = off;
+				else off();
+			})
+			.catch(() => undefined);
+		return () => {
+			active = false;
+			unsubscribe();
+		};
+	}, []);
 
 	async function onSignOut() {
 		await signOut();

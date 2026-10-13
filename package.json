@@ -45,6 +45,7 @@
     "@tanstack/store": "0.11.2",
     "drizzle-kit": "^0.31.9",
     "drizzle-orm": "^0.45.1",
+    "firebase": "^13.0.0",
     "pdf-lib": "^1.17.1",
     "pg": "^8.16.3",
     "react": "^19.2.0",

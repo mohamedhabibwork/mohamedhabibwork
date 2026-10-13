@@ -1,6 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { SiteFooter, SiteHeader } from "#/components/site";
 import { ChipList, EmptyState, Icon, LinkButton, MarkArt } from "#/design-system/ui";
+import { trackView } from "#/lib/analytics";
 import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getProject } from "#/server/fn/public";
 
@@ -49,6 +51,7 @@ export const Route = createFileRoute("/projects/$slug")({
 function ProjectPage() {
 	const { project: pr, related } = Route.useLoaderData();
 	const paragraphs = pr.description.split(/\n{2,}/).map((t) => t.trim()).filter(Boolean);
+	useEffect(() => trackView("project", pr.slug, pr.title), [pr.slug, pr.title]);
 	return (
 		<>
 			<SiteHeader />
