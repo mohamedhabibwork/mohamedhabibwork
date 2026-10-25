@@ -18,6 +18,7 @@ import { sendMessage } from "#/server/fn/public";
 const NAV = [
 	{ to: "/projects", label: "Projects" },
 	{ to: "/services", label: "Services" },
+	{ to: "/blog", label: "Blog" },
 	{ to: "/", hash: "experience", label: "Experience" },
 	{ to: "/", hash: "contact", label: "Contact" },
 ] as const;

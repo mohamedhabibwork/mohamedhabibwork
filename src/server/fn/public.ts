@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeader } from "@tanstack/react-start/server";
-import { and, asc, desc, eq, inArray, ne } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, ne, sql } from "drizzle-orm";
 import { z } from "zod";
 import { withDb } from "#/db";
 import {
@@ -12,7 +12,11 @@ import {
 	services,
 	skills,
 } from "#/db/schema";
-import { RELATED_POST_COUNT, readingMinutes } from "#/lib/blog";
+import {
+	minutesForWords,
+	RELATED_POST_COUNT,
+	readingMinutes,
+} from "#/lib/blog";
 import { notifyOwnerOfMessage } from "#/server/mail";
 import { paypalPublicConfig } from "#/server/paypal";
 import { notifyOwnerPush } from "#/server/push";
@@ -114,6 +118,32 @@ export const getService = createServerFn({ method: "GET" })
 			};
 		}),
 	);
+
+const BLOG_INDEX_LIMIT = 100;
+
+/** Published posts for /blog, newest first. Word count comes from SQL so bodies stay on the server. */
+export const getBlogPosts = createServerFn({ method: "GET" }).handler(
+	async () =>
+		withDb(async (db) => {
+			const rows = await db
+				.select({
+					slug: blogPosts.slug,
+					title: blogPosts.title,
+					excerpt: blogPosts.excerpt,
+					tags: blogPosts.tags,
+					publishedAt: blogPosts.publishedAt,
+					words: sql<number>`coalesce(array_length(regexp_split_to_array(trim(${blogPosts.body}), '\\s+'), 1), 0)`,
+				})
+				.from(blogPosts)
+				.where(eq(blogPosts.published, true))
+				.orderBy(desc(blogPosts.publishedAt))
+				.limit(BLOG_INDEX_LIMIT);
+			return rows.map(({ words, ...post }) => ({
+				...post,
+				minutes: minutesForWords(Number(words)),
+			}));
+		}),
+);
 
 /** One published blog post plus related posts (shared tags first, then newest). Returns null when missing. */
 export const getBlogPost = createServerFn({ method: "GET" })

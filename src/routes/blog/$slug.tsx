@@ -1,8 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import Markdown from "react-markdown";
 import { BlogCard } from "#/components/cards";
 import { SiteFooter, SiteHeader } from "#/components/site";
 import { ChipList, EmptyState, Icon, LinkButton } from "#/design-system/ui";
-import { paragraphsOf, readingMinutes } from "#/lib/blog";
+import { readingMinutes, textDirection } from "#/lib/blog";
 import {
 	absoluteUrl,
 	jsonLd,
@@ -61,6 +62,7 @@ function BlogPostPage() {
 	const { post, related } = Route.useLoaderData();
 	const [category] = post.tags;
 	const minutes = readingMinutes(post.body);
+	const dir = textDirection(post.title, post.excerpt, post.body);
 	const published = post.publishedAt
 		? new Date(post.publishedAt).toLocaleDateString("en-GB", {
 				day: "numeric",
@@ -76,11 +78,13 @@ function BlogPostPage() {
 				<article
 					className="blog-post site-section"
 					aria-labelledby="post-title"
+					dir={dir}
+					lang={dir === "rtl" ? "ar" : undefined}
 				>
 					<nav className="blog-post__crumbs" aria-label="Breadcrumb">
 						<Link to="/">Home</Link>
 						<span aria-hidden>/</span>
-						<span>Blog</span>
+						<Link to="/blog">Blog</Link>
 						{category && (
 							<>
 								<span aria-hidden>/</span>
@@ -97,9 +101,7 @@ function BlogPostPage() {
 						{published && <> · {published}</>} · {minutes} min read
 					</p>
 					<div className="blog-post__body">
-						{paragraphsOf(post.body).map((t) => (
-							<p key={t}>{t}</p>
-						))}
+						<Markdown>{post.body}</Markdown>
 					</div>
 					{post.tags.length > 0 && <ChipList items={post.tags} label="Tags" />}
 				</article>
