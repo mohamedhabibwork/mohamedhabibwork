@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeader } from "@tanstack/react-start/server";
-import { and, asc, desc, eq, ne } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, ne } from "drizzle-orm";
 import { z } from "zod";
 import { withDb } from "#/db";
 import {
@@ -124,25 +124,39 @@ export const getBlogPost = createServerFn({ method: "GET" })
 				where: and(eq(blogPosts.slug, slug), eq(blogPosts.published, true)),
 			});
 			if (!post) return null;
+			// Rank on metadata only; bodies are loaded for the few posts we actually show.
 			const candidates = await db
 				.select({
 					slug: blogPosts.slug,
 					title: blogPosts.title,
 					excerpt: blogPosts.excerpt,
 					tags: blogPosts.tags,
-					body: blogPosts.body,
 				})
 				.from(blogPosts)
 				.where(and(eq(blogPosts.published, true), ne(blogPosts.id, post.id)))
 				.orderBy(desc(blogPosts.publishedAt));
 			const sharesTag = (p: { tags: string[] }) =>
 				p.tags.some((tag) => post.tags.includes(tag));
-			const related = [
+			const picked = [
 				...candidates.filter(sharesTag),
 				...candidates.filter((p) => !sharesTag(p)),
-			]
-				.slice(0, RELATED_POST_COUNT)
-				.map(({ body, ...p }) => ({ ...p, minutes: readingMinutes(body) }));
+			].slice(0, RELATED_POST_COUNT);
+			const bodies = picked.length
+				? await db
+						.select({ slug: blogPosts.slug, body: blogPosts.body })
+						.from(blogPosts)
+						.where(
+							inArray(
+								blogPosts.slug,
+								picked.map((p) => p.slug),
+							),
+						)
+				: [];
+			const bodyBySlug = new Map(bodies.map((b) => [b.slug, b.body]));
+			const related = picked.map((p) => ({
+				...p,
+				minutes: readingMinutes(bodyBySlug.get(p.slug) ?? ""),
+			}));
 			return { post, related };
 		}),
 	);
