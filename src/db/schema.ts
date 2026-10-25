@@ -13,7 +13,9 @@ import type { AtsResult } from "#/server/ats";
 import type { CvData } from "#/server/cv-schema";
 
 const timestamps = {
-	createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true })
+		.defaultNow()
+		.notNull(),
 	updatedAt: timestamp("updated_at", { withTimezone: true })
 		.defaultNow()
 		.notNull()
@@ -35,8 +37,14 @@ export const profile = pgTable("profile", {
 	linkedin: text().notNull().default(""),
 	availability: text().notNull().default(""),
 	photoUrl: text("photo_url").notNull().default("/brand/marks/mh-mark.svg"),
-	stats: jsonb().$type<{ label: string; value: string }[]>().notNull().default([]),
-	education: jsonb().$type<{ degree: string; school: string; start: string; end: string }[]>().notNull().default([]),
+	stats: jsonb()
+		.$type<{ label: string; value: string }[]>()
+		.notNull()
+		.default([]),
+	education: jsonb()
+		.$type<{ degree: string; school: string; start: string; end: string }[]>()
+		.notNull()
+		.default([]),
 	certifications: text().array().notNull().default([]),
 	...timestamps,
 });
@@ -93,6 +101,25 @@ export const skills = pgTable("skills", {
 	...timestamps,
 });
 
+/** Blog posts. Drafts stay unpublished; `publishedAt` is set the first time a post is published. */
+export const blogPosts = pgTable(
+	"blog_posts",
+	{
+		id: serial().primaryKey(),
+		slug: text().notNull(),
+		title: text().notNull(),
+		excerpt: text().notNull().default(""),
+		/** Long-form body. Paragraphs separated by blank lines. */
+		body: text().notNull().default(""),
+		tags: text().array().notNull().default([]),
+		coverUrl: text("cover_url").notNull().default(""),
+		published: boolean().notNull().default(false),
+		publishedAt: timestamp("published_at", { withTimezone: true }),
+		...timestamps,
+	},
+	(t) => [uniqueIndex("blog_posts_slug_idx").on(t.slug)],
+);
+
 /** Services offered on /services. Each page has a contact form tagged with the service. */
 export const services = pgTable(
 	"services",
@@ -126,7 +153,9 @@ export const messages = pgTable(
 		service: text().notNull().default(""),
 		body: text().notNull(),
 		read: boolean().notNull().default(false),
-		createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+		createdAt: timestamp("created_at", { withTimezone: true })
+			.defaultNow()
+			.notNull(),
 	},
 	(t) => [index("messages_created_idx").on(t.createdAt)],
 );
@@ -158,7 +187,10 @@ export const payments = pgTable(
 		environment: text().notNull().default("live"),
 		...timestamps,
 	},
-	(t) => [uniqueIndex("payments_order_idx").on(t.paypalOrderId), index("payments_created_idx").on(t.createdAt)],
+	(t) => [
+		uniqueIndex("payments_order_idx").on(t.paypalOrderId),
+		index("payments_created_idx").on(t.createdAt),
+	],
 );
 
 /** A CV built in the dashboard. `data` is the full document; `isPublic` exposes its PDF endpoint. */
@@ -188,7 +220,9 @@ export const atsReports = pgTable(
 		jobDescription: text("job_description").notNull(),
 		score: integer().notNull(),
 		result: jsonb().$type<AtsResult>().notNull(),
-		createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+		createdAt: timestamp("created_at", { withTimezone: true })
+			.defaultNow()
+			.notNull(),
 	},
 	(t) => [index("ats_reports_cv_idx").on(t.cvId)],
 );
@@ -197,5 +231,16 @@ export const atsReports = pgTable(
 export const sessions = pgTable("sessions", {
 	id: text().primaryKey(),
 	expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
-	createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true })
+		.defaultNow()
+		.notNull(),
+});
+
+/** Browsers the owner enabled admin push notifications on (Firebase Cloud Messaging registration tokens). */
+export const pushTokens = pgTable("push_tokens", {
+	token: text().primaryKey(),
+	userAgent: text("user_agent").notNull().default(""),
+	createdAt: timestamp("created_at", { withTimezone: true })
+		.defaultNow()
+		.notNull(),
 });

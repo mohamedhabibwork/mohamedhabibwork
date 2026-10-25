@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { AdminNotifications } from "#/components/AdminNotifications";
 import { Badge, Card, EmptyState, StatCard } from "#/design-system/ui";
 import { getDashboard } from "#/server/fn/admin";
 
@@ -26,6 +27,7 @@ function Dashboard() {
 				<StatCard label="Projects" value={d.counts.projects} />
 				<StatCard label="Roles" value={d.counts.experiences} />
 			</div>
+			<AdminNotifications />
 			<div className="mh-grid-2">
 				<Card title="Recent messages" footer={<Link className="mh-link" to="/admin/messages">All messages →</Link>}>
 					{d.recentMessages.length === 0 ? (
