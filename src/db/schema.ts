@@ -101,6 +101,25 @@ export const skills = pgTable("skills", {
 	...timestamps,
 });
 
+/** Blog posts. Drafts stay unpublished; `publishedAt` is set the first time a post is published. */
+export const blogPosts = pgTable(
+	"blog_posts",
+	{
+		id: serial().primaryKey(),
+		slug: text().notNull(),
+		title: text().notNull(),
+		excerpt: text().notNull().default(""),
+		/** Long-form body. Paragraphs separated by blank lines. */
+		body: text().notNull().default(""),
+		tags: text().array().notNull().default([]),
+		coverUrl: text("cover_url").notNull().default(""),
+		published: boolean().notNull().default(false),
+		publishedAt: timestamp("published_at", { withTimezone: true }),
+		...timestamps,
+	},
+	(t) => [uniqueIndex("blog_posts_slug_idx").on(t.slug)],
+);
+
 /** Services offered on /services. Each page has a contact form tagged with the service. */
 export const services = pgTable(
 	"services",

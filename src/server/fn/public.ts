@@ -4,6 +4,7 @@ import { and, asc, desc, eq, ne } from "drizzle-orm";
 import { z } from "zod";
 import { withDb } from "#/db";
 import {
+	blogPosts,
 	cvs,
 	experiences,
 	messages,
@@ -11,9 +12,10 @@ import {
 	services,
 	skills,
 } from "#/db/schema";
+import { RELATED_POST_COUNT, readingMinutes } from "#/lib/blog";
 import { notifyOwnerOfMessage } from "#/server/mail";
-import { notifyOwnerPush } from "#/server/push";
 import { paypalPublicConfig } from "#/server/paypal";
+import { notifyOwnerPush } from "#/server/push";
 import { verifyTurnstile } from "#/server/turnstile";
 
 /** Everything the public portfolio page renders, in one round trip. */
@@ -113,6 +115,38 @@ export const getService = createServerFn({ method: "GET" })
 		}),
 	);
 
+/** One published blog post plus related posts (shared tags first, then newest). Returns null when missing. */
+export const getBlogPost = createServerFn({ method: "GET" })
+	.validator((slug: unknown) => z.string().trim().min(1).max(120).parse(slug))
+	.handler(async ({ data: slug }) =>
+		withDb(async (db) => {
+			const post = await db.query.blogPosts.findFirst({
+				where: and(eq(blogPosts.slug, slug), eq(blogPosts.published, true)),
+			});
+			if (!post) return null;
+			const candidates = await db
+				.select({
+					slug: blogPosts.slug,
+					title: blogPosts.title,
+					excerpt: blogPosts.excerpt,
+					tags: blogPosts.tags,
+					body: blogPosts.body,
+				})
+				.from(blogPosts)
+				.where(and(eq(blogPosts.published, true), ne(blogPosts.id, post.id)))
+				.orderBy(desc(blogPosts.publishedAt));
+			const sharesTag = (p: { tags: string[] }) =>
+				p.tags.some((tag) => post.tags.includes(tag));
+			const related = [
+				...candidates.filter(sharesTag),
+				...candidates.filter((p) => !sharesTag(p)),
+			]
+				.slice(0, RELATED_POST_COUNT)
+				.map(({ body, ...p }) => ({ ...p, minutes: readingMinutes(body) }));
+			return { post, related };
+		}),
+	);
+
 /** One published project plus a few related ones for /projects/$slug. Returns null when missing. */
 export const getProject = createServerFn({ method: "GET" })
 	.validator((slug: unknown) => z.string().trim().min(1).max(120).parse(slug))
@@ -153,13 +187,15 @@ const contactSchema = z.object({
 		.min(10, "Tell me a little more (10+ characters)")
 		.max(5000),
 	"cf-turnstile-response": z.string().max(2048).default(""),
-	/** Honeypot: real visitors leave it empty. */
-	company: z.string().max(0).optional(),
+	/** Honeypot: hidden from people, but browser autofill can fill it. Filled values are dropped, not reported as errors. */
+	hp_check: z.string().max(200).default(""),
 });
 
 export const sendMessage = createServerFn({ method: "POST" })
 	.validator((input: unknown) => contactSchema.parse(input))
 	.handler(async ({ data }) => {
+		// A bot filled the honeypot: pretend success and store nothing.
+		if (data.hp_check) return { ok: true as const };
 		if (
 			!(await verifyTurnstile(
 				data["cf-turnstile-response"],
