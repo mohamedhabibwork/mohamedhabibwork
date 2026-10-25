@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ChipList, Icon, type IconName } from "#/design-system/ui";
+import { textDirection } from "#/lib/blog";
 
 type ProjectCardData = {
 	slug: string;
@@ -57,13 +58,20 @@ type BlogCardData = {
 
 export function BlogCard({ post: p }: { post: BlogCardData }) {
 	const [category] = p.tags;
+	const dir = textDirection(p.title, p.excerpt);
 	return (
 		<Link className="blog-card" to="/blog/$slug" params={{ slug: p.slug }}>
 			<span className="blog-card__pill">
 				{category ? `${category} · ${p.minutes} min` : `${p.minutes} min`}
 			</span>
-			<h3 className="blog-card__title">{p.title}</h3>
-			{p.excerpt && <p className="blog-card__desc">{p.excerpt}</p>}
+			<h3 className="blog-card__title" dir={dir}>
+				{p.title}
+			</h3>
+			{p.excerpt && (
+				<p className="blog-card__desc" dir={dir}>
+					{p.excerpt}
+				</p>
+			)}
 		</Link>
 	);
 }
