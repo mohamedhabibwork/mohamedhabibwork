@@ -3,12 +3,15 @@
   "configurations": [
     {
       "name": "portfolio",
-      "runtimeExecutable": "bun",
+      "runtimeExecutable": "bunx",
       "runtimeArgs": [
-        "run",
-        "dev"
+        "vite",
+        "dev",
+        "--port",
+        "3010",
+        "--strictPort"
       ],
-      "port": 3000
+      "port": 3010
     },
     {
       "name": "portfolio-3001",

@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BlogCard } from "#/components/cards";
-import { SiteFooter, SiteHeader } from "#/components/site";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
 import {
 	absoluteUrl,
@@ -15,7 +14,7 @@ import { getBlogPosts } from "#/server/fn/public";
 const DESCRIPTION =
 	"Notes on software engineering, self-hosting, cloud infrastructure and the tools I use day to day.";
 
-export const Route = createFileRoute("/blog/")({
+export const Route = createFileRoute("/_site/blog/")({
 	loader: () => getBlogPosts(),
 	head: ({ loaderData }) => {
 		const posts = loaderData ?? [];
@@ -51,7 +50,6 @@ function BlogIndexPage() {
 	const posts = Route.useLoaderData();
 	return (
 		<>
-			<SiteHeader />
 			<main id="main" className="site">
 				<section className="site-section">
 					<SectionHeading
@@ -75,7 +73,6 @@ function BlogIndexPage() {
 					)}
 				</section>
 			</main>
-			<SiteFooter />
 		</>
 	);
 }

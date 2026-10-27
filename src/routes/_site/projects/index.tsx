@@ -1,14 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { ProjectCard } from "#/components/cards";
-import { SiteFooter, SiteHeader } from "#/components/site";
 import { EmptyState, SectionHeading, Tabs } from "#/design-system/ui";
 import { absoluteUrl, breadcrumbs, jsonLd, pageTitle, seo } from "#/lib/seo";
 import { getProjects } from "#/server/fn/public";
 
 const ALL = "all";
 
-export const Route = createFileRoute("/projects/")({
+export const Route = createFileRoute("/_site/projects/")({
 	loader: () => getProjects(),
 	head: ({ loaderData }) => {
 		const rows = loaderData ?? [];
@@ -34,7 +33,6 @@ function ProjectsPage() {
 	const shown = tab === ALL ? rows : rows.filter((r) => r.category === tab);
 	return (
 		<>
-			<SiteHeader />
 			<main id="main" className="site">
 				<section className="site-section">
 					<SectionHeading as="h1" eyebrow="Portfolio" title="All projects" description="Every platform I've built or led, from ride-hailing and emergency dispatch to fintech and ERP." />
@@ -55,7 +53,6 @@ function ProjectsPage() {
 					)}
 				</section>
 			</main>
-			<SiteFooter />
 		</>
 	);
 }

@@ -1,11 +1,15 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Scripts } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { SiteFooter, SiteHeader } from "#/components/site";
+import { Footer } from "#/components/layout/Footer";
+import { Header } from "#/components/layout/Header";
+import { MotionProvider } from "#/design-system/motion";
 import { EmptyState, LinkButton, themeBootScript } from "#/design-system/ui";
 import { analyticsBootstrap } from "#/lib/analytics";
 import { initFirebaseAnalytics } from "#/lib/firebase";
 import { pageTitle, SITE_URL } from "#/lib/seo";
+import { m } from "#/paraglide/messages";
+import { getLocale, getTextDirection } from "#/paraglide/runtime";
 import appCss from "../styles.css?url";
 
 interface MyRouterContext {
@@ -55,37 +59,50 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 function NotFound() {
 	return (
 		<>
-			<title>{pageTitle("Page not found")}</title>
+			<title>{pageTitle(m.not_found_title())}</title>
 			<meta name="robots" content="noindex" />
-			<SiteHeader />
-			<main id="main" className="site" style={{ padding: "96px 0" }}>
+			<Header />
+			<main id="main" className="site route-state">
 				<EmptyState
 					icon="search"
-					title="Page not found"
-					description="The page you're looking for doesn't exist or has moved."
-					action={<LinkButton href="/projects">Browse projects</LinkButton>}
+					title={m.not_found_title()}
+					description={m.not_found_body()}
+					action={<LinkButton href="/projects">{m.not_found_cta()}</LinkButton>}
 				/>
-				<p style={{ textAlign: "center", marginTop: 16 }}><a className="mh-link" href="/">Back to the home page</a></p>
+				<p className="route-state__home">
+					<a className="mh-link" href="/">
+						{m.not_found_home()}
+					</a>
+				</p>
 			</main>
-			<SiteFooter />
+			<Footer owner={null} />
 		</>
 	);
 }
+
+/** Without JavaScript nothing would ever reveal, so scroll-reveal elements start visible. */
+const NO_JS_REVEAL = "[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}";
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	useEffect(() => {
 		void initFirebaseAnalytics();
 	}, []);
+	const locale = getLocale();
 	return (
-		<html lang="en" data-theme="dark" suppressHydrationWarning>
+		<html lang={locale} dir={getTextDirection(locale)} data-theme="dark" suppressHydrationWarning>
 			<head>
 				{/* biome-ignore lint/security/noDangerouslySetInnerHtml: static theme boot script, no user input */}
 				<script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
 				<HeadContent />
+				<noscript>
+					<style>{NO_JS_REVEAL}</style>
+				</noscript>
 			</head>
 			<body>
-				<a className="skip-link" href="#main">Skip to content</a>
-				{children}
+				<a className="skip-link" href="#main">
+					{m.skip_to_content()}
+				</a>
+				<MotionProvider>{children}</MotionProvider>
 				<Scripts />
 			</body>
 		</html>

@@ -1,12 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { SiteFooter, SiteHeader } from "#/components/site";
 import { ChipList, EmptyState, Icon, LinkButton, MarkArt } from "#/design-system/ui";
 import { trackView } from "#/lib/analytics";
 import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getProject } from "#/server/fn/public";
 
-export const Route = createFileRoute("/projects/$slug")({
+export const Route = createFileRoute("/_site/projects/$slug")({
 	loader: async ({ params }) => {
 		const data = await getProject({ data: params.slug });
 		if (!data) throw notFound();
@@ -54,7 +53,6 @@ function ProjectPage() {
 	useEffect(() => trackView("project", pr.slug, pr.title), [pr.slug, pr.title]);
 	return (
 		<>
-			<SiteHeader />
 
 			<main id="main" className="site">
 				<article className="project-detail" aria-labelledby="project-title">
@@ -117,7 +115,6 @@ function ProjectPage() {
 					</nav>
 				)}
 			</main>
-			<SiteFooter />
 		</>
 	);
 }

@@ -14,10 +14,10 @@ import { contactPoints, parsePrice, serviceOffer, telHref, whatsappHref } from "
 import { absoluteUrl, jsonLd, PERSON_ID, SITE_NAME, SITE_URL, seo, TITLE_MAX } from "#/lib/seo";
 import { type SkillEvidence, skillEvidence } from "#/lib/skill-evidence";
 import { ProjectCard, ServiceCard } from "#/components/cards";
-import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
+import { ContactForm } from "#/components/site";
 import { getPortfolio } from "#/server/fn/public";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_site/")({
 	loader: () => getPortfolio(),
 	head: ({ loaderData }) => {
 		const p = loaderData?.profile;
@@ -79,7 +79,6 @@ function Home() {
 	const mainCv = data.publicCvs[0];
 	return (
 		<>
-			<SiteHeader />
 
 			<main id="main" className="site">
 				<section className="mh-hero" aria-labelledby="hero-title">
@@ -115,8 +114,6 @@ function Home() {
 				<Credentials education={p.education} certifications={p.certifications} />
 				<Contact profile={p} services={data.services} />
 			</main>
-
-			<SiteFooter owner={p} />
 		</>
 	);
 }
