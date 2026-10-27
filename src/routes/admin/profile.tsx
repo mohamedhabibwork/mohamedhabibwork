@@ -45,6 +45,15 @@ function ProfilePage() {
 				</div>
 			</section>
 			<section className="mh-formsec">
+				<div className="mh-formsec__head"><h3 className="mh-formsec__title">Arabic</h3><p className="mh-formsec__desc">Leave a field empty to show the English text on the Arabic site.</p></div>
+				<div className="mh-formsec__body mh-formsec__body--2">
+					<Input label="Headline (Arabic)" dir="rtl" value={form.headlineAr ?? ""} onChange={set("headlineAr")} error={f("headlineAr")} />
+					<Input label="Availability (Arabic)" dir="rtl" value={form.availabilityAr ?? ""} onChange={set("availabilityAr")} error={f("availabilityAr")} />
+					<div style={{ gridColumn: "1 / -1" }}><Textarea label="Tagline (Arabic)" dir="rtl" rows={2} value={form.taglineAr ?? ""} onChange={set("taglineAr")} error={f("taglineAr")} /></div>
+					<div style={{ gridColumn: "1 / -1" }}><Textarea label="Summary (Arabic)" dir="rtl" rows={5} value={form.summaryAr ?? ""} onChange={set("summaryAr")} error={f("summaryAr")} /></div>
+				</div>
+			</section>
+			<section className="mh-formsec">
 				<div className="mh-formsec__head"><h3 className="mh-formsec__title">Contact</h3><p className="mh-formsec__desc">Public on your site and CVs.</p></div>
 				<div className="mh-formsec__body mh-formsec__body--2">
 					<Input label="Email" type="email" value={form.email} onChange={set("email")} required error={f("email")} />

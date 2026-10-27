@@ -71,6 +71,20 @@ function Projects() {
 						<Textarea label="The challenge" rows={2} value={edit.challenge} onChange={(e) => setEdit({ ...edit, challenge: e.target.value })} error={fe("challenge")} />
 						<Textarea label="Case study" hint="Shown on the project page. Separate paragraphs with a blank line." rows={6} value={edit.description} onChange={(e) => setEdit({ ...edit, description: e.target.value })} error={fe("description")} />
 						<LinesField label="Outcomes" value={edit.outcomes} onChange={(outcomes) => setEdit({ ...edit, outcomes })} rows={3} />
+						<fieldset className="form-grid" style={{ border: 0, padding: 0, margin: 0 }}>
+							<legend className="mh-formsec__title">Arabic</legend>
+							<p className="mh-formsec__desc">Leave a field empty to show the English text on the Arabic site.</p>
+							<div className="form-grid-2">
+								<Input label="Title (Arabic)" dir="rtl" value={edit.titleAr ?? ""} onChange={(e) => setEdit({ ...edit, titleAr: e.target.value })} error={fe("titleAr")} />
+								<Input label="Subtitle (Arabic)" dir="rtl" value={edit.subtitleAr ?? ""} onChange={(e) => setEdit({ ...edit, subtitleAr: e.target.value })} error={fe("subtitleAr")} />
+							</div>
+							<Textarea label="Summary (Arabic)" dir="rtl" rows={3} value={edit.summaryAr ?? ""} onChange={(e) => setEdit({ ...edit, summaryAr: e.target.value })} error={fe("summaryAr")} />
+							<LinesField label="Key features (Arabic)" dir="rtl" value={edit.featuresAr ?? []} onChange={(featuresAr) => setEdit({ ...edit, featuresAr })} rows={3} />
+							<Input label="My role (Arabic)" dir="rtl" value={edit.roleAr ?? ""} onChange={(e) => setEdit({ ...edit, roleAr: e.target.value })} error={fe("roleAr")} />
+							<Textarea label="The challenge (Arabic)" dir="rtl" rows={2} value={edit.challengeAr ?? ""} onChange={(e) => setEdit({ ...edit, challengeAr: e.target.value })} error={fe("challengeAr")} />
+							<Textarea label="Case study (Arabic)" dir="rtl" rows={6} value={edit.descriptionAr ?? ""} onChange={(e) => setEdit({ ...edit, descriptionAr: e.target.value })} error={fe("descriptionAr")} />
+							<LinesField label="Outcomes (Arabic)" dir="rtl" value={edit.outcomesAr ?? []} onChange={(outcomesAr) => setEdit({ ...edit, outcomesAr })} rows={3} />
+						</fieldset>
 						<div className="form-grid-2">
 							<Input label="Live URL" value={edit.url} onChange={(e) => setEdit({ ...edit, url: e.target.value })} />
 							<Input label="Cover image URL" value={edit.imageUrl} onChange={(e) => setEdit({ ...edit, imageUrl: e.target.value })} hint="Leave empty to use the generated cover" />

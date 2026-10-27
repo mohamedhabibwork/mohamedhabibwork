@@ -17,6 +17,9 @@ import {
 import { requireOwner } from "#/server/auth";
 
 const list = z.array(z.string().trim().max(400)).max(30);
+/** Optional Arabic twin of a text field. Empty or missing falls back to English on the site. */
+const arText = (max: number) => z.string().trim().max(max).nullish();
+const arList = list.nullish();
 const id = z.object({ id: z.number().int().positive() });
 
 export const getDashboard = createServerFn({ method: "GET" }).handler(
@@ -94,6 +97,10 @@ const profileSchema = z.object({
 	github: z.string().trim().max(300),
 	linkedin: z.string().trim().max(300),
 	availability: z.string().trim().max(200),
+	headlineAr: arText(160),
+	taglineAr: arText(300),
+	summaryAr: arText(3000),
+	availabilityAr: arText(200),
 	certifications: list.default([]),
 	photoUrl: z.string().trim().max(500),
 	stats: z
@@ -139,6 +146,9 @@ export const experienceSchema = z.object({
 	summary: z.string().trim().max(1500),
 	highlights: list,
 	tech: list,
+	roleAr: arText(160),
+	summaryAr: arText(1500),
+	highlightsAr: arList,
 	sort: z.number().int(),
 });
 export type ExperienceInput = z.infer<typeof experienceSchema>;
@@ -196,6 +206,14 @@ export const projectSchema = z.object({
 	outcomes: list.default([]),
 	features: list,
 	tech: list,
+	titleAr: arText(160),
+	subtitleAr: arText(200),
+	summaryAr: arText(1500),
+	descriptionAr: arText(10000),
+	roleAr: arText(300),
+	challengeAr: arText(1500),
+	outcomesAr: arList,
+	featuresAr: arList,
 	url: z.string().trim().max(300),
 	imageUrl: z.string().trim().max(500),
 	featured: z.boolean(),
@@ -256,6 +274,10 @@ export const serviceSchema = z.object({
 	deliverables: list.default([]),
 	tech: list.default([]),
 	startingAt: z.string().trim().max(80).default(""),
+	titleAr: arText(160),
+	summaryAr: arText(500),
+	descriptionAr: arText(10000),
+	deliverablesAr: arList,
 	published: z.boolean(),
 	sort: z.number().int(),
 });

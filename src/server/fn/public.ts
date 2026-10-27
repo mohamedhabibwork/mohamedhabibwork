@@ -17,14 +17,61 @@ import {
 	RELATED_POST_COUNT,
 	readingMinutes,
 } from "#/lib/blog";
+import {
+	type ContentLocale,
+	contentLocaleSchema,
+	localizeRow,
+} from "#/lib/localized";
 import { notifyOwnerOfMessage } from "#/server/mail";
 import { paypalPublicConfig } from "#/server/paypal";
 import { notifyOwnerPush } from "#/server/push";
 import { verifyTurnstile } from "#/server/turnstile";
 
+/** Optional input of list loaders: `{ locale }`, defaulting to English. */
+type LocaleInput = { locale?: ContentLocale } | undefined;
+const localeInput = z.object({ locale: contentLocaleSchema }).default({
+	locale: "en",
+});
+
+/** Input of detail loaders: a bare slug (English) or `{ slug, locale }`. */
+type SlugInput = string | { slug: string; locale?: ContentLocale };
+const slugInput = z.preprocess(
+	(input) => (typeof input === "string" ? { slug: input } : input),
+	z.object({
+		slug: z.string().trim().min(1).max(120),
+		locale: contentLocaleSchema,
+	}),
+);
+
+/** Translatable columns per table; each has an `*Ar` twin in the schema. */
+const PROFILE_TEXT = [
+	"headline",
+	"tagline",
+	"summary",
+	"availability",
+] as const;
+const EXPERIENCE_TEXT = ["role", "summary", "highlights"] as const;
+const PROJECT_TEXT = [
+	"title",
+	"subtitle",
+	"summary",
+	"description",
+	"role",
+	"challenge",
+	"outcomes",
+	"features",
+] as const;
+const SERVICE_TEXT = [
+	"title",
+	"summary",
+	"description",
+	"deliverables",
+] as const;
+
 /** Everything the public portfolio page renders, in one round trip. */
-export const getPortfolio = createServerFn({ method: "GET" }).handler(
-	async () =>
+export const getPortfolio = createServerFn({ method: "GET" })
+	.validator((input: LocaleInput) => localeInput.parse(input))
+	.handler(async ({ data: { locale } }) =>
 		withDb(async (db) => {
 			const [p, exp, proj, sk, publicCvs, svc] = await Promise.all([
 				db.query.profile.findFirst(),
@@ -50,48 +97,58 @@ export const getPortfolio = createServerFn({ method: "GET" }).handler(
 						icon: services.icon,
 						summary: services.summary,
 						startingAt: services.startingAt,
+						titleAr: services.titleAr,
+						summaryAr: services.summaryAr,
 					})
 					.from(services)
 					.where(eq(services.published, true))
 					.orderBy(asc(services.sort)),
 			]);
 			return {
-				profile: p ?? null,
-				experiences: exp,
-				projects: proj,
+				profile: p ? localizeRow(p, PROFILE_TEXT, locale) : null,
+				experiences: exp.map((e) => localizeRow(e, EXPERIENCE_TEXT, locale)),
+				projects: proj.map((row) => localizeRow(row, PROJECT_TEXT, locale)),
 				skills: sk,
 				publicCvs,
-				services: svc,
+				services: svc.map((row) =>
+					localizeRow(row, ["title", "summary"], locale),
+				),
 			};
 		}),
-);
+	);
 
 /** All published projects for /projects. */
-export const getProjects = createServerFn({ method: "GET" }).handler(async () =>
-	withDb((db) =>
-		db
-			.select()
-			.from(projects)
-			.where(eq(projects.published, true))
-			.orderBy(desc(projects.featured), asc(projects.sort)),
-	),
-);
+export const getProjects = createServerFn({ method: "GET" })
+	.validator((input: LocaleInput) => localeInput.parse(input))
+	.handler(async ({ data: { locale } }) => {
+		const rows = await withDb((db) =>
+			db
+				.select()
+				.from(projects)
+				.where(eq(projects.published, true))
+				.orderBy(desc(projects.featured), asc(projects.sort)),
+		);
+		return rows.map((row) => localizeRow(row, PROJECT_TEXT, locale));
+	});
 
 /** All published services for /services. */
-export const getServices = createServerFn({ method: "GET" }).handler(async () =>
-	withDb((db) =>
-		db
-			.select()
-			.from(services)
-			.where(eq(services.published, true))
-			.orderBy(asc(services.sort)),
-	),
-);
+export const getServices = createServerFn({ method: "GET" })
+	.validator((input: LocaleInput) => localeInput.parse(input))
+	.handler(async ({ data: { locale } }) => {
+		const rows = await withDb((db) =>
+			db
+				.select()
+				.from(services)
+				.where(eq(services.published, true))
+				.orderBy(asc(services.sort)),
+		);
+		return rows.map((row) => localizeRow(row, SERVICE_TEXT, locale));
+	});
 
 /** One published service plus the others for cross-links. Returns null when missing. */
 export const getService = createServerFn({ method: "GET" })
-	.validator((slug: unknown) => z.string().trim().min(1).max(120).parse(slug))
-	.handler(async ({ data: slug }) =>
+	.validator((input: SlugInput) => slugInput.parse(input))
+	.handler(async ({ data: { slug, locale } }) =>
 		withDb(async (db) => {
 			const service = await db.query.services.findFirst({
 				where: and(eq(services.slug, slug), eq(services.published, true)),
@@ -103,6 +160,8 @@ export const getService = createServerFn({ method: "GET" })
 					title: services.title,
 					icon: services.icon,
 					summary: services.summary,
+					titleAr: services.titleAr,
+					summaryAr: services.summaryAr,
 				})
 				.from(services)
 				.where(and(eq(services.published, true), ne(services.id, service.id)))
@@ -111,8 +170,10 @@ export const getService = createServerFn({ method: "GET" })
 				columns: { name: true, email: true, phone: true },
 			});
 			return {
-				service,
-				others,
+				service: localizeRow(service, SERVICE_TEXT, locale),
+				others: others.map((row) =>
+					localizeRow(row, ["title", "summary"], locale),
+				),
 				owner: owner ?? null,
 				paypal: paypalPublicConfig(),
 			};
@@ -154,6 +215,17 @@ export const getBlogPost = createServerFn({ method: "GET" })
 				where: and(eq(blogPosts.slug, slug), eq(blogPosts.published, true)),
 			});
 			if (!post) return null;
+			// The paired EN/AR post, linked either way round by `translationOf`.
+			const translation =
+				(await db.query.blogPosts.findFirst({
+					columns: { id: true, slug: true, title: true },
+					where: and(
+						eq(blogPosts.published, true),
+						post.translationOf
+							? eq(blogPosts.id, post.translationOf)
+							: eq(blogPosts.translationOf, post.id),
+					),
+				})) ?? null;
 			// Rank on metadata only; bodies are loaded for the few posts we actually show.
 			const candidates = await db
 				.select({
@@ -163,7 +235,13 @@ export const getBlogPost = createServerFn({ method: "GET" })
 					tags: blogPosts.tags,
 				})
 				.from(blogPosts)
-				.where(and(eq(blogPosts.published, true), ne(blogPosts.id, post.id)))
+				.where(
+					and(
+						eq(blogPosts.published, true),
+						ne(blogPosts.id, post.id),
+						translation ? ne(blogPosts.id, translation.id) : undefined,
+					),
+				)
 				.orderBy(desc(blogPosts.publishedAt));
 			const sharesTag = (p: { tags: string[] }) =>
 				p.tags.some((tag) => post.tags.includes(tag));
@@ -187,14 +265,20 @@ export const getBlogPost = createServerFn({ method: "GET" })
 				...p,
 				minutes: readingMinutes(bodyBySlug.get(p.slug) ?? ""),
 			}));
-			return { post, related };
+			return {
+				post,
+				related,
+				translation: translation
+					? { slug: translation.slug, title: translation.title }
+					: null,
+			};
 		}),
 	);
 
 /** One published project plus a few related ones for /projects/$slug. Returns null when missing. */
 export const getProject = createServerFn({ method: "GET" })
-	.validator((slug: unknown) => z.string().trim().min(1).max(120).parse(slug))
-	.handler(async ({ data: slug }) =>
+	.validator((input: SlugInput) => slugInput.parse(input))
+	.handler(async ({ data: { slug, locale } }) =>
 		withDb(async (db) => {
 			const project = await db.query.projects.findFirst({
 				where: and(eq(projects.slug, slug), eq(projects.published, true)),
@@ -206,12 +290,19 @@ export const getProject = createServerFn({ method: "GET" })
 					title: projects.title,
 					subtitle: projects.subtitle,
 					category: projects.category,
+					titleAr: projects.titleAr,
+					subtitleAr: projects.subtitleAr,
 				})
 				.from(projects)
 				.where(and(eq(projects.published, true), ne(projects.id, project.id)))
 				.orderBy(desc(projects.featured), asc(projects.sort))
 				.limit(3);
-			return { project, related };
+			return {
+				project: localizeRow(project, PROJECT_TEXT, locale),
+				related: related.map((row) =>
+					localizeRow(row, ["title", "subtitle"], locale),
+				),
+			};
 		}),
 	);
 

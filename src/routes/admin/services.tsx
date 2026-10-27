@@ -69,6 +69,14 @@ function Services() {
 						<Textarea label="Description" hint="Separate paragraphs with a blank line." rows={5} value={edit.description} onChange={(e) => setEdit({ ...edit, description: e.target.value })} error={fe("description")} />
 						<LinesField label="Deliverables" value={edit.deliverables} onChange={(deliverables) => setEdit({ ...edit, deliverables })} rows={4} />
 						<LinesField label="Typical stack" value={edit.tech} onChange={(tech) => setEdit({ ...edit, tech })} rows={3} />
+						<fieldset className="form-grid" style={{ border: 0, padding: 0, margin: 0 }}>
+							<legend className="mh-formsec__title">Arabic</legend>
+							<p className="mh-formsec__desc">Leave a field empty to show the English text on the Arabic site.</p>
+							<Input label="Title (Arabic)" dir="rtl" value={edit.titleAr ?? ""} onChange={(e) => setEdit({ ...edit, titleAr: e.target.value })} error={fe("titleAr")} />
+							<Textarea label="Summary (Arabic)" dir="rtl" rows={2} value={edit.summaryAr ?? ""} onChange={(e) => setEdit({ ...edit, summaryAr: e.target.value })} error={fe("summaryAr")} />
+							<Textarea label="Description (Arabic)" dir="rtl" rows={5} value={edit.descriptionAr ?? ""} onChange={(e) => setEdit({ ...edit, descriptionAr: e.target.value })} error={fe("descriptionAr")} />
+							<LinesField label="Deliverables (Arabic)" dir="rtl" value={edit.deliverablesAr ?? []} onChange={(deliverablesAr) => setEdit({ ...edit, deliverablesAr })} rows={4} />
+						</fieldset>
 						<Checkbox label="Published" checked={edit.published} onChange={(e) => setEdit({ ...edit, published: e.target.checked })} />
 					</form>
 				</Modal>
