@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Magnetic } from "#/design-system/motion";
 import { IconButton, LinkButton, Logo, ThemeToggle } from "#/design-system/ui";
 import { m } from "#/paraglide/messages";
+import { localizeHref } from "#/paraglide/runtime";
 import { LocaleSwitch } from "./LocaleSwitch";
 import { MobileNav } from "./MobileNav";
 import { NAV } from "./nav";
@@ -24,7 +25,7 @@ export function Header() {
 	return (
 		<header className="site-header" data-scrolled={scrolled || undefined}>
 			<div className="site site-header__inner">
-				<Logo size={26} href="/" />
+				<Logo size={26} href={localizeHref("/")} />
 				<nav className="site-nav" aria-label={m.nav_main()}>
 					{NAV.map((n) => (
 						<Link
@@ -43,7 +44,7 @@ export function Header() {
 					<ThemeToggle />
 					<span className="site-header__cta">
 						<Magnetic>
-							<LinkButton href="/#contact" size="sm">
+							<LinkButton href={localizeHref("/#contact")} size="sm">
 								{m.cta_hire_me()}
 							</LinkButton>
 						</Magnetic>

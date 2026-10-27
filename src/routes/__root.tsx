@@ -9,7 +9,7 @@ import { analyticsBootstrap } from "#/lib/analytics";
 import { initFirebaseAnalytics } from "#/lib/firebase";
 import { pageTitle, SITE_URL } from "#/lib/seo";
 import { m } from "#/paraglide/messages";
-import { getLocale, getTextDirection } from "#/paraglide/runtime";
+import { getLocale, getTextDirection, localizeHref } from "#/paraglide/runtime";
 import appCss from "../styles.css?url";
 
 interface MyRouterContext {
@@ -67,10 +67,10 @@ function NotFound() {
 					icon="search"
 					title={m.not_found_title()}
 					description={m.not_found_body()}
-					action={<LinkButton href="/projects">{m.not_found_cta()}</LinkButton>}
+					action={<LinkButton href={localizeHref("/projects")}>{m.not_found_cta()}</LinkButton>}
 				/>
 				<p className="route-state__home">
-					<a className="mh-link" href="/">
+					<a className="mh-link" href={localizeHref("/")}>
 						{m.not_found_home()}
 					</a>
 				</p>

@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Reveal } from "#/design-system/motion";
 import { Icon, Logo } from "#/design-system/ui";
 import { m } from "#/paraglide/messages";
+import { localizeHref } from "#/paraglide/runtime";
 import type { SiteOwner } from "#/server/fn/site";
 import { NAV } from "./nav";
 
@@ -36,7 +37,7 @@ export function Footer({ owner }: { owner: SiteOwner | null }) {
 		<footer className="site-footer">
 			<Reveal className="site site-footer__grid">
 				<div className="site-footer__brand">
-					<Logo size={28} href="/" />
+					<Logo size={28} href={localizeHref("/")} />
 					<p>{m.footer_tagline()}</p>
 					{owner?.availability && (
 						<span className="availability">

@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { EASE_OUT } from "#/design-system/motion";
 import { IconButton, LinkButton } from "#/design-system/ui";
 import { m } from "#/paraglide/messages";
+import { localizeHref } from "#/paraglide/runtime";
 import { LocaleSwitch } from "./LocaleSwitch";
 import { NAV } from "./nav";
 
@@ -93,7 +94,7 @@ export function MobileNav({
 					<div className="mobile-nav__foot">
 						<LocaleSwitch />
 						<LinkButton
-							href="/#contact"
+							href={localizeHref("/#contact")}
 							onClick={onClose}
 							trailingIcon="arrow-right"
 						>
