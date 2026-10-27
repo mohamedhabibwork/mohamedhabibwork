@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServiceCard } from "#/components/cards";
-import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
+import { ContactForm } from "#/components/site";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
 import { parsePrice, serviceOffer } from "#/lib/contact";
 import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getServices } from "#/server/fn/public";
 
-export const Route = createFileRoute("/services/")({
+export const Route = createFileRoute("/_site/services/")({
 	loader: () => getServices(),
 	head: ({ loaderData }) => {
 		const rows = loaderData ?? [];
@@ -40,7 +40,6 @@ function ServicesPage() {
 	const rows = Route.useLoaderData();
 	return (
 		<>
-			<SiteHeader />
 			<main id="main" className="site">
 				<section className="site-section">
 					<SectionHeading as="h1" eyebrow="Work with me" title="Services" description="Pick what you need. Every enquiry comes straight to my inbox, and I reply within 24 hours." />
@@ -55,7 +54,6 @@ function ServicesPage() {
 					<ContactForm services={rows} />
 				</section>
 			</main>
-			<SiteFooter />
 		</>
 	);
 }

@@ -16,6 +16,8 @@ const config = defineConfig({
       project: './project.inlang',
       outdir: './src/paraglide',
       strategy: ['url', 'baseLocale'],
+      // Matches the server's one-URL-per-page rule: `/ar`, never `/ar/`.
+      trailingSlash: 'never',
     }),
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tailwindcss(),

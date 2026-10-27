@@ -9,13 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as SiteRouteRouteImport } from './routes/_site/route'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SiteDotwebmanifestRouteImport } from './routes/site[.]webmanifest'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SiteIndexRouteImport } from './routes/_site/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminExperienceRouteImport } from './routes/admin/experience'
 import { Route as AdminMessagesRouteImport } from './routes/admin/messages'
@@ -24,12 +25,12 @@ import { Route as AdminProfileRouteImport } from './routes/admin/profile'
 import { Route as AdminProjectsRouteImport } from './routes/admin/projects'
 import { Route as AdminServicesRouteImport } from './routes/admin/services'
 import { Route as AdminSkillsRouteImport } from './routes/admin/skills'
-import { Route as BlogIndexRouteImport } from './routes/blog/index'
-import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
-import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
-import { Route as ProjectsSlugRouteImport } from './routes/projects/$slug'
-import { Route as ServicesIndexRouteImport } from './routes/services/index'
-import { Route as ServicesSlugRouteImport } from './routes/services/$slug'
+import { Route as SiteBlogIndexRouteImport } from './routes/_site/blog/index'
+import { Route as SiteBlogSlugRouteImport } from './routes/_site/blog/$slug'
+import { Route as SiteProjectsIndexRouteImport } from './routes/_site/projects/index'
+import { Route as SiteProjectsSlugRouteImport } from './routes/_site/projects/$slug'
+import { Route as SiteServicesIndexRouteImport } from './routes/_site/services/index'
+import { Route as SiteServicesSlugRouteImport } from './routes/_site/services/$slug'
 import { Route as AdminCvsIndexRouteImport } from './routes/admin/cvs/index'
 import { Route as AdminCvsIdRouteImport } from './routes/admin/cvs/$id'
 import { Route as ApiPaypalOrdersRouteImport } from './routes/api/paypal.orders'
@@ -38,9 +39,8 @@ import { Route as OgProjectsFileRouteImport } from './routes/og/projects.$file'
 import { Route as ApiCvSlugPdfRouteImport } from './routes/api/cv.$slug.pdf'
 import { Route as ApiPaypalOrdersOrderIdCaptureRouteImport } from './routes/api/paypal.orders.$orderId.capture'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const SiteRouteRoute = SiteRouteRouteImport.update({
+  id: '/_site',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRouteRoute = AdminRouteRouteImport.update({
@@ -72,6 +72,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
+} as any)
+const SiteIndexRoute = SiteIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SiteRouteRoute,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
@@ -113,35 +118,35 @@ const AdminSkillsRoute = AdminSkillsRouteImport.update({
   path: '/skills',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
+const SiteBlogIndexRoute = SiteBlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => SiteRouteRoute,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
+const SiteBlogSlugRoute = SiteBlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => SiteRouteRoute,
 } as any)
-const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
+const SiteProjectsIndexRoute = SiteProjectsIndexRouteImport.update({
   id: '/projects/',
   path: '/projects/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => SiteRouteRoute,
 } as any)
-const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
+const SiteProjectsSlugRoute = SiteProjectsSlugRouteImport.update({
   id: '/projects/$slug',
   path: '/projects/$slug',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => SiteRouteRoute,
 } as any)
-const ServicesIndexRoute = ServicesIndexRouteImport.update({
+const SiteServicesIndexRoute = SiteServicesIndexRouteImport.update({
   id: '/services/',
   path: '/services/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => SiteRouteRoute,
 } as any)
-const ServicesSlugRoute = ServicesSlugRouteImport.update({
+const SiteServicesSlugRoute = SiteServicesSlugRouteImport.update({
   id: '/services/$slug',
   path: '/services/$slug',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => SiteRouteRoute,
 } as any)
 const AdminCvsIndexRoute = AdminCvsIndexRouteImport.update({
   id: '/cvs/',
@@ -181,7 +186,7 @@ const ApiPaypalOrdersOrderIdCaptureRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof SiteIndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
@@ -195,23 +200,22 @@ export interface FileRoutesByFullPath {
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/skills': typeof AdminSkillsRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/projects/$slug': typeof ProjectsSlugRoute
-  '/services/$slug': typeof ServicesSlugRoute
   '/admin/': typeof AdminIndexRoute
-  '/blog/': typeof BlogIndexRoute
-  '/projects/': typeof ProjectsIndexRoute
-  '/services/': typeof ServicesIndexRoute
+  '/blog/$slug': typeof SiteBlogSlugRoute
+  '/projects/$slug': typeof SiteProjectsSlugRoute
+  '/services/$slug': typeof SiteServicesSlugRoute
   '/admin/cvs/$id': typeof AdminCvsIdRoute
   '/api/paypal/orders': typeof ApiPaypalOrdersRouteWithChildren
   '/api/paypal/webhook': typeof ApiPaypalWebhookRoute
   '/og/projects/$file': typeof OgProjectsFileRoute
+  '/blog/': typeof SiteBlogIndexRoute
+  '/projects/': typeof SiteProjectsIndexRoute
+  '/services/': typeof SiteServicesIndexRoute
   '/admin/cvs/': typeof AdminCvsIndexRoute
   '/api/cv/$slug/pdf': typeof ApiCvSlugPdfRoute
   '/api/paypal/orders/$orderId/capture': typeof ApiPaypalOrdersOrderIdCaptureRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -224,24 +228,25 @@ export interface FileRoutesByTo {
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/skills': typeof AdminSkillsRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/projects/$slug': typeof ProjectsSlugRoute
-  '/services/$slug': typeof ServicesSlugRoute
+  '/': typeof SiteIndexRoute
   '/admin': typeof AdminIndexRoute
-  '/blog': typeof BlogIndexRoute
-  '/projects': typeof ProjectsIndexRoute
-  '/services': typeof ServicesIndexRoute
+  '/blog/$slug': typeof SiteBlogSlugRoute
+  '/projects/$slug': typeof SiteProjectsSlugRoute
+  '/services/$slug': typeof SiteServicesSlugRoute
   '/admin/cvs/$id': typeof AdminCvsIdRoute
   '/api/paypal/orders': typeof ApiPaypalOrdersRouteWithChildren
   '/api/paypal/webhook': typeof ApiPaypalWebhookRoute
   '/og/projects/$file': typeof OgProjectsFileRoute
+  '/blog': typeof SiteBlogIndexRoute
+  '/projects': typeof SiteProjectsIndexRoute
+  '/services': typeof SiteServicesIndexRoute
   '/admin/cvs': typeof AdminCvsIndexRoute
   '/api/cv/$slug/pdf': typeof ApiCvSlugPdfRoute
   '/api/paypal/orders/$orderId/capture': typeof ApiPaypalOrdersOrderIdCaptureRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_site': typeof SiteRouteRouteWithChildren
   '/admin': typeof AdminRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/mcp': typeof McpRoute
@@ -255,17 +260,18 @@ export interface FileRoutesById {
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/skills': typeof AdminSkillsRoute
-  '/blog/$slug': typeof BlogSlugRoute
-  '/projects/$slug': typeof ProjectsSlugRoute
-  '/services/$slug': typeof ServicesSlugRoute
+  '/_site/': typeof SiteIndexRoute
   '/admin/': typeof AdminIndexRoute
-  '/blog/': typeof BlogIndexRoute
-  '/projects/': typeof ProjectsIndexRoute
-  '/services/': typeof ServicesIndexRoute
+  '/_site/blog/$slug': typeof SiteBlogSlugRoute
+  '/_site/projects/$slug': typeof SiteProjectsSlugRoute
+  '/_site/services/$slug': typeof SiteServicesSlugRoute
   '/admin/cvs/$id': typeof AdminCvsIdRoute
   '/api/paypal/orders': typeof ApiPaypalOrdersRouteWithChildren
   '/api/paypal/webhook': typeof ApiPaypalWebhookRoute
   '/og/projects/$file': typeof OgProjectsFileRoute
+  '/_site/blog/': typeof SiteBlogIndexRoute
+  '/_site/projects/': typeof SiteProjectsIndexRoute
+  '/_site/services/': typeof SiteServicesIndexRoute
   '/admin/cvs/': typeof AdminCvsIndexRoute
   '/api/cv/$slug/pdf': typeof ApiCvSlugPdfRoute
   '/api/paypal/orders/$orderId/capture': typeof ApiPaypalOrdersOrderIdCaptureRoute
@@ -287,23 +293,22 @@ export interface FileRouteTypes {
     | '/admin/projects'
     | '/admin/services'
     | '/admin/skills'
+    | '/admin/'
     | '/blog/$slug'
     | '/projects/$slug'
     | '/services/$slug'
-    | '/admin/'
-    | '/blog/'
-    | '/projects/'
-    | '/services/'
     | '/admin/cvs/$id'
     | '/api/paypal/orders'
     | '/api/paypal/webhook'
     | '/og/projects/$file'
+    | '/blog/'
+    | '/projects/'
+    | '/services/'
     | '/admin/cvs/'
     | '/api/cv/$slug/pdf'
     | '/api/paypal/orders/$orderId/capture'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/login'
     | '/mcp'
     | '/robots.txt'
@@ -316,23 +321,24 @@ export interface FileRouteTypes {
     | '/admin/projects'
     | '/admin/services'
     | '/admin/skills'
+    | '/'
+    | '/admin'
     | '/blog/$slug'
     | '/projects/$slug'
     | '/services/$slug'
-    | '/admin'
-    | '/blog'
-    | '/projects'
-    | '/services'
     | '/admin/cvs/$id'
     | '/api/paypal/orders'
     | '/api/paypal/webhook'
     | '/og/projects/$file'
+    | '/blog'
+    | '/projects'
+    | '/services'
     | '/admin/cvs'
     | '/api/cv/$slug/pdf'
     | '/api/paypal/orders/$orderId/capture'
   id:
     | '__root__'
-    | '/'
+    | '/_site'
     | '/admin'
     | '/login'
     | '/mcp'
@@ -346,36 +352,31 @@ export interface FileRouteTypes {
     | '/admin/projects'
     | '/admin/services'
     | '/admin/skills'
-    | '/blog/$slug'
-    | '/projects/$slug'
-    | '/services/$slug'
+    | '/_site/'
     | '/admin/'
-    | '/blog/'
-    | '/projects/'
-    | '/services/'
+    | '/_site/blog/$slug'
+    | '/_site/projects/$slug'
+    | '/_site/services/$slug'
     | '/admin/cvs/$id'
     | '/api/paypal/orders'
     | '/api/paypal/webhook'
     | '/og/projects/$file'
+    | '/_site/blog/'
+    | '/_site/projects/'
+    | '/_site/services/'
     | '/admin/cvs/'
     | '/api/cv/$slug/pdf'
     | '/api/paypal/orders/$orderId/capture'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  SiteRouteRoute: typeof SiteRouteRouteWithChildren
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   McpRoute: typeof McpRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SiteDotwebmanifestRoute: typeof SiteDotwebmanifestRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  BlogSlugRoute: typeof BlogSlugRoute
-  ProjectsSlugRoute: typeof ProjectsSlugRoute
-  ServicesSlugRoute: typeof ServicesSlugRoute
-  BlogIndexRoute: typeof BlogIndexRoute
-  ProjectsIndexRoute: typeof ProjectsIndexRoute
-  ServicesIndexRoute: typeof ServicesIndexRoute
   ApiPaypalOrdersRoute: typeof ApiPaypalOrdersRouteWithChildren
   ApiPaypalWebhookRoute: typeof ApiPaypalWebhookRoute
   OgProjectsFileRoute: typeof OgProjectsFileRoute
@@ -384,11 +385,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
+    '/_site': {
+      id: '/_site'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof SiteRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -432,6 +433,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_site/': {
+      id: '/_site/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof SiteIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
     '/admin/': {
       id: '/admin/'
@@ -489,47 +497,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSkillsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/blog/': {
-      id: '/blog/'
+    '/_site/blog/': {
+      id: '/_site/blog/'
       path: '/blog'
       fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof SiteBlogIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
-    '/blog/$slug': {
-      id: '/blog/$slug'
+    '/_site/blog/$slug': {
+      id: '/_site/blog/$slug'
       path: '/blog/$slug'
       fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof SiteBlogSlugRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
-    '/projects/': {
-      id: '/projects/'
+    '/_site/projects/': {
+      id: '/_site/projects/'
       path: '/projects'
       fullPath: '/projects/'
-      preLoaderRoute: typeof ProjectsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof SiteProjectsIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
-    '/projects/$slug': {
-      id: '/projects/$slug'
+    '/_site/projects/$slug': {
+      id: '/_site/projects/$slug'
       path: '/projects/$slug'
       fullPath: '/projects/$slug'
-      preLoaderRoute: typeof ProjectsSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof SiteProjectsSlugRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
-    '/services/': {
-      id: '/services/'
+    '/_site/services/': {
+      id: '/_site/services/'
       path: '/services'
       fullPath: '/services/'
-      preLoaderRoute: typeof ServicesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof SiteServicesIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
-    '/services/$slug': {
-      id: '/services/$slug'
+    '/_site/services/$slug': {
+      id: '/_site/services/$slug'
       path: '/services/$slug'
       fullPath: '/services/$slug'
-      preLoaderRoute: typeof ServicesSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof SiteServicesSlugRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
     '/admin/cvs/': {
       id: '/admin/cvs/'
@@ -583,6 +591,30 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface SiteRouteRouteChildren {
+  SiteIndexRoute: typeof SiteIndexRoute
+  SiteBlogSlugRoute: typeof SiteBlogSlugRoute
+  SiteProjectsSlugRoute: typeof SiteProjectsSlugRoute
+  SiteServicesSlugRoute: typeof SiteServicesSlugRoute
+  SiteBlogIndexRoute: typeof SiteBlogIndexRoute
+  SiteProjectsIndexRoute: typeof SiteProjectsIndexRoute
+  SiteServicesIndexRoute: typeof SiteServicesIndexRoute
+}
+
+const SiteRouteRouteChildren: SiteRouteRouteChildren = {
+  SiteIndexRoute: SiteIndexRoute,
+  SiteBlogSlugRoute: SiteBlogSlugRoute,
+  SiteProjectsSlugRoute: SiteProjectsSlugRoute,
+  SiteServicesSlugRoute: SiteServicesSlugRoute,
+  SiteBlogIndexRoute: SiteBlogIndexRoute,
+  SiteProjectsIndexRoute: SiteProjectsIndexRoute,
+  SiteServicesIndexRoute: SiteServicesIndexRoute,
+}
+
+const SiteRouteRouteWithChildren = SiteRouteRoute._addFileChildren(
+  SiteRouteRouteChildren,
+)
+
 interface AdminRouteRouteChildren {
   AdminExperienceRoute: typeof AdminExperienceRoute
   AdminMessagesRoute: typeof AdminMessagesRoute
@@ -626,19 +658,13 @@ const ApiPaypalOrdersRouteWithChildren = ApiPaypalOrdersRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  SiteRouteRoute: SiteRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   McpRoute: McpRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SiteDotwebmanifestRoute: SiteDotwebmanifestRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  BlogSlugRoute: BlogSlugRoute,
-  ProjectsSlugRoute: ProjectsSlugRoute,
-  ServicesSlugRoute: ServicesSlugRoute,
-  BlogIndexRoute: BlogIndexRoute,
-  ProjectsIndexRoute: ProjectsIndexRoute,
-  ServicesIndexRoute: ServicesIndexRoute,
   ApiPaypalOrdersRoute: ApiPaypalOrdersRouteWithChildren,
   ApiPaypalWebhookRoute: ApiPaypalWebhookRoute,
   OgProjectsFileRoute: OgProjectsFileRoute,

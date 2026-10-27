@@ -2,14 +2,14 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { ServiceCard } from "#/components/cards";
 import { canPayOnline, PayPalCheckout } from "#/components/PayPalCheckout";
-import { ContactForm, SiteFooter, SiteHeader } from "#/components/site";
+import { ContactForm } from "#/components/site";
 import { ChipList, EmptyState, Icon, type IconName, LinkButton, MarkArt, SectionHeading } from "#/design-system/ui";
 import { trackView } from "#/lib/analytics";
 import { parseCheckoutPrice, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
 import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
 import { getService } from "#/server/fn/public";
 
-export const Route = createFileRoute("/services/$slug")({
+export const Route = createFileRoute("/_site/services/$slug")({
 	loader: async ({ params }) => {
 		const data = await getService({ data: params.slug });
 		if (!data) throw notFound();
@@ -52,7 +52,6 @@ function ServicePage() {
 	useEffect(() => trackView("service", s.slug, s.title, price ?? undefined), [s.slug, s.title, price?.amount, price?.currency]);
 	return (
 		<>
-			<SiteHeader />
 			<main id="main" className="site">
 				<section className="mh-hero" aria-labelledby="service-title">
 					<MarkArt className="mh-hero__art" position="right" />
@@ -106,7 +105,6 @@ function ServicePage() {
 					</nav>
 				)}
 			</main>
-			<SiteFooter />
 		</>
 	);
 }

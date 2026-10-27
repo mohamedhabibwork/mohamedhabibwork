@@ -1,7 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import Markdown from "react-markdown";
 import { BlogCard } from "#/components/cards";
-import { SiteFooter, SiteHeader } from "#/components/site";
 import { ChipList, EmptyState, Icon, LinkButton } from "#/design-system/ui";
 import { readingMinutes, textDirection } from "#/lib/blog";
 import {
@@ -14,7 +13,7 @@ import {
 } from "#/lib/seo";
 import { getBlogPost } from "#/server/fn/public";
 
-export const Route = createFileRoute("/blog/$slug")({
+export const Route = createFileRoute("/_site/blog/$slug")({
 	loader: async ({ params }) => {
 		const data = await getBlogPost({ data: params.slug });
 		if (!data) throw notFound();
@@ -73,7 +72,6 @@ function BlogPostPage() {
 		: null;
 	return (
 		<>
-			<SiteHeader />
 			<main id="main" className="site">
 				<article
 					className="blog-post site-section"
@@ -125,7 +123,6 @@ function BlogPostPage() {
 					</section>
 				)}
 			</main>
-			<SiteFooter />
 		</>
 	);
 }
