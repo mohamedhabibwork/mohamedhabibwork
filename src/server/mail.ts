@@ -1,28 +1,27 @@
-type EmailBinding = {
-	send(message: {
-		from: { email: string; name?: string };
-		to: string;
-		replyTo?: string;
-		subject: string;
-		text: string;
-		html: string;
-	}): Promise<{ messageId: string }>;
-};
+import { createTransport, type Transporter } from "nodemailer";
 
 const esc = (s: string) =>
 	s.replace(/[<>&'"]/g, (c) => `&#${c.charCodeAt(0)};`);
 /** Strips CR/LF so visitor input can't inject headers via the subject. */
 const oneLine = (s: string) => s.replace(/[\r\n]+/g, " ").trim();
 
-async function emailBinding(): Promise<EmailBinding | null> {
-	try {
-		const { env } = (await import("cloudflare:workers")) as {
-			env: { EMAIL?: EmailBinding };
-		};
-		return env.EMAIL ?? null;
-	} catch {
-		return null;
-	}
+const SMTP_IMPLICIT_TLS_PORT = 465;
+
+let transport: Transporter | null = null;
+
+/** SMTP transport built from SMTP_* env vars; null when host, user or password is missing. */
+function mailTransport(): Transporter | null {
+	if (transport) return transport;
+	const host = process.env.SMTP_HOST;
+	const user = process.env.SMTP_USER;
+	const pass = process.env.SMTP_PASSWORD;
+	if (!host || !user || !pass) return null;
+	const port = Number(process.env.SMTP_PORT ?? SMTP_IMPLICIT_TLS_PORT);
+	const secure = process.env.SMTP_SECURE
+		? process.env.SMTP_SECURE === "true"
+		: port === SMTP_IMPLICIT_TLS_PORT;
+	transport = createTransport({ host, port, secure, auth: { user, pass } });
+	return transport;
 }
 
 type PaymentNotice = {
@@ -40,10 +39,10 @@ type PaymentNotice = {
 export async function notifyOwnerOfPayment(p: PaymentNotice): Promise<boolean> {
 	const from = process.env.MAIL_FROM;
 	const to = process.env.CONTACT_TO;
-	const binding = await emailBinding();
-	if (!binding || !from || !to) {
+	const smtp = mailTransport();
+	if (!smtp || !from || !to) {
 		console.warn(
-			"Payment email skipped: EMAIL binding, MAIL_FROM or CONTACT_TO not configured",
+			"Payment email skipped: SMTP_* env, MAIL_FROM or CONTACT_TO not configured",
 		);
 		return false;
 	}
@@ -61,8 +60,8 @@ export async function notifyOwnerOfPayment(p: PaymentNotice): Promise<boolean> {
 ${p.notes ? `<p>They want to discuss:</p><blockquote style="border-left:3px solid #c2f852;margin:0;padding:8px 16px;white-space:pre-wrap">${esc(p.notes)}</blockquote>` : ""}
 <p style="color:#666;font-size:12px">PayPal order ${esc(p.paypalOrderId)}${p.captureId ? ` · transaction ${esc(p.captureId)}` : ""}. Reply to schedule the session.</p>`;
 	try {
-		await binding.send({
-			from: { email: from, name: "Portfolio payments" },
+		await smtp.sendMail({
+			from: { address: from, name: "Portfolio payments" },
 			to,
 			...(p.payerEmail ? { replyTo: p.payerEmail } : {}),
 			subject,
@@ -96,10 +95,10 @@ export async function notifyOwnerOfMessage(
 ): Promise<boolean> {
 	const from = process.env.MAIL_FROM;
 	const to = process.env.CONTACT_TO;
-	const binding = await emailBinding();
-	if (!binding || !from || !to) {
+	const smtp = mailTransport();
+	if (!smtp || !from || !to) {
 		console.warn(
-			"Contact email skipped: EMAIL binding, MAIL_FROM or CONTACT_TO not configured",
+			"Contact email skipped: SMTP_* env, MAIL_FROM or CONTACT_TO not configured",
 		);
 		return false;
 	}
@@ -115,8 +114,8 @@ export async function notifyOwnerOfMessage(
 <blockquote style="border-left:3px solid #c2f852;margin:0;padding:8px 16px;white-space:pre-wrap">${esc(msg.body)}</blockquote>
 <p style="color:#666;font-size:12px">Sent from the contact form. Reply to answer directly.</p>`;
 	try {
-		await binding.send({
-			from: { email: from, name: "Portfolio contact form" },
+		await smtp.sendMail({
+			from: { address: from, name: "Portfolio contact form" },
 			to,
 			replyTo: msg.email,
 			subject,

@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequestHeader } from "@tanstack/react-start/server";
+import { clientIp } from "#/server/client-ip";
 import { and, asc, desc, eq, inArray, ne, sql } from "drizzle-orm";
 import { z } from "zod";
 import { withDb } from "#/db";
@@ -244,7 +244,7 @@ export const sendMessage = createServerFn({ method: "POST" })
 			!(await verifyTurnstile(
 				data["cf-turnstile-response"],
 				"contact",
-				getRequestHeader("cf-connecting-ip"),
+				clientIp(),
 			))
 		) {
 			return {
