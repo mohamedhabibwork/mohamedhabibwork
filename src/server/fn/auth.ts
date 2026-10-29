@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequestHeader } from "@tanstack/react-start/server";
+import { clientIp } from "#/server/client-ip";
 import { z } from "zod";
 import { verifyTurnstile } from "#/server/turnstile";
 import { adminCredentials, createSession, destroySession, isSignedIn, verifyPassword } from "#/server/auth";
@@ -9,7 +9,7 @@ export const getSession = createServerFn({ method: "GET" }).handler(async () => 
 export const signIn = createServerFn({ method: "POST" })
 	.validator((input: unknown) => z.object({ email: z.string().trim().email(), password: z.string().min(1).max(200), turnstile: z.string().max(2048).default("") }).parse(input))
 	.handler(async ({ data }) => {
-		if (!(await verifyTurnstile(data.turnstile, "login", getRequestHeader("cf-connecting-ip")))) {
+		if (!(await verifyTurnstile(data.turnstile, "login", clientIp()))) {
 			return { ok: false as const, error: "Please complete the verification and try again." };
 		}
 		const admin = adminCredentials();

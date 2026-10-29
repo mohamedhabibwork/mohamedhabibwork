@@ -1,0 +1,16 @@
+node_modules
+.output
+.nitro
+.tanstack
+.wrangler
+dist
+.git
+.env
+.env.local
+brand
+docs
+drizzle
+.remember
+.claude
+*.pdf
+*.png
