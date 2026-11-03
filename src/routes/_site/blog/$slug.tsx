@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import Markdown from "react-markdown";
 import { BlogCard } from "#/components/cards";
 import { ChipList, EmptyState, Icon, LinkButton } from "#/design-system/ui";
-import { postLocale, readingMinutes, textDirection } from "#/lib/blog";
+import { postAlternates, postLocale, readingMinutes, textDirection } from "#/lib/blog";
 import {
 	jsonLd,
 	localizedUrl,
@@ -12,6 +12,8 @@ import {
 	truncate,
 } from "#/lib/seo";
 import { getBlogPost } from "#/server/fn/public";
+import { m } from "#/paraglide/messages";
+import { getLocale, localizeHref } from "#/paraglide/runtime";
 
 export const Route = createFileRoute("/_site/blog/$slug")({
 	loader: async ({ params }) => {
@@ -22,12 +24,12 @@ export const Route = createFileRoute("/_site/blog/$slug")({
 	head: ({ loaderData, params }) => {
 		if (!loaderData)
 			return seo({
-				title: pageTitle("Post not found"),
-				description: "This post doesn't exist.",
+				title: pageTitle(m.blog_not_found_title()),
+				description: m.blog_not_found_seo(),
 				path: `/blog/${params.slug}`,
 				noindex: true,
 			});
-		const { post } = loaderData;
+		const { post, translation } = loaderData;
 		const path = `/blog/${post.slug}`;
 		const description = truncate(post.excerpt || post.body);
 		const contentLocale = postLocale(post);
@@ -37,6 +39,7 @@ export const Route = createFileRoute("/_site/blog/$slug")({
 			path,
 			type: "article",
 			contentLocale,
+			alternates: postAlternates(post, translation?.slug),
 		});
 		const article = {
 			"@context": "https://schema.org",
@@ -56,9 +59,9 @@ export const Route = createFileRoute("/_site/blog/$slug")({
 		<main id="main" className="site" style={{ padding: "96px 0" }}>
 			<EmptyState
 				icon="search"
-				title="Post not found"
-				description="It may have been renamed or removed."
-				action={<LinkButton href="/">Back to home</LinkButton>}
+				title={m.blog_not_found_title()}
+				description={m.blog_not_found_body()}
+				action={<LinkButton href={localizeHref("/")}>{m.not_found_home()}</LinkButton>}
 			/>
 		</main>
 	),
@@ -71,7 +74,7 @@ function BlogPostPage() {
 	const minutes = readingMinutes(post.body);
 	const dir = textDirection(post.title, post.excerpt, post.body);
 	const published = post.publishedAt
-		? new Date(post.publishedAt).toLocaleDateString("en-GB", {
+		? new Date(post.publishedAt).toLocaleDateString(getLocale() === "ar" ? "ar-EG" : "en-GB", {
 				day: "numeric",
 				month: "short",
 				year: "numeric",
@@ -85,12 +88,12 @@ function BlogPostPage() {
 					className="blog-post site-section"
 					aria-labelledby="post-title"
 					dir={dir}
-					lang={dir === "rtl" ? "ar" : undefined}
+					lang={dir === "rtl" ? "ar" : "en"}
 				>
-					<nav className="blog-post__crumbs" aria-label="Breadcrumb">
-						<Link to="/">Home</Link>
+					<nav className="blog-post__crumbs" aria-label={m.blog_breadcrumb()}>
+						<Link to="/">{m.nav_home()}</Link>
 						<span aria-hidden>/</span>
-						<Link to="/blog">Blog</Link>
+						<Link to="/blog">{m.nav_blog()}</Link>
 						{category && (
 							<>
 								<span aria-hidden>/</span>
@@ -104,27 +107,27 @@ function BlogPostPage() {
 					{post.excerpt && <p className="blog-post__lead">{post.excerpt}</p>}
 					<p className="blog-post__byline">
 						<strong>Mohamed Habib</strong>
-						{published && <> · {published}</>} · {minutes} min read
+						{published && <> · {published}</>} · {m.blog_min_read({ count: minutes })}
 					</p>
 					<div className="blog-post__body">
 						<Markdown>{post.body}</Markdown>
 					</div>
-					{post.tags.length > 0 && <ChipList items={post.tags} label="Tags" />}
+					{post.tags.length > 0 && <ChipList items={post.tags} label={m.blog_tags()} />}
 				</article>
 
 				{related.length > 0 && (
 					<section className="site-section" aria-labelledby="related-title">
 						<h2 className="blog-related__title" id="related-title">
-							Related
+							{m.blog_related()}
 						</h2>
 						<div className="blog-related__grid">
 							{related.map((p) => (
 								<BlogCard key={p.slug} post={p} />
 							))}
 							<Link className="blog-cta" to="/services">
-								<span className="blog-cta__eyebrow">Services</span>
+								<span className="blog-cta__eyebrow">{m.nav_services()}</span>
 								<span className="blog-cta__title">
-									See how we can help <Icon name="arrow-right" size={16} />
+									{m.blog_cta()} <Icon name="arrow-right" size={16} />
 								</span>
 							</Link>
 						</div>

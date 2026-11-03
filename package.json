@@ -23,7 +23,8 @@
     "ds:sync": "node scripts/sync-design-system.mjs",
     "hash-password": "node scripts/hash-password.mjs",
     "set-admin-password": "node scripts/set-admin-password.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "bun test ./src/"
   },
   "dependencies": {
     "@faker-js/faker": "^10.3.0",

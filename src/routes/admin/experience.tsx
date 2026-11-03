@@ -64,6 +64,13 @@ function ExperiencePage() {
 						<Checkbox label="I currently work here" checked={edit.current} onChange={(e) => setEdit({ ...edit, current: e.target.checked })} />
 						<Textarea label="Summary" rows={2} value={edit.summary} onChange={(e) => setEdit({ ...edit, summary: e.target.value })} />
 						<LinesField label="Highlights" value={edit.highlights} onChange={(highlights) => setEdit({ ...edit, highlights })} rows={5} hint="One per line. Start with a verb; include a number." />
+						<fieldset className="form-grid" style={{ border: 0, padding: 0, margin: 0 }}>
+							<legend className="mh-formsec__title">Arabic</legend>
+							<p className="mh-formsec__desc">Leave a field empty to show the English text on the Arabic site.</p>
+							<Input label="Role (Arabic)" dir="rtl" value={edit.roleAr ?? ""} onChange={(e) => setEdit({ ...edit, roleAr: e.target.value })} error={fe("roleAr")} />
+							<Textarea label="Summary (Arabic)" dir="rtl" rows={2} value={edit.summaryAr ?? ""} onChange={(e) => setEdit({ ...edit, summaryAr: e.target.value })} />
+							<LinesField label="Highlights (Arabic)" dir="rtl" value={edit.highlightsAr ?? []} onChange={(highlightsAr) => setEdit({ ...edit, highlightsAr })} rows={5} />
+						</fieldset>
 						<LinesField label="Tech" value={edit.tech} onChange={(tech) => setEdit({ ...edit, tech })} rows={3} />
 					</form>
 				</Modal>

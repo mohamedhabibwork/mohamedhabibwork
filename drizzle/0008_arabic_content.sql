@@ -1,0 +1,22 @@
+ALTER TABLE "blog_posts" ADD COLUMN "translation_of" integer;--> statement-breakpoint
+ALTER TABLE "experiences" ADD COLUMN "role_ar" text;--> statement-breakpoint
+ALTER TABLE "experiences" ADD COLUMN "summary_ar" text;--> statement-breakpoint
+ALTER TABLE "experiences" ADD COLUMN "highlights_ar" text[];--> statement-breakpoint
+ALTER TABLE "profile" ADD COLUMN "headline_ar" text;--> statement-breakpoint
+ALTER TABLE "profile" ADD COLUMN "tagline_ar" text;--> statement-breakpoint
+ALTER TABLE "profile" ADD COLUMN "summary_ar" text;--> statement-breakpoint
+ALTER TABLE "profile" ADD COLUMN "availability_ar" text;--> statement-breakpoint
+ALTER TABLE "projects" ADD COLUMN "title_ar" text;--> statement-breakpoint
+ALTER TABLE "projects" ADD COLUMN "subtitle_ar" text;--> statement-breakpoint
+ALTER TABLE "projects" ADD COLUMN "summary_ar" text;--> statement-breakpoint
+ALTER TABLE "projects" ADD COLUMN "description_ar" text;--> statement-breakpoint
+ALTER TABLE "projects" ADD COLUMN "role_ar" text;--> statement-breakpoint
+ALTER TABLE "projects" ADD COLUMN "challenge_ar" text;--> statement-breakpoint
+ALTER TABLE "projects" ADD COLUMN "outcomes_ar" text[];--> statement-breakpoint
+ALTER TABLE "projects" ADD COLUMN "features_ar" text[];--> statement-breakpoint
+ALTER TABLE "services" ADD COLUMN "title_ar" text;--> statement-breakpoint
+ALTER TABLE "services" ADD COLUMN "summary_ar" text;--> statement-breakpoint
+ALTER TABLE "services" ADD COLUMN "description_ar" text;--> statement-breakpoint
+ALTER TABLE "services" ADD COLUMN "deliverables_ar" text[];--> statement-breakpoint
+ALTER TABLE "blog_posts" ADD CONSTRAINT "blog_posts_translation_of_blog_posts_id_fk" FOREIGN KEY ("translation_of") REFERENCES "public"."blog_posts"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
+CREATE INDEX "blog_posts_translation_idx" ON "blog_posts" USING btree ("translation_of");

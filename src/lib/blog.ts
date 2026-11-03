@@ -29,9 +29,30 @@ export const textDirection = (...parts: string[]): "rtl" | "ltr" => {
 };
 
 /** The language a post is written in. A post has one language, so this also picks its canonical URL. */
-export const postLocale = (post: { title: string; excerpt?: string | null; body?: string }): "en" | "ar" =>
-	textDirection(post.title, post.excerpt ?? "", post.body ?? "") === "rtl" ? "ar" : "en";
+export const postLocale = (post: {
+	title: string;
+	excerpt?: string | null;
+	body?: string;
+}): "en" | "ar" =>
+	textDirection(post.title, post.excerpt ?? "", post.body ?? "") === "rtl"
+		? "ar"
+		: "en";
 
-/** The language most of `posts` are written in, for pages that list them. */
-export const dominantPostLocale = (posts: { title: string; excerpt?: string | null }[]): "en" | "ar" =>
-	posts.filter((p) => postLocale(p) === "ar").length * 2 > posts.length ? "ar" : "en";
+/** The paths of a post and its paired translation, for hreflang. Posts without a pair have one version. */
+export const postAlternates = (
+	post: { slug: string; title: string; excerpt?: string | null; body?: string },
+	translationSlug: string | null | undefined,
+) => {
+	if (!translationSlug) return undefined;
+	const own = `/blog/${post.slug}`;
+	const other = `/blog/${translationSlug}`;
+	return postLocale(post) === "ar"
+		? { en: other, ar: own }
+		: { en: own, ar: other };
+};
+
+/** The language most posts are written in, for pages that list them. */
+export const dominantPostLocale = (locales: ("en" | "ar")[]): "en" | "ar" =>
+	locales.filter((locale) => locale === "ar").length * 2 > locales.length
+		? "ar"
+		: "en";

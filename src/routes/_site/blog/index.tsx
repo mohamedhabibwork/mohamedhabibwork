@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BlogCard } from "#/components/cards";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
-import { dominantPostLocale, postLocale } from "#/lib/blog";
+import { dominantPostLocale } from "#/lib/blog";
 import {
 	breadcrumbs,
 	jsonLd,
@@ -10,27 +10,18 @@ import {
 	pageTitle,
 	seo,
 } from "#/lib/seo";
+import { m } from "#/paraglide/messages";
 import { getBlogPosts } from "#/server/fn/public";
-
-const DESCRIPTION =
-	"Notes on software engineering, self-hosting, cloud infrastructure and the tools I use day to day.";
-
-/** The index lists the same posts under both prefixes, so its metadata follows the language they're written in. */
-const META = {
-	en: { title: "Software Engineering Blog", description: DESCRIPTION },
-	ar: {
-		title: "مدونة هندسة البرمجيات",
-		description:
-			"مقالات عملية عن هندسة البرمجيات والاستضافة الذاتية والبنية السحابية والأدوات اللي بستخدمها كل يوم.",
-	},
-};
 
 export const Route = createFileRoute("/_site/blog/")({
 	loader: () => getBlogPosts(),
 	head: ({ loaderData }) => {
 		const posts = loaderData ?? [];
-		const contentLocale = dominantPostLocale(posts);
-		const { title, description } = META[contentLocale];
+		const contentLocale = dominantPostLocale(posts.map((p) => p.locale));
+		// The index lists the same posts under both prefixes, so its metadata follows the language they're written in.
+		const locale = contentLocale;
+		const title = m.blog_seo_title({}, { locale });
+		const description = m.blog_seo_description({}, { locale });
 		const url = localizedUrl("/blog", contentLocale);
 		const base = seo({
 			title: pageTitle(title),
@@ -48,7 +39,7 @@ export const Route = createFileRoute("/_site/blog/")({
 			blogPost: posts.map((p) => ({
 				"@type": "BlogPosting",
 				headline: p.title,
-				url: localizedUrl(`/blog/${p.slug}`, postLocale(p)),
+				url: localizedUrl(`/blog/${p.slug}`, p.locale),
 				datePublished: p.publishedAt
 					? new Date(p.publishedAt).toISOString()
 					: undefined,
@@ -56,7 +47,10 @@ export const Route = createFileRoute("/_site/blog/")({
 		};
 		return {
 			...base,
-			scripts: [jsonLd(blog), jsonLd(breadcrumbs(["Blog", url]))],
+			scripts: [
+				jsonLd(blog),
+				jsonLd(breadcrumbs(locale, [m.nav_blog({}, { locale }), "/blog"])),
+			],
 		};
 	},
 	component: BlogIndexPage,
@@ -70,15 +64,15 @@ function BlogIndexPage() {
 				<section className="site-section">
 					<SectionHeading
 						as="h1"
-						eyebrow="Writing"
-						title="Blog"
-						description={DESCRIPTION}
+						eyebrow={m.blog_eyebrow()}
+						title={m.nav_blog()}
+						description={m.blog_seo_description()}
 					/>
 					{posts.length === 0 ? (
 						<EmptyState
 							icon="search"
-							title="No posts yet"
-							description="Check back soon."
+							title={m.blog_empty_title()}
+							description={m.blog_empty_body()}
 						/>
 					) : (
 						<div className="blog-related__grid">
