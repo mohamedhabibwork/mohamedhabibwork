@@ -1,3 +1,5 @@
+import { type Locale, localizeHref } from "#/paraglide/runtime";
+
 /** Posts shown in the Related section of a blog post. */
 export const RELATED_POST_COUNT = 2;
 
@@ -50,6 +52,14 @@ export const postAlternates = (
 		? { en: other, ar: own }
 		: { en: own, ar: other };
 };
+
+/** Where a post lives: the prefix of the language it's written in, whichever locale is showing. */
+export const postHref = (post: { slug: string; locale: Locale }) =>
+	localizeHref(`/blog/${post.slug}`, { locale: post.locale });
+
+/** The other-language page for a post: its translation, or the blog index when it has none. */
+export const postSwitchPath = (translationSlug: string | null | undefined) =>
+	translationSlug ? `/blog/${translationSlug}` : "/blog";
 
 /** The language most posts are written in, for pages that list them. */
 export const dominantPostLocale = (locales: ("en" | "ar")[]): "en" | "ar" =>

@@ -16,6 +16,14 @@ export const DEFAULT_OG_IMAGE = {
 /** Stable JSON-LD node id so every page can reference the same Person. */
 export const PERSON_ID = `${SITE_URL}/#person`;
 
+/** The author of every post, spelled out because `@id` alone doesn't resolve on pages without the Person node. */
+export const AUTHOR = {
+	"@type": "Person",
+	"@id": PERSON_ID,
+	name: SITE_NAME,
+	url: `${SITE_URL}/`,
+};
+
 /** Search results cut titles around 60 chars and descriptions around 160. */
 export const TITLE_MAX = 60;
 export const DESCRIPTION_MAX = 160;
@@ -96,7 +104,24 @@ type SeoInput = {
 	contentLocale?: Locale;
 	/** The page's path in each language, when it has both. Adds hreflang tags. */
 	alternates?: LocalePaths;
+	/** Open Graph article fields, for `type: "article"`. */
+	article?: { publishedTime?: string; modifiedTime?: string; section?: string };
 };
+
+const articleMeta = ({
+	publishedTime,
+	modifiedTime,
+	section,
+}: NonNullable<SeoInput["article"]>) => [
+	...(publishedTime
+		? [{ property: "article:published_time", content: publishedTime }]
+		: []),
+	...(modifiedTime
+		? [{ property: "article:modified_time", content: modifiedTime }]
+		: []),
+	...(section ? [{ property: "article:section", content: section }] : []),
+	{ property: "article:author", content: AUTHOR.url },
+];
 
 /** Title, description, canonical, Open Graph and Twitter tags for a route's `head()`. */
 export function seo({
@@ -108,6 +133,7 @@ export function seo({
 	noindex = false,
 	contentLocale = "en",
 	alternates,
+	article,
 }: SeoInput) {
 	const url = localizedUrl(alternates?.[contentLocale] ?? path, contentLocale);
 	const img = absoluteUrl(image.url);
@@ -129,6 +155,7 @@ export function seo({
 						},
 					]
 				: []),
+			...(article ? articleMeta(article) : []),
 			{ property: "og:title", content: title },
 			{ property: "og:description", content: desc },
 			{ property: "og:url", content: url },

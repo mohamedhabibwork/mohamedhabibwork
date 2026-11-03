@@ -11,6 +11,34 @@ const metaOf = (head: ReturnType<typeof seo>, property: string) =>
 	head.meta.find((m) => "property" in m && m.property === property);
 
 describe("seo", () => {
+	test("an article page carries its publish and update dates", () => {
+		const head = seo({
+			...base,
+			path: "/blog/x",
+			type: "article",
+			article: {
+				publishedTime: "2026-11-01T00:00:00.000Z",
+				modifiedTime: "2026-11-02T00:00:00.000Z",
+				section: "Node.js",
+			},
+		});
+		assert.equal(
+			metaOf(head, "article:published_time")?.content,
+			"2026-11-01T00:00:00.000Z",
+		);
+		assert.equal(
+			metaOf(head, "article:modified_time")?.content,
+			"2026-11-02T00:00:00.000Z",
+		);
+		assert.equal(metaOf(head, "article:section")?.content, "Node.js");
+		assert.equal(metaOf(head, "article:author")?.content, `${SITE_URL}/`);
+	});
+
+	test("a page without article data has no article tags", () => {
+		const head = seo({ ...base, path: "/blog" });
+		assert.equal(metaOf(head, "article:author"), undefined);
+	});
+
 	test("an untranslated page has an English canonical and no hreflang", () => {
 		const head = seo({ ...base, path: "/projects/too-bus" });
 		assert.equal(canonicalOf(head), `${SITE_URL}/projects/too-bus`);

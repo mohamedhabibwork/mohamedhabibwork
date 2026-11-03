@@ -3,6 +3,7 @@ import { asc, desc, eq } from "drizzle-orm";
 import { withDb } from "#/db";
 import { blogPosts, experiences, projects, services } from "#/db/schema";
 import { dominantPostLocale, postAlternates, postLocale } from "#/lib/blog";
+import { escapeXml } from "#/lib/feed";
 import {
 	hasArabic,
 	mostlyArabic,
@@ -18,9 +19,6 @@ import {
 	localizedUrl,
 } from "#/lib/seo";
 import type { Locale } from "#/paraglide/runtime";
-
-const escapeXml = (s: string) =>
-	s.replace(/[<>&'"]/g, (c) => `&#${c.charCodeAt(0)};`);
 
 type SitemapPage = {
 	path: string;
@@ -78,6 +76,7 @@ export const Route = createFileRoute("/sitemap.xml")({
 								excerpt: blogPosts.excerpt,
 								body: blogPosts.body,
 								updatedAt: blogPosts.updatedAt,
+								coverUrl: blogPosts.coverUrl,
 							})
 							.from(blogPosts)
 							.where(eq(blogPosts.published, true))
@@ -155,6 +154,7 @@ export const Route = createFileRoute("/sitemap.xml")({
 								path: `/blog/${r.slug}`,
 								lastmod: r.updatedAt,
 								priority: "0.7",
+								image: r.coverUrl || undefined,
 							},
 							postLocale(r),
 							postAlternates(r, translationSlug(r)),
