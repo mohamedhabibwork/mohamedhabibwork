@@ -121,7 +121,10 @@ export const Route = createFileRoute("/sitemap.xml")({
 						mostlyArabic(svc.map(serviceArabic)),
 					),
 					{
-						loc: localizedUrl("/blog", dominantPostLocale(posts)),
+						loc: localizedUrl(
+							"/blog",
+							dominantPostLocale(posts.map((p) => postLocale(p))),
+						),
 						lastmod: newest(posts),
 						priority: "0.8",
 					},

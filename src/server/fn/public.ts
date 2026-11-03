@@ -14,6 +14,7 @@ import {
 } from "#/db/schema";
 import {
 	minutesForWords,
+	postLocale,
 	RELATED_POST_COUNT,
 	readingMinutes,
 } from "#/lib/blog";
@@ -177,7 +178,7 @@ export const getService = createServerFn({ method: "GET" })
 
 const BLOG_INDEX_LIMIT = 100;
 
-/** Published posts for /blog, newest first. Word count comes from SQL so bodies stay on the server. */
+/** Published posts for /blog, newest first. Language and word count are worked out here so bodies stay on the server. */
 export const getBlogPosts = createServerFn({ method: "GET" }).handler(
 	async () =>
 		withDb(async (db) => {
@@ -188,14 +189,16 @@ export const getBlogPosts = createServerFn({ method: "GET" }).handler(
 					excerpt: blogPosts.excerpt,
 					tags: blogPosts.tags,
 					publishedAt: blogPosts.publishedAt,
+					body: blogPosts.body,
 					words: sql<number>`coalesce(array_length(regexp_split_to_array(trim(${blogPosts.body}), '\\s+'), 1), 0)`,
 				})
 				.from(blogPosts)
 				.where(eq(blogPosts.published, true))
 				.orderBy(desc(blogPosts.publishedAt))
 				.limit(BLOG_INDEX_LIMIT);
-			return rows.map(({ words, ...post }) => ({
+			return rows.map(({ words, body, ...post }) => ({
 				...post,
+				locale: postLocale({ ...post, body }),
 				minutes: minutesForWords(Number(words)),
 			}));
 		}),

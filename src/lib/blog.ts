@@ -51,10 +51,8 @@ export const postAlternates = (
 		: { en: own, ar: other };
 };
 
-/** The language most of `posts` are written in, for pages that list them. */
-export const dominantPostLocale = (
-	posts: { title: string; excerpt?: string | null }[],
-): "en" | "ar" =>
-	posts.filter((p) => postLocale(p) === "ar").length * 2 > posts.length
+/** The language most posts are written in, for pages that list them. */
+export const dominantPostLocale = (locales: ("en" | "ar")[]): "en" | "ar" =>
+	locales.filter((locale) => locale === "ar").length * 2 > locales.length
 		? "ar"
 		: "en";

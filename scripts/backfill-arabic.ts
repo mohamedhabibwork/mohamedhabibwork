@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "../src/db/schema.ts";
+import { missingArabic } from "../src/lib/localized.ts";
 import { experienceArabic, profileArabic, projectArabic, serviceArabic } from "./arabic-content.ts";
 
 config({ path: [".env.local", ".env"] });
@@ -14,11 +15,6 @@ config({ path: [".env.local", ".env"] });
 const apply = process.argv.includes("--apply");
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const db = drizzle(pool, { schema });
-
-/** The fields of `twins` whose column is still empty on `row`. */
-function missing<T extends Record<string, unknown>>(row: Record<string, unknown>, twins: T): Partial<T> {
-	return Object.fromEntries(Object.entries(twins).filter(([key]) => row[key] == null)) as Partial<T>;
-}
 
 async function main() {
 	await db.transaction(async (tx) => {
@@ -29,25 +25,25 @@ async function main() {
 		};
 
 		for (const row of await tx.select().from(schema.profile)) {
-			const patch = missing(row, profileArabic);
+			const patch = missingArabic(row, profileArabic);
 			if (report("profile", String(row.id), patch)) await tx.update(schema.profile).set(patch).where(eq(schema.profile.id, row.id));
 		}
 		for (const row of await tx.select().from(schema.experiences)) {
 			const twins = experienceArabic[row.company];
 			if (!twins) continue;
-			const patch = missing(row, twins);
+			const patch = missingArabic(row, twins);
 			if (report("experiences", row.company, patch)) await tx.update(schema.experiences).set(patch).where(eq(schema.experiences.id, row.id));
 		}
 		for (const row of await tx.select().from(schema.projects)) {
 			const twins = projectArabic[row.slug];
 			if (!twins) continue;
-			const patch = missing(row, twins);
+			const patch = missingArabic(row, twins);
 			if (report("projects", row.slug, patch)) await tx.update(schema.projects).set(patch).where(eq(schema.projects.id, row.id));
 		}
 		for (const row of await tx.select().from(schema.services)) {
 			const twins = serviceArabic[row.slug];
 			if (!twins) continue;
-			const patch = missing(row, twins);
+			const patch = missingArabic(row, twins);
 			if (report("services", row.slug, patch)) await tx.update(schema.services).set(patch).where(eq(schema.services.id, row.id));
 		}
 	});

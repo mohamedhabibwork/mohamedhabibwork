@@ -103,6 +103,18 @@ export function portfolioHasArabic(data: PortfolioRows): boolean {
 	);
 }
 
+/** The fields of `twins` whose column on `row` holds no text yet. Admin forms save blank twins as `""` or `[]`. */
+export function missingArabic<T extends Record<string, unknown>>(
+	row: Record<string, unknown>,
+	twins: T,
+): Partial<T> {
+	return Object.fromEntries(
+		Object.entries(twins).filter(
+			([key]) => !hasContent(row[key] as Translatable | null | undefined),
+		),
+	) as Partial<T>;
+}
+
 type ArKey<K extends string> = `${K}Ar`;
 
 /**

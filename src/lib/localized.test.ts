@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import { describe, test } from "node:test";
-import { hasArabic, mostlyArabic, portfolioHasArabic } from "#/lib/localized";
+import {
+	hasArabic,
+	missingArabic,
+	mostlyArabic,
+	portfolioHasArabic,
+} from "#/lib/localized";
 
 const translatedService = {
 	title: "A",
@@ -39,6 +44,20 @@ describe("hasArabic", () => {
 		};
 		assert.equal(hasArabic(row, ["features"]), true);
 		assert.equal(hasArabic(row, ["outcomes"]), false);
+	});
+});
+
+describe("missingArabic", () => {
+	const twins = { titleAr: "أ", featuresAr: ["س"], summaryAr: "ب" };
+
+	test("fills null, blank and empty-array columns", () => {
+		const row = { titleAr: null, featuresAr: [], summaryAr: "  " };
+		assert.deepEqual(missingArabic(row, twins), twins);
+	});
+
+	test("keeps text that is already there", () => {
+		const row = { titleAr: "موجود", featuresAr: ["موجود"], summaryAr: null };
+		assert.deepEqual(missingArabic(row, twins), { summaryAr: "ب" });
 	});
 });
 

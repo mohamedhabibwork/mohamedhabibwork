@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BlogCard } from "#/components/cards";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
-import { dominantPostLocale, postLocale } from "#/lib/blog";
+import { dominantPostLocale } from "#/lib/blog";
 import {
 	breadcrumbs,
 	jsonLd,
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/_site/blog/")({
 	loader: () => getBlogPosts(),
 	head: ({ loaderData }) => {
 		const posts = loaderData ?? [];
-		const contentLocale = dominantPostLocale(posts);
+		const contentLocale = dominantPostLocale(posts.map((p) => p.locale));
 		// The index lists the same posts under both prefixes, so its metadata follows the language they're written in.
 		const locale = contentLocale;
 		const title = m.blog_seo_title({}, { locale });
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/_site/blog/")({
 			blogPost: posts.map((p) => ({
 				"@type": "BlogPosting",
 				headline: p.title,
-				url: localizedUrl(`/blog/${p.slug}`, postLocale(p)),
+				url: localizedUrl(`/blog/${p.slug}`, p.locale),
 				datePublished: p.publishedAt
 					? new Date(p.publishedAt).toISOString()
 					: undefined,
