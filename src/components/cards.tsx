@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ChipList, Icon, type IconName } from "#/design-system/ui";
 import { textDirection } from "#/lib/blog";
+import { m } from "#/paraglide/messages";
 
 type ProjectCardData = {
 	slug: string;
@@ -42,7 +43,7 @@ export function ProjectCard({ project: pr }: { project: ProjectCardData }) {
 					<Icon name="arrow-right" size={16} />
 				</h3>
 				<p className="mh-project__desc">{pr.summary}</p>
-				<ChipList items={pr.tech} label="Stack" />
+				<ChipList items={pr.tech} label={m.project_stack()} />
 			</div>
 		</Link>
 	);
@@ -62,7 +63,9 @@ export function BlogCard({ post: p }: { post: BlogCardData }) {
 	return (
 		<Link className="blog-card" to="/blog/$slug" params={{ slug: p.slug }}>
 			<span className="blog-card__pill">
-				{category ? `${category} · ${p.minutes} min` : `${p.minutes} min`}
+				{category
+					? `${category} · ${m.blog_minutes({ minutes: p.minutes })}`
+					: m.blog_minutes({ minutes: p.minutes })}
 			</span>
 			<h3 className="blog-card__title" dir={dir}>
 				{p.title}

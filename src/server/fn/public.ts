@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
-import { clientIp } from "#/server/client-ip";
 import { and, asc, desc, eq, inArray, ne, sql } from "drizzle-orm";
 import { z } from "zod";
+import { AR_PROJECTS, AR_SERVICES } from "#/content/ar";
 import { withDb } from "#/db";
 import {
 	blogPosts,
@@ -17,6 +17,7 @@ import {
 	RELATED_POST_COUNT,
 	readingMinutes,
 } from "#/lib/blog";
+import { clientIp } from "#/server/client-ip";
 import { notifyOwnerOfMessage } from "#/server/mail";
 import { paypalPublicConfig } from "#/server/paypal";
 import { notifyOwnerPush } from "#/server/push";
@@ -112,6 +113,7 @@ export const getService = createServerFn({ method: "GET" })
 			});
 			return {
 				service,
+				hasArabic: service.slug in AR_SERVICES,
 				others,
 				owner: owner ?? null,
 				paypal: paypalPublicConfig(),
@@ -211,7 +213,7 @@ export const getProject = createServerFn({ method: "GET" })
 				.where(and(eq(projects.published, true), ne(projects.id, project.id)))
 				.orderBy(desc(projects.featured), asc(projects.sort))
 				.limit(3);
-			return { project, related };
+			return { project, hasArabic: project.slug in AR_PROJECTS, related };
 		}),
 	);
 
