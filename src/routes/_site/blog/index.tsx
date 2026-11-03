@@ -10,8 +10,8 @@ import {
 	pageTitle,
 	seo,
 } from "#/lib/seo";
-import { getBlogPosts } from "#/server/fn/public";
 import { m } from "#/paraglide/messages";
+import { getBlogPosts } from "#/server/fn/public";
 
 export const Route = createFileRoute("/_site/blog/")({
 	loader: () => getBlogPosts(),
@@ -47,7 +47,10 @@ export const Route = createFileRoute("/_site/blog/")({
 		};
 		return {
 			...base,
-			scripts: [jsonLd(blog), jsonLd(breadcrumbs(locale, [m.nav_blog({}, { locale }), "/blog"]))],
+			scripts: [
+				jsonLd(blog),
+				jsonLd(breadcrumbs(locale, [m.nav_blog({}, { locale }), "/blog"])),
+			],
 		};
 	},
 	component: BlogIndexPage,
