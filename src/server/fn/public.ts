@@ -259,10 +259,14 @@ export const getBlogPost = createServerFn({ method: "GET" })
 						)
 				: [];
 			const bodyBySlug = new Map(bodies.map((b) => [b.slug, b.body]));
-			const related = picked.map((p) => ({
-				...p,
-				minutes: readingMinutes(bodyBySlug.get(p.slug) ?? ""),
-			}));
+			const related = picked.map((p) => {
+				const body = bodyBySlug.get(p.slug) ?? "";
+				return {
+					...p,
+					locale: postLocale({ ...p, body }),
+					minutes: readingMinutes(body),
+				};
+			});
 			return {
 				post,
 				related,

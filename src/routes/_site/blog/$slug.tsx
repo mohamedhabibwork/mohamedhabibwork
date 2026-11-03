@@ -1,12 +1,22 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import Markdown from "react-markdown";
 import { BlogCard } from "#/components/cards";
 import { ChipList, EmptyState, Icon, LinkButton } from "#/design-system/ui";
-import { postAlternates, postLocale, readingMinutes, textDirection } from "#/lib/blog";
 import {
+	postAlternates,
+	postHref,
+	postLocale,
+	readingMinutes,
+	textDirection,
+} from "#/lib/blog";
+import { RSS_PATH, RSS_TITLE } from "#/lib/feed";
+import {
+	absoluteUrl,
+	AUTHOR,
+	breadcrumbs,
+	DEFAULT_OG_IMAGE,
 	jsonLd,
 	localizedUrl,
-	PERSON_ID,
 	pageTitle,
 	seo,
 	truncate,
@@ -16,9 +26,16 @@ import { m } from "#/paraglide/messages";
 import { getLocale, localizeHref } from "#/paraglide/runtime";
 
 export const Route = createFileRoute("/_site/blog/$slug")({
-	loader: async ({ params }) => {
+	loader: async ({ params, location }) => {
 		const data = await getBlogPost({ data: params.slug });
 		if (!data) throw notFound();
+		// A post lives at one URL, in the language it's written in.
+		const locale = postLocale(data.post);
+		if (locale !== getLocale())
+			throw redirect({
+				href: `${postHref({ slug: data.post.slug, locale })}${location.searchStr}`,
+				statusCode: 301,
+			});
 		return data;
 	},
 	head: ({ loaderData, params }) => {
@@ -33,13 +50,24 @@ export const Route = createFileRoute("/_site/blog/$slug")({
 		const path = `/blog/${post.slug}`;
 		const description = truncate(post.excerpt || post.body);
 		const contentLocale = postLocale(post);
+		const [section] = post.tags;
+		const publishedTime = post.publishedAt
+			? new Date(post.publishedAt).toISOString()
+			: undefined;
+		const modifiedTime = new Date(post.updatedAt).toISOString();
+		const image = post.coverUrl
+			? { url: post.coverUrl, alt: post.title }
+			: DEFAULT_OG_IMAGE;
+		const url = localizedUrl(path, contentLocale);
 		const base = seo({
 			title: pageTitle(post.title),
 			description,
 			path,
 			type: "article",
+			image,
 			contentLocale,
 			alternates: postAlternates(post, translation?.slug),
+			article: { publishedTime, modifiedTime, section },
 		});
 		const article = {
 			"@context": "https://schema.org",
@@ -47,13 +75,39 @@ export const Route = createFileRoute("/_site/blog/$slug")({
 			headline: post.title,
 			description,
 			inLanguage: contentLocale,
-			url: localizedUrl(path, contentLocale),
-			datePublished: post.publishedAt
-				? new Date(post.publishedAt).toISOString()
-				: undefined,
-			author: { "@id": PERSON_ID },
+			url,
+			mainEntityOfPage: url,
+			image: [absoluteUrl(image.url)],
+			datePublished: publishedTime,
+			dateModified: modifiedTime,
+			articleSection: section,
+			keywords: post.tags.join(", ") || undefined,
+			wordCount: post.body.trim().split(/\s+/).filter(Boolean).length,
+			author: AUTHOR,
+			publisher: AUTHOR,
 		};
-		return { ...base, scripts: [jsonLd(article)] };
+		return {
+			...base,
+			links: [
+				...base.links,
+				{
+					rel: "alternate",
+					type: "application/rss+xml",
+					title: RSS_TITLE,
+					href: RSS_PATH,
+				},
+			],
+			scripts: [
+				jsonLd(article),
+				jsonLd(
+					breadcrumbs(
+						contentLocale,
+						[m.nav_blog({}, { locale: contentLocale }), "/blog"],
+						[post.title, path],
+					),
+				),
+			],
+		};
 	},
 	notFoundComponent: () => (
 		<main id="main" className="site" style={{ padding: "96px 0" }}>

@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { ChipList, Icon, type IconName } from "#/design-system/ui";
-import { textDirection } from "#/lib/blog";
+import { postHref, textDirection } from "#/lib/blog";
 import { m } from "#/paraglide/messages";
+import { getLocale, type Locale } from "#/paraglide/runtime";
 
 type ProjectCardData = {
 	slug: string;
@@ -51,29 +52,41 @@ export function ProjectCard({ project: pr }: { project: ProjectCardData }) {
 
 type BlogCardData = {
 	slug: string;
+	locale: Locale;
 	title: string;
 	excerpt: string;
 	tags: string[];
 	minutes: number;
 };
 
-export function BlogCard({ post: p }: { post: BlogCardData }) {
+export function BlogCard({
+	post: p,
+	headingLevel: Heading = "h3",
+}: {
+	post: BlogCardData;
+	headingLevel?: "h2" | "h3";
+}) {
 	const [category] = p.tags;
 	const dir = textDirection(p.title, p.excerpt);
-	return (
-		<Link className="blog-card" to="/blog/$slug" params={{ slug: p.slug }}>
+	const content = (
+		<>
 			<span className="blog-card__pill">
 				{category ? `${category} · ${m.blog_card_minutes({ count: p.minutes })}` : m.blog_card_minutes({ count: p.minutes })}
 			</span>
-			<h3 className="blog-card__title" dir={dir}>
-				{p.title}
-			</h3>
-			{p.excerpt && (
-				<p className="blog-card__desc" dir={dir}>
-					{p.excerpt}
-				</p>
-			)}
+			<Heading className="blog-card__title">{p.title}</Heading>
+			{p.excerpt && <p className="blog-card__desc">{p.excerpt}</p>}
+		</>
+	);
+	const attrs = { className: "blog-card", dir, lang: p.locale };
+	// Crossing languages takes a full page load, so the server renders the right `lang`/`dir`.
+	return p.locale === getLocale() ? (
+		<Link {...attrs} to="/blog/$slug" params={{ slug: p.slug }}>
+			{content}
 		</Link>
+	) : (
+		<a {...attrs} href={postHref(p)}>
+			{content}
+		</a>
 	);
 }
 

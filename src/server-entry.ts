@@ -1,5 +1,6 @@
 import { AsyncLocalStorage } from "node:async_hooks";
 import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
+import { publicUrl } from "./lib/public-url";
 import {
 	baseLocale,
 	extractLocaleFromUrl,
@@ -31,7 +32,8 @@ const permanentRedirect = (url: URL) => Response.redirect(url.toString(), 301);
 
 export default createServerEntry({
 	async fetch(request) {
-		const url = new URL(request.url);
+		const url = publicUrl(request);
+		const isRead = request.method === "GET" || request.method === "HEAD";
 		if (REDIRECT_HOSTS.has(url.hostname)) {
 			url.hostname = CANONICAL_HOST;
 			url.protocol = "https:";
@@ -39,17 +41,14 @@ export default createServerEntry({
 			return permanentRedirect(url);
 		}
 		// One URL per page: `/projects/` → `/projects` with a permanent (not 307) redirect.
-		if (
-			(request.method === "GET" || request.method === "HEAD") &&
-			url.pathname.length > 1 &&
-			url.pathname.endsWith("/")
-		) {
+		if (isRead && url.pathname.length > 1 && url.pathname.endsWith("/")) {
 			url.pathname = url.pathname.replace(/\/+$/, "") || "/";
 			return permanentRedirect(url);
 		}
 		const locale = extractLocaleFromUrl(url) ?? baseLocale;
 		const response = await requestLocale.run(locale, () =>
-			handler.fetch(request),
+			// Redirects from routes are built from this URL, so it needs the public scheme too.
+			handler.fetch(isRead ? new Request(url, request) : request),
 		);
 		if (!isPreviewHost(url.hostname)) return response;
 		const tagged = new Response(response.body, response);
