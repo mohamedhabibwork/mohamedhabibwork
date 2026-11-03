@@ -2,10 +2,10 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import Markdown from "react-markdown";
 import { BlogCard } from "#/components/cards";
 import { ChipList, EmptyState, Icon, LinkButton } from "#/design-system/ui";
-import { readingMinutes, textDirection } from "#/lib/blog";
+import { postLocale, readingMinutes, textDirection } from "#/lib/blog";
 import {
-	absoluteUrl,
 	jsonLd,
+	localizedUrl,
 	PERSON_ID,
 	pageTitle,
 	seo,
@@ -30,13 +30,21 @@ export const Route = createFileRoute("/_site/blog/$slug")({
 		const { post } = loaderData;
 		const path = `/blog/${post.slug}`;
 		const description = truncate(post.excerpt || post.body);
-		const base = seo({ title: pageTitle(post.title), description, path });
+		const contentLocale = postLocale(post);
+		const base = seo({
+			title: pageTitle(post.title),
+			description,
+			path,
+			type: "article",
+			contentLocale,
+		});
 		const article = {
 			"@context": "https://schema.org",
 			"@type": "BlogPosting",
 			headline: post.title,
 			description,
-			url: absoluteUrl(path),
+			inLanguage: contentLocale,
+			url: localizedUrl(path, contentLocale),
 			datePublished: post.publishedAt
 				? new Date(post.publishedAt).toISOString()
 				: undefined,

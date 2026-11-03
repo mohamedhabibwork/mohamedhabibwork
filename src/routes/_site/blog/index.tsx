@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BlogCard } from "#/components/cards";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
+import { dominantPostLocale, postLocale } from "#/lib/blog";
 import {
-	absoluteUrl,
 	breadcrumbs,
 	jsonLd,
+	localizedUrl,
 	PERSON_ID,
 	pageTitle,
 	seo,
@@ -14,25 +15,40 @@ import { getBlogPosts } from "#/server/fn/public";
 const DESCRIPTION =
 	"Notes on software engineering, self-hosting, cloud infrastructure and the tools I use day to day.";
 
+/** The index lists the same posts under both prefixes, so its metadata follows the language they're written in. */
+const META = {
+	en: { title: "Software Engineering Blog", description: DESCRIPTION },
+	ar: {
+		title: "مدونة هندسة البرمجيات",
+		description:
+			"مقالات عملية عن هندسة البرمجيات والاستضافة الذاتية والبنية السحابية والأدوات اللي بستخدمها كل يوم.",
+	},
+};
+
 export const Route = createFileRoute("/_site/blog/")({
 	loader: () => getBlogPosts(),
 	head: ({ loaderData }) => {
 		const posts = loaderData ?? [];
+		const contentLocale = dominantPostLocale(posts);
+		const { title, description } = META[contentLocale];
+		const url = localizedUrl("/blog", contentLocale);
 		const base = seo({
-			title: pageTitle("Blog"),
-			description: DESCRIPTION,
+			title: pageTitle(title),
+			description,
 			path: "/blog",
+			contentLocale,
 		});
 		const blog = {
 			"@context": "https://schema.org",
 			"@type": "Blog",
 			name: "Mohamed Habib — Blog",
-			url: absoluteUrl("/blog"),
+			url,
+			inLanguage: contentLocale,
 			author: { "@id": PERSON_ID },
 			blogPost: posts.map((p) => ({
 				"@type": "BlogPosting",
 				headline: p.title,
-				url: absoluteUrl(`/blog/${p.slug}`),
+				url: localizedUrl(`/blog/${p.slug}`, postLocale(p)),
 				datePublished: p.publishedAt
 					? new Date(p.publishedAt).toISOString()
 					: undefined,
@@ -40,7 +56,7 @@ export const Route = createFileRoute("/_site/blog/")({
 		};
 		return {
 			...base,
-			scripts: [jsonLd(blog), jsonLd(breadcrumbs(["Blog", "/blog"]))],
+			scripts: [jsonLd(blog), jsonLd(breadcrumbs(["Blog", url]))],
 		};
 	},
 	component: BlogIndexPage,

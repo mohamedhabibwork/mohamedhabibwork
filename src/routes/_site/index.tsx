@@ -17,6 +17,9 @@ import { ProjectCard, ServiceCard } from "#/components/cards";
 import { ContactForm } from "#/components/site";
 import { getPortfolio } from "#/server/fn/public";
 
+/** Written for search results: the profile summary is longer than a snippet and would be cut mid-sentence. */
+const HOME_DESCRIPTION = "Senior full-stack engineer and team leader with 7+ years building scalable web platforms for transportation, healthcare and fintech.";
+
 export const Route = createFileRoute("/_site/")({
 	loader: () => getPortfolio(),
 	head: ({ loaderData }) => {
@@ -27,7 +30,7 @@ export const Route = createFileRoute("/_site/")({
 		const title = [`${name} · ${role} & Team Leader`, `${name} · ${role}`].find((t) => t.length <= TITLE_MAX) ?? `${name} · ${role}`;
 		const base = seo({
 			title,
-			description: p?.summary || "Senior full-stack engineer and team leader building scalable web platforms.",
+			description: HOME_DESCRIPTION,
 			path: "/",
 			type: "profile",
 		});
