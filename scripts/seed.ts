@@ -25,6 +25,11 @@ const profile = {
 	github: "https://github.com/mohamedhabibwork",
 	linkedin: "https://www.linkedin.com/in/mohamedhabibwork/",
 	availability: "Open to cloud-native, high-impact products · replies within 24 hours",
+	headlineAr: "مهندس برمجيات أول (Full-Stack) · ‎.NET Core و C#‎ · PHP/Laravel",
+	taglineAr: "خدمات مصغّرة وأنظمة سحابية قابلة للتوسّع — من متطلبات المنتج حتى بيئة الإنتاج.",
+	summaryAr:
+		"مهندس برمجيات أول وقائد فريق بخبرة تتجاوز سبع سنوات في بناء منصات ويب قابلة للتوسّع، من صياغة متطلبات المنتج حتى الإطلاق في بيئة الإنتاج، في قطاعات النقل والرعاية الصحية والتقنية المالية والتجارة الإلكترونية والتعليم في مصر والسعودية والإمارات. أعمل على الواجهات الخلفية بـ ‎.NET Core/C#‎ وPHP/Laravel وNode.js، وعلى الواجهات الأمامية بـ React وVue.js وTypeScript، وعلى البيانات بـ PostgreSQL وMySQL وMongoDB وRedis وElasticsearch، وأتولّى النشر على AWS وAzure باستخدام Docker وKubernetes مع التكامل والنشر المستمرَّين. أجمع بين التصميم العملي للأنظمة والاهتمام بالأداء والتنفيذ المنضبط، إلى جانب التوجيه الفني والتواصل الواضح.",
+	availabilityAr: "متاح للمنتجات السحابية عالية الأثر · أردّ خلال ٢٤ ساعة",
 	photoUrl: "/brand/marks/mh-mark.svg",
 	stats: [
 		{ label: "Years experience", value: "7+" },
@@ -54,6 +59,40 @@ const experiences = [
 	{ company: "Rwabett", role: "Back End Developer", location: "Egypt", start: "Aug 2020", end: "Jun 2021", current: false, summary: "E-commerce, ERP and CRM.", highlights: ["Built multi-vendor online stores with integrated ERP, CRM and inventory management.", "Developed mobile APIs for store and delivery apps."], tech: ["Laravel", "Vue.js", "MySQL"] },
 	{ company: "Global Dev Gate", role: "Web Developer (training program)", location: "Egypt", start: "Sep 2018", end: "Jun 2020", current: false, summary: "NEN certification training and advanced web development program.", highlights: ["Developed distance-learning platforms and educational management systems.", "Integrated Fawry, Paymob and PayPal payment gateways for secure transactions.", "Built mobile API integrations for educational applications."], tech: ["PHP", "Laravel", "Vue.js", "React", "Node.js", "Python"] },
 ].map((e, i) => ({ ...e, sort: i }));
+
+/** Arabic twins for the top three projects. The others fall back to English. */
+const projectArabic: Record<string, Partial<typeof schema.projects.$inferInsert>> = {
+	"too-app": {
+		titleAr: "تطبيق TOO",
+		subtitleAr: "منصة لطلب الرحلات",
+		summaryAr: "منصة متكاملة لطلب الرحلات تضم تتبّعًا لحظيًا عبر GPS، وبوابات دفع، وإدارة للسائقين، وربطًا بأنظمة ERP وCRM.",
+		featuresAr: ["تتبّع وتوزيع لحظي عبر GPS", "الدفع عبر Fawry وPayPal", "تطبيقان للسائق والراكب", "لوحة تحليلات للإدارة"],
+		roleAr: "مطوّر Full-Stack — التوزيع والمدفوعات ولوحة الإدارة في الواجهة الخلفية",
+		challengeAr: "مطابقة الركّاب مع أقرب سائق لحظيًا في مدينة مزدحمة، مع الحفاظ على اتساق المدفوعات ومستحقات السائقين وسجلات نظام ERP.",
+		descriptionAr: "تطبيق TOO منصة لطلب الرحلات تتضمن تطبيقين منفصلين للراكب والسائق، ومحرّك توزيع لحظيًا، ولوحة لإدارة العمليات.\n\nبنيتُ الواجهة البرمجية الأساسية بـ Laravel، وخدمة المواقع بلغة GoLang التي تستقبل إحداثيات السائقين وتبثّ التحديثات عبر Socket.io. وتتم المدفوعات عبر Fawry وPayPal مع مطابقتها في نظامَي ERP وCRM الخاصين بالشركة.",
+		outcomesAr: ["تحديثات لحظية للموقع في أقل من ثانية للركّاب وموظفي التوزيع", "ربط بوابتَي دفع محلية ودولية", "واجهة إدارة موحّدة للرحلات والسائقين والمستحقات والدعم"],
+	},
+	team1: {
+		titleAr: "Team1",
+		subtitleAr: "نقل الحالات الطارئة",
+		summaryAr: "منصة لتنسيق النقل الطبي تتيح التوزيع اللحظي للحالات الطارئة، والمحادثة بين الفرق الطبية، وتتبّع المرضى.",
+		featuresAr: ["توزيع الحالات الطارئة", "محادثة لحظية بين الفرق", "تتبّع المرضى", "التنسيق مع المستشفيات"],
+		roleAr: "مطوّر Full-Stack أول وقائد فريق",
+		challengeAr: "تنسيق نقل المرضى في الحالات الطارئة بين سيارات الإسعاف والفرق الطبية والمستشفيات، حيث تُحسب كل دقيقة.",
+		descriptionAr: "Team1 منصة لنقل الحالات الطبية الطارئة: يكلّف موظفو التوزيع الطواقم، وتتواصل الفرق الطبية لحظيًا، وتطّلع المستشفيات على بيانات المرضى القادمين قبل وصولهم.\n\nقُدتُ فريقًا من أكثر من خمسة مطوّرين، وتولّيتُ تصميم البنية، وبنيتُ طبقة WebSocket للمحادثة اللحظية وتتبّع المرضى فوق Laravel وNode.js.",
+		outcomesAr: ["توزيع لحظي ومتابعة حالة الطواقم", "محادثة فورية بين الفرق الطبية وتتبّع المرضى", "ربط بالمستشفيات لتسليم المرضى القادمين"],
+	},
+	mappy: {
+		titleAr: "Mappy",
+		subtitleAr: "بديل لخرائط Google",
+		summaryAr: "محرّك خرائط مخصّص يوفّر الملاحة وخدمات المواقع وتحسين المسارات وواجهات برمجية للخرائط موجّهة للمؤسسات.",
+		featuresAr: ["محرّك خرائط مخصّص", "تحسين المسارات", "خدمات المواقع", "واجهات برمجية للمؤسسات"],
+		roleAr: "مطوّر Full-Stack — محرّك الخرائط والواجهات البرمجية",
+		challengeAr: "تقديم خدمات التوجيه وتحديد المواقع دون الاعتماد على تسعير خرائط Google أو حدود استخدامها.",
+		descriptionAr: "Mappy (‏mapy.world) محرّك خرائط مخصّص يوفّر الملاحة والبحث وتحسين المسارات، ويُتاح لعملاء المؤسسات عبر واجهات برمجية للخرائط.\n\nعملتُ على خدمات ASP.NET، والبيانات المكانية في PostgreSQL، والواجهة الأمامية للخرائط بـ React.",
+		outcomesAr: ["توجيه وترميز جغرافي مستضافان ذاتيًا", "واجهات برمجية للخرائط تستخدمها منتجات الشركة الداخلية", "تحسين المسارات لاستخدامات الأساطيل"],
+	},
+};
 
 /** Case-study copy for each /projects/$slug page. */
 const projectDetails: Record<string, { role: string; challenge: string; description: string; outcomes: string[] }> = {
@@ -116,8 +155,54 @@ const projects = [
 	{ slug: "paymob-suite", title: "Paymob Suite", subtitle: "Fintech systems", category: "FinTech", year: "2021", summary: "ASM and FSM financial systems with payment processing, transaction management and reporting.", features: ["Payment integration", "Transactions", "Financial reporting", "ERP integration"], tech: ["Laravel", "PostgreSQL"], url: "", imageUrl: "", featured: false },
 	{ slug: "too-bus", title: "TOO Bus", subtitle: "School transport", category: "Education", year: "2022", summary: "School bus tracking with real-time GPS, parent notifications and route optimisation.", features: ["Live bus tracking", "Parent notifications", "Route optimisation", "Student safety"], tech: ["Laravel", "GoLang", "MySQL"], url: "", imageUrl: "", featured: false },
 	{ slug: "too-security", title: "Too Security", subtitle: "Workforce management", category: "Security", year: "2022", summary: "Security company operations: workforce tracking, shift scheduling, HR, ERP and CRM.", features: ["Workforce tracking", "Shift scheduling", "HR", "ERP & CRM"], tech: ["Laravel", "GoLang"], url: "", imageUrl: "", featured: false },
-].map((p, i) => ({ ...p, ...projectDetails[p.slug], published: true, sort: i }));
+].map((p, i) => ({ ...p, ...projectDetails[p.slug], ...projectArabic[p.slug], published: true, sort: i }));
 
+
+/** Arabic twins for every service. */
+const serviceArabic: Record<string, Partial<typeof schema.services.$inferInsert>> = {
+	"consultation": {
+		titleAr: "استشارة تقنية لمدة ساعة",
+		summaryAr: "مكالمة فيديو مركّزة لمدة ساعة حول البنية التقنية أو اختيار التقنيات أو التوسّع أو التوظيف، مع ملاحظات مكتوبة بعدها.",
+		descriptionAr: "أحضِر مشكلة محددة: قرارًا معماريًا، أو نظامًا بطيئًا، أو اختيارًا بين تقنيات، أو تكاملًا مع بوابات الدفع أو الأنظمة اللحظية، أو طريقة تنظيم فريقك.\n\nنلتقي لمدة ساعة عبر Google Meet أو Zoom، ثم تصلك خلاصة مكتوبة موجزة بالتوصيات والخطوات التالية. يمكنك الحجز مباشرة، أو مراسلتي أولًا إن لم تكن متأكدًا من أنها الخدمة المناسبة.",
+		deliverablesAr: ["مكالمة فيديو مدتها ٦٠ دقيقة", "مراجعة للبنية والشيفرة خلال المكالمة", "خلاصة مكتوبة بالخطوات التالية", "متابعة الأسئلة عبر البريد لمدة أسبوع"],
+	},
+	"full-stack-development": {
+		titleAr: "تطوير تطبيقات الويب المتكاملة",
+		summaryAr: "منصات ويب متكاملة من البداية إلى النهاية: واجهات برمجية ولوحات تحكم وتطبيقات للعملاء مبنية لتتوسّع.",
+		descriptionAr: "أصمّم وأبني منتجات ويب كاملة، بدءًا من مخطط قاعدة البيانات والواجهات البرمجية، وصولًا إلى لوحة الإدارة والواجهة التي يستخدمها العملاء.\n\nأعتمد عادةً على Laravel أو Node.js في الواجهة الخلفية وReact أو Vue في الواجهة الأمامية، مع النشر المستمر والمراقبة منذ اليوم الأول.",
+		deliverablesAr: ["البنية التقنية ونموذج البيانات", "واجهة برمجية REST أو GraphQL", "لوحة إدارة", "تطبيق ويب متجاوب", "التكامل والنشر المستمر"],
+	},
+	"realtime-tracking": {
+		titleAr: "التتبّع والتوزيع اللحظي",
+		summaryAr: "تتبّع لحظي عبر GPS وتوزيع وإشعارات للأساطيل والرحلات وعمليات التوصيل والفرق الميدانية.",
+		descriptionAr: "بنيتُ منصات لطلب الرحلات، ونقل طلاب المدارس، وتوزيع سيارات الإسعاف، وتتبّع المندوبين الميدانيين. أستطيع تقديم مسار بيانات المواقع ومنطق التوزيع ولوحات المتابعة اللحظية التي يحتاجها فريق عملياتك.",
+		deliverablesAr: ["استقبال بيانات المواقع لحظيًا", "منطق التوزيع والإسناد", "واجهة برمجية لتطبيقات السائقين والعملاء", "لوحة متابعة لحظية للعمليات", "إشعارات فورية ورسائل SMS"],
+	},
+	"payment-integration": {
+		titleAr: "ربط بوابات الدفع",
+		summaryAr: "مدفوعات آمنة عبر Fawry وPaymob وPayPal وStripe، تشمل المطابقة وصرف المستحقات.",
+		descriptionAr: "أربط بوابات الدفع المحلية والدولية، وأعالج إشعارات Webhook والمبالغ المستردة بأمان، وأطابق المعاملات مع نظام ERP أو النظام المحاسبي لديك.",
+		deliverablesAr: ["ربط بوابة الدفع", "معالجة Webhook دون تكرار", "المبالغ المستردة وصرف المستحقات", "تقارير المطابقة"],
+	},
+	"erp-crm": {
+		titleAr: "أنظمة ERP وCRM",
+		summaryAr: "وحدات ERP وCRM مخصّصة أو تكامل مع ERPNext للمبيعات والمخزون والموارد البشرية والعمليات.",
+		descriptionAr: "من إدارة المخزون متعدد البائعين إلى جدولة القوى العاملة، أبني أو أربط الأنظمة الإدارية التي تُبقي العمليات تسير بسلاسة، بما في ذلك تخصيص ERPNext.",
+		deliverablesAr: ["تحليل المتطلبات ورسم العمليات", "وحدات مخصّصة", "التكامل مع ERPNext", "التقارير ولوحات المتابعة", "ترحيل البيانات"],
+	},
+	"mobile-api": {
+		titleAr: "الواجهات الخلفية لتطبيقات الجوال",
+		summaryAr: "واجهات برمجية سريعة ومُرقّمة الإصدارات لتطبيقات iOS وAndroid، مع المصادقة والإشعارات وتخزين الملفات.",
+		descriptionAr: "أبني الواجهة الخلفية التي يحتاجها فريق تطبيقات الجوال لديك: المصادقة، وواجهات REST أو GraphQL مُرقّمة الإصدارات، والإشعارات الفورية، وتخزين الوسائط، مع التوثيق والاختبار.",
+		deliverablesAr: ["تصميم الواجهة البرمجية وتوثيقها", "المصادقة والصلاحيات", "الإشعارات الفورية", "تخزين الملفات والوسائط", "المراقبة"],
+	},
+	"technical-leadership": {
+		titleAr: "القيادة التقنية والاستشارات",
+		summaryAr: "قيادة الفرق ومراجعة البنية التقنية وتنظيم عملية التسليم لفرق من ٥ إلى ١٠ مطوّرين.",
+		descriptionAr: "قُدتُ فرقًا موزّعة بين مصر والسعودية والإمارات. أستطيع قيادة فريقك، أو مراجعة البنية التقنية، أو إرساء ممارسات مراجعة الشيفرة والإصدار، أو المساعدة في توظيف المطوّرين وتأهيلهم.",
+		deliverablesAr: ["مراجعة البنية التقنية", "مراجعة الشيفرة ومعايير الجودة", "عملية الإصدار وضمان الجودة", "التوجيه الفني ودعم التوظيف"],
+	},
+};
 
 const services = [
 	{ slug: "consultation", title: "1-hour technical consultation", icon: "phone", summary: "A focused one-hour video call on your architecture, stack, scaling or hiring questions — with written follow-up notes.", description: "Bring a specific problem: an architecture decision, a slow system, a stack choice, a payment or real-time integration, or how to structure your team.\n\nWe meet for one hour on Google Meet or Zoom, and you get a short written summary with recommendations and next steps afterwards. Book directly, or message me first if you're not sure it's the right fit.", deliverables: ["60-minute video call", "Architecture and code review on the call", "Written summary and next steps", "Follow-up questions by email for a week"], tech: ["System design", ".NET", "Laravel", "React", "Cloud"], startingAt: "$100 / hour" },
@@ -127,7 +212,7 @@ const services = [
 	{ slug: "erp-crm", title: "ERP & CRM systems", icon: "layers", summary: "Custom ERP/CRM modules or ERPNext integrations for sales, inventory, HR and operations.", description: "From multi-vendor inventory to workforce scheduling, I build or integrate the back-office systems that keep operations running, including ERPNext customisation.", deliverables: ["Requirements and process mapping", "Custom modules", "ERPNext integration", "Reporting and dashboards", "Data migration"], tech: ["Laravel", "ERPNext", "Python", "PostgreSQL"], startingAt: "" },
 	{ slug: "mobile-api", title: "Mobile app backends & APIs", icon: "monitor", summary: "Fast, versioned APIs for iOS and Android apps with auth, notifications and file storage.", description: "I build the backend your mobile team needs: authentication, versioned REST or GraphQL APIs, push notifications and media storage, documented and tested.", deliverables: ["API design and docs", "Auth and roles", "Push notifications", "File and media storage", "Monitoring"], tech: ["Laravel", "Node.js", "GraphQL", "AWS"], startingAt: "" },
 	{ slug: "technical-leadership", title: "Technical leadership & consulting", icon: "users", summary: "Team leadership, architecture reviews and delivery process for teams of 5–10 developers.", description: "I've led distributed teams across Egypt, Saudi Arabia and the UAE. I can lead your team, review architecture, set up code review and release practices, or help hire and onboard developers.", deliverables: ["Architecture review", "Code review and standards", "Release and QA process", "Mentoring and hiring support"], tech: ["Agile / Scrum", "System design", "CI/CD"], startingAt: "" },
-].map((s, i) => ({ ...s, published: true, sort: i }));
+].map((s, i) => ({ ...s, ...serviceArabic[s.slug], published: true, sort: i }));
 
 const skillRows: [string, string, number, number][] = [
 	["PHP & Laravel", "Backend", 5, 7], [".NET Core / C# / ASP.NET", "Backend", 4, 3], ["Node.js & Express", "Backend", 4, 5], ["GoLang", "Backend", 4, 3], ["Python", "Backend", 3, 2],

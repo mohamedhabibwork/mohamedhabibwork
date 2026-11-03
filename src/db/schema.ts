@@ -1,4 +1,5 @@
 import {
+	type AnyPgColumn,
 	boolean,
 	index,
 	integer,
@@ -36,6 +37,11 @@ export const profile = pgTable("profile", {
 	github: text().notNull().default(""),
 	linkedin: text().notNull().default(""),
 	availability: text().notNull().default(""),
+	/** Arabic twins of the text above. Null or empty falls back to English. */
+	headlineAr: text("headline_ar"),
+	taglineAr: text("tagline_ar"),
+	summaryAr: text("summary_ar"),
+	availabilityAr: text("availability_ar"),
 	photoUrl: text("photo_url").notNull().default("/brand/marks/mh-mark.svg"),
 	stats: jsonb()
 		.$type<{ label: string; value: string }[]>()
@@ -60,6 +66,10 @@ export const experiences = pgTable("experiences", {
 	summary: text().notNull().default(""),
 	highlights: text().array().notNull().default([]),
 	tech: text().array().notNull().default([]),
+	/** Arabic twins. Null or empty falls back to English. */
+	roleAr: text("role_ar"),
+	summaryAr: text("summary_ar"),
+	highlightsAr: text("highlights_ar").array(),
 	sort: integer().notNull().default(0),
 	...timestamps,
 });
@@ -81,6 +91,15 @@ export const projects = pgTable(
 		outcomes: text().array().notNull().default([]),
 		features: text().array().notNull().default([]),
 		tech: text().array().notNull().default([]),
+		/** Arabic twins of the text fields above. Null or empty falls back to English. */
+		titleAr: text("title_ar"),
+		subtitleAr: text("subtitle_ar"),
+		summaryAr: text("summary_ar"),
+		descriptionAr: text("description_ar"),
+		roleAr: text("role_ar"),
+		challengeAr: text("challenge_ar"),
+		outcomesAr: text("outcomes_ar").array(),
+		featuresAr: text("features_ar").array(),
 		url: text().notNull().default(""),
 		imageUrl: text("image_url").notNull().default(""),
 		featured: boolean().notNull().default(false),
@@ -115,9 +134,17 @@ export const blogPosts = pgTable(
 		coverUrl: text("cover_url").notNull().default(""),
 		published: boolean().notNull().default(false),
 		publishedAt: timestamp("published_at", { withTimezone: true }),
+		/** Pairs an English and an Arabic post: the translation points at the original. */
+		translationOf: integer("translation_of").references(
+			(): AnyPgColumn => blogPosts.id,
+			{ onDelete: "set null" },
+		),
 		...timestamps,
 	},
-	(t) => [uniqueIndex("blog_posts_slug_idx").on(t.slug)],
+	(t) => [
+		uniqueIndex("blog_posts_slug_idx").on(t.slug),
+		index("blog_posts_translation_idx").on(t.translationOf),
+	],
 );
 
 /** Services offered on /services. Each page has a contact form tagged with the service. */
@@ -134,6 +161,11 @@ export const services = pgTable(
 		deliverables: text().array().notNull().default([]),
 		tech: text().array().notNull().default([]),
 		startingAt: text("starting_at").notNull().default(""),
+		/** Arabic twins of the text fields above. Null or empty falls back to English. */
+		titleAr: text("title_ar"),
+		summaryAr: text("summary_ar"),
+		descriptionAr: text("description_ar"),
+		deliverablesAr: text("deliverables_ar").array(),
 		published: boolean().notNull().default(true),
 		sort: integer().notNull().default(0),
 		...timestamps,

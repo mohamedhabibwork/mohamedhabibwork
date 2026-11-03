@@ -37,6 +37,13 @@ const blogSchema = z.object({
 	tags: z.array(z.string().trim().min(1).max(40)).max(12).default([]),
 	coverUrl: z.string().trim().max(500).default(""),
 	published: z.boolean().default(false),
+	/** Slug of the post this one translates (EN ↔ AR). null unpairs it; omit to leave unchanged. */
+	translationOf: z
+		.string()
+		.trim()
+		.max(120)
+		.regex(SLUG, "lowercase-with-dashes")
+		.nullish(),
 });
 
 /**
@@ -46,7 +53,7 @@ const blogSchema = z.object({
 export function createPortfolioMcp({ owner }: { owner: boolean }): McpServer {
 	const server = new McpServer({
 		name: "mohamed-habib-portfolio",
-		version: "1.1.0",
+		version: "1.2.0",
 	});
 
 	server.registerTool(
@@ -272,16 +279,35 @@ export function createPortfolioMcp({ owner }: { owner: boolean }): McpServer {
 		{
 			title: "Create or update blog post",
 			description:
-				"Creates a blog post, or updates the one with the same slug. publishedAt is set the first time it is published.",
+				"Creates a blog post, or updates the one with the same slug. publishedAt is set the first time it is published. Set translationOf to the slug of the original post to pair an English and an Arabic version.",
 			inputSchema: blogSchema.shape,
 		},
 		async (input) => {
-			const values = blogSchema.parse(input);
-			const existing = await withDb((db) =>
-				db.query.blogPosts.findFirst({
-					where: eq(blogPosts.slug, values.slug),
-				}),
+			const { translationOf: originalSlug, ...post } = blogSchema.parse(input);
+			const [existing, original] = await withDb((db) =>
+				Promise.all([
+					db.query.blogPosts.findFirst({
+						where: eq(blogPosts.slug, post.slug),
+					}),
+					originalSlug
+						? db.query.blogPosts.findFirst({
+								columns: { id: true },
+								where: eq(blogPosts.slug, originalSlug),
+							})
+						: undefined,
+				]),
 			);
+			if (originalSlug && !original)
+				return notFound(`blog post '${originalSlug}' to pair with`);
+			if (original && original.id === existing?.id)
+				return {
+					...json({ error: "A post cannot be a translation of itself" }),
+					isError: true,
+				};
+			const values =
+				originalSlug === undefined
+					? post
+					: { ...post, translationOf: original?.id ?? null };
 			const publishedAt =
 				existing?.publishedAt ?? (values.published ? new Date() : null);
 			const [row] = await withDb((db) =>
@@ -404,13 +430,18 @@ export function createPortfolioMcp({ owner }: { owner: boolean }): McpServer {
 		{
 			title: "Update profile",
 			description:
-				"Updates profile text fields. Omitted fields stay unchanged.",
+				"Updates profile text fields, including the Arabic versions (*Ar). Omitted fields stay unchanged.",
 			inputSchema: {
 				headline: z.string().trim().max(160).optional(),
 				tagline: z.string().trim().max(300).optional(),
 				summary: z.string().trim().max(3000).optional(),
 				availability: z.string().trim().max(200).optional(),
 				location: z.string().trim().max(160).optional(),
+				// Arabic twins; empty or null falls back to English on the site.
+				headlineAr: z.string().trim().max(160).nullish(),
+				taglineAr: z.string().trim().max(300).nullish(),
+				summaryAr: z.string().trim().max(3000).nullish(),
+				availabilityAr: z.string().trim().max(200).nullish(),
 			},
 		},
 		async (patch) => {
