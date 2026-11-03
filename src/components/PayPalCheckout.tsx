@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Alert, Textarea } from "#/design-system/ui";
 import { track } from "#/lib/analytics";
 import { PAYPAL_CURRENCIES, type Price } from "#/lib/contact";
+import { m } from "#/paraglide/messages";
 
 /** Public settings of the active PayPal app, from the server (`paypalPublicConfig`). The secret never leaves the server. */
 export type PayPalPublic = { clientId: string; env: "live" | "sandbox" };
@@ -147,18 +148,22 @@ export function PayPalCheckout({
 							!res.ok ||
 							!["COMPLETED", "PENDING"].includes(res.data.status ?? "")
 						) {
-							track("payment_failed", { item_id: service.slug, status: res.data.status ?? "error" });
+							track("payment_failed", {
+								item_id: service.slug,
+								status: res.data.status ?? "error",
+							});
 							setResult({
 								kind: "error",
-								message:
-									res.data.error ??
-									"Payment couldn't be completed. You have not been charged.",
+								message: res.data.error ?? m.paypal_declined(),
 							});
 							return;
 						}
 						if (res.data.status === "PENDING") {
 							// Not credited yet (e.g. eCheck or PayPal review) and may still be denied: no purchase event.
-							track("payment_pending", { item_id: service.slug, transaction_id: orderID });
+							track("payment_pending", {
+								item_id: service.slug,
+								transaction_id: orderID,
+							});
 							setResult({
 								kind: "pending",
 								payerName: res.data.payerName ?? "",
@@ -174,12 +179,14 @@ export function PayPalCheckout({
 						setResult({ kind: "paid", payerName: res.data.payerName ?? "" });
 					},
 					onError: (error) => {
-						track("payment_failed", { item_id: service.slug, status: "sdk_error" });
+						track("payment_failed", {
+							item_id: service.slug,
+							status: "sdk_error",
+						});
 						console.error("PayPal checkout error:", error);
 						setResult({
 							kind: "error",
-							message:
-								"PayPal checkout didn't complete. Please try again or message me instead.",
+							message: m.paypal_failed(),
 						});
 					},
 				});
@@ -190,8 +197,7 @@ export function PayPalCheckout({
 				if (!cancelled)
 					setResult({
 						kind: "error",
-						message:
-							"PayPal couldn't load. Check your connection or ad blocker, or message me instead.",
+						message: m.paypal_load_failed(),
 					});
 			})
 			.finally(() => {
@@ -205,19 +211,17 @@ export function PayPalCheckout({
 
 	if (result?.kind === "pending") {
 		return (
-			<Alert variant="info" title="Payment is processing">
-				PayPal is still clearing your payment. I'll email you to schedule your
-				session as soon as it completes — usually within a few days for
-				bank-funded payments.
+			<Alert variant="info" title={m.paypal_pending_title()}>
+				{m.paypal_pending_body()}
 			</Alert>
 		);
 	}
 	if (result?.kind === "paid") {
 		return (
-			<Alert variant="success" title="Payment received — thank you!">
-				{result.payerName ? `${result.payerName.split(" ")[0]}, I'll` : "I'll"}{" "}
-				email you within 24 hours to schedule your session. PayPal has sent your
-				receipt.
+			<Alert variant="success" title={m.paypal_paid_title()}>
+				{result.payerName
+					? m.paypal_paid_body_named({ name: result.payerName.split(" ")[0] })
+					: m.paypal_paid_body()}
 			</Alert>
 		);
 	}
@@ -230,7 +234,7 @@ export function PayPalCheckout({
 				</Alert>
 			)}
 			<Textarea
-				label="What would you like to discuss? (optional)"
+				label={m.paypal_notes()}
 				rows={3}
 				maxLength={1000}
 				onChange={(e) => {
@@ -250,19 +254,18 @@ export function PayPalCheckout({
 			/>
 			{loading && (
 				<p style={{ margin: 0, color: "var(--text-muted)" }}>
-					Loading secure PayPal checkout…
+					{m.paypal_loading()}
 				</p>
 			)}
 			<div aria-live="polite">
 				{result?.kind === "error" && (
-					<Alert variant="danger" title="Not paid">
+					<Alert variant="danger" title={m.paypal_not_paid()}>
 						{result.message}
 					</Alert>
 				)}
 			</div>
 			<p style={{ margin: 0, fontSize: 13, color: "var(--text-subtle)" }}>
-				Pay with PayPal or a debit/credit card. After payment I'll email you to
-				book a time that suits you.
+				{m.paypal_hint()}
 			</p>
 		</div>
 	);

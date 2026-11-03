@@ -4,12 +4,15 @@ import { EmptyState, SectionHeading } from "#/design-system/ui";
 import { dominantPostLocale, postLocale } from "#/lib/blog";
 import {
 	breadcrumbs,
+	forLocale,
 	jsonLd,
 	localizedUrl,
 	PERSON_ID,
 	pageTitle,
 	seo,
 } from "#/lib/seo";
+import { SEO_AR } from "#/lib/seo-ar";
+import { m } from "#/paraglide/messages";
 import { getBlogPosts } from "#/server/fn/public";
 
 const DESCRIPTION =
@@ -36,7 +39,7 @@ export const Route = createFileRoute("/_site/blog/")({
 			title: pageTitle(title),
 			description,
 			path: "/blog",
-			contentLocale,
+			languages: [contentLocale],
 		});
 		const blog = {
 			"@context": "https://schema.org",
@@ -56,7 +59,7 @@ export const Route = createFileRoute("/_site/blog/")({
 		};
 		return {
 			...base,
-			scripts: [jsonLd(blog), jsonLd(breadcrumbs(["Blog", url]))],
+			scripts: [jsonLd(blog), jsonLd(breadcrumbs([m.nav_blog(), url]))],
 		};
 	},
 	component: BlogIndexPage,
@@ -70,15 +73,15 @@ function BlogIndexPage() {
 				<section className="site-section">
 					<SectionHeading
 						as="h1"
-						eyebrow="Writing"
-						title="Blog"
-						description={DESCRIPTION}
+						eyebrow={m.blog_eyebrow()}
+						title={m.nav_blog()}
+						description={forLocale(DESCRIPTION, SEO_AR.blog.description)}
 					/>
 					{posts.length === 0 ? (
 						<EmptyState
 							icon="search"
-							title="No posts yet"
-							description="Check back soon."
+							title={m.blog_empty()}
+							description={m.blog_empty_body()}
 						/>
 					) : (
 						<div className="blog-related__grid">

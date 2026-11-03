@@ -11,6 +11,8 @@ import {
 	seo,
 	truncate,
 } from "#/lib/seo";
+import { m } from "#/paraglide/messages";
+import { getLocale } from "#/paraglide/runtime";
 import { getBlogPost } from "#/server/fn/public";
 
 export const Route = createFileRoute("/_site/blog/$slug")({
@@ -22,7 +24,7 @@ export const Route = createFileRoute("/_site/blog/$slug")({
 	head: ({ loaderData, params }) => {
 		if (!loaderData)
 			return seo({
-				title: pageTitle("Post not found"),
+				title: pageTitle(m.blog_not_found()),
 				description: "This post doesn't exist.",
 				path: `/blog/${params.slug}`,
 				noindex: true,
@@ -30,13 +32,14 @@ export const Route = createFileRoute("/_site/blog/$slug")({
 		const { post } = loaderData;
 		const path = `/blog/${post.slug}`;
 		const description = truncate(post.excerpt || post.body);
+		// Posts are written in one language, so that version is the only one indexed.
 		const contentLocale = postLocale(post);
 		const base = seo({
 			title: pageTitle(post.title),
 			description,
 			path,
 			type: "article",
-			contentLocale,
+			languages: [contentLocale],
 		});
 		const article = {
 			"@context": "https://schema.org",
@@ -56,9 +59,9 @@ export const Route = createFileRoute("/_site/blog/$slug")({
 		<main id="main" className="site" style={{ padding: "96px 0" }}>
 			<EmptyState
 				icon="search"
-				title="Post not found"
-				description="It may have been renamed or removed."
-				action={<LinkButton href="/">Back to home</LinkButton>}
+				title={m.blog_not_found()}
+				description={m.service_not_found_body()}
+				action={<LinkButton href="/">{m.not_found_home()}</LinkButton>}
 			/>
 		</main>
 	),
@@ -71,12 +74,15 @@ function BlogPostPage() {
 	const minutes = readingMinutes(post.body);
 	const dir = textDirection(post.title, post.excerpt, post.body);
 	const published = post.publishedAt
-		? new Date(post.publishedAt).toLocaleDateString("en-GB", {
-				day: "numeric",
-				month: "short",
-				year: "numeric",
-				timeZone: "UTC",
-			})
+		? new Date(post.publishedAt).toLocaleDateString(
+				getLocale() === "ar" ? "ar-EG-u-nu-latn" : "en-GB",
+				{
+					day: "numeric",
+					month: "short",
+					year: "numeric",
+					timeZone: "UTC",
+				},
+			)
 		: null;
 	return (
 		<>
@@ -87,10 +93,10 @@ function BlogPostPage() {
 					dir={dir}
 					lang={dir === "rtl" ? "ar" : undefined}
 				>
-					<nav className="blog-post__crumbs" aria-label="Breadcrumb">
-						<Link to="/">Home</Link>
+					<nav className="blog-post__crumbs" aria-label={m.blog_breadcrumb()}>
+						<Link to="/">{m.nav_home()}</Link>
 						<span aria-hidden>/</span>
-						<Link to="/blog">Blog</Link>
+						<Link to="/blog">{m.nav_blog()}</Link>
 						{category && (
 							<>
 								<span aria-hidden>/</span>
@@ -103,28 +109,30 @@ function BlogPostPage() {
 					</h1>
 					{post.excerpt && <p className="blog-post__lead">{post.excerpt}</p>}
 					<p className="blog-post__byline">
-						<strong>Mohamed Habib</strong>
-						{published && <> · {published}</>} · {minutes} min read
+						<strong>{m.blog_author()}</strong>
+						{published && <> · {published}</>} · {m.blog_read_time({ minutes })}
 					</p>
 					<div className="blog-post__body">
 						<Markdown>{post.body}</Markdown>
 					</div>
-					{post.tags.length > 0 && <ChipList items={post.tags} label="Tags" />}
+					{post.tags.length > 0 && (
+						<ChipList items={post.tags} label={m.blog_tags()} />
+					)}
 				</article>
 
 				{related.length > 0 && (
 					<section className="site-section" aria-labelledby="related-title">
 						<h2 className="blog-related__title" id="related-title">
-							Related
+							{m.blog_related()}
 						</h2>
 						<div className="blog-related__grid">
 							{related.map((p) => (
 								<BlogCard key={p.slug} post={p} />
 							))}
 							<Link className="blog-cta" to="/services">
-								<span className="blog-cta__eyebrow">Services</span>
+								<span className="blog-cta__eyebrow">{m.nav_services()}</span>
 								<span className="blog-cta__title">
-									See how we can help <Icon name="arrow-right" size={16} />
+									{m.blog_cta()} <Icon name="arrow-right" size={16} />
 								</span>
 							</Link>
 						</div>
