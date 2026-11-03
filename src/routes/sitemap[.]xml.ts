@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { desc, eq } from "drizzle-orm";
 import { withDb } from "#/db";
 import { blogPosts, projects, services } from "#/db/schema";
-import { absoluteUrl } from "#/lib/seo";
+import { dominantPostLocale, postLocale } from "#/lib/blog";
+import { absoluteUrl, localizedUrl } from "#/lib/seo";
 
 const escapeXml = (s: string) =>
 	s.replace(/[<>&'"]/g, (c) => `&#${c.charCodeAt(0)};`);
@@ -27,7 +28,13 @@ export const Route = createFileRoute("/sitemap.xml")({
 							.from(services)
 							.where(eq(services.published, true)),
 						db
-							.select({ slug: blogPosts.slug, updatedAt: blogPosts.updatedAt })
+							.select({
+								slug: blogPosts.slug,
+								title: blogPosts.title,
+								excerpt: blogPosts.excerpt,
+								body: blogPosts.body,
+								updatedAt: blogPosts.updatedAt,
+							})
 							.from(blogPosts)
 							.where(eq(blogPosts.published, true))
 							.orderBy(desc(blogPosts.publishedAt)),
@@ -57,7 +64,7 @@ export const Route = createFileRoute("/sitemap.xml")({
 						priority: "0.9",
 					},
 					{
-						loc: absoluteUrl("/blog"),
+						loc: localizedUrl("/blog", dominantPostLocale(posts)),
 						lastmod: newest(posts),
 						priority: "0.8",
 					},
@@ -73,7 +80,7 @@ export const Route = createFileRoute("/sitemap.xml")({
 						image: absoluteUrl(r.imageUrl || `/og/projects/${r.slug}.svg`),
 					})),
 					...posts.map((r) => ({
-						loc: absoluteUrl(`/blog/${r.slug}`),
+						loc: localizedUrl(`/blog/${r.slug}`, postLocale(r)),
 						lastmod: r.updatedAt,
 						priority: "0.7",
 					})),

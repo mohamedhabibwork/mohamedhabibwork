@@ -27,3 +27,11 @@ export const textDirection = (...parts: string[]): "rtl" | "ltr" => {
 	const letters = arabic + latin;
 	return letters > 0 && arabic / letters >= RTL_SHARE ? "rtl" : "ltr";
 };
+
+/** The language a post is written in. A post has one language, so this also picks its canonical URL. */
+export const postLocale = (post: { title: string; excerpt?: string | null; body?: string }): "en" | "ar" =>
+	textDirection(post.title, post.excerpt ?? "", post.body ?? "") === "rtl" ? "ar" : "en";
+
+/** The language most of `posts` are written in, for pages that list them. */
+export const dominantPostLocale = (posts: { title: string; excerpt?: string | null }[]): "en" | "ar" =>
+	posts.filter((p) => postLocale(p) === "ar").length * 2 > posts.length ? "ar" : "en";
