@@ -20,7 +20,14 @@ import {
 import {
 	type ContentLocale,
 	contentLocaleSchema,
+	EXPERIENCE_TEXT,
+	hasArabic,
 	localizeRow,
+	PROFILE_TEXT,
+	PROJECT_TEXT,
+	portfolioHasArabic,
+	SERVICE_CARD_TEXT,
+	SERVICE_TEXT,
 } from "#/lib/localized";
 import { notifyOwnerOfMessage } from "#/server/mail";
 import { paypalPublicConfig } from "#/server/paypal";
@@ -42,31 +49,6 @@ const slugInput = z.preprocess(
 		locale: contentLocaleSchema,
 	}),
 );
-
-/** Translatable columns per table; each has an `*Ar` twin in the schema. */
-const PROFILE_TEXT = [
-	"headline",
-	"tagline",
-	"summary",
-	"availability",
-] as const;
-const EXPERIENCE_TEXT = ["role", "summary", "highlights"] as const;
-const PROJECT_TEXT = [
-	"title",
-	"subtitle",
-	"summary",
-	"description",
-	"role",
-	"challenge",
-	"outcomes",
-	"features",
-] as const;
-const SERVICE_TEXT = [
-	"title",
-	"summary",
-	"description",
-	"deliverables",
-] as const;
 
 /** Everything the public portfolio page renders, in one round trip. */
 export const getPortfolio = createServerFn({ method: "GET" })
@@ -111,8 +93,14 @@ export const getPortfolio = createServerFn({ method: "GET" })
 				skills: sk,
 				publicCvs,
 				services: svc.map((row) =>
-					localizeRow(row, ["title", "summary"], locale),
+					localizeRow(row, SERVICE_CARD_TEXT, locale),
 				),
+				hasArabic: portfolioHasArabic({
+					profile: p,
+					projects: proj,
+					services: svc,
+					experiences: exp,
+				}),
 			};
 		}),
 	);
@@ -128,7 +116,10 @@ export const getProjects = createServerFn({ method: "GET" })
 				.where(eq(projects.published, true))
 				.orderBy(desc(projects.featured), asc(projects.sort)),
 		);
-		return rows.map((row) => localizeRow(row, PROJECT_TEXT, locale));
+		return rows.map((row) => ({
+			...localizeRow(row, PROJECT_TEXT, locale),
+			hasArabic: hasArabic(row, PROJECT_TEXT),
+		}));
 	});
 
 /** All published services for /services. */
@@ -142,7 +133,10 @@ export const getServices = createServerFn({ method: "GET" })
 				.where(eq(services.published, true))
 				.orderBy(asc(services.sort)),
 		);
-		return rows.map((row) => localizeRow(row, SERVICE_TEXT, locale));
+		return rows.map((row) => ({
+			...localizeRow(row, SERVICE_TEXT, locale),
+			hasArabic: hasArabic(row, SERVICE_TEXT),
+		}));
 	});
 
 /** One published service plus the others for cross-links. Returns null when missing. */
@@ -171,8 +165,9 @@ export const getService = createServerFn({ method: "GET" })
 			});
 			return {
 				service: localizeRow(service, SERVICE_TEXT, locale),
+				hasArabic: hasArabic(service, SERVICE_TEXT),
 				others: others.map((row) =>
-					localizeRow(row, ["title", "summary"], locale),
+					localizeRow(row, SERVICE_CARD_TEXT, locale),
 				),
 				owner: owner ?? null,
 				paypal: paypalPublicConfig(),
@@ -299,6 +294,7 @@ export const getProject = createServerFn({ method: "GET" })
 				.limit(3);
 			return {
 				project: localizeRow(project, PROJECT_TEXT, locale),
+				hasArabic: hasArabic(project, PROJECT_TEXT),
 				related: related.map((row) =>
 					localizeRow(row, ["title", "subtitle"], locale),
 				),

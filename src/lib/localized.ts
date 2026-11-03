@@ -24,6 +24,85 @@ export function localized<T extends Translatable>(
 	return locale === "ar" && ar != null && hasContent(ar) ? ar : en;
 }
 
+/** Translatable columns per table; each has an `*Ar` twin in the schema. */
+export const PROFILE_TEXT = [
+	"headline",
+	"tagline",
+	"summary",
+	"availability",
+] as const;
+export const EXPERIENCE_TEXT = ["role", "summary", "highlights"] as const;
+export const PROJECT_TEXT = [
+	"title",
+	"subtitle",
+	"summary",
+	"description",
+	"role",
+	"challenge",
+	"outcomes",
+	"features",
+] as const;
+export const SERVICE_TEXT = [
+	"title",
+	"summary",
+	"description",
+	"deliverables",
+] as const;
+/** The service columns a card shows, which is all the home page loads. */
+export const SERVICE_CARD_TEXT = ["title", "summary"] as const;
+
+/**
+ * Whether `row` reads fully in Arabic: every listed field with English content has an Arabic twin.
+ * Partly translated rows fall back to English field by field, so they don't count as a translation.
+ */
+export function hasArabic(
+	row: Record<string, unknown>,
+	fields: readonly string[],
+): boolean {
+	return fields.every(
+		(f) =>
+			!hasContent(row[f] as Translatable | null | undefined) ||
+			hasContent(row[`${f}Ar`] as Translatable | null | undefined),
+	);
+}
+
+/** Whether a page listing several rows reads mostly in Arabic. */
+export const mostlyArabic = (translated: boolean[]) =>
+	translated.filter(Boolean).length * 2 > translated.length;
+
+const HOME_PROJECT_COUNT = 6;
+
+/** The projects the home page shows: the featured ones, or the first few when none are. */
+export function homeProjects<P extends { featured: boolean }>(
+	projects: P[],
+): P[] {
+	const featured = projects.filter((p) => p.featured);
+	return (featured.length > 0 ? featured : projects).slice(
+		0,
+		HOME_PROJECT_COUNT,
+	);
+}
+
+type PortfolioRows = {
+	profile: Record<string, unknown> | null | undefined;
+	projects: (Record<string, unknown> & { featured: boolean })[];
+	services: Record<string, unknown>[];
+	experiences: Record<string, unknown>[];
+};
+
+/** Whether the home page has an Arabic version: the profile, and most of the rows it lists. */
+export function portfolioHasArabic(data: PortfolioRows): boolean {
+	return (
+		data.profile != null &&
+		hasArabic(data.profile, PROFILE_TEXT) &&
+		mostlyArabic([
+			...homeProjects(data.projects).map((r) => hasArabic(r, PROJECT_TEXT)),
+			...data.services.map((r) => hasArabic(r, SERVICE_CARD_TEXT)),
+			...data.experiences.map((r) => hasArabic(r, EXPERIENCE_TEXT)),
+		])
+	);
+}
+
 type ArKey<K extends string> = `${K}Ar`;
 
 /**

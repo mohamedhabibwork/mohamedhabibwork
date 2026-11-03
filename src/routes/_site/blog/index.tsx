@@ -1,38 +1,45 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BlogCard } from "#/components/cards";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
+import { dominantPostLocale, postLocale } from "#/lib/blog";
 import {
-	absoluteUrl,
 	breadcrumbs,
 	jsonLd,
+	localizedUrl,
 	PERSON_ID,
 	pageTitle,
 	seo,
 } from "#/lib/seo";
 import { getBlogPosts } from "#/server/fn/public";
-
-const DESCRIPTION =
-	"Notes on software engineering, self-hosting, cloud infrastructure and the tools I use day to day.";
+import { m } from "#/paraglide/messages";
 
 export const Route = createFileRoute("/_site/blog/")({
 	loader: () => getBlogPosts(),
 	head: ({ loaderData }) => {
 		const posts = loaderData ?? [];
+		const contentLocale = dominantPostLocale(posts);
+		// The index lists the same posts under both prefixes, so its metadata follows the language they're written in.
+		const locale = contentLocale;
+		const title = m.blog_seo_title({}, { locale });
+		const description = m.blog_seo_description({}, { locale });
+		const url = localizedUrl("/blog", contentLocale);
 		const base = seo({
-			title: pageTitle("Blog"),
-			description: DESCRIPTION,
+			title: pageTitle(title),
+			description,
 			path: "/blog",
+			contentLocale,
 		});
 		const blog = {
 			"@context": "https://schema.org",
 			"@type": "Blog",
 			name: "Mohamed Habib — Blog",
-			url: absoluteUrl("/blog"),
+			url,
+			inLanguage: contentLocale,
 			author: { "@id": PERSON_ID },
 			blogPost: posts.map((p) => ({
 				"@type": "BlogPosting",
 				headline: p.title,
-				url: absoluteUrl(`/blog/${p.slug}`),
+				url: localizedUrl(`/blog/${p.slug}`, postLocale(p)),
 				datePublished: p.publishedAt
 					? new Date(p.publishedAt).toISOString()
 					: undefined,
@@ -40,7 +47,7 @@ export const Route = createFileRoute("/_site/blog/")({
 		};
 		return {
 			...base,
-			scripts: [jsonLd(blog), jsonLd(breadcrumbs(["Blog", "/blog"]))],
+			scripts: [jsonLd(blog), jsonLd(breadcrumbs(locale, [m.nav_blog({}, { locale }), "/blog"]))],
 		};
 	},
 	component: BlogIndexPage,
@@ -54,15 +61,15 @@ function BlogIndexPage() {
 				<section className="site-section">
 					<SectionHeading
 						as="h1"
-						eyebrow="Writing"
-						title="Blog"
-						description={DESCRIPTION}
+						eyebrow={m.blog_eyebrow()}
+						title={m.nav_blog()}
+						description={m.blog_seo_description()}
 					/>
 					{posts.length === 0 ? (
 						<EmptyState
 							icon="search"
-							title="No posts yet"
-							description="Check back soon."
+							title={m.blog_empty_title()}
+							description={m.blog_empty_body()}
 						/>
 					) : (
 						<div className="blog-related__grid">

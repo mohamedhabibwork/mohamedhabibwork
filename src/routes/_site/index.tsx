@@ -11,24 +11,30 @@ import {
 	Timeline,
 } from "#/design-system/ui";
 import { contactPoints, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
-import { absoluteUrl, jsonLd, PERSON_ID, SITE_NAME, SITE_URL, seo, TITLE_MAX } from "#/lib/seo";
+import { homeProjects } from "#/lib/localized";
+import { absoluteUrl, jsonLd, localizedUrl, PERSON_ID, pageLocale, SITE_NAME, SITE_URL, seo, TITLE_MAX } from "#/lib/seo";
 import { type SkillEvidence, skillEvidence } from "#/lib/skill-evidence";
 import { ProjectCard, ServiceCard } from "#/components/cards";
 import { ContactForm } from "#/components/site";
 import { getPortfolio } from "#/server/fn/public";
+import { m } from "#/paraglide/messages";
+import { getLocale, localizeHref } from "#/paraglide/runtime";
 
 export const Route = createFileRoute("/_site/")({
-	loader: () => getPortfolio(),
+	loader: () => getPortfolio({ data: { locale: getLocale() } }),
 	head: ({ loaderData }) => {
 		const p = loaderData?.profile;
+		const page = pageLocale("/", loaderData?.hasArabic ?? false);
+		const { contentLocale: locale } = page;
+		const homeUrl = localizedUrl("/", locale);
 		const name = p?.name ?? SITE_NAME;
 		// Headline reads "Senior Full-Stack Engineer · .NET Core & C# · …"; the first part is the role.
-		const role = p?.headline.split(/[·|]/)[0].trim() || "Senior Full-Stack Engineer";
-		const title = [`${name} · ${role} & Team Leader`, `${name} · ${role}`].find((t) => t.length <= TITLE_MAX) ?? `${name} · ${role}`;
+		const role = p?.headline.split(/[·|]/)[0].trim() || m.home_default_role({}, { locale });
+		const title = [m.home_title({ name, role }, { locale }), `${name} · ${role}`].find((t) => t.length <= TITLE_MAX) ?? `${name} · ${role}`;
 		const base = seo({
 			title,
-			description: p?.summary || "Senior full-stack engineer and team leader building scalable web platforms.",
-			path: "/",
+			description: m.home_description({}, { locale }),
+			...page,
 			type: "profile",
 		});
 		if (!p) return base;
@@ -43,7 +49,7 @@ export const Route = createFileRoute("/_site/")({
 			email: `mailto:${p.email}`,
 			...(p.phone ? { telephone: telHref(p.phone).slice(4) } : {}),
 			contactPoint: contactPoints(p),
-			url: SITE_URL,
+			url: homeUrl,
 			image: absoluteUrl("/brand/images/profile.jpg"),
 			...(p.location ? { homeLocation: { "@type": "Place", name: p.location } } : {}),
 			...(current ? { worksFor: { "@type": "Organization", name: current.company } } : {}),
@@ -52,13 +58,13 @@ export const Route = createFileRoute("/_site/")({
 			knowsAbout: [...new Set(loaderData.skills.map((s) => s.name))],
 			makesOffer: loaderData.services.flatMap((s) => {
 				const price = parsePrice(s.startingAt);
-				const url = absoluteUrl(`/services/${s.slug}`);
+				const url = localizedUrl(`/services/${s.slug}`, locale);
 				return price ? [{ ...serviceOffer(price, url), itemOffered: { "@type": "Service", name: s.title, url } }] : [];
 			}),
 		};
-		const site = { "@context": "https://schema.org", "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: p.name, url: SITE_URL, inLanguage: "en", publisher: { "@id": PERSON_ID } };
-		const page = { "@context": "https://schema.org", "@type": "ProfilePage", url: SITE_URL, name: title, isPartOf: { "@id": `${SITE_URL}/#website` }, mainEntity: { "@id": PERSON_ID } };
-		return { ...base, scripts: [jsonLd(person), jsonLd(site), jsonLd(page)] };
+		const site = { "@context": "https://schema.org", "@type": "WebSite", "@id": `${SITE_URL}/#website`, name: p.name, url: homeUrl, inLanguage: locale, publisher: { "@id": PERSON_ID } };
+		const profilePage = { "@context": "https://schema.org", "@type": "ProfilePage", url: homeUrl, name: title, inLanguage: locale, isPartOf: { "@id": `${SITE_URL}/#website` }, mainEntity: { "@id": PERSON_ID } };
+		return { ...base, scripts: [jsonLd(person), jsonLd(site), jsonLd(profilePage)] };
 	},
 	component: Home,
 });
@@ -72,7 +78,7 @@ function Home() {
 	if (!p) {
 		return (
 			<main id="main" className="site" style={{ padding: "96px 0" }}>
-				<Alert variant="info" title="No profile yet">Run <code>bun run db:seed</code> or fill in your profile in the dashboard.</Alert>
+				<Alert variant="info" title={m.home_empty_title()}>{m.home_empty_body()}</Alert>
 			</main>
 		);
 	}
@@ -88,21 +94,21 @@ function Home() {
 						<span className="mh-hero__eyebrow">{p.availability || p.location}</span>
 					</div>
 					<h1 className="mh-hero__title" id="hero-title">
-						{p.headline.split(/[·|&]/)[0].trim()} <em>& team leader.</em>
+						{p.headline.split(/[·|&]/)[0].trim()} <em>{m.home_hero_suffix()}</em>
 					</h1>
 					<p className="mh-hero__lead">{p.tagline}</p>
 					<div className="mh-hero__actions">
-						<LinkButton href="#work" size="lg" trailingIcon="arrow-right">See my work</LinkButton>
+						<LinkButton href="#work" size="lg" trailingIcon="arrow-right">{m.home_see_work()}</LinkButton>
 						{mainCv && (
 							<LinkButton href={`/api/cv/${mainCv.slug}/pdf?download=1`} size="lg" variant="outline" leadingIcon="download">
-								Download CV
+								{m.home_download_cv()}
 							</LinkButton>
 						)}
 					</div>
 				</section>
 
 				{p.stats.length > 0 && (
-					<section className="mh-grid-4" aria-label="Highlights">
+					<section className="mh-grid-4" aria-label={m.home_highlights()}>
 						{p.stats.map((s) => <StatCard key={s.label} label={s.label} value={s.value} />)}
 					</section>
 				)}
@@ -119,16 +125,15 @@ function Home() {
 }
 
 function Projects({ projects }: { projects: Portfolio["projects"] }) {
-	const featured = projects.filter((x) => x.featured).slice(0, 6);
-	const shown = featured.length > 0 ? featured : projects.slice(0, 6);
+	const shown = homeProjects(projects);
 	return (
 		<section className="site-section" id="work" aria-labelledby="work-title">
 			<SectionHeading
 				id="work-title"
-				eyebrow="Selected work"
-				title="Projects"
-				description="Platforms I've built and led across transportation, healthcare, fintech and more."
-				action={<LinkButton href="/projects" variant="ghost" trailingIcon="arrow-right">All {projects.length} projects</LinkButton>}
+				eyebrow={m.home_projects_eyebrow()}
+				title={m.nav_projects()}
+				description={m.home_projects_description()}
+				action={<LinkButton href={localizeHref("/projects")} variant="ghost" trailingIcon="arrow-right">{m.home_all_projects({ count: projects.length })}</LinkButton>}
 			/>
 			<div className="mh-grid-3">
 				{shown.map((pr) => <ProjectCard key={pr.id} project={pr} />)}
@@ -140,10 +145,10 @@ function Projects({ projects }: { projects: Portfolio["projects"] }) {
 function Experience({ items }: { items: Portfolio["experiences"] }) {
 	return (
 		<section className="site-section" id="experience" aria-labelledby="exp-title">
-			<SectionHeading id="exp-title" eyebrow="Career" title="Experience" />
+			<SectionHeading id="exp-title" eyebrow={m.home_experience_eyebrow()} title={m.home_experience_title()} />
 			<Timeline
 				items={items.map((e) => ({
-					meta: `${e.start} — ${e.current ? "Present" : e.end}`,
+					meta: `${e.start} — ${e.current ? m.home_present() : e.end}`,
 					title: `${e.role} · ${e.company}`,
 					body: (
 						<>
@@ -165,7 +170,7 @@ function Skills({ skills, projects, roles }: { skills: Portfolio["skills"]; proj
 	const groups = [...new Set(skills.map((s) => s.category))];
 	return (
 		<section className="site-section" id="skills" aria-labelledby="skills-title">
-			<SectionHeading id="skills-title" eyebrow="Toolbox" title="Skills" description="Each skill links to the projects and roles where I used it." />
+			<SectionHeading id="skills-title" eyebrow={m.home_skills_eyebrow()} title={m.home_skills_title()} description={m.home_skills_description()} />
 			<div className="mh-grid-2">
 				{groups.map((g) => (
 					<div key={g} className="mh-card">
@@ -189,18 +194,18 @@ function SkillRow({ skill: s, evidence }: { skill: Portfolio["skills"][number]; 
 		<div className="skill-row">
 			<SkillMeter skills={[s]} />
 			<p className="skill-row__evidence">
-				{s.years ? <span className="skill-row__years">{s.years}+ yrs</span> : null}
-				{evidence.companies.length > 0 && <span>at {evidence.companies.slice(0, 3).join(", ")}</span>}
+				{s.years ? <span className="skill-row__years">{m.home_skill_years({ years: s.years })}</span> : null}
+				{evidence.companies.length > 0 && <span>{m.home_skill_at({ companies: evidence.companies.slice(0, 3).join(", ") })}</span>}
 				{shownProjects.length > 0 && (
 					<span>
-						in{" "}
+						{m.home_skill_in()}{" "}
 						{shownProjects.map((p, i) => (
 							<span key={p.slug}>
 								{i > 0 && ", "}
 								<Link to="/projects/$slug" params={{ slug: p.slug }}>{p.title}</Link>
 							</span>
 						))}
-						{more > 0 && <> and <Link to="/projects">{more} more</Link></>}
+						{more > 0 && <> {m.home_skill_and()} <Link to="/projects">{m.home_skill_more({ count: more })}</Link></>}
 					</span>
 				)}
 			</p>
@@ -212,11 +217,11 @@ function Credentials({ education, certifications }: { education: NonNullable<Por
 	if (education.length === 0 && certifications.length === 0) return null;
 	return (
 		<section className="site-section" id="education" aria-labelledby="edu-title">
-			<SectionHeading id="edu-title" eyebrow="Background" title="Education & certifications" />
+			<SectionHeading id="edu-title" eyebrow={m.home_credentials_eyebrow()} title={m.home_credentials_title()} />
 			<div className="mh-grid-2">
 				{education.length > 0 && (
 					<div className="mh-card">
-						<span className="mh-card__eyebrow">Education</span>
+						<span className="mh-card__eyebrow">{m.home_education()}</span>
 						<ul className="project-detail__list">
 							{education.map((e) => (
 								<li key={e.school}>
@@ -229,7 +234,7 @@ function Credentials({ education, certifications }: { education: NonNullable<Por
 				)}
 				{certifications.length > 0 && (
 					<div className="mh-card">
-						<span className="mh-card__eyebrow">Certifications</span>
+						<span className="mh-card__eyebrow">{m.home_certifications()}</span>
 						<ul className="project-detail__list">{certifications.map((c) => <li key={c}><Icon name="award" size={16} />{c}</li>)}</ul>
 					</div>
 				)}
@@ -241,12 +246,12 @@ function Credentials({ education, certifications }: { education: NonNullable<Por
 function Contact({ profile, services }: { profile: NonNullable<Portfolio["profile"]>; services: Portfolio["services"] }) {
 	return (
 		<section className="site-section" id="contact" aria-labelledby="contact-title">
-			<SectionHeading id="contact-title" eyebrow="Contact" title="Let's build something" description={profile.availability} />
+			<SectionHeading id="contact-title" eyebrow={m.common_contact_eyebrow()} title={m.home_contact_title()} description={profile.availability} />
 			<div className="contact-grid">
 				<ul className="contact-list">
 					<li><Icon name="mail" /><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
-					{profile.phone && <li><Icon name="phone" /><a href={telHref(profile.phone)}>Call {profile.phone}</a></li>}
-					{profile.phone && <li><Icon name="send" /><a href={whatsappHref(profile.phone)} target="_blank" rel="noopener noreferrer">WhatsApp me</a></li>}
+					{profile.phone && <li><Icon name="phone" /><a href={telHref(profile.phone)}>{m.home_call({ phone: profile.phone })}</a></li>}
+					{profile.phone && <li><Icon name="send" /><a href={whatsappHref(profile.phone)} target="_blank" rel="noopener noreferrer">{m.home_whatsapp_me()}</a></li>}
 					{profile.location && <li><Icon name="map-pin" /><span>{profile.location}</span></li>}
 					{profile.linkedin && <li><Icon name="linkedin" /><a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>}
 					{profile.github && <li><Icon name="github" /><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>}
@@ -261,7 +266,7 @@ function Services({ services }: { services: Portfolio["services"] }) {
 	if (services.length === 0) return null;
 	return (
 		<section className="site-section" id="services" aria-labelledby="services-title">
-			<SectionHeading id="services-title" eyebrow="What I do" title="Services" action={<LinkButton href="/services" variant="ghost" trailingIcon="arrow-right">All services</LinkButton>} />
+			<SectionHeading id="services-title" eyebrow={m.home_services_eyebrow()} title={m.nav_services()} action={<LinkButton href={localizeHref("/services")} variant="ghost" trailingIcon="arrow-right">{m.home_all_services()}</LinkButton>} />
 			<div className="mh-grid-3">
 				{services.slice(0, 6).map((s) => <ServiceCard key={s.slug} service={s} />)}
 			</div>

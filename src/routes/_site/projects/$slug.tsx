@@ -2,23 +2,27 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { ChipList, EmptyState, Icon, LinkButton, MarkArt } from "#/design-system/ui";
 import { trackView } from "#/lib/analytics";
-import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
+import { absoluteUrl, breadcrumbs, jsonLd, localizedUrl, PERSON_ID, pageLocale, pageTitle, seo } from "#/lib/seo";
 import { getProject } from "#/server/fn/public";
+import { m } from "#/paraglide/messages";
+import { getLocale, localizeHref } from "#/paraglide/runtime";
 
 export const Route = createFileRoute("/_site/projects/$slug")({
 	loader: async ({ params }) => {
-		const data = await getProject({ data: params.slug });
+		const data = await getProject({ data: { slug: params.slug, locale: getLocale() } });
 		if (!data) throw notFound();
 		return data;
 	},
 	head: ({ loaderData, params }) => {
-		if (!loaderData) return seo({ title: pageTitle("Project not found"), description: "This project doesn't exist.", path: `/projects/${params.slug}`, noindex: true });
-		const { project: pr } = loaderData;
+		if (!loaderData) return seo({ title: pageTitle(m.project_not_found_title()), description: m.project_not_found_seo(), path: `/projects/${params.slug}`, noindex: true });
+		const { project: pr, hasArabic } = loaderData;
 		const path = `/projects/${pr.slug}`;
+		const page = pageLocale(path, hasArabic);
+		const { contentLocale: locale } = page;
 		const base = seo({
 			title: pageTitle(`${pr.title} — ${pr.subtitle || pr.category}`, pr.title),
 			description: pr.summary,
-			path,
+			...page,
 			// Social crawlers don't render SVG, so generated covers fall back to the default PNG.
 			image: pr.imageUrl && !pr.imageUrl.endsWith(".svg") ? { url: pr.imageUrl, alt: `${pr.title} — ${pr.subtitle}` } : undefined,
 			type: "article",
@@ -29,7 +33,8 @@ export const Route = createFileRoute("/_site/projects/$slug")({
 			name: pr.title,
 			headline: `${pr.title} — ${pr.subtitle}`,
 			description: pr.summary,
-			url: absoluteUrl(path),
+			url: localizedUrl(path, locale),
+			inLanguage: locale,
 			image: absoluteUrl(pr.imageUrl || `/og/projects/${pr.slug}.svg`),
 			genre: pr.category,
 			keywords: pr.tech.join(", "),
@@ -37,11 +42,11 @@ export const Route = createFileRoute("/_site/projects/$slug")({
 			...(pr.url ? { sameAs: pr.url } : {}),
 			creator: { "@id": PERSON_ID },
 		};
-		return { ...base, scripts: [jsonLd(work), jsonLd(breadcrumbs(["Projects", "/projects"], [pr.title, path]))] };
+		return { ...base, scripts: [jsonLd(work), jsonLd(breadcrumbs(locale, [m.nav_projects({}, { locale }), "/projects"], [pr.title, path]))] };
 	},
 	notFoundComponent: () => (
 		<main id="main" className="site" style={{ padding: "96px 0" }}>
-			<EmptyState icon="search" title="Project not found" description="It may have been renamed or unpublished." action={<LinkButton href="/projects">See all projects</LinkButton>} />
+			<EmptyState icon="search" title={m.project_not_found_title()} description={m.project_not_found_body()} action={<LinkButton href={localizeHref("/projects")}>{m.project_see_all()}</LinkButton>} />
 		</main>
 	),
 	component: ProjectPage,
@@ -62,8 +67,8 @@ function ProjectPage() {
 						<h1 className="mh-hero__title" id="project-title">{pr.title}{pr.subtitle && <em> — {pr.subtitle}</em>}</h1>
 						<p className="mh-hero__lead">{pr.summary}</p>
 						<div className="mh-hero__actions">
-							{pr.url && <LinkButton href={pr.url} target="_blank" rel="noopener noreferrer" size="lg" trailingIcon="arrow-up-right">Visit live site</LinkButton>}
-							<LinkButton href="/#contact" size="lg" variant="outline">Discuss a similar project</LinkButton>
+							{pr.url && <LinkButton href={pr.url} target="_blank" rel="noopener noreferrer" size="lg" trailingIcon="arrow-up-right">{m.project_visit()}</LinkButton>}
+							<LinkButton href={localizeHref("/#contact")} size="lg" variant="outline">{m.project_discuss()}</LinkButton>
 						</div>
 					</section>
 
@@ -73,13 +78,13 @@ function ProjectPage() {
 
 					<div className="mh-grid-2 site-section">
 						<div className="mh-card">
-							{pr.role && <><span className="mh-card__eyebrow">My role</span><p>{pr.role}</p></>}
-							{pr.challenge && <><span className="mh-card__eyebrow">The challenge</span><p>{pr.challenge}</p></>}
-							<span className="mh-card__eyebrow">Stack</span>
-							<ChipList items={pr.tech} label="Stack" />
+							{pr.role && <><span className="mh-card__eyebrow">{m.project_role()}</span><p>{pr.role}</p></>}
+							{pr.challenge && <><span className="mh-card__eyebrow">{m.project_challenge()}</span><p>{pr.challenge}</p></>}
+							<span className="mh-card__eyebrow">{m.common_stack()}</span>
+							<ChipList items={pr.tech} label={m.common_stack()} />
 						</div>
 						<div className="mh-card">
-							<span className="mh-card__eyebrow">Overview</span>
+							<span className="mh-card__eyebrow">{m.common_overview()}</span>
 							{(paragraphs.length ? paragraphs : [pr.summary]).map((t) => <p key={t}>{t}</p>)}
 						</div>
 					</div>
@@ -87,13 +92,13 @@ function ProjectPage() {
 					<div className="mh-grid-2 site-section">
 						{pr.features.length > 0 && (
 							<section className="mh-card" aria-labelledby="features-title">
-								<h2 className="mh-card__eyebrow" id="features-title">Key features</h2>
+								<h2 className="mh-card__eyebrow" id="features-title">{m.project_features()}</h2>
 								<ul className="project-detail__list">{pr.features.map((f) => <li key={f}><Icon name="check" size={16} />{f}</li>)}</ul>
 							</section>
 						)}
 						{pr.outcomes.length > 0 && (
 							<section className="mh-card" aria-labelledby="outcomes-title">
-								<h2 className="mh-card__eyebrow" id="outcomes-title">Outcomes</h2>
+								<h2 className="mh-card__eyebrow" id="outcomes-title">{m.project_outcomes()}</h2>
 								<ul className="project-detail__list">{pr.outcomes.map((o) => <li key={o}><Icon name="arrow-right" size={16} />{o}</li>)}</ul>
 							</section>
 						)}
@@ -101,8 +106,8 @@ function ProjectPage() {
 				</article>
 
 				{related.length > 0 && (
-					<nav className="site-section" aria-label="More projects">
-						<h2 className="mh-card__eyebrow">More projects</h2>
+					<nav className="site-section" aria-label={m.project_more()}>
+						<h2 className="mh-card__eyebrow">{m.project_more()}</h2>
 						<div className="mh-grid-3">
 							{related.map((r) => (
 								<Link key={r.slug} className="mh-card" to="/projects/$slug" params={{ slug: r.slug }}>

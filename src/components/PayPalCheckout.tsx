@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Alert, Textarea } from "#/design-system/ui";
 import { track } from "#/lib/analytics";
 import { PAYPAL_CURRENCIES, type Price } from "#/lib/contact";
+import { m } from "#/paraglide/messages";
 
 /** Public settings of the active PayPal app, from the server (`paypalPublicConfig`). The secret never leaves the server. */
 export type PayPalPublic = { clientId: string; env: "live" | "sandbox" };
@@ -126,7 +127,7 @@ export function PayPalCheckout({
 							notes: notes.current,
 						});
 						if (!res.ok || !res.data.id)
-							throw new Error(res.data.error ?? "Couldn't start checkout");
+							throw new Error(res.data.error ?? m.pay_start_failed());
 						track("begin_checkout", {
 							currency: price.currency,
 							value: price.amount,
@@ -151,8 +152,7 @@ export function PayPalCheckout({
 							setResult({
 								kind: "error",
 								message:
-									res.data.error ??
-									"Payment couldn't be completed. You have not been charged.",
+									res.data.error ?? m.pay_incomplete(),
 							});
 							return;
 						}
@@ -178,8 +178,7 @@ export function PayPalCheckout({
 						console.error("PayPal checkout error:", error);
 						setResult({
 							kind: "error",
-							message:
-								"PayPal checkout didn't complete. Please try again or message me instead.",
+							message: m.pay_sdk_error(),
 						});
 					},
 				});
@@ -190,8 +189,7 @@ export function PayPalCheckout({
 				if (!cancelled)
 					setResult({
 						kind: "error",
-						message:
-							"PayPal couldn't load. Check your connection or ad blocker, or message me instead.",
+						message: m.pay_load_error(),
 					});
 			})
 			.finally(() => {
@@ -205,32 +203,29 @@ export function PayPalCheckout({
 
 	if (result?.kind === "pending") {
 		return (
-			<Alert variant="info" title="Payment is processing">
-				PayPal is still clearing your payment. I'll email you to schedule your
-				session as soon as it completes — usually within a few days for
-				bank-funded payments.
+			<Alert variant="info" title={m.pay_pending_title()}>
+				{m.pay_pending_body()}
 			</Alert>
 		);
 	}
 	if (result?.kind === "paid") {
 		return (
-			<Alert variant="success" title="Payment received — thank you!">
-				{result.payerName ? `${result.payerName.split(" ")[0]}, I'll` : "I'll"}{" "}
-				email you within 24 hours to schedule your session. PayPal has sent your
-				receipt.
+			<Alert variant="success" title={m.pay_paid_title()}>
+				{result.payerName
+					? m.pay_paid_body_named({ name: result.payerName.split(" ")[0] })
+					: m.pay_paid_body()}
 			</Alert>
 		);
 	}
 	return (
 		<div className="mh-card" style={{ gap: 16 }}>
 			{paypal.env === "sandbox" && (
-				<Alert variant="warning" title="Test mode">
-					PayPal sandbox — no real money moves. Pay with a sandbox buyer
-					account.
+				<Alert variant="warning" title={m.pay_test_title()}>
+					{m.pay_test_body()}
 				</Alert>
 			)}
 			<Textarea
-				label="What would you like to discuss? (optional)"
+				label={m.pay_notes()}
 				rows={3}
 				maxLength={1000}
 				onChange={(e) => {
@@ -250,19 +245,18 @@ export function PayPalCheckout({
 			/>
 			{loading && (
 				<p style={{ margin: 0, color: "var(--text-muted)" }}>
-					Loading secure PayPal checkout…
+					{m.pay_loading()}
 				</p>
 			)}
 			<div aria-live="polite">
 				{result?.kind === "error" && (
-					<Alert variant="danger" title="Not paid">
+					<Alert variant="danger" title={m.pay_not_paid()}>
 						{result.message}
 					</Alert>
 				)}
 			</div>
 			<p style={{ margin: 0, fontSize: 13, color: "var(--text-subtle)" }}>
-				Pay with PayPal or a debit/credit card. After payment I'll email you to
-				book a time that suits you.
+				{m.pay_footer()}
 			</p>
 		</div>
 	);
