@@ -1,9 +1,9 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { ServiceCard } from "#/components/cards";
+import { OfferList } from "#/components/cards";
 import { canPayOnline, PayPalCheckout } from "#/components/PayPalCheckout";
 import { ContactForm } from "#/components/site";
-import { ChipList, EmptyState, Icon, type IconName, LinkButton, MarkArt, SectionHeading } from "#/design-system/ui";
+import { ChipList, EmptyState, Icon, LinkButton, SectionHeading } from "#/design-system/ui";
 import { trackView } from "#/lib/analytics";
 import { parseCheckoutPrice, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
 import { breadcrumbs, jsonLd, localizedUrl, PERSON_ID, pageLocale, pageTitle, seo } from "#/lib/seo";
@@ -58,37 +58,47 @@ function ServicePage() {
 	return (
 		<>
 			<main id="main" className="site">
-				<section className="mh-hero" aria-labelledby="service-title">
-					<MarkArt className="mh-hero__art" position="right" />
-					<span className="mh-hero__eyebrow">{m.service_eyebrow()}</span>
-					<h1 className="mh-hero__title" id="service-title">{s.title}</h1>
-					<p className="mh-hero__lead">{s.summary}</p>
-					<div className="mh-hero__actions">
-						<LinkButton href={payable ? "#book" : "#enquire"} size="lg" trailingIcon="arrow-right" data-track={payable ? "book" : undefined}>
-							{!price ? m.service_contact() : payable ? m.service_book_pay({ price: s.startingAt }) : m.service_request({ price: s.startingAt })}
-						</LinkButton>
-						{owner?.phone && <LinkButton href={telHref(owner.phone)} size="lg" variant="outline" leadingIcon="phone">{m.service_call()}</LinkButton>}
-						{owner?.phone && (
-							<LinkButton href={whatsappHref(owner.phone, m.service_whatsapp_message({ name: owner.name.split(" ")[0], title: s.title }))} target="_blank" rel="noopener noreferrer" size="lg" variant="ghost">
-								{m.common_whatsapp()}
-							</LinkButton>
-						)}
-						{s.startingAt && !price && <span className="mh-hero__eyebrow">{m.service_from({ price: s.startingAt })}</span>}
-					</div>
-				</section>
+				<header className="case-head">
+					<span className="case-head__crumb"><Link to="/services">{m.nav_services()}</Link></span>
+					<h1 id="service-title">{s.title}</h1>
+					<p className="case-head__sub">{s.summary}</p>
+				</header>
 
-				<div className="mh-grid-2 site-section project-detail">
-					<div className="mh-card">
-						<span className="mh-card__eyebrow">{m.common_overview()}</span>
-						{(paragraphs.length ? paragraphs : [s.summary]).map((t) => <p key={t}>{t}</p>)}
-						{s.tech.length > 0 && <><span className="mh-card__eyebrow">{m.service_stack()}</span><ChipList items={s.tech} label={m.common_stack()} /></>}
-					</div>
-					{s.deliverables.length > 0 && (
-						<section className="mh-card" aria-labelledby="deliverables-title">
-							<h2 className="mh-card__eyebrow" id="deliverables-title">{m.service_deliverables()}</h2>
-							<ul className="project-detail__list">{s.deliverables.map((d) => <li key={d}><Icon name={(s.icon as IconName) || "check"} size={16} />{d}</li>)}</ul>
+				<div className="case" style={{ paddingTop: 0 }}>
+					<div className="case__body">
+						<section aria-labelledby="overview-title">
+							<h2 id="overview-title">{m.common_overview()}</h2>
+							{(paragraphs.length ? paragraphs : [s.summary]).map((t) => <p key={t}>{t}</p>)}
 						</section>
-					)}
+						{s.deliverables.length > 0 && (
+							<section aria-labelledby="deliverables-title">
+								<h2 id="deliverables-title">{m.service_deliverables()}</h2>
+								<ul className="case__list">{s.deliverables.map((d) => <li key={d}><Icon name="check" size={16} />{d}</li>)}</ul>
+							</section>
+						)}
+						{s.tech.length > 0 && (
+							<section aria-labelledby="stack-title">
+								<h2 id="stack-title">{m.service_stack()}</h2>
+								<ChipList items={s.tech} label={m.common_stack()} />
+							</section>
+						)}
+					</div>
+					<aside className="spec" aria-label="Pricing and booking">
+						<dl>
+							<div><dt>Starting at</dt><dd className="spec__price">{s.startingAt || "Quote"}</dd></div>
+						</dl>
+						<div className="spec__actions">
+							<LinkButton href={payable ? "#book" : "#enquire"} data-track={payable ? "book" : undefined}>
+								{!price ? m.service_contact() : payable ? m.service_book_pay({ price: s.startingAt }) : m.service_request({ price: s.startingAt })}
+							</LinkButton>
+							{owner?.phone && <LinkButton href={telHref(owner.phone)} variant="outline" leadingIcon="phone">{m.service_call()}</LinkButton>}
+							{owner?.phone && (
+								<LinkButton href={whatsappHref(owner.phone, m.service_whatsapp_message({ name: owner.name.split(" ")[0], title: s.title }))} target="_blank" rel="noopener noreferrer" variant="ghost">
+									{m.common_whatsapp()}
+								</LinkButton>
+							)}
+						</div>
+					</aside>
 				</div>
 
 				{payable && paypal && (
@@ -105,8 +115,8 @@ function ServicePage() {
 
 				{others.length > 0 && (
 					<nav className="site-section" aria-label={m.service_others()}>
-						<h2 className="mh-card__eyebrow">{m.service_others()}</h2>
-						<div className="mh-grid-3">{others.slice(0, 3).map((o) => <ServiceCard key={o.slug} service={o} />)}</div>
+						<header className="page-head"><h2>{m.service_others()}</h2></header>
+						<OfferList services={others.slice(0, 3)} />
 					</nav>
 				)}
 			</main>

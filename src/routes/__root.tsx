@@ -1,5 +1,9 @@
 import type { QueryClient } from "@tanstack/react-query";
-import { createRootRouteWithContext, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+	createRootRouteWithContext,
+	HeadContent,
+	Scripts,
+} from "@tanstack/react-router";
 import { useEffect } from "react";
 import { Footer } from "#/components/layout/Footer";
 import { Header } from "#/components/layout/Header";
@@ -18,14 +22,27 @@ interface MyRouterContext {
 
 /** Search Console / Bing Webmaster ownership tokens, set at build time (optional — DNS verification also works). */
 const SITE_VERIFICATION = [
-	{ name: "google-site-verification", content: import.meta.env.VITE_GOOGLE_SITE_VERIFICATION as string | undefined },
-	{ name: "msvalidate.01", content: import.meta.env.VITE_BING_SITE_VERIFICATION as string | undefined },
+	{
+		name: "google-site-verification",
+		content: import.meta.env.VITE_GOOGLE_SITE_VERIFICATION as
+			| string
+			| undefined,
+	},
+	{
+		name: "msvalidate.01",
+		content: import.meta.env.VITE_BING_SITE_VERIFICATION as string | undefined,
+	},
 ].filter((m): m is { name: string; content: string } => Boolean(m.content));
 
 /** Google Analytics 4 measurement id, set at build time (.env.production) so local dev isn't tracked. */
-const GA_ID = (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined)?.trim();
+const GA_ID = (
+	import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined
+)?.trim();
 // Shape-checked because the id is embedded in an inline script.
-const analyticsScripts = GA_ID && /^G-[A-Z0-9]+$/.test(GA_ID) ? [{ children: analyticsBootstrap(GA_ID, new URL(SITE_URL).hostname) }] : [];
+const analyticsScripts =
+	GA_ID && /^G-[A-Z0-9]+$/.test(GA_ID)
+		? [{ children: analyticsBootstrap(GA_ID, new URL(SITE_URL).hostname) }]
+		: [];
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	head: () => ({
@@ -45,8 +62,20 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			{ rel: "apple-touch-icon", href: "/icon-180.png" },
 			{ rel: "manifest", href: "/site.webmanifest" },
 			{ rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
-			{ rel: "preload", href: "/brand/fonts/Poppins-400.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
-			{ rel: "preload", href: "/brand/fonts/Barlow-800.woff2", as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+			{
+				rel: "preload",
+				href: "/brand/fonts/Poppins-400.woff2",
+				as: "font",
+				type: "font/woff2",
+				crossOrigin: "anonymous",
+			},
+			{
+				rel: "preload",
+				href: "/brand/fonts/Barlow-800.woff2",
+				as: "font",
+				type: "font/woff2",
+				crossOrigin: "anonymous",
+			},
 		],
 		// GA4 tracks client-side navigations itself (enhanced measurement: "page changes based on browser history").
 		scripts: analyticsScripts,
@@ -67,7 +96,11 @@ function NotFound() {
 					icon="search"
 					title={m.not_found_title()}
 					description={m.not_found_body()}
-					action={<LinkButton href={localizeHref("/projects")}>{m.not_found_cta()}</LinkButton>}
+					action={
+						<LinkButton href={localizeHref("/projects")}>
+							{m.not_found_cta()}
+						</LinkButton>
+					}
 				/>
 				<p className="route-state__home">
 					<a className="mh-link" href={localizeHref("/")}>
@@ -81,7 +114,8 @@ function NotFound() {
 }
 
 /** Without JavaScript nothing would ever reveal, so scroll-reveal elements start visible. */
-const NO_JS_REVEAL = "[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}";
+const NO_JS_REVEAL =
+	"[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}";
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	useEffect(() => {
@@ -89,10 +123,21 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 	}, []);
 	const locale = getLocale();
 	return (
-		<html lang={locale} dir={getTextDirection(locale)} data-theme="dark" suppressHydrationWarning>
+		<html
+			lang={locale}
+			dir={getTextDirection(locale)}
+			data-theme="dark"
+			suppressHydrationWarning
+		>
 			<head>
 				{/* biome-ignore lint/security/noDangerouslySetInnerHtml: static theme boot script, no user input */}
 				<script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+				<script
+					async
+					src="https://collector-analytics.firstcallmedical.app/oa.js"
+					data-key="oa_pk_KTvGxVNeCvFtRSLExMEVJsvCXCXRIWzy"
+					data-collector="https://collector-analytics.firstcallmedical.app"
+				/>
 				<HeadContent />
 				<noscript>
 					<style>{NO_JS_REVEAL}</style>

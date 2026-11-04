@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { ChipList, EmptyState, Icon, LinkButton, MarkArt } from "#/design-system/ui";
+import { WorkIndex } from "#/components/cards";
+import { ChipList, EmptyState, Icon, LinkButton } from "#/design-system/ui";
 import { trackView } from "#/lib/analytics";
 import { absoluteUrl, breadcrumbs, jsonLd, localizedUrl, PERSON_ID, pageLocale, pageTitle, seo } from "#/lib/seo";
 import { getProject } from "#/server/fn/public";
@@ -60,63 +61,60 @@ function ProjectPage() {
 		<>
 
 			<main id="main" className="site">
-				<article className="project-detail" aria-labelledby="project-title">
-					<section className="mh-hero">
-						<MarkArt className="mh-hero__art" position="right" />
-						<span className="mh-hero__eyebrow">{[pr.category, pr.year].filter(Boolean).join(" · ")}</span>
-						<h1 className="mh-hero__title" id="project-title">{pr.title}{pr.subtitle && <em> — {pr.subtitle}</em>}</h1>
-						<p className="mh-hero__lead">{pr.summary}</p>
-						<div className="mh-hero__actions">
-							{pr.url && <LinkButton href={pr.url} target="_blank" rel="noopener noreferrer" size="lg" trailingIcon="arrow-up-right">{m.project_visit()}</LinkButton>}
-							<LinkButton href={localizeHref("/#contact")} size="lg" variant="outline">{m.project_discuss()}</LinkButton>
-						</div>
-					</section>
+				<article aria-labelledby="project-title">
+					<header className="case-head">
+						<span className="case-head__crumb"><Link to="/projects">{m.nav_projects()}</Link>{pr.category && <> / {pr.category}</>}</span>
+						<h1 id="project-title">{pr.title}</h1>
+						{(pr.subtitle || pr.summary) && <p className="case-head__sub">{pr.subtitle ? `${pr.subtitle}. ${pr.summary}` : pr.summary}</p>}
+					</header>
 
-					<figure className="mh-project__media project-detail__cover">
-						<img src={pr.imageUrl || `/og/projects/${pr.slug}.svg`} alt={`${pr.title} — ${pr.subtitle}`} width={1200} height={630} />
+					<figure className="case-cover">
+						<img src={pr.imageUrl || `/og/projects/${pr.slug}.svg`} alt={`${pr.title} — ${pr.subtitle}`} width={1200} height={630} fetchPriority="high" />
 					</figure>
 
-					<div className="mh-grid-2 site-section">
-						<div className="mh-card">
-							{pr.role && <><span className="mh-card__eyebrow">{m.project_role()}</span><p>{pr.role}</p></>}
-							{pr.challenge && <><span className="mh-card__eyebrow">{m.project_challenge()}</span><p>{pr.challenge}</p></>}
-							<span className="mh-card__eyebrow">{m.common_stack()}</span>
-							<ChipList items={pr.tech} label={m.common_stack()} />
-						</div>
-						<div className="mh-card">
-							<span className="mh-card__eyebrow">{m.common_overview()}</span>
-							{(paragraphs.length ? paragraphs : [pr.summary]).map((t) => <p key={t}>{t}</p>)}
-						</div>
-					</div>
-
-					<div className="mh-grid-2 site-section">
-						{pr.features.length > 0 && (
-							<section className="mh-card" aria-labelledby="features-title">
-								<h2 className="mh-card__eyebrow" id="features-title">{m.project_features()}</h2>
-								<ul className="project-detail__list">{pr.features.map((f) => <li key={f}><Icon name="check" size={16} />{f}</li>)}</ul>
+					<div className="case">
+						<div className="case__body">
+							<section aria-labelledby="overview-title">
+								<h2 id="overview-title">{m.common_overview()}</h2>
+								{(paragraphs.length ? paragraphs : [pr.summary]).map((t) => <p key={t}>{t}</p>)}
 							</section>
-						)}
-						{pr.outcomes.length > 0 && (
-							<section className="mh-card" aria-labelledby="outcomes-title">
-								<h2 className="mh-card__eyebrow" id="outcomes-title">{m.project_outcomes()}</h2>
-								<ul className="project-detail__list">{pr.outcomes.map((o) => <li key={o}><Icon name="arrow-right" size={16} />{o}</li>)}</ul>
-							</section>
-						)}
+							{pr.challenge && (
+								<section aria-labelledby="challenge-title">
+									<h2 id="challenge-title">{m.project_challenge()}</h2>
+									<p>{pr.challenge}</p>
+								</section>
+							)}
+							{pr.features.length > 0 && (
+								<section aria-labelledby="features-title">
+									<h2 id="features-title">{m.project_features()}</h2>
+									<ul className="case__list">{pr.features.map((f) => <li key={f}><Icon name="check" size={16} />{f}</li>)}</ul>
+								</section>
+							)}
+							{pr.outcomes.length > 0 && (
+								<section aria-labelledby="outcomes-title">
+									<h2 id="outcomes-title">{m.project_outcomes()}</h2>
+									<ul className="case__list">{pr.outcomes.map((o) => <li key={o}><Icon name="arrow-right" size={16} />{o}</li>)}</ul>
+								</section>
+							)}
+						</div>
+						<aside className="spec" aria-label="Project facts">
+							<dl>
+								{pr.role && <div><dt>{m.project_role()}</dt><dd>{pr.role}</dd></div>}
+								{pr.year && <div><dt>Year</dt><dd>{pr.year}</dd></div>}
+								{pr.tech.length > 0 && <div><dt>{m.common_stack()}</dt><dd><ChipList items={pr.tech} label={m.common_stack()} /></dd></div>}
+							</dl>
+							<div className="spec__actions">
+								{pr.url && <LinkButton href={pr.url} target="_blank" rel="noopener noreferrer" trailingIcon="arrow-up-right">{m.project_visit()}</LinkButton>}
+								<LinkButton href={localizeHref("/#contact")} variant="outline">{m.project_discuss()}</LinkButton>
+							</div>
+						</aside>
 					</div>
 				</article>
 
 				{related.length > 0 && (
 					<nav className="site-section" aria-label={m.project_more()}>
-						<h2 className="mh-card__eyebrow">{m.project_more()}</h2>
-						<div className="mh-grid-3">
-							{related.map((r) => (
-								<Link key={r.slug} className="mh-card" to="/projects/$slug" params={{ slug: r.slug }}>
-									<span className="mh-card__eyebrow">{r.category}</span>
-									<h3 className="mh-project__title">{r.title}<Icon name="arrow-right" size={16} /></h3>
-									<p className="mh-project__desc">{r.subtitle}</p>
-								</Link>
-							))}
-						</div>
+						<header className="page-head"><h2>{m.project_more()}</h2></header>
+						<WorkIndex projects={related.map((r) => ({ ...r, summary: r.subtitle }))} />
 					</nav>
 				)}
 			</main>

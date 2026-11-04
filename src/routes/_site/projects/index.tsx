@@ -1,9 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ProjectCard } from "#/components/cards";
+import { WorkIndex } from "#/components/cards";
 import { EmptyState, SectionHeading, Tabs } from "#/design-system/ui";
 import { mostlyArabic } from "#/lib/localized";
-import { breadcrumbs, jsonLd, localizedUrl, pageLocale, pageTitle, seo } from "#/lib/seo";
+import {
+	breadcrumbs,
+	jsonLd,
+	localizedUrl,
+	pageLocale,
+	pageTitle,
+	seo,
+} from "#/lib/seo";
 import { getProjects } from "#/server/fn/public";
 import { m } from "#/paraglide/messages";
 import { getLocale } from "#/paraglide/runtime";
@@ -52,9 +59,7 @@ function ProjectsPage() {
 					{shown.length === 0 ? (
 						<EmptyState icon="briefcase" title={m.projects_empty()} />
 					) : (
-						<div className="mh-grid-3" style={{ marginTop: 24 }}>
-							{shown.map((pr) => <ProjectCard key={pr.id} project={pr} />)}
-						</div>
+						<div style={{ marginTop: 24 }}><WorkIndex projects={shown} /></div>
 					)}
 				</section>
 			</main>

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ServiceCard } from "#/components/cards";
+import { OfferList } from "#/components/cards";
 import { ContactForm } from "#/components/site";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
 import { parsePrice, serviceOffer } from "#/lib/contact";
@@ -52,7 +52,7 @@ function ServicesPage() {
 					{rows.length === 0 ? (
 						<EmptyState icon="briefcase" title={m.services_empty()} />
 					) : (
-						<div className="mh-grid-3">{rows.map((s) => <ServiceCard key={s.id} service={s} />)}</div>
+						<OfferList services={rows} />
 					)}
 				</section>
 				<section className="site-section" id="contact" aria-labelledby="services-contact">

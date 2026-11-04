@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BlogCard } from "#/components/cards";
+import { PostList } from "#/components/cards";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
 import { dominantPostLocale } from "#/lib/blog";
 import { RSS_PATH, RSS_TITLE } from "#/lib/feed";
@@ -87,11 +87,7 @@ function BlogIndexPage() {
 							description={m.blog_empty_body()}
 						/>
 					) : (
-						<div className="blog-related__grid">
-							{posts.map((p) => (
-								<BlogCard key={p.slug} post={p} headingLevel="h2" />
-							))}
-						</div>
+						<PostList posts={posts} />
 					)}
 				</section>
 			</main>

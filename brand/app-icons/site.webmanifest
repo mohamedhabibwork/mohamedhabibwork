@@ -1,0 +1,34 @@
+{
+  "name": "Mohamed Habib \u00b7 Tech Lead",
+  "short_name": "Habib",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0d0a",
+  "theme_color": "#0b0d0a",
+  "icons": [
+    {
+      "src": "/android-chrome-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
