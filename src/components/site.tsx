@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Turnstile, type TurnstileHandle } from "#/components/Turnstile";
 import { Alert, Button, Input, Select, Textarea } from "#/design-system/ui";
 import { track } from "#/lib/analytics";
+import { m } from "#/paraglide/messages";
 import { sendMessage } from "#/server/fn/public";
 
 type ServiceOption = { slug: string; title: string };
@@ -38,7 +39,7 @@ export function ContactForm({
 		e.preventDefault();
 		const form = e.currentTarget;
 		if (!token) {
-			setFormError("Please complete the verification below.");
+			setFormError(m.form_verify());
 			return;
 		}
 		const input = {
@@ -67,9 +68,7 @@ export function ContactForm({
 			track("form_error", { form: "contact" });
 			const issues = parseIssues(err);
 			if (!issues) {
-				setFormError(
-					"Couldn't send your message. Please email me directly instead.",
-				);
+				setFormError(m.form_send_failed());
 				return;
 			}
 			const fieldErrors = Object.fromEntries(
@@ -78,9 +77,7 @@ export function ContactForm({
 			setErrors(fieldErrors);
 			// Issues without a visible field would otherwise leave the visitor with nothing highlighted.
 			if (Object.keys(fieldErrors).length < Object.keys(issues).length)
-				setFormError(
-					"Something in the form didn't check out. Please refresh the page and try again.",
-				);
+				setFormError(m.form_invalid());
 		} finally {
 			// Tokens are single-use: get a fresh one for any further submit.
 			turnstile.current?.reset();
@@ -98,10 +95,10 @@ export function ContactForm({
 			{!service && services && services.length > 0 && (
 				<Select
 					name="service"
-					label="Service (optional)"
+					label={m.form_service()}
 					defaultValue=""
 					options={[
-						{ value: "", label: "General enquiry" },
+						{ value: "", label: m.form_general() },
 						...services.map((s) => ({ value: s.slug, label: s.title })),
 					]}
 					error={errors.service}
@@ -110,7 +107,7 @@ export function ContactForm({
 			<div className="form-grid-2">
 				<Input
 					name="name"
-					label="Name"
+					label={m.form_name()}
 					required
 					autoComplete="name"
 					error={errors.name}
@@ -118,7 +115,7 @@ export function ContactForm({
 				<Input
 					name="email"
 					type="email"
-					label="Email"
+					label={m.form_email()}
 					required
 					autoComplete="email"
 					error={errors.email}
@@ -126,20 +123,20 @@ export function ContactForm({
 			</div>
 			<Input
 				name="subject"
-				label="Subject"
-				defaultValue={service ? `Enquiry: ${service.title}` : undefined}
+				label={m.form_subject()}
+				defaultValue={service ? m.form_subject_service({ title: service.title }) : undefined}
 				error={errors.subject}
 			/>
 			<Textarea
 				name="body"
-				label={service ? "Tell me about your project" : "Message"}
+				label={service ? m.form_project() : m.form_message()}
 				required
 				rows={5}
 				error={errors.body}
 			/>
 			<div className="hp" aria-hidden>
 				<label>
-					Leave this field empty
+					{m.form_honeypot()}
 					<input name="hp_check" tabIndex={-1} autoComplete="off" />
 				</label>
 			</div>
@@ -151,23 +148,23 @@ export function ContactForm({
 					disabled={!token}
 					trailingIcon="send"
 				>
-					Send message
+					{m.form_send()}
 				</Button>
 			</div>
 			<div ref={statusRef} aria-live="polite">
 				{state === "sent" && (
-					<Alert variant="success" title="Message sent">
-						Thanks! I'll reply within a day.
+					<Alert variant="success" title={m.form_sent_title()}>
+						{m.form_sent_body()}
 					</Alert>
 				)}
 				{formError && (
-					<Alert variant="danger" title="Not sent">
+					<Alert variant="danger" title={m.form_not_sent()}>
 						{formError}
 					</Alert>
 				)}
 				{hasFieldErrors && !formError && (
-					<Alert variant="danger" title="Not sent">
-						Please fix the highlighted fields above.
+					<Alert variant="danger" title={m.form_not_sent()}>
+						{m.form_fix_fields()}
 					</Alert>
 				)}
 			</div>

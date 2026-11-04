@@ -6,12 +6,14 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "../src/db/schema.ts";
 import { cvDataSchema } from "../src/server/cv-schema.ts";
+import { experienceArabic, profileArabic, projectArabic, serviceArabic } from "./arabic-content.ts";
 
 config({ path: [".env.local", ".env"] });
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const db = drizzle(pool, { schema });
 
 const profile = {
+	...profileArabic,
 	id: 1,
 	name: "Mohamed Habib",
 	headline: "Senior Full-Stack Engineer · .NET Core & C# · PHP/Laravel",
@@ -53,7 +55,7 @@ const experiences = [
 	{ company: "Al-Tawasol (Gulf Communication Company)", role: "PHP Developer", location: "New Cairo, Egypt", start: "Mar 2021", end: "Oct 2023", current: false, summary: "Transportation, mapping, medical and security platforms.", highlights: ["Built TOO APP, an Uber-like ride-hailing platform with real-time GPS dispatch and Fawry/PayPal payments.", "Developed Mappy, a custom mapping engine with route optimisation and enterprise mapping APIs.", "Delivered TOO Bus school transport tracking, Too Medical rep tracking and Too Security workforce management."], tech: ["Laravel", "GoLang", "ASP.NET", "PostgreSQL", "Socket.io"] },
 	{ company: "Rwabett", role: "Back End Developer", location: "Egypt", start: "Aug 2020", end: "Jun 2021", current: false, summary: "E-commerce, ERP and CRM.", highlights: ["Built multi-vendor online stores with integrated ERP, CRM and inventory management.", "Developed mobile APIs for store and delivery apps."], tech: ["Laravel", "Vue.js", "MySQL"] },
 	{ company: "Global Dev Gate", role: "Web Developer (training program)", location: "Egypt", start: "Sep 2018", end: "Jun 2020", current: false, summary: "NEN certification training and advanced web development program.", highlights: ["Developed distance-learning platforms and educational management systems.", "Integrated Fawry, Paymob and PayPal payment gateways for secure transactions.", "Built mobile API integrations for educational applications."], tech: ["PHP", "Laravel", "Vue.js", "React", "Node.js", "Python"] },
-].map((e, i) => ({ ...e, sort: i }));
+].map((e, i) => ({ ...e, ...experienceArabic[e.company], sort: i }));
 
 /** Case-study copy for each /projects/$slug page. */
 const projectDetails: Record<string, { role: string; challenge: string; description: string; outcomes: string[] }> = {
@@ -116,7 +118,7 @@ const projects = [
 	{ slug: "paymob-suite", title: "Paymob Suite", subtitle: "Fintech systems", category: "FinTech", year: "2021", summary: "ASM and FSM financial systems with payment processing, transaction management and reporting.", features: ["Payment integration", "Transactions", "Financial reporting", "ERP integration"], tech: ["Laravel", "PostgreSQL"], url: "", imageUrl: "", featured: false },
 	{ slug: "too-bus", title: "TOO Bus", subtitle: "School transport", category: "Education", year: "2022", summary: "School bus tracking with real-time GPS, parent notifications and route optimisation.", features: ["Live bus tracking", "Parent notifications", "Route optimisation", "Student safety"], tech: ["Laravel", "GoLang", "MySQL"], url: "", imageUrl: "", featured: false },
 	{ slug: "too-security", title: "Too Security", subtitle: "Workforce management", category: "Security", year: "2022", summary: "Security company operations: workforce tracking, shift scheduling, HR, ERP and CRM.", features: ["Workforce tracking", "Shift scheduling", "HR", "ERP & CRM"], tech: ["Laravel", "GoLang"], url: "", imageUrl: "", featured: false },
-].map((p, i) => ({ ...p, ...projectDetails[p.slug], published: true, sort: i }));
+].map((p, i) => ({ ...p, ...projectDetails[p.slug], ...projectArabic[p.slug], published: true, sort: i }));
 
 
 const services = [
@@ -127,7 +129,7 @@ const services = [
 	{ slug: "erp-crm", title: "ERP & CRM systems", icon: "layers", summary: "Custom ERP/CRM modules or ERPNext integrations for sales, inventory, HR and operations.", description: "From multi-vendor inventory to workforce scheduling, I build or integrate the back-office systems that keep operations running, including ERPNext customisation.", deliverables: ["Requirements and process mapping", "Custom modules", "ERPNext integration", "Reporting and dashboards", "Data migration"], tech: ["Laravel", "ERPNext", "Python", "PostgreSQL"], startingAt: "" },
 	{ slug: "mobile-api", title: "Mobile app backends & APIs", icon: "monitor", summary: "Fast, versioned APIs for iOS and Android apps with auth, notifications and file storage.", description: "I build the backend your mobile team needs: authentication, versioned REST or GraphQL APIs, push notifications and media storage, documented and tested.", deliverables: ["API design and docs", "Auth and roles", "Push notifications", "File and media storage", "Monitoring"], tech: ["Laravel", "Node.js", "GraphQL", "AWS"], startingAt: "" },
 	{ slug: "technical-leadership", title: "Technical leadership & consulting", icon: "users", summary: "Team leadership, architecture reviews and delivery process for teams of 5–10 developers.", description: "I've led distributed teams across Egypt, Saudi Arabia and the UAE. I can lead your team, review architecture, set up code review and release practices, or help hire and onboard developers.", deliverables: ["Architecture review", "Code review and standards", "Release and QA process", "Mentoring and hiring support"], tech: ["Agile / Scrum", "System design", "CI/CD"], startingAt: "" },
-].map((s, i) => ({ ...s, published: true, sort: i }));
+].map((s, i) => ({ ...s, ...serviceArabic[s.slug], published: true, sort: i }));
 
 const skillRows: [string, string, number, number][] = [
 	["PHP & Laravel", "Backend", 5, 7], [".NET Core / C# / ASP.NET", "Backend", 4, 3], ["Node.js & Express", "Backend", 4, 5], ["GoLang", "Backend", 4, 3], ["Python", "Backend", 3, 2],

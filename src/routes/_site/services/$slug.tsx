@@ -6,37 +6,42 @@ import { ContactForm } from "#/components/site";
 import { ChipList, EmptyState, Icon, LinkButton, SectionHeading } from "#/design-system/ui";
 import { trackView } from "#/lib/analytics";
 import { parseCheckoutPrice, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
-import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
+import { breadcrumbs, jsonLd, localizedUrl, PERSON_ID, pageLocale, pageTitle, seo } from "#/lib/seo";
 import { getService } from "#/server/fn/public";
+import { m } from "#/paraglide/messages";
+import { getLocale, localizeHref } from "#/paraglide/runtime";
 
 export const Route = createFileRoute("/_site/services/$slug")({
 	loader: async ({ params }) => {
-		const data = await getService({ data: params.slug });
+		const data = await getService({ data: { slug: params.slug, locale: getLocale() } });
 		if (!data) throw notFound();
 		return data;
 	},
 	head: ({ loaderData, params }) => {
-		if (!loaderData) return seo({ title: pageTitle("Service not found"), description: "This service doesn't exist.", path: `/services/${params.slug}`, noindex: true });
-		const { service: s, paypal } = loaderData;
+		if (!loaderData) return seo({ title: pageTitle(m.service_not_found_title()), description: m.service_not_found_seo(), path: `/services/${params.slug}`, noindex: true });
+		const { service: s, paypal, hasArabic } = loaderData;
 		const path = `/services/${s.slug}`;
+		const page = pageLocale(path, hasArabic);
+		const { contentLocale: locale } = page;
 		const price = parsePrice(s.startingAt);
-		const base = seo({ title: pageTitle(price ? `${s.title} — ${s.startingAt}` : s.title, s.title), description: s.summary, path });
+		const base = seo({ title: pageTitle(price ? `${s.title} — ${s.startingAt}` : s.title, s.title), description: s.summary, ...page });
 		const service = {
 			"@context": "https://schema.org",
 			"@type": "Service",
 			name: s.title,
 			description: s.summary,
-			url: absoluteUrl(path),
+			url: localizedUrl(path, locale),
+			inLanguage: locale,
 			serviceType: s.title,
 			areaServed: "Worldwide",
 			provider: { "@id": PERSON_ID },
-			...(price ? { offers: serviceOffer(price, absoluteUrl(`${path}${canPayOnline(parseCheckoutPrice(s.startingAt), paypal) ? "#book" : "#enquire"}`)) } : {}),
+			...(price ? { offers: serviceOffer(price, localizedUrl(`${path}${canPayOnline(parseCheckoutPrice(s.startingAt), paypal) ? "#book" : "#enquire"}`, locale)) } : {}),
 		};
-		return { ...base, scripts: [jsonLd(service), jsonLd(breadcrumbs(["Services", "/services"], [s.title, path]))] };
+		return { ...base, scripts: [jsonLd(service), jsonLd(breadcrumbs(locale, [m.nav_services({}, { locale }), "/services"], [s.title, path]))] };
 	},
 	notFoundComponent: () => (
 		<main id="main" className="site" style={{ padding: "96px 0" }}>
-			<EmptyState icon="search" title="Service not found" description="It may have been renamed or removed." action={<LinkButton href="/services">See all services</LinkButton>} />
+			<EmptyState icon="search" title={m.service_not_found_title()} description={m.service_not_found_body()} action={<LinkButton href={localizeHref("/services")}>{m.service_see_all()}</LinkButton>} />
 		</main>
 	),
 	component: ServicePage,
@@ -54,7 +59,7 @@ function ServicePage() {
 		<>
 			<main id="main" className="site">
 				<header className="case-head">
-					<span className="case-head__crumb"><Link to="/services">Services</Link></span>
+					<span className="case-head__crumb"><Link to="/services">{m.nav_services()}</Link></span>
 					<h1 id="service-title">{s.title}</h1>
 					<p className="case-head__sub">{s.summary}</p>
 				</header>
@@ -62,19 +67,19 @@ function ServicePage() {
 				<div className="case" style={{ paddingTop: 0 }}>
 					<div className="case__body">
 						<section aria-labelledby="overview-title">
-							<h2 id="overview-title">Overview</h2>
+							<h2 id="overview-title">{m.common_overview()}</h2>
 							{(paragraphs.length ? paragraphs : [s.summary]).map((t) => <p key={t}>{t}</p>)}
 						</section>
 						{s.deliverables.length > 0 && (
 							<section aria-labelledby="deliverables-title">
-								<h2 id="deliverables-title">What you get</h2>
+								<h2 id="deliverables-title">{m.service_deliverables()}</h2>
 								<ul className="case__list">{s.deliverables.map((d) => <li key={d}><Icon name="check" size={16} />{d}</li>)}</ul>
 							</section>
 						)}
 						{s.tech.length > 0 && (
 							<section aria-labelledby="stack-title">
-								<h2 id="stack-title">Typical stack</h2>
-								<ChipList items={s.tech} label="Stack" />
+								<h2 id="stack-title">{m.service_stack()}</h2>
+								<ChipList items={s.tech} label={m.common_stack()} />
 							</section>
 						)}
 					</div>
@@ -84,12 +89,12 @@ function ServicePage() {
 						</dl>
 						<div className="spec__actions">
 							<LinkButton href={payable ? "#book" : "#enquire"} data-track={payable ? "book" : undefined}>
-								{!price ? "Contact me about this" : payable ? "Book and pay" : "Request a session"}
+								{!price ? m.service_contact() : payable ? m.service_book_pay({ price: s.startingAt }) : m.service_request({ price: s.startingAt })}
 							</LinkButton>
-							{owner?.phone && <LinkButton href={telHref(owner.phone)} variant="outline" leadingIcon="phone">Call me</LinkButton>}
+							{owner?.phone && <LinkButton href={telHref(owner.phone)} variant="outline" leadingIcon="phone">{m.service_call()}</LinkButton>}
 							{owner?.phone && (
-								<LinkButton href={whatsappHref(owner.phone, `Hi ${owner.name.split(" ")[0]}, I'm interested in: ${s.title}`)} target="_blank" rel="noopener noreferrer" variant="ghost">
-									Message on WhatsApp
+								<LinkButton href={whatsappHref(owner.phone, m.service_whatsapp_message({ name: owner.name.split(" ")[0], title: s.title }))} target="_blank" rel="noopener noreferrer" variant="ghost">
+									{m.common_whatsapp()}
 								</LinkButton>
 							)}
 						</div>
@@ -98,19 +103,19 @@ function ServicePage() {
 
 				{payable && paypal && (
 					<section className="site-section" id="book" aria-labelledby="book-title">
-						<SectionHeading id="book-title" title={`Book your ${s.title.toLowerCase()}`} description={`${s.startingAt} · secure checkout with PayPal or card. I'll email you within 24 hours to pick a time.`} />
+						<SectionHeading id="book-title" eyebrow={m.service_book_eyebrow()} title={m.service_book_title({ title: s.title.toLowerCase() })} description={m.service_book_description({ price: s.startingAt })} />
 						<PayPalCheckout service={{ slug: s.slug, title: s.title }} price={checkoutPrice} paypal={paypal} />
 					</section>
 				)}
 
 				<section className="site-section" id="enquire" aria-labelledby="enquire-title">
-					<SectionHeading id="enquire-title" title={`Let's talk about ${s.title.toLowerCase()}`} description="Your message comes straight to my inbox. I reply within 24 hours." />
+					<SectionHeading id="enquire-title" eyebrow={m.common_contact_eyebrow()} title={m.service_enquire_title({ title: s.title.toLowerCase() })} description={m.common_reply_24h()} />
 					<ContactForm service={{ slug: s.slug, title: s.title }} />
 				</section>
 
 				{others.length > 0 && (
-					<nav className="site-section" aria-label="Other services">
-						<header className="page-head"><h2>Other services</h2></header>
+					<nav className="site-section" aria-label={m.service_others()}>
+						<header className="page-head"><h2>{m.service_others()}</h2></header>
 						<OfferList services={others.slice(0, 3)} />
 					</nav>
 				)}

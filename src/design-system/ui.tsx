@@ -322,8 +322,8 @@ export function Switch({ label, ...rest }: InputHTMLAttributes<HTMLInputElement>
 }
 
 /** Edits a list of strings as one item per line. */
-export function LinesField({ value, onChange, ...p }: { value: string[]; onChange: (v: string[]) => void; label: string; hint?: string; rows?: number }) {
-	return <Textarea label={p.label} hint={p.hint ?? "One per line."} rows={p.rows ?? 4} value={value.join("\n")} onChange={(e) => onChange(e.target.value.split("\n"))} onBlur={() => onChange(value.map((s) => s.trim()).filter(Boolean))} />;
+export function LinesField({ value, onChange, ...p }: { value: string[]; onChange: (v: string[]) => void; label: string; hint?: string; rows?: number; dir?: "ltr" | "rtl" }) {
+	return <Textarea label={p.label} hint={p.hint ?? "One per line."} rows={p.rows ?? 4} dir={p.dir} value={value.join("\n")} onChange={(e) => onChange(e.target.value.split("\n"))} onBlur={() => onChange(value.map((s) => s.trim()).filter(Boolean))} />;
 }
 
 /* ── Navigation ── */
