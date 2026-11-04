@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ServiceCard } from "#/components/cards";
+import { OfferList } from "#/components/cards";
 import { ContactForm } from "#/components/site";
 import { EmptyState, SectionHeading } from "#/design-system/ui";
 import { parsePrice, serviceOffer } from "#/lib/contact";
@@ -42,15 +42,18 @@ function ServicesPage() {
 		<>
 			<main id="main" className="site">
 				<section className="site-section">
-					<SectionHeading as="h1" eyebrow="Work with me" title="Services" description="Pick what you need. Every enquiry comes straight to my inbox, and I reply within 24 hours." />
+					<header className="page-head" style={{ paddingTop: 24 }}>
+						<h1>Services</h1>
+						<p>Pick what you need. Every enquiry comes straight to my inbox, and I reply within 24 hours.</p>
+					</header>
 					{rows.length === 0 ? (
 						<EmptyState icon="briefcase" title="No services listed yet" />
 					) : (
-						<div className="mh-grid-3">{rows.map((s) => <ServiceCard key={s.id} service={s} />)}</div>
+						<OfferList services={rows} />
 					)}
 				</section>
 				<section className="site-section" id="contact" aria-labelledby="services-contact">
-					<SectionHeading id="services-contact" eyebrow="Contact" title="Not sure which fits?" description="Tell me about your project and I'll suggest the right approach." />
+					<SectionHeading id="services-contact" title="Not sure which fits?" description="Tell me about your project and I'll suggest the right approach." />
 					<ContactForm services={rows} />
 				</section>
 			</main>

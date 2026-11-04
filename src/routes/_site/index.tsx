@@ -3,17 +3,14 @@ import {
 	Alert,
 	Icon,
 	LinkButton,
-	Logo,
-	MarkArt,
 	SectionHeading,
 	SkillMeter,
-	StatCard,
 	Timeline,
 } from "#/design-system/ui";
 import { contactPoints, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
 import { absoluteUrl, jsonLd, PERSON_ID, SITE_NAME, SITE_URL, seo, TITLE_MAX } from "#/lib/seo";
 import { type SkillEvidence, skillEvidence } from "#/lib/skill-evidence";
-import { ProjectCard, ServiceCard } from "#/components/cards";
+import { OfferList, WorkIndex } from "#/components/cards";
 import { ContactForm } from "#/components/site";
 import { getPortfolio } from "#/server/fn/public";
 
@@ -77,34 +74,35 @@ function Home() {
 		);
 	}
 	const mainCv = data.publicCvs[0];
+	const current = data.experiences.find((e) => e.current);
 	return (
 		<>
 
 			<main id="main" className="site">
-				<section className="mh-hero" aria-labelledby="hero-title">
-					<MarkArt className="mh-hero__art" position="right" />
-					<div className="mh-row" style={{ gap: 16 }}>
-						<Logo variant="mark" size={112} />
-						<span className="mh-hero__eyebrow">{p.availability || p.location}</span>
+				<section className="intro" aria-labelledby="hero-title">
+					<div>
+						<h1 className="intro__title" id="hero-title">{p.headline.split(/[·|&]/)[0].trim()} and team leader</h1>
+						<p className="intro__lead">{p.tagline}</p>
+						<div className="intro__actions">
+							<LinkButton href="#work" size="lg">See my work</LinkButton>
+							{mainCv && (
+								<LinkButton href={`/api/cv/${mainCv.slug}/pdf?download=1`} size="lg" variant="outline" leadingIcon="download">
+									Download CV
+								</LinkButton>
+							)}
+						</div>
 					</div>
-					<h1 className="mh-hero__title" id="hero-title">
-						{p.headline.split(/[·|&]/)[0].trim()} <em>& team leader.</em>
-					</h1>
-					<p className="mh-hero__lead">{p.tagline}</p>
-					<div className="mh-hero__actions">
-						<LinkButton href="#work" size="lg" trailingIcon="arrow-right">See my work</LinkButton>
-						{mainCv && (
-							<LinkButton href={`/api/cv/${mainCv.slug}/pdf?download=1`} size="lg" variant="outline" leadingIcon="download">
-								Download CV
-							</LinkButton>
-						)}
-					</div>
+					<dl className="now">
+						{current && <div><dt>Currently</dt><dd>{current.role} at {current.company}</dd></div>}
+						{p.location && <div><dt>Based in</dt><dd>{p.location}</dd></div>}
+						{p.availability && <div><dt>Availability</dt><dd className="now__live">{p.availability}</dd></div>}
+					</dl>
 				</section>
 
 				{p.stats.length > 0 && (
-					<section className="mh-grid-4" aria-label="Highlights">
-						{p.stats.map((s) => <StatCard key={s.label} label={s.label} value={s.value} />)}
-					</section>
+					<dl className="facts" aria-label="Highlights">
+						{p.stats.map((s) => <div key={s.label}><dt>{s.label}</dt><dd>{s.value}</dd></div>)}
+					</dl>
 				)}
 
 				<Projects projects={data.projects} />
@@ -123,16 +121,12 @@ function Projects({ projects }: { projects: Portfolio["projects"] }) {
 	const shown = featured.length > 0 ? featured : projects.slice(0, 6);
 	return (
 		<section className="site-section" id="work" aria-labelledby="work-title">
-			<SectionHeading
-				id="work-title"
-				eyebrow="Selected work"
-				title="Projects"
-				description="Platforms I've built and led across transportation, healthcare, fintech and more."
-				action={<LinkButton href="/projects" variant="ghost" trailingIcon="arrow-right">All {projects.length} projects</LinkButton>}
-			/>
-			<div className="mh-grid-3">
-				{shown.map((pr) => <ProjectCard key={pr.id} project={pr} />)}
-			</div>
+			<header className="page-head">
+				<h2 id="work-title">Selected work</h2>
+				<LinkButton href="/projects" variant="ghost" trailingIcon="arrow-right">All {projects.length} projects</LinkButton>
+				<p>Platforms I've built and led across transportation, healthcare, fintech and more.</p>
+			</header>
+			<WorkIndex projects={shown} />
 		</section>
 	);
 }
@@ -140,7 +134,7 @@ function Projects({ projects }: { projects: Portfolio["projects"] }) {
 function Experience({ items }: { items: Portfolio["experiences"] }) {
 	return (
 		<section className="site-section" id="experience" aria-labelledby="exp-title">
-			<SectionHeading id="exp-title" eyebrow="Career" title="Experience" />
+			<SectionHeading id="exp-title" title="Experience" />
 			<Timeline
 				items={items.map((e) => ({
 					meta: `${e.start} — ${e.current ? "Present" : e.end}`,
@@ -165,7 +159,7 @@ function Skills({ skills, projects, roles }: { skills: Portfolio["skills"]; proj
 	const groups = [...new Set(skills.map((s) => s.category))];
 	return (
 		<section className="site-section" id="skills" aria-labelledby="skills-title">
-			<SectionHeading id="skills-title" eyebrow="Toolbox" title="Skills" description="Each skill links to the projects and roles where I used it." />
+			<SectionHeading id="skills-title" title="Skills" description="Each skill links to the projects and roles where I used it." />
 			<div className="mh-grid-2">
 				{groups.map((g) => (
 					<div key={g} className="mh-card">
@@ -212,7 +206,7 @@ function Credentials({ education, certifications }: { education: NonNullable<Por
 	if (education.length === 0 && certifications.length === 0) return null;
 	return (
 		<section className="site-section" id="education" aria-labelledby="edu-title">
-			<SectionHeading id="edu-title" eyebrow="Background" title="Education & certifications" />
+			<SectionHeading id="edu-title" title="Education & certifications" />
 			<div className="mh-grid-2">
 				{education.length > 0 && (
 					<div className="mh-card">
@@ -241,7 +235,7 @@ function Credentials({ education, certifications }: { education: NonNullable<Por
 function Contact({ profile, services }: { profile: NonNullable<Portfolio["profile"]>; services: Portfolio["services"] }) {
 	return (
 		<section className="site-section" id="contact" aria-labelledby="contact-title">
-			<SectionHeading id="contact-title" eyebrow="Contact" title="Let's build something" description={profile.availability} />
+			<SectionHeading id="contact-title" title="Let's build something" description={profile.availability} />
 			<div className="contact-grid">
 				<ul className="contact-list">
 					<li><Icon name="mail" /><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
@@ -261,10 +255,11 @@ function Services({ services }: { services: Portfolio["services"] }) {
 	if (services.length === 0) return null;
 	return (
 		<section className="site-section" id="services" aria-labelledby="services-title">
-			<SectionHeading id="services-title" eyebrow="What I do" title="Services" action={<LinkButton href="/services" variant="ghost" trailingIcon="arrow-right">All services</LinkButton>} />
-			<div className="mh-grid-3">
-				{services.slice(0, 6).map((s) => <ServiceCard key={s.slug} service={s} />)}
-			</div>
+			<header className="page-head">
+				<h2 id="services-title">Services</h2>
+				<LinkButton href="/services" variant="ghost" trailingIcon="arrow-right">All services</LinkButton>
+			</header>
+			<OfferList services={services.slice(0, 6)} />
 		</section>
 	);
 }

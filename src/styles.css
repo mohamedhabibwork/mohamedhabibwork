@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./design-system/tokens.css";
 @import "./design-system/components.css";
+@import "./site.css";
 
 /* App-level layout on top of the MH design system. Colours and type always come from tokens. */
 *,

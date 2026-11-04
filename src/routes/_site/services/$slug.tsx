@@ -1,9 +1,9 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { ServiceCard } from "#/components/cards";
+import { OfferList } from "#/components/cards";
 import { canPayOnline, PayPalCheckout } from "#/components/PayPalCheckout";
 import { ContactForm } from "#/components/site";
-import { ChipList, EmptyState, Icon, type IconName, LinkButton, MarkArt, SectionHeading } from "#/design-system/ui";
+import { ChipList, EmptyState, Icon, LinkButton, SectionHeading } from "#/design-system/ui";
 import { trackView } from "#/lib/analytics";
 import { parseCheckoutPrice, parsePrice, serviceOffer, telHref, whatsappHref } from "#/lib/contact";
 import { absoluteUrl, breadcrumbs, jsonLd, PERSON_ID, pageTitle, seo } from "#/lib/seo";
@@ -53,55 +53,65 @@ function ServicePage() {
 	return (
 		<>
 			<main id="main" className="site">
-				<section className="mh-hero" aria-labelledby="service-title">
-					<MarkArt className="mh-hero__art" position="right" />
-					<span className="mh-hero__eyebrow">Service</span>
-					<h1 className="mh-hero__title" id="service-title">{s.title}</h1>
-					<p className="mh-hero__lead">{s.summary}</p>
-					<div className="mh-hero__actions">
-						<LinkButton href={payable ? "#book" : "#enquire"} size="lg" trailingIcon="arrow-right" data-track={payable ? "book" : undefined}>
-							{!price ? "Contact me about this" : payable ? `Book & pay · ${s.startingAt}` : `Request a session · ${s.startingAt}`}
-						</LinkButton>
-						{owner?.phone && <LinkButton href={telHref(owner.phone)} size="lg" variant="outline" leadingIcon="phone">Call me</LinkButton>}
-						{owner?.phone && (
-							<LinkButton href={whatsappHref(owner.phone, `Hi ${owner.name.split(" ")[0]}, I'm interested in: ${s.title}`)} target="_blank" rel="noopener noreferrer" size="lg" variant="ghost">
-								WhatsApp
-							</LinkButton>
-						)}
-						{s.startingAt && !price && <span className="mh-hero__eyebrow">From {s.startingAt}</span>}
-					</div>
-				</section>
+				<header className="case-head">
+					<span className="case-head__crumb"><Link to="/services">Services</Link></span>
+					<h1 id="service-title">{s.title}</h1>
+					<p className="case-head__sub">{s.summary}</p>
+				</header>
 
-				<div className="mh-grid-2 site-section project-detail">
-					<div className="mh-card">
-						<span className="mh-card__eyebrow">Overview</span>
-						{(paragraphs.length ? paragraphs : [s.summary]).map((t) => <p key={t}>{t}</p>)}
-						{s.tech.length > 0 && <><span className="mh-card__eyebrow">Typical stack</span><ChipList items={s.tech} label="Stack" /></>}
-					</div>
-					{s.deliverables.length > 0 && (
-						<section className="mh-card" aria-labelledby="deliverables-title">
-							<h2 className="mh-card__eyebrow" id="deliverables-title">What you get</h2>
-							<ul className="project-detail__list">{s.deliverables.map((d) => <li key={d}><Icon name={(s.icon as IconName) || "check"} size={16} />{d}</li>)}</ul>
+				<div className="case" style={{ paddingTop: 0 }}>
+					<div className="case__body">
+						<section aria-labelledby="overview-title">
+							<h2 id="overview-title">Overview</h2>
+							{(paragraphs.length ? paragraphs : [s.summary]).map((t) => <p key={t}>{t}</p>)}
 						</section>
-					)}
+						{s.deliverables.length > 0 && (
+							<section aria-labelledby="deliverables-title">
+								<h2 id="deliverables-title">What you get</h2>
+								<ul className="case__list">{s.deliverables.map((d) => <li key={d}><Icon name="check" size={16} />{d}</li>)}</ul>
+							</section>
+						)}
+						{s.tech.length > 0 && (
+							<section aria-labelledby="stack-title">
+								<h2 id="stack-title">Typical stack</h2>
+								<ChipList items={s.tech} label="Stack" />
+							</section>
+						)}
+					</div>
+					<aside className="spec" aria-label="Pricing and booking">
+						<dl>
+							<div><dt>Starting at</dt><dd className="spec__price">{s.startingAt || "Quote"}</dd></div>
+						</dl>
+						<div className="spec__actions">
+							<LinkButton href={payable ? "#book" : "#enquire"} data-track={payable ? "book" : undefined}>
+								{!price ? "Contact me about this" : payable ? "Book and pay" : "Request a session"}
+							</LinkButton>
+							{owner?.phone && <LinkButton href={telHref(owner.phone)} variant="outline" leadingIcon="phone">Call me</LinkButton>}
+							{owner?.phone && (
+								<LinkButton href={whatsappHref(owner.phone, `Hi ${owner.name.split(" ")[0]}, I'm interested in: ${s.title}`)} target="_blank" rel="noopener noreferrer" variant="ghost">
+									Message on WhatsApp
+								</LinkButton>
+							)}
+						</div>
+					</aside>
 				</div>
 
 				{payable && paypal && (
 					<section className="site-section" id="book" aria-labelledby="book-title">
-						<SectionHeading id="book-title" eyebrow="Book & pay" title={`Book your ${s.title.toLowerCase()}`} description={`${s.startingAt} · secure checkout with PayPal or card. I'll email you within 24 hours to pick a time.`} />
+						<SectionHeading id="book-title" title={`Book your ${s.title.toLowerCase()}`} description={`${s.startingAt} · secure checkout with PayPal or card. I'll email you within 24 hours to pick a time.`} />
 						<PayPalCheckout service={{ slug: s.slug, title: s.title }} price={checkoutPrice} paypal={paypal} />
 					</section>
 				)}
 
 				<section className="site-section" id="enquire" aria-labelledby="enquire-title">
-					<SectionHeading id="enquire-title" eyebrow="Contact" title={`Let's talk about ${s.title.toLowerCase()}`} description="Your message comes straight to my inbox. I reply within 24 hours." />
+					<SectionHeading id="enquire-title" title={`Let's talk about ${s.title.toLowerCase()}`} description="Your message comes straight to my inbox. I reply within 24 hours." />
 					<ContactForm service={{ slug: s.slug, title: s.title }} />
 				</section>
 
 				{others.length > 0 && (
 					<nav className="site-section" aria-label="Other services">
-						<h2 className="mh-card__eyebrow">Other services</h2>
-						<div className="mh-grid-3">{others.slice(0, 3).map((o) => <ServiceCard key={o.slug} service={o} />)}</div>
+						<header className="page-head"><h2>Other services</h2></header>
+						<OfferList services={others.slice(0, 3)} />
 					</nav>
 				)}
 			</main>

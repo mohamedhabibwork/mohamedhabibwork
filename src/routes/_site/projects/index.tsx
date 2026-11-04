@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ProjectCard } from "#/components/cards";
-import { EmptyState, SectionHeading, Tabs } from "#/design-system/ui";
+import { WorkIndex } from "#/components/cards";
+import { EmptyState, Tabs } from "#/design-system/ui";
 import { absoluteUrl, breadcrumbs, jsonLd, pageTitle, seo } from "#/lib/seo";
 import { getProjects } from "#/server/fn/public";
 
@@ -35,7 +35,10 @@ function ProjectsPage() {
 		<>
 			<main id="main" className="site">
 				<section className="site-section">
-					<SectionHeading as="h1" eyebrow="Portfolio" title="All projects" description="Every platform I've built or led, from ride-hailing and emergency dispatch to fintech and ERP." />
+					<header className="page-head" style={{ paddingTop: 24 }}>
+						<h1>Projects</h1>
+						<p>Every platform I've built or led, from ride-hailing and emergency dispatch to fintech and ERP.</p>
+					</header>
 					{categories.length > 1 && (
 						<Tabs
 							label="Filter by category"
@@ -47,9 +50,7 @@ function ProjectsPage() {
 					{shown.length === 0 ? (
 						<EmptyState icon="briefcase" title="No projects yet" />
 					) : (
-						<div className="mh-grid-3" style={{ marginTop: 24 }}>
-							{shown.map((pr) => <ProjectCard key={pr.id} project={pr} />)}
-						</div>
+						<div style={{ marginTop: 24 }}><WorkIndex projects={shown} /></div>
 					)}
 				</section>
 			</main>

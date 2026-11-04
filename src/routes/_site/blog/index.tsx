@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BlogCard } from "#/components/cards";
-import { EmptyState, SectionHeading } from "#/design-system/ui";
+import { PostList } from "#/components/cards";
+import { EmptyState } from "#/design-system/ui";
 import {
 	absoluteUrl,
 	breadcrumbs,
@@ -52,12 +52,10 @@ function BlogIndexPage() {
 		<>
 			<main id="main" className="site">
 				<section className="site-section">
-					<SectionHeading
-						as="h1"
-						eyebrow="Writing"
-						title="Blog"
-						description={DESCRIPTION}
-					/>
+					<header className="page-head" style={{ paddingTop: 24 }}>
+						<h1>Writing</h1>
+						<p>{DESCRIPTION}</p>
+					</header>
 					{posts.length === 0 ? (
 						<EmptyState
 							icon="search"
@@ -65,11 +63,7 @@ function BlogIndexPage() {
 							description="Check back soon."
 						/>
 					) : (
-						<div className="blog-related__grid">
-							{posts.map((p) => (
-								<BlogCard key={p.slug} post={p} />
-							))}
-						</div>
+						<PostList posts={posts} />
 					)}
 				</section>
 			</main>
