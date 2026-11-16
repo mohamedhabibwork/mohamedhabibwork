@@ -56,7 +56,7 @@ export const getPortfolio = createServerFn({ method: "GET" })
 	.validator((input: LocaleInput) => localeInput.parse(input))
 	.handler(async ({ data: { locale } }) =>
 		withDb(async (db) => {
-			const [p, exp, proj, sk, publicCvs, svc] = await Promise.all([
+			const [p, exp, proj, sk, publicCvs, svc, latestRaw] = await Promise.all([
 				db.query.profile.findFirst(),
 				db
 					.select()
@@ -86,6 +86,19 @@ export const getPortfolio = createServerFn({ method: "GET" })
 					.from(services)
 					.where(eq(services.published, true))
 					.orderBy(asc(services.sort)),
+				db
+					.select({
+						slug: blogPosts.slug,
+						title: blogPosts.title,
+						excerpt: blogPosts.excerpt,
+						body: blogPosts.body,
+						tags: blogPosts.tags,
+						publishedAt: blogPosts.publishedAt,
+					})
+					.from(blogPosts)
+					.where(eq(blogPosts.published, true))
+					.orderBy(desc(blogPosts.publishedAt))
+					.limit(3),
 			]);
 			return {
 				profile: p ? localizeRow(p, PROFILE_TEXT, locale) : null,
@@ -96,6 +109,15 @@ export const getPortfolio = createServerFn({ method: "GET" })
 				services: svc.map((row) =>
 					localizeRow(row, SERVICE_CARD_TEXT, locale),
 				),
+				latestPosts: latestRaw.map((post) => ({
+					slug: post.slug,
+					title: post.title,
+					excerpt: post.excerpt,
+					tags: post.tags,
+					publishedAt: post.publishedAt,
+					minutes: readingMinutes(post.body),
+					locale: postLocale(post),
+				})),
 				hasArabic: portfolioHasArabic({
 					profile: p,
 					projects: proj,

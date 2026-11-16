@@ -30,6 +30,23 @@ const isPreviewHost = (host: string) => host.endsWith(".workers.dev");
 
 const permanentRedirect = (url: URL) => Response.redirect(url.toString(), 301);
 
+/** Legacy URLs from earlier site versions that should permanently redirect to `/`. */
+const LEGACY_HOME_REDIRECTS = new Set([
+	"/index.html",
+	"/pdf",
+	"/Mohammad_Habib_Senior_Full_Stack_Developer_Resume.pdf",
+]);
+
+/** Removed legacy pages that should return 410 Gone so search engines drop them quickly. */
+const GONE_PATHS = new Set(["/privacy-policy", "/terms"]);
+
+const isNoindexPath = (pathname: string) =>
+	pathname === "/admin" ||
+	pathname.startsWith("/admin/") ||
+	pathname === "/login" ||
+	pathname === "/mcp" ||
+	pathname.startsWith("/api/");
+
 export default createServerEntry({
 	async fetch(request) {
 		const url = publicUrl(request);
@@ -45,14 +62,31 @@ export default createServerEntry({
 			url.pathname = url.pathname.replace(/\/+$/, "") || "/";
 			return permanentRedirect(url);
 		}
+		if (isRead && LEGACY_HOME_REDIRECTS.has(url.pathname)) {
+			url.pathname = "/";
+			url.search = "";
+			return permanentRedirect(url);
+		}
+		if (isRead && GONE_PATHS.has(url.pathname)) {
+			return new Response("Gone", {
+				status: 410,
+				headers: {
+					"Content-Type": "text/plain; charset=utf-8",
+					"X-Robots-Tag": "noindex, nofollow",
+					"Cache-Control": "public, max-age=86400",
+				},
+			});
+		}
 		const locale = extractLocaleFromUrl(url) ?? baseLocale;
 		const response = await requestLocale.run(locale, () =>
 			// Redirects from routes are built from this URL, so it needs the public scheme too.
 			handler.fetch(isRead ? new Request(url, request) : request),
 		);
-		if (!isPreviewHost(url.hostname)) return response;
+		const shouldNoindex =
+			isPreviewHost(url.hostname) || isNoindexPath(url.pathname);
+		if (!shouldNoindex) return response;
 		const tagged = new Response(response.body, response);
-		tagged.headers.set("X-Robots-Tag", "noindex");
+		tagged.headers.set("X-Robots-Tag", "noindex, nofollow");
 		return tagged;
 	},
 });

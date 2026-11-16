@@ -162,17 +162,43 @@ export function OfferList({ services }: { services: ServiceCardData[] }) {
 
 /** Blog posts as a reading list. */
 export function PostList({ posts }: { posts: BlogCardData[] }) {
+	const currentLocale = getLocale();
 	return (
 		<ul className="post-list">
 			{posts.map((p) => {
 				const dir = textDirection(p.title, p.excerpt);
+				const inner = (
+					<>
+						<span className="post-row__meta">
+							{m.blog_min_read({ count: p.minutes })}
+							{p.tags[0] ? `, ${p.tags[0]}` : ""}
+						</span>
+						<span className="post-row__title" dir={dir}>
+							{p.title}
+						</span>
+						{p.excerpt && (
+							<span className="post-row__excerpt" dir={dir}>
+								{p.excerpt}
+							</span>
+						)}
+					</>
+				);
 				return (
 					<li key={p.slug}>
-						<Link className="post-row" to="/blog/$slug" params={{ slug: p.slug }}>
-							<span className="post-row__meta">{p.minutes} min read{p.tags[0] ? `, ${p.tags[0]}` : ""}</span>
-							<span className="post-row__title" dir={dir}>{p.title}</span>
-							{p.excerpt && <span className="post-row__excerpt" dir={dir}>{p.excerpt}</span>}
-						</Link>
+						{p.locale === currentLocale ? (
+							<Link
+								className="post-row"
+								to="/blog/$slug"
+								params={{ slug: p.slug }}
+								lang={p.locale}
+							>
+								{inner}
+							</Link>
+						) : (
+							<a className="post-row" href={postHref(p)} lang={p.locale}>
+								{inner}
+							</a>
+						)}
 					</li>
 				);
 			})}

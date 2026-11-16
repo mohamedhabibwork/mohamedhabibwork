@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { OfferList, WorkIndex } from "#/components/cards";
+import { OfferList, PostList, WorkIndex } from "#/components/cards";
 import { ContactForm } from "#/components/site";
 import {
 	Alert,
@@ -209,6 +209,7 @@ function Home() {
 					education={p.education}
 					certifications={p.certifications}
 				/>
+				<Writing posts={data.latestPosts} />
 				<Contact profile={p} services={data.services} />
 			</main>
 		</>
@@ -533,6 +534,33 @@ function Services({ services }: { services: Portfolio["services"] }) {
 				}
 			/>
 			<OfferList services={services.slice(0, 6)} />
+		</section>
+	);
+}
+
+function Writing({ posts }: { posts: Portfolio["latestPosts"] }) {
+	if (posts.length === 0) return null;
+	return (
+		<section
+			className="site-section"
+			id="writing"
+			aria-labelledby="writing-title"
+		>
+			<SectionHeading
+				id="writing-title"
+				eyebrow={m.blog_eyebrow()}
+				title={m.nav_blog()}
+				action={
+					<LinkButton
+						href={localizeHref("/blog")}
+						variant="ghost"
+						trailingIcon="arrow-right"
+					>
+						{m.nav_blog()}
+					</LinkButton>
+				}
+			/>
+			<PostList posts={posts} />
 		</section>
 	);
 }
